@@ -9,13 +9,6 @@ package matopeli;
  *
  * @author Olli
  */
-public class Matopeli {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-    }
-    
+public class Testauskommittiluokka {
+    //tää on paskaa jos ei tää toimi
 }
