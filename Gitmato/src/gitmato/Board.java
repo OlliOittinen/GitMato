@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gitmato;
+package Gitmato;
 
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -163,7 +163,7 @@ public class Board extends JPanel implements ActionListener {
     
     private void drawGameOver(Graphics g) {
 
-    String msg = "HÄVISIT PELIN!!! PISTEESI: " + pisteet + " press R to restart";
+    String msg = "HÄVISIT PELIN!!! PISTEESI: " + pisteet;
     Font small = new Font("Helvetica", Font.BOLD, 20);
     FontMetrics fm = getFontMetrics(small);
 
