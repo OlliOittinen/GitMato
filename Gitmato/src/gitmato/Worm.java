@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gitmato;
+package matopeli;
 
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -42,7 +42,7 @@ public class Worm {
     }
     
     public void move() {
-        if (x > 0 && dx < 0 || x < 950 && dx > 0) {
+        if (x > 0 && dx < 0 || x < 960 && dx > 0) {
             if(suuntaAdv == 2){
                 x += dx;
             }
