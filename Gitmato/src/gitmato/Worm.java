@@ -33,7 +33,7 @@ public class Worm {
     }
 
     private void initWorm() {
-        ImageIcon kuvamato = new ImageIcon("src/images/Matopala.png");
+        ImageIcon kuvamato = new ImageIcon("src/gitmato/Matopala.png");
 
         image = kuvamato.getImage();
 
