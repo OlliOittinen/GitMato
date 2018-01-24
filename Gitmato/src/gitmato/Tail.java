@@ -7,7 +7,6 @@ package gitmato;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import Gitmato.Worm;
 
 /**
  *

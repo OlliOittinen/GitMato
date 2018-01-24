@@ -5,10 +5,6 @@
  */
 package gitmato;
 
-import Gitmato.Worm;
-import java.awt.Color;
-import javax.swing.Timer;
-import java.util.*;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Color;
@@ -22,8 +18,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.Rectangle;
-import Gitmato.Snack;
-import Gitmato.Worm;
+
 
 /**
  *
