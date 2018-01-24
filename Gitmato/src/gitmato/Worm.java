@@ -6,6 +6,7 @@
 package gitmato;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
@@ -23,7 +24,7 @@ public class Worm {
     private int suuntaAdv = 0;
     private Image image;
     
-    double nopeus = 10;
+    double nopeus = 3;
     
 
     public Worm() {
@@ -41,13 +42,13 @@ public class Worm {
     }
     
     public void move() {
-        if (x > 0 && dx < 0 || x < 450 && dx > 0) {
+        if (x > 0 && dx < 0 || x < 950 && dx > 0) {
             if(suuntaAdv == 2){
                 x += dx;
             }
             
         }
-        if (y > 0 && dy < 0 || y < 875 && dy > 0) {
+        if (y > 0 && dy < 0 || y < 950 && dy > 0) {
             if(suuntaAdv == 1){
                 y += dy;
             }
@@ -62,9 +63,21 @@ public class Worm {
     public int getY() {
         return y;
     }
+    
+    public void setX(int luku) {
+        this.x = luku;
+    }
+
+    public void setY(int luku) {
+        this.y = luku;
+    }
 
     public Image getImage() {
         return image;
+    }
+    
+    public int getSuunta(){
+        return suunta;
     }
 
     public void keyPressed(KeyEvent e) {
@@ -72,28 +85,35 @@ public class Worm {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-            suunta = 1;
-            suuntaAdv = 2;
-            
+            if(suunta != 2){
+                suunta = 1;
+                suuntaAdv = 2;
+            }
             
         }
 
         if (key == KeyEvent.VK_RIGHT) {
+            if(suunta != 1){
             suunta = 2;
-            suuntaAdv = 1;
+            suuntaAdv = 2;
 
+            }
         }
 
         if (key == KeyEvent.VK_UP) {
+            if(suunta != 4){
+        
             suunta = 3;
             suuntaAdv = 1;
-
+            }
         }
 
         if (key == KeyEvent.VK_DOWN) {
+            if(suunta != 3){
+        
             suunta = 4;
-            suuntaAdv = 2;
-
+            suuntaAdv = 1;
+            }
         }
     }
     
@@ -113,6 +133,10 @@ public class Worm {
         if(suunta == 4){
             dy = 1 * nopeus;
         }
+    }
+    
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, 50, 50);
     }
     
     
