@@ -7,7 +7,7 @@ package matopeli;
 
 /**
  *
- * @author Olli
+ * @author Eero
  */
 public class Matopeli {
 
@@ -15,7 +15,8 @@ public class Matopeli {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+        // Testing testing pls work git...
+        //jtn paskaa
     }
     
 }
