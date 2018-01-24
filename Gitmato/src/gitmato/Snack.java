@@ -30,7 +30,7 @@ public class Snack {
 
     public void initSnack() {
         
-        ImageIcon kuva = new ImageIcon("src/gitmato/Matopala.png");
+        ImageIcon kuva = new ImageIcon("src/Images/Matopala.png");
         image = kuva.getImage();
             
         ye = 200;

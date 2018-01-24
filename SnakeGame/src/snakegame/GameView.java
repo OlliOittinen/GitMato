@@ -49,6 +49,7 @@ public class GameView {
     public void drawFood(Graphics graphics, Node squareArea) {
         drawCircle(graphics, squareArea, Color.RED);
     }
+    
     public void drawGridBackground(Graphics graphics) {
         for (int i = 0; i < grid.getWidth(); i++) {
             for (int j = 0; j < grid.getHeight(); j++) {
@@ -56,7 +57,7 @@ public class GameView {
             }
         }
     }
-
+    
     private void drawSquare(Graphics graphics, Node squareArea, Color color) {
         graphics.setColor(color);
         int size = DEFAULT_NODE_SIZE;                                 

@@ -14,8 +14,8 @@ import java.awt.*;
 
 public class SnakeApp implements Runnable {
 
-    private final int DEFAULT_GRID_WIDTH = 30;
-    private final int DEFAULT_GRID_HEIGHT = 30;
+    private final int DEFAULT_GRID_WIDTH = 100;
+    private final int DEFAULT_GRID_HEIGHT = 100;
     private GameView gameView;
     private GameController gameController;
 
