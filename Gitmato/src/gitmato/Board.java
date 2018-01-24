@@ -163,7 +163,7 @@ public class Board extends JPanel implements ActionListener {
     
     private void drawGameOver(Graphics g) {
 
-    String msg = "HÄVISIT PELIN!!! PISTEESI: " + pisteet;
+    String msg = "HÄVISIT PELIN!!! PISTEESI: " + pisteet + " press R to restart";
     Font small = new Font("Helvetica", Font.BOLD, 20);
     FontMetrics fm = getFontMetrics(small);
 
