@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Gitmato;
+package gitmato;
 
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -33,10 +33,7 @@ public class Board extends JPanel implements ActionListener {
     private int life = 1;
     private boolean ingame;
     private int pisteet;
-    
-    
-    
-    
+
     public Board() {
 
         initBoard();
@@ -47,17 +44,14 @@ public class Board extends JPanel implements ActionListener {
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
-        
-        
-        
+
         worm = new Worm();
         
         snack = new Snack();
         timer = new Timer(DELAY, this);
         timer.start();
         ingame = true;
-        
-        
+                
     }
     
     private void inGame() {
@@ -72,8 +66,6 @@ public class Board extends JPanel implements ActionListener {
     }
     
     private class TAdapter extends KeyAdapter {
-
-        
 
         @Override
         public void keyPressed(KeyEvent e) {
@@ -128,17 +120,13 @@ public class Board extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        
-        
         checkCollisions();
         worm.move();
         worm.moveCont();
         
         
         //faster();
-        repaint();
-        
-        
+        repaint();        
     }
     
     public void checkCollisions() {
@@ -146,8 +134,7 @@ public class Board extends JPanel implements ActionListener {
         Rectangle Matokuutio = worm.getBounds();
 
         Rectangle r1 = snack.getBounds();
-        
-        
+                
         if (r1.intersects(Matokuutio)){
             snack.setX((int) (Math.random() * 940));
             snack.setY((int) (Math.random() * 940));
