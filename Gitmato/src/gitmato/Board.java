@@ -120,7 +120,7 @@ public class Board extends JPanel implements ActionListener {
             for(int i=0; i < body.size() ; i++){
                 // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
                 g2d.drawImage(body.get(i).getImage(), body.get(i).getX(), body.get(i).getY(), this);
-                System.out.println("tätä tehdään");
+                //System.out.println("tätä tehdään");
             }
         }
         
@@ -159,8 +159,8 @@ public class Board extends JPanel implements ActionListener {
         cordinates.add(0 , p);
         
         //jos lista liian suuri poistetaan viimeinen
-        if(cordinates.size() >= 10000){
-            cordinates.remove(10000);
+        if(cordinates.size() >= 3000){
+            cordinates.remove(cordinates.size() -1);
         }
         
         //Päivitetään jokaisen "Tail" olion coordinaatit
