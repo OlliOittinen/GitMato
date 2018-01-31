@@ -16,6 +16,8 @@ import javax.swing.ImageIcon;
  */
 public class Worm {
     
+    //private int playerNro;
+    
     private double dx;
     private double dy;
     private int x;
@@ -26,14 +28,12 @@ public class Worm {
     
     double nopeus = 3;
     
-    public Worm() {
-
+    public Worm() {  
         initWorm();
     }
 
     private void initWorm() {
         ImageIcon kuvamato = new ImageIcon("src/Images/MatoOsaSini.png");
-
         image = kuvamato.getImage();
 
         x = 200;
@@ -79,7 +79,14 @@ public class Worm {
         return suunta;
     }
 
-    public double getNopeus() {
+    public void setSuunta(int s){
+        this.suunta = s;
+    }
+    public void setSuuntaAdv(int a){
+        this.suuntaAdv = a;
+    }
+    
+     public double getNopeus() {
         return nopeus;
     }
 

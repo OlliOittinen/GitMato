@@ -16,6 +16,7 @@ public class Matopeli{
                 
                 MainFrame peli = new MainFrame();
                 peli.setVisible(true);
+                
             }
         });         
     }

@@ -22,6 +22,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import Controller.PlayerController;
 
 
 /**
@@ -46,10 +47,12 @@ public class Board extends JPanel implements ActionListener {
     Point2D p;          // coordinaatit
     private int x;
     private int y;
-    private final List<Point2D> cordinates;     
+    private final List<Point2D> cordinates;    
+    private static List<Worm> worms;
     
     public Board() {
         //alustetaan listat
+        this.worms = new ArrayList<>();
         this.cordinates = new ArrayList<>();
         this.body = new ArrayList<>();
         this.p = new Point2D.Double(0,0);
@@ -63,7 +66,9 @@ public class Board extends JPanel implements ActionListener {
         setFocusable(true);
         setBackground(Color.BLACK);
 
-        worm = new Worm();
+        worms.add(worm = new Worm());
+        
+        
         
         snack = new Snack();
         timer = new Timer(DELAY, this);
@@ -215,5 +220,9 @@ public class Board extends JPanel implements ActionListener {
         body.add(tail = new Tail(tailNro * 20));
         System.out.println(body.size());
         
+    }
+    
+    public static List getWorms(){
+        return worms;
     }
 }
