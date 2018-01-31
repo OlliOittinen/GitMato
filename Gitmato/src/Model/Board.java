@@ -159,7 +159,7 @@ public class Board extends JPanel implements ActionListener {
         cordinates.add(0 , p);
         
         //jos lista liian suuri poistetaan viimeinen
-        if(cordinates.size() >= 3000){
+        if(cordinates.size() >= 10000){
             cordinates.remove(cordinates.size() -1);
         }
         
