@@ -26,10 +26,6 @@ public class Worm {
     
     double nopeus = 3;
     
-    
-    
-    
-    
     public Worm() {
 
         initWorm();
@@ -83,6 +79,14 @@ public class Worm {
         return suunta;
     }
 
+    public double getNopeus() {
+        return nopeus;
+    }
+
+    public void setNopeus(double nopeus) {
+        this.nopeus = nopeus;
+    }
+    
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
