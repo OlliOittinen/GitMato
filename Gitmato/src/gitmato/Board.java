@@ -37,6 +37,7 @@ public class Board extends JPanel implements ActionListener {
     private int life = 1;
     private boolean ingame;
     private int pisteet;
+<<<<<<< HEAD
     //Lista Tail paloista
     private final List<Tail> body;
     //pidetään lukua kuinka monta Tail objektia on.
@@ -47,6 +48,9 @@ public class Board extends JPanel implements ActionListener {
     private int y;
     private final List<Point2D> cordinates;     
     
+=======
+
+>>>>>>> 92af3026d47c4abe07754050dfaaa9a1674390ac
     public Board() {
         //alustetaan listat
         this.cordinates = new ArrayList<>();
@@ -61,17 +65,14 @@ public class Board extends JPanel implements ActionListener {
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
-        
-        
-        
+
         worm = new Worm();
         
         snack = new Snack();
         timer = new Timer(DELAY, this);
         timer.start();
         ingame = true;
-        
-        
+                
     }
     
     private void inGame() {
@@ -86,8 +87,6 @@ public class Board extends JPanel implements ActionListener {
     }
     
     private class TAdapter extends KeyAdapter {
-
-        
 
         @Override
         public void keyPressed(KeyEvent e) {
@@ -150,8 +149,6 @@ public class Board extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        
-        
         checkCollisions();
         worm.move();
         worm.moveCont();
@@ -180,9 +177,7 @@ public class Board extends JPanel implements ActionListener {
         }
             
         //faster();
-        repaint();
-        
-        
+        repaint();        
     }
     
     public void checkCollisions() {
@@ -190,8 +185,7 @@ public class Board extends JPanel implements ActionListener {
         Rectangle Matokuutio = worm.getBounds();
 
         Rectangle r1 = snack.getBounds();
-        
-        
+                
         if (r1.intersects(Matokuutio)){
             snack.setX((int) (Math.random() * 940));
             snack.setY((int) (Math.random() * 940));
