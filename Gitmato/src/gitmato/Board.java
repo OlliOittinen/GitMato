@@ -37,7 +37,7 @@ public class Board extends JPanel implements ActionListener {
     private int life = 1;
     private boolean ingame;
     private int pisteet;
-<<<<<<< HEAD
+
     //Lista Tail paloista
     private final List<Tail> body;
     //pidetään lukua kuinka monta Tail objektia on.
@@ -48,9 +48,6 @@ public class Board extends JPanel implements ActionListener {
     private int y;
     private final List<Point2D> cordinates;     
     
-=======
-
->>>>>>> 92af3026d47c4abe07754050dfaaa9a1674390ac
     public Board() {
         //alustetaan listat
         this.cordinates = new ArrayList<>();
