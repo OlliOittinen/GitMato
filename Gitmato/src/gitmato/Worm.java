@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Gitmato;
+package gitmato;
 
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -26,14 +26,17 @@ public class Worm {
     
     double nopeus = 3;
     
-
+    
+    
+    
+    
     public Worm() {
 
         initWorm();
     }
 
     private void initWorm() {
-        ImageIcon kuvamato = new ImageIcon("src/Images/Matopala.png");
+        ImageIcon kuvamato = new ImageIcon("src/Images/MatoOsaSini.png");
 
         image = kuvamato.getImage();
 
@@ -132,6 +135,7 @@ public class Worm {
         
         if(suunta == 4){
             dy = 1 * nopeus;
+            
         }
     }
     

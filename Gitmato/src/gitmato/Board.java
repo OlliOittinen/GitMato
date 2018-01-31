@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Gitmato;
+package gitmato;
 
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -18,6 +18,10 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.Rectangle;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
@@ -26,18 +30,28 @@ import java.awt.Rectangle;
  */
 public class Board extends JPanel implements ActionListener {
     private Worm worm;
-    
+    private Tail tail;
     private Timer timer;
     private final int DELAY = 10;
     private Snack snack;
     private int life = 1;
     private boolean ingame;
     private int pisteet;
-    
-    
-    
+    //Lista Tail paloista
+    private final List<Tail> body;
+    //pidetään lukua kuinka monta Tail objektia on.
+    private int tailNro = 0;
+    // Wormin locaatio muuttujat:
+    Point2D p;          // coordinaatit
+    private int x;
+    private int y;
+    private final List<Point2D> cordinates;     
     
     public Board() {
+        //alustetaan listat
+        this.cordinates = new ArrayList<>();
+        this.body = new ArrayList<>();
+        this.p = new Point2D.Double(0,0);
 
         initBoard();
     }
@@ -103,8 +117,16 @@ public class Board extends JPanel implements ActionListener {
         drawPisteet(g);
         
         g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
-        
         g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);
+        
+        //tarkistetaan onko häntiä piirrettäväksi
+        if(tailNro > 0){         
+            for(int i=0; i < body.size() ; i++){
+                // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
+                g2d.drawImage(body.get(i).getImage(), body.get(i).getX(), body.get(i).getY(), this);
+                System.out.println("tätä tehdään");
+            }
+        }
         
         if(this.life == 0){
             drawGameOver(g);
@@ -133,8 +155,30 @@ public class Board extends JPanel implements ActionListener {
         checkCollisions();
         worm.move();
         worm.moveCont();
+        //tallennnetaan wormin coordinaatit yhteen 2D muuttujaan
+        x = worm.getX();
+        y = worm.getY();
+        p = new Point2D.Double(x,y);
         
+        //Lisätään coortinaatit listan cordinates alkuun (0).
+        //siirtää automaattisesti taulukon arvot yhden eteenpäin, 0->1
+        cordinates.add(0 , p);
         
+        //jos lista liian suuri poistetaan viimeinen
+        if(cordinates.size() >= 10000){
+            cordinates.remove(10000);
+        }
+        
+        //Päivitetään jokaisen "Tail" olion coordinaatit
+        for(int i=0; i < body.size() ; i++){ 
+        int f = body.get(i).getCordinateInt();
+        p = cordinates.get(f);
+        x = (int) p.getX();
+        y = (int) p.getY();
+        body.get(i).setX(x);
+        body.get(i).setY(y);
+        }
+            
         //faster();
         repaint();
         
@@ -174,6 +218,11 @@ public class Board extends JPanel implements ActionListener {
     }
     
     private void spawnTail(){
+        //tulee yksi Tail pala lisää
+        tailNro ++;
+        // lisätään wormin bodiin Tail pala ja annetaan sille järjestyslukunsa
+        body.add(tail = new Tail(tailNro * 20));
+        System.out.println(body.size());
         
     }
 }

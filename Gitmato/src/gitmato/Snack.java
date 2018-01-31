@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Gitmato;
+package gitmato;
 
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -30,7 +30,7 @@ public class Snack {
 
     public void initSnack() {
         
-        ImageIcon kuva = new ImageIcon("src/Images/Matopala.png");
+        ImageIcon kuva = new ImageIcon("src/Images/AppleActual.png");
         image = kuva.getImage();
             
         ye = 200;
