@@ -23,6 +23,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import Controller.PlayerController;
+import java.awt.Image;
+import java.awt.geom.Rectangle2D;
+import javafx.scene.layout.Background;
+import javax.swing.ImageIcon;
 
 
 /**
@@ -31,6 +35,7 @@ import Controller.PlayerController;
  */
 public class Board extends JPanel implements ActionListener {
     private Worm worm;
+    private PlayerController control;
     private Tail tail;
     private Timer timer;
     private final int DELAY = 10;
@@ -50,6 +55,11 @@ public class Board extends JPanel implements ActionListener {
     private final List<Point2D> cordinates;    
     private static List<Worm> worms;
     
+    private Image background;
+    
+    
+    
+    
     public Board() {
         //alustetaan listat
         this.worms = new ArrayList<>();
@@ -61,12 +71,16 @@ public class Board extends JPanel implements ActionListener {
     }
     
     private void initBoard() {
-
+        
+        
+        //TODO: Tähän täytyy tehdä kaikki mahdolliset pelimuodot
+        
+        
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
 
-        worms.add(worm = new Worm());
+        worms.add(worm = new Worm()); //lista worm olioista
         
         
         
@@ -74,6 +88,12 @@ public class Board extends JPanel implements ActionListener {
         timer = new Timer(DELAY, this);
         timer.start();
         ingame = true;
+        
+        control = new PlayerController(); // 
+        control.updateWorms(); // Worms-lista liitetään playercontrolleriin
+        
+        ImageIcon kuvamato = new ImageIcon("src/Images/BlueBG800x600.png");
+        background = kuvamato.getImage();
                 
     }
     
@@ -92,7 +112,7 @@ public class Board extends JPanel implements ActionListener {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            worm.keyPressed(e);
+            control.keyPressed(e);
  
         }
     }
@@ -101,7 +121,11 @@ public class Board extends JPanel implements ActionListener {
         
             if (ingame == true) {
             super.paintComponent(g);
-
+            Graphics2D g2 = (Graphics2D) g;
+            
+            g2.setPaint(Color.BLACK);
+            g2.fill(new Rectangle2D.Double(0, 0, getWidth(), getHeight()));
+            g.drawImage(this.background, 0,0,null);
             doDrawing(g);
 
             Toolkit.getDefaultToolkit().sync();
@@ -189,14 +213,15 @@ public class Board extends JPanel implements ActionListener {
         Rectangle r1 = snack.getBounds();
                 
         if (r1.intersects(Matokuutio)){
-            snack.setX((int) (Math.random() * 940));
-            snack.setY((int) (Math.random() * 940));
+            snack.setX((int) (Math.random() * 800));
+            snack.setY((int) (Math.random() * 600));
             pisteet++;
             spawnTail();
             
         }
         
-        if (worm.getX() < 0 || worm.getX() > 950 || worm.getY() < 0 || worm.getY() > 950){
+        if (worm.getX() < 5 || worm.getX() > 800 || worm.getY() < 5
+                || worm.getY() > 600){
             life --;
         }
     }
@@ -217,7 +242,7 @@ public class Board extends JPanel implements ActionListener {
         //tulee yksi Tail pala lisää
         tailNro ++;
         // lisätään wormin bodiin Tail pala ja annetaan sille järjestyslukunsa
-        body.add(tail = new Tail(tailNro * 20));
+        body.add(tail = new Tail(tailNro * 15));
         System.out.println(body.size());
         
     }

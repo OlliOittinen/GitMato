@@ -26,18 +26,18 @@ public class Worm {
     private int suuntaAdv = 0;
     private Image image;
     
-    double nopeus = 3;
+    double nopeus = 2;
     
     public Worm() {  
         initWorm();
     }
 
     private void initWorm() {
-        ImageIcon kuvamato = new ImageIcon("src/Images/MatoOsaSini.png");
+        ImageIcon kuvamato = new ImageIcon("src/Images/RedWormUp(800x600).png");
         image = kuvamato.getImage();
 
         x = 200;
-        y = 800;
+        y = 400;
     }
     
     public void move() {
@@ -94,42 +94,7 @@ public class Worm {
         this.nopeus = nopeus;
     }
     
-    public void keyPressed(KeyEvent e) {
-
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_LEFT) {
-            if(suunta != 2){
-                suunta = 1;
-                suuntaAdv = 2;
-            }
-            
-        }
-
-        if (key == KeyEvent.VK_RIGHT) {
-            if(suunta != 1){
-            suunta = 2;
-            suuntaAdv = 2;
-
-            }
-        }
-
-        if (key == KeyEvent.VK_UP) {
-            if(suunta != 4){
-        
-            suunta = 3;
-            suuntaAdv = 1;
-            }
-        }
-
-        if (key == KeyEvent.VK_DOWN) {
-            if(suunta != 3){
-        
-            suunta = 4;
-            suuntaAdv = 1;
-            }
-        }
-    }
+    
     
     public void moveCont(){
         if(suunta == 1){

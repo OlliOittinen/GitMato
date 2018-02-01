@@ -24,7 +24,7 @@ public class Tail extends Worm {
         initTail();
     }
     private void initTail(){
-        ImageIcon kuvamato = new ImageIcon("src/images/MatoOsa.png");
+        ImageIcon kuvamato = new ImageIcon("src/images/RedWormTail(800x600).png");
         image = kuvamato.getImage();   
     }
     
