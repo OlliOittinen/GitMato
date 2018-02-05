@@ -26,6 +26,11 @@ public class Worm {
     private int suuntaAdv = 0;
     private Image image;
     
+    private ImageIcon wormup = new ImageIcon("src/Images/RedWormUp(800x600).png");
+    private ImageIcon wormdown = new ImageIcon("src/Images/RedWormDown(800x600).png");
+    private ImageIcon wormleft = new ImageIcon("src/Images/RedWormLeft(800x600).png");
+    private ImageIcon wormright = new ImageIcon("src/Images/RedWormRight(800x600).png");
+    
     double nopeus = 2;
     
     public Worm() {  
@@ -33,8 +38,6 @@ public class Worm {
     }
 
     private void initWorm() {
-        ImageIcon kuvamato = new ImageIcon("src/Images/RedWormUp(800x600).png");
-        image = kuvamato.getImage();
 
         x = 200;
         y = 400;
@@ -75,6 +78,10 @@ public class Worm {
         return image;
     }
     
+    public void setImage(Image img) {
+        this.image = img;
+    }
+    
     public int getSuunta(){
         return suunta;
     }
@@ -98,18 +105,22 @@ public class Worm {
     
     public void moveCont(){
         if(suunta == 1){
+            setImage (wormleft.getImage());
             dx = -1 * nopeus;
         }
         
         if(suunta == 2){
+            setImage (wormright.getImage());
             dx = 1 * nopeus;
         }
         
         if(suunta == 3){
+            setImage (wormup.getImage());
             dy = -1 * nopeus;
         }
         
         if(suunta == 4){
+            setImage (wormdown.getImage());
             dy = 1 * nopeus;
             
         }
