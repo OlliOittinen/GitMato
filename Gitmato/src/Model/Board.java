@@ -220,7 +220,7 @@ public class Board extends JPanel implements ActionListener {
             
         }
         
-        if (worm.getX() < 5 || worm.getX() > 775 || worm.getY() < 5
+        if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5
                 || worm.getY() > 550){
             life --;
         }
@@ -228,7 +228,7 @@ public class Board extends JPanel implements ActionListener {
     
     private void drawGameOver(Graphics g) {
 
-    String msg = "HÄVISIT PELIN!!! PISTEESI: " + pisteet;
+    String msg = "HÄVISIT PELIN!!! PISTEESI: " + pisteet + " Paina R aloittaaksesi alusta";
     Font small = new Font("Helvetica", Font.BOLD, 20);
     FontMetrics fm = getFontMetrics(small);
 

@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
         add(new Board());
         
         
-        setSize(820, 620);
+        setSize(806, 620);
         setResizable(false);
         
         setTitle("Matopeli");
