@@ -12,27 +12,49 @@ import javax.swing.ImageIcon;
  *
  * @author maxki
  */
-public class Tail extends Worm {
+public class Tail{
     private Image image;
     private int x;
     private int y;
+    private int playerNro;
     // luku jonka mukaan hakee cordinaateista itselleen arvon.
     private int cordinateInt;
     
-     public Tail(int ci) {
+     public Tail(int ci, int playerNro) {
         this.cordinateInt = ci;
+        this.playerNro = playerNro;
         initTail();
     }
     private void initTail(){
-        ImageIcon kuvamato = new ImageIcon("src/images/RedWormTail(800x600).png");
-        image = kuvamato.getImage();   
+        if(playerNro==1){
+            ImageIcon kuvamato = new ImageIcon("src/images/RedWormTail(800x600).png");
+            image = kuvamato.getImage();   
+        }
+         if(playerNro==2){
+            ImageIcon kuvamato = new ImageIcon("src/images/BlueWormTail(800x600).png");
+            image = kuvamato.getImage();   
+        }
     }
     
-    @Override
     public Image getImage() {
         return image;
     }
     public int getCordinateInt(){
         return cordinateInt;
+    }
+    
+     public void setX(int luku) {
+        this.x = luku;
+    }
+
+    public void setY(int luku) {
+        this.y = luku;
+    }
+     public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

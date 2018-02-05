@@ -24,23 +24,38 @@ public class Worm {
     private int y;
     private int suunta = 1;
     private int suuntaAdv = 0;
+    private int playerNro;
     private Image image;
     
-    private ImageIcon wormup = new ImageIcon("src/Images/RedWormUp(800x600).png");
-    private ImageIcon wormdown = new ImageIcon("src/Images/RedWormDown(800x600).png");
-    private ImageIcon wormleft = new ImageIcon("src/Images/RedWormLeft(800x600).png");
-    private ImageIcon wormright = new ImageIcon("src/Images/RedWormRight(800x600).png");
+    private ImageIcon wormup;
+    private ImageIcon wormdown;
+    private ImageIcon wormleft;
+    private ImageIcon wormright;
     
     double nopeus = 2;
     
-    public Worm() {  
-        initWorm();
+    public Worm(int p) {  
+        initWorm(p);
     }
 
-    private void initWorm() {
-
-        x = 200;
-        y = 400;
+    private void initWorm(int p) {
+        this.playerNro = p;
+        if(playerNro==1){
+             wormup = new ImageIcon("src/Images/RedWormUp(800x600).png");
+             wormdown = new ImageIcon("src/Images/RedWormDown(800x600).png");
+             wormleft = new ImageIcon("src/Images/RedWormLeft(800x600).png");
+             wormright = new ImageIcon("src/Images/RedWormRight(800x600).png");
+            x = 200;
+            y = 400;
+        }
+        if(playerNro==2){
+             wormup = new ImageIcon("src/Images/BlueWormUp(800x600).png");
+             wormdown = new ImageIcon("src/Images/BlueWormDown(800x600).png");
+             wormleft = new ImageIcon("src/Images/BlueWormLeft(800x600).png");
+             wormright = new ImageIcon("src/Images/BlueWormRight(800x600).png");
+            x = 200;
+            y = 400;
+        }
     }
     
     public void move() {

@@ -100,8 +100,8 @@ public class Board extends JPanel implements ActionListener {
         setFocusable(true);
         setBackground(Color.BLACK);
 
-        worms.add(worm = new Worm()); //lista worm olioista
-        worms.add(worm2 = new Worm());
+        worms.add(worm = new Worm(1)); //lista worm olioista
+        worms.add(worm2 = new Worm(2));
         
         
         snack = new Snack();
@@ -120,7 +120,7 @@ public class Board extends JPanel implements ActionListener {
     private void inGame() {
 
         if (!ingame) {
-            this.life = this.life - 1;
+          
             
             repaint();
             timer.stop();
@@ -320,7 +320,7 @@ public class Board extends JPanel implements ActionListener {
         //tulee yksi Tail pala lisää
         tailNro ++;
         // lisätään wormin bodiin Tail pala ja annetaan sille järjestyslukunsa
-        body.add(tail = new Tail(tailNro * 15));
+        body.add(tail= new Tail(tailNro * 15, 1));
         System.out.println(body.size());
         
     }
@@ -329,7 +329,7 @@ public class Board extends JPanel implements ActionListener {
         //tulee yksi Tail pala lisää
         tailNro2 ++;
         // lisätään wormin bodiin Tail pala ja annetaan sille järjestyslukunsa
-        body2.add(tail = new Tail(tailNro2 * 15));
+        body2.add(tail = new Tail(tailNro2 * 15, 2));
         System.out.println(body2.size());
         
     }
