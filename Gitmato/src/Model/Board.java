@@ -20,13 +20,15 @@ import javax.swing.Timer;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+
+
 import Controller.PlayerController;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
-import javafx.scene.layout.Background;
+
 import javax.swing.ImageIcon;
+
 
 
 /**
@@ -72,13 +74,19 @@ public class Board extends JPanel implements ActionListener {
     
     public Board() {
         //alustetaan listat
-        this.worms = new ArrayList<>();
+        Board.worms = new ArrayList<>();
         this.cordinates = new ArrayList<>();
         this.body = new ArrayList<>();
         this.p = new Point2D.Double(0,0);
+
         this.cordinates2 = new ArrayList<>();
         this.body2 = new ArrayList<>();
         this.p2 = new Point2D.Double(0,0);
+
+        
+        
+        
+
         initBoard();
     }
     
