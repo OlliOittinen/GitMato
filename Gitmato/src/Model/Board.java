@@ -267,7 +267,7 @@ public class Board extends JPanel implements ActionListener {
         if (pu.intersects(Matokuutio)) {
             power.setX((int) (Math.random() * 750));
             power.setY((int) (Math.random() * 750));
-            power.faster();
+            power.faster(worm);
         }
         
         if (r1.intersects(Matokuutio2)){
@@ -281,7 +281,7 @@ public class Board extends JPanel implements ActionListener {
         if (pu.intersects(Matokuutio2)) {
             power.setX((int) (Math.random() * 750));
             power.setY((int) (Math.random() * 750));
-            power.faster();
+            power.faster(worm2);
         }
         
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5

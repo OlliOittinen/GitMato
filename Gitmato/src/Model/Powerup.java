@@ -16,12 +16,11 @@ import javax.swing.ImageIcon;
 
 public class Powerup implements Spawnables {
     
-    Worm worm;
     private int xe;
     private int ye;
     private Image image;
     
-    public void faster() {
+    public void faster(Worm worm) {
         worm.setNopeus(worm.getNopeus()*2);
     }
     
