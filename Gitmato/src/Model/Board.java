@@ -228,7 +228,7 @@ public class Board extends JPanel implements ActionListener {
     
     private void drawGameOver(Graphics g) {
 
-    String msg = "HÄVISIT PELIN!!! PISTEESI: " + pisteet + " Paina R aloittaaksesi alusta";
+    String msg = "HÄVISIT PELIN!!! PISTEESI: " + pisteet;
     Font small = new Font("Helvetica", Font.BOLD, 20);
     FontMetrics fm = getFontMetrics(small);
 
