@@ -21,8 +21,16 @@ import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+=======
+import Controller.PlayerController;
+import java.awt.Image;
+import java.awt.geom.Rectangle2D;
+import javafx.scene.layout.Background;
+import javax.swing.ImageIcon;
+>>>>>>> b9708ac30de139de0889715e6aa63de22d3641fd
 
 
 /**
@@ -31,6 +39,7 @@ import javax.swing.JLabel;
  */
 public class Board extends JPanel implements ActionListener {
     private Worm worm;
+    private PlayerController control;
     private Tail tail;
     private Timer timer;
     private final int DELAY = 10;
@@ -50,6 +59,11 @@ public class Board extends JPanel implements ActionListener {
     private final List<Point2D> cordinates;    
     private static List<Worm> worms;
     
+    private Image background;
+    
+    
+    
+    
     public Board() {
         //alustetaan listat
         Board.worms = new ArrayList<>();
@@ -63,12 +77,16 @@ public class Board extends JPanel implements ActionListener {
     }
     
     private void initBoard() {
-
+        
+        
+        //TODO: Tähän täytyy tehdä kaikki mahdolliset pelimuodot
+        
+        
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
 
-        worms.add(worm = new Worm());
+        worms.add(worm = new Worm()); //lista worm olioista
         
         
         
@@ -76,6 +94,12 @@ public class Board extends JPanel implements ActionListener {
         timer = new Timer(DELAY, this);
         timer.start();
         ingame = true;
+        
+        control = new PlayerController(); // 
+        control.updateWorms(); // Worms-lista liitetään playercontrolleriin
+        
+        ImageIcon kuvamato = new ImageIcon("src/Images/BlueBG800x600.png");
+        background = kuvamato.getImage();
                 
     }
     
@@ -94,7 +118,7 @@ public class Board extends JPanel implements ActionListener {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            worm.keyPressed(e);
+            control.keyPressed(e);
  
         }
     }
@@ -103,7 +127,11 @@ public class Board extends JPanel implements ActionListener {
         
             if (ingame == true) {
             super.paintComponent(g);
-
+            Graphics2D g2 = (Graphics2D) g;
+            
+            g2.setPaint(Color.BLACK);
+            g2.fill(new Rectangle2D.Double(0, 0, getWidth(), getHeight()));
+            g.drawImage(this.background, 0,0,null);
             doDrawing(g);
 
             Toolkit.getDefaultToolkit().sync();
@@ -191,14 +219,15 @@ public class Board extends JPanel implements ActionListener {
         Rectangle r1 = snack.getBounds();
                 
         if (r1.intersects(Matokuutio)){
-            snack.setX((int) (Math.random() * 940));
-            snack.setY((int) (Math.random() * 940));
-            pisteet++;
+            snack.setX((int) (Math.random() * 750));
+            snack.setY((int) (Math.random() * 550));
+            pisteet += 100;
             spawnTail();
             
         }
         
-        if (worm.getX() < 0 || worm.getX() > 950 || worm.getY() < 0 || worm.getY() > 950){
+        if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5
+                || worm.getY() > 550){
             life --;
         }
     }
@@ -211,7 +240,7 @@ public class Board extends JPanel implements ActionListener {
 
     g.setColor(Color.white);
     g.setFont(small);
-    g.drawString(msg, (1000 - fm.stringWidth(msg)) / 2, 500 / 2);
+    g.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
     ingame = false;       
     }
     
@@ -219,7 +248,7 @@ public class Board extends JPanel implements ActionListener {
         //tulee yksi Tail pala lisää
         tailNro ++;
         // lisätään wormin bodiin Tail pala ja annetaan sille järjestyslukunsa
-        body.add(tail = new Tail(tailNro * 20));
+        body.add(tail = new Tail(tailNro * 15));
         System.out.println(body.size());
         
     }

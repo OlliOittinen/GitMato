@@ -30,7 +30,7 @@ public class Snack {
 
     public void initSnack() {
         
-        ImageIcon kuva = new ImageIcon("src/Images/AppleActual.png");
+        ImageIcon kuva = new ImageIcon("src/Images/Apple(800x600).png");
         image = kuva.getImage();
             
         ye = 200;
@@ -65,7 +65,7 @@ public class Snack {
 
     
     public Rectangle getBounds() {
-        return new Rectangle(xe+5, ye+5, 40, 40);
+        return new Rectangle(xe+3, ye+3, 30, 30);
     }
 }
 
