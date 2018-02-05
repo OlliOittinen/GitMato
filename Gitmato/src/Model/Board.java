@@ -234,7 +234,7 @@ public class Board extends JPanel implements ActionListener {
 
     g.setColor(Color.white);
     g.setFont(small);
-    g.drawString(msg, (1000 - fm.stringWidth(msg)) / 2, 500 / 2);
+    g.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
     ingame = false;       
     }
     
