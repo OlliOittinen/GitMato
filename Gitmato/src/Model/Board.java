@@ -21,16 +21,14 @@ import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-=======
+
+
 import Controller.PlayerController;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
-import javafx.scene.layout.Background;
+
 import javax.swing.ImageIcon;
->>>>>>> b9708ac30de139de0889715e6aa63de22d3641fd
+
 
 
 /**
