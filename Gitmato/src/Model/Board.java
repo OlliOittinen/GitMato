@@ -35,24 +35,34 @@ import javax.swing.ImageIcon;
  */
 public class Board extends JPanel implements ActionListener {
     private Worm worm;
+    private Worm worm2;
     private PlayerController control;
     private Tail tail;
+    private Tail tail2;
     private Timer timer;
     private final int DELAY = 10;
     private Snack snack;
     private int life = 1;
+    private int life2 = 1;
     private boolean ingame;
     private int pisteet;
+    private int pisteet2;
 
     //Lista Tail paloista
     private final List<Tail> body;
+    private final List<Tail> body2;
     //pidetään lukua kuinka monta Tail objektia on.
     private int tailNro = 0;
+    private int tailNro2 = 0;
     // Wormin locaatio muuttujat:
-    Point2D p;          // coordinaatit
+    Point2D p;    
+    Point2D p2;// coordinaatit
     private int x;
     private int y;
-    private final List<Point2D> cordinates;    
+    private int x2;
+    private int y2;
+    private final List<Point2D> cordinates;  
+    private final List<Point2D> cordinates2;
     private static List<Worm> worms;
     
     private Image background;
@@ -66,7 +76,9 @@ public class Board extends JPanel implements ActionListener {
         this.cordinates = new ArrayList<>();
         this.body = new ArrayList<>();
         this.p = new Point2D.Double(0,0);
-
+        this.cordinates2 = new ArrayList<>();
+        this.body2 = new ArrayList<>();
+        this.p2 = new Point2D.Double(0,0);
         initBoard();
     }
     
@@ -81,7 +93,7 @@ public class Board extends JPanel implements ActionListener {
         setBackground(Color.BLACK);
 
         worms.add(worm = new Worm()); //lista worm olioista
-        
+        worms.add(worm2 = new Worm());
         
         
         snack = new Snack();
@@ -142,6 +154,7 @@ public class Board extends JPanel implements ActionListener {
         drawPisteet(g);
         
         g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
+        g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
         g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);
         
         //tarkistetaan onko häntiä piirrettäväksi
@@ -153,7 +166,15 @@ public class Board extends JPanel implements ActionListener {
             }
         }
         
-        if(this.life == 0){
+        if(tailNro2 > 0){         
+            for(int i=0; i < body2.size() ; i++){
+                // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
+                g2d.drawImage(body2.get(i).getImage(), body2.get(i).getX(), body2.get(i).getY(), this);
+                //System.out.println("tätä tehdään");
+            }
+        }
+        
+        if(this.life == 0 || this.life2 == 0){
             drawGameOver(g);
         }
         
@@ -161,7 +182,8 @@ public class Board extends JPanel implements ActionListener {
     
     private void drawPisteet(Graphics g) {
 
-        String msg = "Score: " + pisteet;
+        String msg = "P1 pisteet: " + pisteet;
+        String msg2 = "P2 pisteet: " + pisteet2;
 
         Font small = new Font("Helvetica", Font.BOLD, 20);
         FontMetrics fm = getFontMetrics(small);
@@ -169,6 +191,7 @@ public class Board extends JPanel implements ActionListener {
         g.setColor(Color.white);
         g.setFont(small);
         g.drawString(msg, (125 - fm.stringWidth(msg)) / 2, 50 / 2);
+        g.drawString(msg2, (125 - fm.stringWidth(msg2)) / 2, 100 / 2);
         
     }
     
@@ -178,18 +201,27 @@ public class Board extends JPanel implements ActionListener {
         checkCollisions();
         worm.move();
         worm.moveCont();
+        worm2.move();
+        worm2.moveCont();
         //tallennnetaan wormin coordinaatit yhteen 2D muuttujaan
         x = worm.getX();
         y = worm.getY();
+        x2 = worm2.getX();
+        y2 = worm2.getY();
         p = new Point2D.Double(x,y);
-        
+        p2 = new Point2D.Double(x2,y2);
         //Lisätään coortinaatit listan cordinates alkuun (0).
         //siirtää automaattisesti taulukon arvot yhden eteenpäin, 0->1
         cordinates.add(0 , p);
+        cordinates2.add(0 , p2);
         
         //jos lista liian suuri poistetaan viimeinen
         if(cordinates.size() >= 10000){
             cordinates.remove(cordinates.size() -1);
+        }
+        
+        if(cordinates2.size() >= 10000){
+            cordinates2.remove(cordinates2.size() -1);
         }
         
         //Päivitetään jokaisen "Tail" olion coordinaatit
@@ -201,6 +233,15 @@ public class Board extends JPanel implements ActionListener {
         body.get(i).setX(x);
         body.get(i).setY(y);
         }
+        
+        for(int i=0; i < body2.size() ; i++){ 
+        int f = body2.get(i).getCordinateInt();
+        p2 = cordinates2.get(f);
+        x2 = (int) p2.getX();
+        y2 = (int) p2.getY();
+        body2.get(i).setX(x2);
+        body2.get(i).setY(y2);
+        }
             
         //faster();
         repaint();        
@@ -209,6 +250,7 @@ public class Board extends JPanel implements ActionListener {
     public void checkCollisions() {
         
         Rectangle Matokuutio = worm.getBounds();
+        Rectangle Matokuutio2 = worm2.getBounds();
 
         Rectangle r1 = snack.getBounds();
                 
@@ -220,22 +262,50 @@ public class Board extends JPanel implements ActionListener {
             
         }
         
+        if (r1.intersects(Matokuutio2)){
+            snack.setX((int) (Math.random() * 750));
+            snack.setY((int) (Math.random() * 550));
+            pisteet2 += 100;
+            spawnTail2();
+            
+        }
+        
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5
                 || worm.getY() > 550){
             life --;
+        }
+        
+        if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5
+                || worm2.getY() > 550){
+            life2 --;
         }
     }
     
     private void drawGameOver(Graphics g) {
 
-    String msg = "HÄVISIT PELIN!!! PISTEESI: " + pisteet;
-    Font small = new Font("Helvetica", Font.BOLD, 20);
-    FontMetrics fm = getFontMetrics(small);
+        if(life==0){
+            String msg = "Pelaaja 2 voitti pelin!!! PISTEESI: " + pisteet;
+            Font small = new Font("Helvetica", Font.BOLD, 20);
+            FontMetrics fm = getFontMetrics(small);
 
-    g.setColor(Color.white);
-    g.setFont(small);
-    g.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
-    ingame = false;       
+            g.setColor(Color.white);
+            g.setFont(small);
+            g.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
+            ingame = false; 
+        }
+        
+        if(life2==0){
+            String msg = "Pelaaja 1 voitti pelin!!! PISTEESI: " + pisteet;
+            Font small = new Font("Helvetica", Font.BOLD, 20);
+            FontMetrics fm = getFontMetrics(small);
+
+            g.setColor(Color.white);
+            g.setFont(small);
+            g.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
+            ingame = false; 
+        }
+    
+              
     }
     
     private void spawnTail(){
@@ -244,6 +314,15 @@ public class Board extends JPanel implements ActionListener {
         // lisätään wormin bodiin Tail pala ja annetaan sille järjestyslukunsa
         body.add(tail = new Tail(tailNro * 15));
         System.out.println(body.size());
+        
+    }
+    
+    private void spawnTail2(){
+        //tulee yksi Tail pala lisää
+        tailNro2 ++;
+        // lisätään wormin bodiin Tail pala ja annetaan sille järjestyslukunsa
+        body2.add(tail = new Tail(tailNro2 * 15));
+        System.out.println(body2.size());
         
     }
     

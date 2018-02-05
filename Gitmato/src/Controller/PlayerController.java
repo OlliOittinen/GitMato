@@ -68,6 +68,38 @@ public class PlayerController {
             }
         }
         
+        if (key == KeyEvent.VK_A) {
+            if(worms.get(1).getSuunta() != 2){
+                worms.get(1).setSuunta(1);
+                worms.get(1).setSuuntaAdv(2);
+            }
+            
+        }
+
+        if (key == KeyEvent.VK_D) {
+            if(worms.get(1).getSuunta() != 1){
+            worms.get(1).setSuunta(2) ;
+            worms.get(1).setSuuntaAdv(2) ;
+
+            }
+        }
+
+        if (key == KeyEvent.VK_W) {
+            if(worms.get(1).getSuunta() != 4){
+        
+             worms.get(1).setSuunta(3);
+            worms.get(1).setSuuntaAdv(1);
+            }
+        }
+
+        if (key == KeyEvent.VK_S) {
+            if(worms.get(1).getSuunta() != 3){
+        
+             worms.get(1).setSuunta(4);
+            worms.get(1).setSuuntaAdv(1);
+            }
+        }
+        
         
                 
 
