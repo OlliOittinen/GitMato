@@ -213,15 +213,15 @@ public class Board extends JPanel implements ActionListener {
         Rectangle r1 = snack.getBounds();
                 
         if (r1.intersects(Matokuutio)){
-            snack.setX((int) (Math.random() * 800));
-            snack.setY((int) (Math.random() * 600));
+            snack.setX((int) (Math.random() * 750));
+            snack.setY((int) (Math.random() * 550));
             pisteet += 100;
             spawnTail();
             
         }
         
-        if (worm.getX() < 5 || worm.getX() > 800 || worm.getY() < 5
-                || worm.getY() > 600){
+        if (worm.getX() < 5 || worm.getX() > 775 || worm.getY() < 5
+                || worm.getY() > 550){
             life --;
         }
     }
