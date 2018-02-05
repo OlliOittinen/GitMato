@@ -120,7 +120,7 @@ public class Board extends JPanel implements ActionListener {
     private void inGame() {
 
         if (!ingame) {
-          
+            
             
             repaint();
             timer.stop();
@@ -259,8 +259,28 @@ public class Board extends JPanel implements ActionListener {
         
         Rectangle Matokuutio = worm.getBounds();
         Rectangle Matokuutio2 = worm2.getBounds();
+        
+        
 
         Rectangle r1 = snack.getBounds();
+        
+        for(int i=0; i < body.size() ; i++){
+            Rectangle Matotail = body.get(i).getBounds();
+            if (Matokuutio2.intersects(Matotail)){
+                System.out.println("asd");
+                life2 = 0;
+                
+            }
+        }
+        
+        for(int i=0; i < body2.size() ; i++){
+            Rectangle Matotail2 = body2.get(i).getBounds();
+            if (Matokuutio.intersects(Matotail2)){
+                System.out.println("lol");
+                life = 0;
+                
+            }
+        }
                 
         if (r1.intersects(Matokuutio)){
             snack.setX((int) (Math.random() * 750));
@@ -277,6 +297,8 @@ public class Board extends JPanel implements ActionListener {
             spawnTail2();
             
         }
+        
+        
         
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5
                 || worm.getY() > 550){
