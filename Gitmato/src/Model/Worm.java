@@ -53,7 +53,7 @@ public class Worm {
              wormdown = new ImageIcon("src/Images/BlueWormDown(800x600).png");
              wormleft = new ImageIcon("src/Images/BlueWormLeft(800x600).png");
              wormright = new ImageIcon("src/Images/BlueWormRight(800x600).png");
-            x = 200;
+            x = 400;
             y = 400;
         }
     }
@@ -142,7 +142,7 @@ public class Worm {
     }
     
     public Rectangle getBounds() {
-        return new Rectangle(x, y, 50, 50);
+        return new Rectangle(x, y, 35, 42);
     }
     
     

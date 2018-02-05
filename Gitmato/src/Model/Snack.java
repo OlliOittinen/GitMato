@@ -59,7 +59,7 @@ public class Snack implements Spawnables{
 
 @Override    
     public Rectangle getBounds() {
-        return new Rectangle(xe+3, ye+3, 30, 30);
+        return new Rectangle(xe, ye, 41, 55);
     }
 }
 
