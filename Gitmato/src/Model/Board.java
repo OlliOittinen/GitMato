@@ -215,7 +215,7 @@ public class Board extends JPanel implements ActionListener {
         if (r1.intersects(Matokuutio)){
             snack.setX((int) (Math.random() * 800));
             snack.setY((int) (Math.random() * 600));
-            pisteet++;
+            pisteet += 100;
             spawnTail();
             
         }
