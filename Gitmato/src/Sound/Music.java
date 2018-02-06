@@ -7,6 +7,7 @@ public class Music {
     private Clip clip;
 
     public static Music sound1 = new Music("Arcade_Funk.wav");
+    public static Music sound2 = new Music("Running In The 90s (Hardcore Rave Edit).wav");
 
     public Music(String fileName) {
         try {

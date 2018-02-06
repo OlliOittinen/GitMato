@@ -22,6 +22,8 @@ public class Powerup implements Spawnables {
     
     public void faster(Worm worm) {
         worm.setNopeus(worm.getNopeus()*2);
+        Sound.Music.sound1.stop();
+        Sound.Music.sound2.play();
     }
     
     public Powerup() {
