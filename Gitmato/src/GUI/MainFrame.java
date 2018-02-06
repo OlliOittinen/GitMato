@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 public class MainFrame extends JFrame {
 
     public MainFrame() {
-        
+        Sound.Music.sound1.loop();
         initUI();
     }
     
