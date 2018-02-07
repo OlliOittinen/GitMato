@@ -97,36 +97,24 @@ public final class Board extends JPanel implements ActionListener {
         this.cordinates2 = new ArrayList<>();
         this.body2 = new ArrayList<>();
         this.p2 = new Point2D.Double(0,0);
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> c12a5d29b523cd6036f7458966e68c34512d32d7
         initBoard();
         
     }
     
-<<<<<<< HEAD
-     public void initBoard() {
-        //TODO: Tähän täytyy tehdä kaikki mahdolliset pelimuodot
-  
-=======
     private void initBoard() {
         //TODO: Tähän täytyy tehdä kaikki mahdolliset pelimuodot
         
->>>>>>> c12a5d29b523cd6036f7458966e68c34512d32d7
+
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
 
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
-<<<<<<< HEAD
-    
-=======
-        
+
         power = new Powerup();
->>>>>>> c12a5d29b523cd6036f7458966e68c34512d32d7
+
         snack = new Snack();
         timer = new Timer(DELAY, this);
         timer.start();
@@ -165,11 +153,9 @@ public final class Board extends JPanel implements ActionListener {
     }
     private void inGame() {
 
-<<<<<<< HEAD
-        if (!ingame) {
-=======
+        
         if (!ingame) {            
->>>>>>> c12a5d29b523cd6036f7458966e68c34512d32d7
+
             repaint();
             timer.stop();
             

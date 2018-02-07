@@ -84,12 +84,9 @@ public class Matopeli extends Application {
     
     //So this shit makes it so that we can add the board into a JavaFX Scene
      private void createAndSetSwingContent(final SwingNode swingNode, Matopeli m) {
-         SwingUtilities.invokeLater(new Runnable() {
-             @Override
-             public void run() {
-                 JPanel board = new Board(m);
-                 swingNode.setContent(board);
-             }
+         SwingUtilities.invokeLater(() -> {
+             JPanel board = new Board(m);
+             swingNode.setContent(board);
          });
      }
 
