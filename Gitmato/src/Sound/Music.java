@@ -28,7 +28,8 @@ public class Music {
                     public void run() {
                         synchronized (clip) {
                             clip.stop();
-                            clip.setFramePosition(0);
+                            int frame = clip.getFramePosition();
+                            clip.setFramePosition(frame);
                             clip.start();
                         }
                     }
@@ -57,7 +58,8 @@ public class Music {
                     public void run() {
                         synchronized (clip) {
                             clip.stop();
-                            clip.setFramePosition(0);
+                            int frame = clip.getFramePosition();
+                            clip.setFramePosition(frame);
                             clip.loop(Clip.LOOP_CONTINUOUSLY);
                         }
                     }

@@ -33,6 +33,8 @@ public class Powerup implements Spawnables {
             @Override
             public void run() {
                 worm.setNopeus(worm.getNopeus()-1);
+                Sound.Music.sound2.stop();
+                Sound.Music.sound1.loop();
             }
         }, 5000);
     }
