@@ -303,7 +303,7 @@ public final class Board extends JPanel implements ActionListener {
         for(int i=0; i < body.size() ; i++){
             Rectangle Matotail = body.get(i).getBounds();
             if (Matokuutio2.intersects(Matotail)){
-                System.out.println("asd");
+                System.out.println("Blue dead");
                 life2 = 0;
                 
             }
@@ -312,7 +312,7 @@ public final class Board extends JPanel implements ActionListener {
         for(int i=0; i < body2.size() ; i++){
             Rectangle Matotail2 = body2.get(i).getBounds();
             if (Matokuutio.intersects(Matotail2)){
-                System.out.println("lol");
+                System.out.println("Red dead");
                 life = 0;
                 
             }
@@ -347,12 +347,12 @@ public final class Board extends JPanel implements ActionListener {
             power.faster(worm2);
         }
         
-        if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5
+        if (worm.getX() < 5 || worm.getX() > 750 || worm.getY() < 5
                 || worm.getY() > 550){
             life --;
         }
         
-        if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5
+        if (worm2.getX() < 5 || worm2.getX() > 750 || worm2.getY() < 5
                 || worm2.getY() > 550){
             life2 --;
         }
