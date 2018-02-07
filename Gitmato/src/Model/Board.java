@@ -5,6 +5,14 @@
  */
 package Model;
 
+import Controller.Matopeli;
+import javafx.application.*;
+import javafx.stage.*;
+import javafx.scene.*;
+import javafx.scene.layout.*;
+import javafx.scene.control.*;
+
+
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Color;
@@ -24,6 +32,7 @@ import java.util.List;
 
 
 import Controller.PlayerController;
+import GUI.MainFrame;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 
@@ -35,7 +44,7 @@ import javax.swing.ImageIcon;
  *
  * @author maxki
  */
-public class Board extends JPanel implements ActionListener {
+public final class Board extends JPanel implements ActionListener {
     private Worm worm;
     private Worm worm2;
     private PlayerController control;
@@ -49,6 +58,7 @@ public class Board extends JPanel implements ActionListener {
     private boolean ingame;
     private int pisteet;
     private int pisteet2;
+    private MainFrame frame;
 
     //Lista Tail paloista
     private final List<Tail> body;
@@ -67,12 +77,16 @@ public class Board extends JPanel implements ActionListener {
     private final List<Point2D> cordinates2;
     private static List<Worm> worms;
     
+    private Matopeli engine;
+    
     private Image background;
     
     
     
     
-    public Board() {
+    public Board (Matopeli e) {
+        this.engine = e;
+        
         //alustetaan listat
         Board.worms = new ArrayList<>();
         this.cordinates = new ArrayList<>();
@@ -82,49 +96,64 @@ public class Board extends JPanel implements ActionListener {
         this.cordinates2 = new ArrayList<>();
         this.body2 = new ArrayList<>();
         this.p2 = new Point2D.Double(0,0);
-
         
-        
-        
-
         initBoard();
+        
     }
     
-    private void initBoard() {
-        
-        
+     public void initBoard() {
         //TODO: Tähän täytyy tehdä kaikki mahdolliset pelimuodot
-        
-        
+  
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
 
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
-        
-        
+    
         snack = new Snack();
         timer = new Timer(DELAY, this);
         timer.start();
         ingame = true;
         
+        
         control = new PlayerController(); // 
         control.updateWorms(); // Worms-lista liitetään playercontrolleriin
+        control.updateBoard(this);
         
         ImageIcon kuvamato = new ImageIcon("src/Images/BlueBG800x600.png");
         background = kuvamato.getImage();
-                
+         System.out.println("In initBoard");
+       
     }
-    
+     public void restartGame(){
+        worms.remove(0);
+        worms.remove(1);
+        
+        worms.add(worm = new Worm(1)); //lista worm olioista
+        worms.add(worm2 = new Worm(2));
+        
+        timer.restart();
+        
+        control.updateWorms();
+        control.updateBoard(this);
+        life = 1;
+        life2 = 1;
+        
+        cordinates.clear();
+        cordinates2.clear();     
+        
+        tailNro = 0;
+        tailNro2 = 0;
+      
+    }
     private void inGame() {
 
         if (!ingame) {
-            
-            
             repaint();
             timer.stop();
-
+            
+            
         }
     }
     
@@ -150,6 +179,7 @@ public class Board extends JPanel implements ActionListener {
 
             Toolkit.getDefaultToolkit().sync();
         } else {
+           
             drawGameOver(g);
             inGame();
             

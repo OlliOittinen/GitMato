@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author gedst
  */
-public class PlayerController {
+public class PlayerController  {
     
     private List<Worm> worms = new ArrayList<>(); 
     private Board board;
@@ -29,6 +29,9 @@ public class PlayerController {
    
     public void updateWorms(){ // tätä täytyy kutsua joka pelin alussa!!!!
         this.worms = Board.getWorms(); // saadaan oikeat pelaajat.
+    }
+    public void updateBoard(Board b){
+        this.board = b;
     }
      
     public void keyPressed(KeyEvent e) {
@@ -54,7 +57,7 @@ public class PlayerController {
 
         if (key == KeyEvent.VK_UP) {
             if(worms.get(0).getSuunta() != 4){
-        
+                System.out.println("input got");
              worms.get(0).setSuunta(3);
             worms.get(0).setSuuntaAdv(1);
             }
@@ -68,6 +71,8 @@ public class PlayerController {
             }
         }
         
+        
+        // controlls for player 2 
         if (key == KeyEvent.VK_A) {
             if(worms.get(1).getSuunta() != 2){
                 worms.get(1).setSuunta(1);
@@ -100,8 +105,10 @@ public class PlayerController {
             }
         }
         
-        
-                
+        //GAME RESET
+        if (key == KeyEvent.VK_SPACE) {
+            board.restartGame();
+        }
 
                 
             
