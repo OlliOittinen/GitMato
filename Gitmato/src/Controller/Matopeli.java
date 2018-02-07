@@ -50,6 +50,7 @@ public class Matopeli extends Application {
         layout1.setAlignment(Pos.CENTER);
         layout1.getChildren().addAll(label1, button2, button1);
         scene1 = new Scene(layout1, 800, 590);
+        layout1.setId("pane");
         scene1.getStylesheets().add("Styling/styling.css");
         //---------------------------------
         
