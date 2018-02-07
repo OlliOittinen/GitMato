@@ -343,12 +343,12 @@ public final class Board extends JPanel implements ActionListener {
             power.faster(worm2);
         }
         
-        if (worm.getX() < 5 || worm.getX() > 750 || worm.getY() < 5
+        if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5
                 || worm.getY() > 550){
             life --;
         }
         
-        if (worm2.getX() < 5 || worm2.getX() > 750 || worm2.getY() < 5
+        if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5
                 || worm2.getY() > 550){
             life2 --;
         }
