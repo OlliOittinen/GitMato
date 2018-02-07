@@ -345,20 +345,14 @@ public final class Board extends JPanel implements ActionListener {
         }
         
         if (pu.intersects(Matokuutio)) {
-            faster.setX(-100);
-            faster.setY(-100);
-            slower.setX(-100);
-            slower.setY(-100);
+            
             faster.faster(worm);
             powerUpCD();
         }
         
         if (ps.intersects(Matokuutio)) {
             slower.slower(worm, worm2);
-            faster.setX(-100);
-            faster.setY(-100);
-            slower.setX(-100);
-            slower.setY(-100);    
+                
             powerUpCD();
         }
         
@@ -370,19 +364,13 @@ public final class Board extends JPanel implements ActionListener {
         }
         
         if (pu.intersects(Matokuutio2)) {
-            faster.setX(-100);
-            faster.setY(-100);
-            slower.setX(-100);
-            slower.setY(-100);
+            
             faster.faster(worm2);
             powerUpCD();
         }
         
         if (ps.intersects(Matokuutio2)) {
-            faster.setX(-100);
-        faster.setY(-100);
-        slower.setX(-100);
-        slower.setY(-100);
+            
             slower.slower(worm2, worm);
             powerUpCD();
         }
