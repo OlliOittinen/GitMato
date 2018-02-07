@@ -24,6 +24,7 @@ public interface Spawnables {
    public void setX(int x);
    public void setY(int y);
    public Image getImage();
+   public void randomizeXY();
 }
 
     
