@@ -79,7 +79,7 @@ public class Matopeli extends Application {
         
         //Display scene 1 at first
         window.setScene(scene1);
-        window.setTitle("Title Here");
+        window.setTitle("Gitmato");
         window.show();
     }
     

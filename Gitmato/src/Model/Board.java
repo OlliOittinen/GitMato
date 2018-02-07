@@ -131,6 +131,7 @@ public final class Board extends JPanel implements ActionListener {
        
     }
      public void restartGame(){
+        
         ingame = true;
         worms.remove(0);
         worms.remove(0);
@@ -360,7 +361,7 @@ public final class Board extends JPanel implements ActionListener {
     private void drawGameOver(Graphics g) {
 
         if(life==0){
-            String msg = "Pelaaja 2 voitti pelin!!! PISTEESI: " + pisteet;
+            String msg = "Pelaaja 2 voitti pelin!!! Paina Space pelataksesi uudelleen";
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);
 
@@ -371,7 +372,7 @@ public final class Board extends JPanel implements ActionListener {
         }
         
         if(life2==0){
-            String msg = "Pelaaja 1 voitti pelin!!! PISTEESI: " + pisteet;
+            String msg = "Pelaaja 1 voitti pelin!!! Paina Space pelataksesi uudelleen";
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);
 
