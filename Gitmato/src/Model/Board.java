@@ -122,7 +122,7 @@ public final class Board extends JPanel implements ActionListener {
 
         faster = new Faster();
         slower = new Slower();
-
+        powerUpCD();
         snack = new Snack();
         timer = new Timer(DELAY, this);
         timer.start();
