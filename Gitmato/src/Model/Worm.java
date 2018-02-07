@@ -32,7 +32,7 @@ public class Worm {
     private ImageIcon wormleft;
     private ImageIcon wormright;
     
-    double nopeus = 2;
+    double nopeus = 1;
     
     public Worm(int p) {  
         initWorm(p);
