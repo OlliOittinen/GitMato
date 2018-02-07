@@ -48,7 +48,7 @@ public class Slower implements Spawnables{
 
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/Images/Bottle(800x600).png");
+        ImageIcon kuva = new ImageIcon("src/Images/BottleRed(800x600).png");
         image = kuva.getImage();
             
         setX((int) (Math.random() * 750));
