@@ -30,7 +30,7 @@ public class MainFrame extends JFrame {
     public Board childPanel2;
 
     public MainFrame() {
-        Sound.Music.sound1.loop();
+        
         initUI();
     }
     

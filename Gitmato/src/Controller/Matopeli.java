@@ -28,6 +28,7 @@ public class Matopeli extends Application {
     public void start(Stage primaryStage) {
         window = primaryStage;
         window.setTitle("Gitmato");
+        Sound.Music.sound1.loop();
         
         
         
