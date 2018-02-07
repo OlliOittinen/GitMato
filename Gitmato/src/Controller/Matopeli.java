@@ -47,7 +47,7 @@ public class Matopeli extends Application {
         //Layout 1 - Game mode selector
         VBox layout1 = new VBox(20);
         layout1.getChildren().addAll(label1, button1, button2);
-        scene1 = new Scene(layout1, 800, 600);
+        scene1 = new Scene(layout1, 800, 590);
         //---------------------------------
         
         //------VERSUS SCENE---------------
@@ -57,7 +57,7 @@ public class Matopeli extends Application {
         final SwingNode swingNode = new SwingNode();
         createAndSetSwingContent(swingNode, this);
         layout2.getChildren().add(swingNode); // Adding swing node
-        scene2 = new Scene(layout2, 800, 600);
+        scene2 = new Scene(layout2, 800, 590);
         //-----------------------------------
         
         //------GAME OVER SCENE---------------

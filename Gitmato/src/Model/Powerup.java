@@ -84,4 +84,9 @@ public class Powerup implements Spawnables {
     public Image getImage() {
         return image;
     }
+    @Override
+    public void randomizeXY() {
+        setX((int) (Math.random() * 750));
+        setY((int) (Math.random() * 550));
+    }
 }

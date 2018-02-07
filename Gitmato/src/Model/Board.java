@@ -320,30 +320,26 @@ public final class Board extends JPanel implements ActionListener {
 
                 
         if (r1.intersects(Matokuutio)){
-            snack.setX((int) (Math.random() * 750));
-            snack.setY((int) (Math.random() * 550));
+            snack.randomizeXY();
             pisteet += 100;
             spawnTail();
             
         }
         
         if (pu.intersects(Matokuutio)) {
-            power.setX((int) (Math.random() * 750));
-            power.setY((int) (Math.random() * 550));
+            power.randomizeXY();
             power.faster(worm);
         }
         
         if (r1.intersects(Matokuutio2)){
-            snack.setX((int) (Math.random() * 750));
-            snack.setY((int) (Math.random() * 550));
+            snack.randomizeXY();
             pisteet2 += 100;
             spawnTail2();
             
         }
         
         if (pu.intersects(Matokuutio2)) {
-            power.setX((int) (Math.random() * 750));
-            power.setY((int) (Math.random() * 550));
+            power.randomizeXY();
             power.faster(worm2);
         }
         

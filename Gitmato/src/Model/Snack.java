@@ -61,5 +61,10 @@ public class Snack implements Spawnables{
     public Rectangle getBounds() {
         return new Rectangle(xe, ye, 41, 55);
     }
+@Override
+    public void randomizeXY() {
+        setX((int) (Math.random() * 750));
+        setY((int) (Math.random() * 550));
+    }
 }
 
