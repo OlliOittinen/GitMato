@@ -55,8 +55,8 @@ public class Faster implements Spawnables {
         ImageIcon kuva = new ImageIcon("src/Images/Bottle(800x600).png");
         image = kuva.getImage();
             
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
+        setX(-100);
+        setY(-100);
     }
 
     @Override

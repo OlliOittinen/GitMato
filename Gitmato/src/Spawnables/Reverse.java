@@ -21,7 +21,7 @@ public class Reverse implements Spawnables {
     private int ye;
     private Image image;
             
-    public void slower(Worm worm, Worm worm2) {
+    public void reverse(Worm worm, Worm worm2) {
         worm2.setNopeus(worm2.getNopeus()*-1);
         
         //säätää nopeuden väliaikseks
@@ -48,8 +48,8 @@ public class Reverse implements Spawnables {
         ImageIcon kuva = new ImageIcon("src/Images/reverse_icon.png");
         image = kuva.getImage();
             
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
+        setX(-100);
+        setY(-100);
     }
 
     @Override

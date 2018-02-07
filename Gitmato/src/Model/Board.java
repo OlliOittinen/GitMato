@@ -5,9 +5,7 @@
  */
 package Model;
 
-import Spawnables.Snack;
-import Spawnables.Faster;
-import Spawnables.Slower;
+import Spawnables.*;
 import Controller.Matopeli;
 import javafx.application.*;
 import javafx.stage.*;
@@ -61,6 +59,7 @@ public final class Board extends JPanel implements ActionListener {
     private Snack snack;
     private Faster faster;
     private Slower slower;
+    private Reverse reverse;
     private int life = 1;
     private int life2 = 1;
     private boolean ingame;
@@ -122,6 +121,7 @@ public final class Board extends JPanel implements ActionListener {
 
         faster = new Faster();
         slower = new Slower();
+        reverse = new Reverse();
         powerUpCD();
         snack = new Snack();
         timer = new Timer(DELAY, this);
@@ -218,6 +218,7 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);
         g2d.drawImage(faster.getImage(), faster.getX(), faster.getY(), this);
         g2d.drawImage(slower.getImage(), slower.getX(), slower.getY(),  this);
+        g2d.drawImage(reverse.getImage(), reverse.getX(), reverse.getY(),  this);
         
         //tarkistetaan onko häntiä piirrettäväksi
         if(tailNro > 0){         
@@ -317,6 +318,7 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle r1 = snack.getBounds();
         Rectangle pu = faster.getBounds();
         Rectangle ps = slower.getBounds();
+        Rectangle pr = reverse.getBounds();
         
         for(int i=0; i < body.size() ; i++){
             Rectangle Matotail = body.get(i).getBounds();
@@ -335,43 +337,46 @@ public final class Board extends JPanel implements ActionListener {
                 
             }
         }
-
-                
+        
         if (r1.intersects(Matokuutio)){
             snack.randomizeXY();
             pisteet += 100;
             spawnTail();
-            
         }
         
         if (pu.intersects(Matokuutio)) {
-            
             faster.faster(worm);
             powerUpCD();
         }
         
         if (ps.intersects(Matokuutio)) {
-            slower.slower(worm, worm2);
-                
+            slower.slower(worm, worm2); 
+            powerUpCD();
+        }
+        
+        if (pr.intersects(Matokuutio)) {
+            reverse.reverse(worm, worm2);
             powerUpCD();
         }
         
         if (r1.intersects(Matokuutio2)){
             snack.randomizeXY();
             pisteet2 += 100;
-            spawnTail2();
-            
+            spawnTail2();   
         }
         
         if (pu.intersects(Matokuutio2)) {
-            
             faster.faster(worm2);
             powerUpCD();
         }
         
         if (ps.intersects(Matokuutio2)) {
-            
             slower.slower(worm2, worm);
+            powerUpCD();
+        }
+        
+        if (pr.intersects(Matokuutio2)) {
+            reverse.reverse(worm2, worm);
             powerUpCD();
         }
         
@@ -441,6 +446,8 @@ public final class Board extends JPanel implements ActionListener {
         faster.setY(-100);
         slower.setX(-100);
         slower.setY(-100);
+        reverse.setX(-100);
+        reverse.setY(-100);
         
         
         //säätää nopeuden väliaikseks
@@ -455,7 +462,11 @@ public final class Board extends JPanel implements ActionListener {
                 int  n = rand.nextInt(10);
                 if(n < 5){
                     faster.randomizeXY();
-                }else{
+                }
+                else if (n>=8) {
+                    reverse.randomizeXY();
+                }
+                else{
                     slower.randomizeXY();
                 }
             }
