@@ -136,28 +136,32 @@ public final class Board extends JPanel implements ActionListener {
        
     }
      public void restartGame(){
+        if(!ingame){
+            ingame = true;
+            worms.remove(0);
+            worms.remove(0);
+
+            worms.add(worm = new Worm(1)); //lista worm olioista
+            worms.add(worm2 = new Worm(2));
+
+            timer.start();
+
+            control.updateWorms();
+            control.updateBoard(this);
+            life = 1;
+            life2 = 1;
+
+            cordinates.clear();
+            cordinates2.clear();  
+            body.clear();
+            body2.clear();
+            pisteet = 0;
+            pisteet2 = 0;
+
+            tailNro = 0;
+            tailNro2 = 0;
+        }
         
-        ingame = true;
-        worms.remove(0);
-        worms.remove(0);
-        
-        worms.add(worm = new Worm(1)); //lista worm olioista
-        worms.add(worm2 = new Worm(2));
-        
-        timer.start();
-        
-        control.updateWorms();
-        control.updateBoard(this);
-        life = 1;
-        life2 = 1;
-        
-        cordinates.clear();
-        cordinates2.clear();  
-        body.clear();
-        body2.clear();
-        
-        tailNro = 0;
-        tailNro2 = 0;
       
     }
     private void inGame() {
