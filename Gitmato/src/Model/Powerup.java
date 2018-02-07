@@ -7,6 +7,8 @@ package Model;
 
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.ImageIcon;
 
 /**
@@ -21,9 +23,18 @@ public class Powerup implements Spawnables {
     private Image image;
     
     public void faster(Worm worm) {
-        worm.setNopeus(worm.getNopeus()*2);
+        worm.setNopeus(worm.getNopeus()+1);
         Sound.Music.sound1.stop();
         Sound.Music.sound2.play();
+        
+        //säätää nopeuden väliaikseks
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                worm.setNopeus(worm.getNopeus()-1);
+            }
+        }, 5000);
     }
     
     public Powerup() {
@@ -40,8 +51,8 @@ public class Powerup implements Spawnables {
         ImageIcon kuva = new ImageIcon("src/Images/Bottle(800x600).png");
         image = kuva.getImage();
             
-        ye = 200;
-        xe = 200;
+        setX((int) (Math.random() * 750));
+        setY((int) (Math.random() * 550));
     }
 
     @Override

@@ -28,8 +28,8 @@ public class Snack implements Spawnables{
         ImageIcon kuva = new ImageIcon("src/Images/Apple(800x600).png");
         image = kuva.getImage();
             
-        ye = 200;
-        xe = 200;
+        setX((int) (Math.random() * 750));
+        setY((int) (Math.random() * 550));
     }
 @Override    
     public void loadImage(String imageName) {
