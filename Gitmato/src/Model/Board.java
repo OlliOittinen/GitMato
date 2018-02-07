@@ -5,6 +5,9 @@
  */
 package Model;
 
+import Spawnables.Snack;
+import Spawnables.Faster;
+import Spawnables.Slower;
 import Controller.Matopeli;
 import javafx.application.*;
 import javafx.stage.*;
@@ -53,7 +56,8 @@ public final class Board extends JPanel implements ActionListener {
     private Timer timer;
     private final int DELAY = 10;
     private Snack snack;
-    private Powerup power;
+    private Faster faster;
+    private Slower slower;
     private int life = 1;
     private int life2 = 1;
     private boolean ingame;
@@ -113,7 +117,8 @@ public final class Board extends JPanel implements ActionListener {
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
 
-        power = new Powerup();
+        faster = new Faster();
+        slower = new Slower();
 
         snack = new Snack();
         timer = new Timer(DELAY, this);
@@ -200,7 +205,8 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
         g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
         g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);
-        g2d.drawImage(power.getImage(), power.getX(), power.getY(), this);
+        g2d.drawImage(faster.getImage(), faster.getX(), faster.getY(), this);
+        g2d.drawImage(slower.getImage(), slower.getX(), slower.getY(),  this);
         
         //tarkistetaan onko häntiä piirrettäväksi
         if(tailNro > 0){         
@@ -298,7 +304,8 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle Matokuutio2 = worm2.getBounds();
 
         Rectangle r1 = snack.getBounds();
-        Rectangle pu = power.getBounds();
+        Rectangle pu = faster.getBounds();
+        Rectangle ps = slower.getBounds();
         
         for(int i=0; i < body.size() ; i++){
             Rectangle Matotail = body.get(i).getBounds();
@@ -327,8 +334,13 @@ public final class Board extends JPanel implements ActionListener {
         }
         
         if (pu.intersects(Matokuutio)) {
-            power.randomizeXY();
-            power.faster(worm);
+            faster.randomizeXY();
+            faster.faster(worm);
+        }
+        
+        if (ps.intersects(Matokuutio)) {
+            slower.randomizeXY();
+            slower.slower(worm, worm2);
         }
         
         if (r1.intersects(Matokuutio2)){
@@ -339,8 +351,13 @@ public final class Board extends JPanel implements ActionListener {
         }
         
         if (pu.intersects(Matokuutio2)) {
-            power.randomizeXY();
-            power.faster(worm2);
+            faster.randomizeXY();
+            faster.faster(worm2);
+        }
+        
+        if (ps.intersects(Matokuutio2)) {
+            slower.randomizeXY();
+            slower.slower(worm2, worm);
         }
         
         if (worm.getX() < 5 || worm.getX() > 750 || worm.getY() < 5

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package Spawnables;
 
+import Model.Worm;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.Timer;
@@ -16,11 +17,12 @@ import javax.swing.ImageIcon;
  * @author Olli
  */
 
-public class Powerup implements Spawnables {
+public class Faster implements Spawnables {
     
     private int xe;
     private int ye;
     private Image image;
+    
     
     public void faster(Worm worm) {
         worm.setNopeus(worm.getNopeus()+1);
@@ -36,10 +38,10 @@ public class Powerup implements Spawnables {
                 Sound.Music.sound2.stop();
                 Sound.Music.sound1.loop();
             }
-        }, 5000);
+        }, 5000); //aika (ms), joka odotetaan
     }
     
-    public Powerup() {
+    public Faster() {
         init();
     }
     
