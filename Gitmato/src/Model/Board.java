@@ -32,12 +32,15 @@ import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 
 
 import Controller.PlayerController;
 import GUI.MainFrame;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 
@@ -342,13 +345,21 @@ public final class Board extends JPanel implements ActionListener {
         }
         
         if (pu.intersects(Matokuutio)) {
-            faster.randomizeXY();
+            faster.setX(-100);
+            faster.setY(-100);
+            slower.setX(-100);
+            slower.setY(-100);
             faster.faster(worm);
+            powerUpCD();
         }
         
         if (ps.intersects(Matokuutio)) {
             slower.slower(worm, worm2);
-            slower.randomizeXY();            
+            faster.setX(-100);
+            faster.setY(-100);
+            slower.setX(-100);
+            slower.setY(-100);    
+            powerUpCD();
         }
         
         if (r1.intersects(Matokuutio2)){
@@ -359,13 +370,21 @@ public final class Board extends JPanel implements ActionListener {
         }
         
         if (pu.intersects(Matokuutio2)) {
-            faster.randomizeXY();
+            faster.setX(-100);
+            faster.setY(-100);
+            slower.setX(-100);
+            slower.setY(-100);
             faster.faster(worm2);
+            powerUpCD();
         }
         
         if (ps.intersects(Matokuutio2)) {
-            slower.randomizeXY();
+            faster.setX(-100);
+        faster.setY(-100);
+        slower.setX(-100);
+        slower.setY(-100);
             slower.slower(worm2, worm);
+            powerUpCD();
         }
         
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5
@@ -426,5 +445,32 @@ public final class Board extends JPanel implements ActionListener {
     
     public static List getWorms(){
         return worms;
+    }
+    
+    public void powerUpCD() {
+        
+        faster.setX(-100);
+        faster.setY(-100);
+        slower.setX(-100);
+        slower.setY(-100);
+        
+        
+        //säätää nopeuden väliaikseks
+        java.util.Timer timer2 = new java.util.Timer();
+        timer2.schedule(new TimerTask() {
+        
+            @Override
+            public void run() {
+                System.out.println("UI JUMA");
+                Random rand = new Random();
+
+                int  n = rand.nextInt(10);
+                if(n < 5){
+                    faster.randomizeXY();
+                }else{
+                    slower.randomizeXY();
+                }
+            }
+        }, 5000); //aika (ms), joka odotetaan
     }
 }
