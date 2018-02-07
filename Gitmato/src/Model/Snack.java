@@ -13,22 +13,17 @@ import javax.swing.ImageIcon;
  *
  * @author maxki
  */
-public class Snack {
+public class Snack implements Spawnables{
     private int xe;
     private int ye;
-    
-    
-    //private int width;
-    //private int height;
-
     private Image image;
 
     public Snack() {
-
-        initSnack();
+        init();
     }
-
-    public void initSnack() {
+    
+    @Override
+    public void init() {
         
         ImageIcon kuva = new ImageIcon("src/Images/Apple(800x600).png");
         image = kuva.getImage();
@@ -36,34 +31,33 @@ public class Snack {
         ye = 200;
         xe = 200;
     }
-    
-    protected void loadImage(String imageName) {
-
+@Override    
+    public void loadImage(String imageName) {
         ImageIcon ii = new ImageIcon(imageName);
         image = ii.getImage();
     }
-
+@Override
     public Image getImage() {
         return image;
     }
-
+@Override
     public int getX() {
         return xe;
     }
-
+@Override
     public int getY() {
         return ye;
     }
-    
+@Override    
     public void setX(int x){
         this.xe = x;
     }
-    
+@Override    
     public void setY(int y){
         this.ye = y;
     }
 
-    
+@Override    
     public Rectangle getBounds() {
         return new Rectangle(xe, ye, 41, 55);
     }
