@@ -131,13 +131,14 @@ public final class Board extends JPanel implements ActionListener {
        
     }
      public void restartGame(){
+        ingame = true;
         worms.remove(0);
-        worms.remove(1);
+        worms.remove(0);
         
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
         
-        timer.restart();
+        timer.start();
         
         control.updateWorms();
         control.updateBoard(this);
@@ -145,7 +146,9 @@ public final class Board extends JPanel implements ActionListener {
         life2 = 1;
         
         cordinates.clear();
-        cordinates2.clear();     
+        cordinates2.clear();  
+        body.clear();
+        body2.clear();
         
         tailNro = 0;
         tailNro2 = 0;

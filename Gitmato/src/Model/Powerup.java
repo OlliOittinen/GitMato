@@ -23,7 +23,7 @@ public class Powerup implements Spawnables {
     private Image image;
     
     public void faster(Worm worm) {
-        worm.setNopeus(worm.getNopeus()+1);
+        worm.setNopeus(3);
         Sound.Music.sound1.stop();
         Sound.Music.sound2.play();
         
@@ -32,7 +32,7 @@ public class Powerup implements Spawnables {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                worm.setNopeus(worm.getNopeus()-1);
+                worm.setNopeus(2);
                 Sound.Music.sound2.stop();
                 Sound.Music.sound1.loop();
             }
