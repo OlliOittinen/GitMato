@@ -28,8 +28,7 @@ public class Music {
                     public void run() {
                         synchronized (clip) {
                             clip.stop();
-                            int frame = clip.getFramePosition();
-                            clip.setFramePosition(frame);
+                            clip.setFramePosition(0);
                             clip.start();
                         }
                     }
