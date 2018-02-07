@@ -38,7 +38,6 @@ import Controller.PlayerController;
 import GUI.MainFrame;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
-import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 
@@ -54,7 +53,7 @@ public final class Board extends JPanel implements ActionListener {
     private PlayerController control;
     private Tail tail;
     private Tail tail2;
-    private javax.swing.Timer timer;
+    private Timer timer;
     private final int DELAY = 10;
     private Snack snack;
     private Faster faster;

@@ -20,7 +20,7 @@ import javax.swing.ImageIcon;
  * @author Olli
  */
 public class Slower implements Spawnables{
-      private int xe;
+    private int xe;
     private int ye;
     private Image image;
             
