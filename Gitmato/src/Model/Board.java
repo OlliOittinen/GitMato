@@ -136,13 +136,15 @@ public final class Board extends JPanel implements ActionListener {
        
     }
      public void restartGame(){
+        
+        ingame = true;
         worms.remove(0);
-        worms.remove(1);
+        worms.remove(0);
         
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
         
-        timer.restart();
+        timer.start();
         
         control.updateWorms();
         control.updateBoard(this);
@@ -150,7 +152,9 @@ public final class Board extends JPanel implements ActionListener {
         life2 = 1;
         
         cordinates.clear();
-        cordinates2.clear();     
+        cordinates2.clear();  
+        body.clear();
+        body2.clear();
         
         tailNro = 0;
         tailNro2 = 0;
@@ -360,12 +364,12 @@ public final class Board extends JPanel implements ActionListener {
             slower.slower(worm2, worm);
         }
         
-        if (worm.getX() < 5 || worm.getX() > 750 || worm.getY() < 5
+        if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5
                 || worm.getY() > 550){
             life --;
         }
         
-        if (worm2.getX() < 5 || worm2.getX() > 750 || worm2.getY() < 5
+        if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5
                 || worm2.getY() > 550){
             life2 --;
         }
@@ -374,7 +378,7 @@ public final class Board extends JPanel implements ActionListener {
     private void drawGameOver(Graphics g) {
 
         if(life==0){
-            String msg = "Pelaaja 2 voitti pelin!!! PISTEESI: " + pisteet;
+            String msg = "Pelaaja 2 voitti pelin!!! Paina Space pelataksesi uudelleen";
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);
 
@@ -385,7 +389,7 @@ public final class Board extends JPanel implements ActionListener {
         }
         
         if(life2==0){
-            String msg = "Pelaaja 1 voitti pelin!!! PISTEESI: " + pisteet;
+            String msg = "Pelaaja 1 voitti pelin!!! Paina Space pelataksesi uudelleen";
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);
 
