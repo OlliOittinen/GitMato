@@ -33,6 +33,15 @@ public class Worm {
     private ImageIcon wormright;
     
     double nopeus = 2;
+    private int life=1;
+
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
     
     public Worm(int p) {  
         initWorm(p);

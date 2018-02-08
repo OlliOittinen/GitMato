@@ -57,10 +57,8 @@ public final class Board extends JPanel implements ActionListener {
     private Slower slower;
     private Reverse reverse;
     private Life HP;
-    private boolean shield;
-    private boolean shield2;
-    private int life = 1;
-    private int life2 = 1;
+    private boolean shield, shield2;
+    //private int life, life2 = 1;
     private boolean ingame;
     private int Pituus;
     private int Pituus2;
@@ -75,10 +73,8 @@ public final class Board extends JPanel implements ActionListener {
     // Wormin locaatio muuttujat:
     Point2D p;
     Point2D p2;// coordinaatit
-    private int x;
-    private int y;
-    private int x2;
-    private int y2;
+    private int x, y;
+    private int x2, y2;
     private final List<Point2D> cordinates;
     private final List<Point2D> cordinates2;
     private static List<Worm> worms;
@@ -151,8 +147,6 @@ public final class Board extends JPanel implements ActionListener {
 
             control.updateWorms();
             control.updateBoard(this);
-            life = 1;
-            life2 = 1;
             
             cordinates.clear();
             cordinates2.clear();
@@ -237,7 +231,7 @@ public final class Board extends JPanel implements ActionListener {
             }
         }
 
-        if (this.life <= 0 || this.life2 <= 0) {
+        if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
             drawGameOver(g);
         }
 
@@ -245,8 +239,8 @@ public final class Board extends JPanel implements ActionListener {
 
     private void drawPisteet(Graphics g) {
 
-        String msg = "Punaisen HP: " + life;
-        String msg2 = "Sinisen HP: " + life2;
+        String msg = "Punaisen HP: " + worm.getLife();
+        String msg2 = "Sinisen HP: " + worm2.getLife();
         
 
         Font small = new Font("Helvetica", Font.BOLD, 20);
@@ -325,7 +319,7 @@ public final class Board extends JPanel implements ActionListener {
             Rectangle Matotail = body.get(i).getBounds();
             if (Matokuutio2.intersects(Matotail) && shield2 == false) {
                 System.out.println("SINISEE SATTU");
-                if(life2 > 1){
+                if(worm2.getLife() > 1){
                     Shield2();
                     worm2.randomizeXY();
                     worm2.setSuuntaAdv(0);
@@ -334,7 +328,7 @@ public final class Board extends JPanel implements ActionListener {
                     System.out.println("Blue dead");
                 }
                 
-                life2 --;
+                worm2.setLife(worm2.getLife()-1);
 
             }
         }
@@ -343,7 +337,7 @@ public final class Board extends JPanel implements ActionListener {
             Rectangle Matotail2 = body2.get(i).getBounds();
             if (Matokuutio.intersects(Matotail2) && shield == false) {
                 System.out.println("PUNASEE SATTU");
-                if(life > 1){
+                if(worm.getLife() > 1){
                     Shield();
                     worm.randomizeXY();
                     worm.setSuuntaAdv(0);
@@ -352,8 +346,8 @@ public final class Board extends JPanel implements ActionListener {
                     System.out.println("Red dead");
                 }
                 
-                life --;
-                
+                worm.setLife(worm.getLife()-1);
+            
                 
 
             }
@@ -382,20 +376,19 @@ public final class Board extends JPanel implements ActionListener {
         }
         
         if (pl.intersects(Matokuutio)) {
-            life++;
-            
+            HP.Life(worm);
             powerUpCD();
         }
         
         
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5 || worm.getY() > 550) {
             System.out.println("PUNASEE SATTU");
-            if(life > 1){
+            if(worm.getLife() > 1){
                 worm.randomizeXY();
                 worm.setSuuntaAdv(0);
                 worm.setSuunta(0);
             }
-            life--;
+            worm.setLife(worm.getLife()-1);
         }
 
         //mato 2 collisions
@@ -421,24 +414,24 @@ public final class Board extends JPanel implements ActionListener {
         }
         
         if (pl.intersects(Matokuutio2)) {
-            life2++;
+            HP.Life(worm2);
             powerUpCD();
         }
 
         if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) {
             System.out.println("SINISEE SATTU");
-            if(life2 > 1){
+            if(worm2.getLife() > 1){
                 worm2.randomizeXY();
                 worm2.setSuuntaAdv(0);
                 worm2.setSuunta(0);
             }
-            life2--;
+            worm2.setLife(worm2.getLife()-1);
         }
     }
 
     private void drawGameOver(Graphics g) {
 
-        if (life <= 0) {
+        if (worm.getLife() <= 0) {
             String msg = "Sininen voitti pelin!!! Paina Space pelataksesi uudelleen";
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);
@@ -450,7 +443,7 @@ public final class Board extends JPanel implements ActionListener {
             ingame = false;
         }
 
-        if (life2 <= 0) {
+        if (worm2.getLife() <= 0) {
             String msg = "Punainen voitti pelin!!! Paina Space pelataksesi uudelleen";
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);

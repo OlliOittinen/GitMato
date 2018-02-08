@@ -24,8 +24,7 @@ public class Life implements Spawnables {
     private Board board;
     
     public void Life(Worm worm) {
-        
-        
+        worm.setLife(worm.getLife()+1);
     }
     
     public Life() {
@@ -35,7 +34,8 @@ public class Life implements Spawnables {
     @Override
     public void loadImage(String imageName) {
         ImageIcon ii = new ImageIcon(imageName);
-        image = ii.getImage();    }
+        image = ii.getImage();
+    }
 
     @Override
     public void init() {
