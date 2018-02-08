@@ -116,7 +116,10 @@ public class Worm {
         this.nopeus = nopeus;
     }
     
-    
+    public void randomizeXY() {
+        setX((int) (Math.random() * 750));
+        setY((int) (Math.random() * 550));
+    }
     
     public void moveCont(){
         if(suunta == 1){

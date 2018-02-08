@@ -56,6 +56,7 @@ public final class Board extends JPanel implements ActionListener {
     private Faster faster;
     private Slower slower;
     private Reverse reverse;
+    private Life HP;
     private int life = 1;
     private int life2 = 1;
     private boolean ingame;
@@ -114,6 +115,7 @@ public final class Board extends JPanel implements ActionListener {
         faster = new Faster();
         slower = new Slower();
         reverse = new Reverse();
+        HP = new Life();
         powerUpCD(); //piilottaa powerupit alussa
         
         snack = new Snack();
@@ -214,6 +216,7 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(faster.getImage(), faster.getX(), faster.getY(), this);
         g2d.drawImage(slower.getImage(), slower.getX(), slower.getY(), this);
         g2d.drawImage(reverse.getImage(), reverse.getX(), reverse.getY(), this);
+        g2d.drawImage(HP.getImage(), HP.getX(), HP.getY(), this);
 
         //tarkistetaan onko häntiä piirrettäväksi
         if (tailNro > 0) {
@@ -240,8 +243,9 @@ public final class Board extends JPanel implements ActionListener {
 
     private void drawPisteet(Graphics g) {
 
-        String msg = "P1 pituus: " + Pituus;
-        String msg2 = "P2 pituus: " + Pituus2;
+        String msg = "P1 HP: " + life;
+        String msg2 = "P2 HP: " + life2;
+        
 
         Font small = new Font("Helvetica", Font.BOLD, 20);
         FontMetrics fm = getFontMetrics(small);
@@ -313,12 +317,19 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle pu = faster.getBounds();
         Rectangle ps = slower.getBounds();
         Rectangle pr = reverse.getBounds();
+        Rectangle pl = HP.getBounds();
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
             if (Matokuutio2.intersects(Matotail)) {
-                System.out.println("Blue dead");
-                life2 = 0;
+                System.out.println("SINISEE SATTU SATTU");
+                if(life2 > 1){
+                    worm2.randomizeXY();
+                }else{
+                    System.out.println("Blue dead");
+                }
+                
+                life2 --;
 
             }
         }
@@ -326,8 +337,16 @@ public final class Board extends JPanel implements ActionListener {
         for (int i = 0; i < body2.size(); i++) {
             Rectangle Matotail2 = body2.get(i).getBounds();
             if (Matokuutio.intersects(Matotail2)) {
-                System.out.println("Red dead");
-                life = 0;
+                System.out.println("PUNASEE SATTU");
+                if(life > 1){
+                    worm.randomizeXY();
+                }else{
+                    System.out.println("Red dead");
+                }
+                
+                life --;
+                
+                
 
             }
         }
@@ -353,8 +372,18 @@ public final class Board extends JPanel implements ActionListener {
             reverse.reverse(worm, worm2);
             powerUpCD();
         }
-        if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5
-                || worm.getY() > 550) {
+        
+        if (pl.intersects(Matokuutio)) {
+            life++;
+            
+            powerUpCD();
+        }
+        
+        
+        if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5 || worm.getY() > 550) {
+            if(life > 1){
+                worm.randomizeXY();
+            }
             life--;
         }
 
@@ -379,16 +408,23 @@ public final class Board extends JPanel implements ActionListener {
             reverse.reverse(worm2, worm);
             powerUpCD();
         }
+        
+        if (pl.intersects(Matokuutio2)) {
+            life2++;
+            powerUpCD();
+        }
 
-        if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5
-                || worm2.getY() > 550) {
+        if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) {
+            if(life2 > 1){
+                worm2.randomizeXY();
+            }
             life2--;
         }
     }
 
     private void drawGameOver(Graphics g) {
 
-        if (life == 0) {
+        if (life <= 0) {
             String msg = "Pelaaja 2 voitti pelin!!! Paina Space pelataksesi uudelleen";
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);
@@ -400,7 +436,7 @@ public final class Board extends JPanel implements ActionListener {
             ingame = false;
         }
 
-        if (life2 == 0) {
+        if (life2 <= 0) {
             String msg = "Pelaaja 1 voitti pelin!!! Paina Space pelataksesi uudelleen";
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);
@@ -419,7 +455,7 @@ public final class Board extends JPanel implements ActionListener {
         tailNro++;
         // lisätään wormin bodiin Tail pala ja annetaan sille järjestyslukunsa
         body.add(tail = new Tail(tailNro * 15, 1));
-        System.out.println(body.size());
+        
 
     }
 
@@ -428,7 +464,7 @@ public final class Board extends JPanel implements ActionListener {
         tailNro2++;
         // lisätään wormin bodiin Tail pala ja annetaan sille järjestyslukunsa
         body2.add(tail = new Tail(tailNro2 * 15, 2));
-        System.out.println(body2.size());
+        
 
     }
 
@@ -444,6 +480,8 @@ public final class Board extends JPanel implements ActionListener {
         slower.setY(-100);
         reverse.setX(-100);
         reverse.setY(-100);
+        HP.setX(-100);
+        HP.setY(-100);
 
         java.util.Timer timer2 = new java.util.Timer();
         timer2.schedule(new TimerTask() {
@@ -453,14 +491,25 @@ public final class Board extends JPanel implements ActionListener {
 
                 Random rand = new Random();
 
-                int n = rand.nextInt(10);
-                if (n < 5) {
-                    faster.randomizeXY();
-                } else if (n >= 8) {
-                    reverse.randomizeXY();
-                } else {
-                    slower.randomizeXY();
+                int n = rand.nextInt(3);
+                
+                switch(n) {
+                    case 0:
+                        faster.randomizeXY();
+                        break;
+                    case 1:
+                        HP.randomizeXY();
+                        break;
+                    case 2:
+                        slower.randomizeXY();
+                        break;
+                    case 3:
+                        reverse.randomizeXY();
+                        break;
+                    default:
+                        System.out.println("WHAT");
                 }
+                
             }
         }, 5000); //aika (ms), joka odotetaan
     }
