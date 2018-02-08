@@ -63,8 +63,8 @@ public final class Board extends JPanel implements ActionListener {
     private int life = 1;
     private int life2 = 1;
     private boolean ingame;
-    private int pisteet;
-    private int pisteet2;
+    private int Pituus;
+    private int Pituus2;
     private MainFrame frame;
 
     //Lista Tail paloista
@@ -158,8 +158,8 @@ public final class Board extends JPanel implements ActionListener {
             cordinates2.clear();  
             body.clear();
             body2.clear();
-            pisteet = 0;
-            pisteet2 = 0;
+            Pituus = 0;
+            Pituus2 = 0;
 
             tailNro = 0;
             tailNro2 = 0;
@@ -245,16 +245,16 @@ public final class Board extends JPanel implements ActionListener {
     
     private void drawPisteet(Graphics g) {
 
-        String msg = "P1 pisteet: " + pisteet;
-        String msg2 = "P2 pisteet: " + pisteet2;
+        String msg = "P1 pituus: " + Pituus;
+        String msg2 = "P2 pituus: " + Pituus2;
 
         Font small = new Font("Helvetica", Font.BOLD, 20);
         FontMetrics fm = getFontMetrics(small);
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msg, (125 - fm.stringWidth(msg)) / 2, 50 / 2);
-        g.drawString(msg2, (125 - fm.stringWidth(msg2)) / 2, 100 / 2);
+        g.drawString(msg, (150 - fm.stringWidth(msg)) / 2, 50 / 2);
+        g.drawString(msg2, (150 - fm.stringWidth(msg2)) / 2, 100 / 2);
         
     }
     
@@ -340,7 +340,7 @@ public final class Board extends JPanel implements ActionListener {
         
         if (r1.intersects(Matokuutio)){
             snack.randomizeXY();
-            pisteet += 100;
+            Pituus += 1;
             spawnTail();
         }
         
@@ -361,7 +361,7 @@ public final class Board extends JPanel implements ActionListener {
         
         if (r1.intersects(Matokuutio2)){
             snack.randomizeXY();
-            pisteet2 += 100;
+            Pituus2 += 1;
             spawnTail2();   
         }
         
@@ -456,7 +456,7 @@ public final class Board extends JPanel implements ActionListener {
         
             @Override
             public void run() {
-                System.out.println("UI JUMA");
+                
                 Random rand = new Random();
 
                 int  n = rand.nextInt(10);
