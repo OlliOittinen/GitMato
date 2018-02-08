@@ -11,7 +11,7 @@ import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.ImageIcon;
-
+import Model.Board;
 /**
  *
  * @author maxki
@@ -21,10 +21,9 @@ public class Life implements Spawnables {
     private int xe;
     private int ye;
     private Image image;
-    
+    private Board board;
     
     public void Life(Worm worm) {
-        
         
         
     }
@@ -40,7 +39,7 @@ public class Life implements Spawnables {
 
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/Images/AppleActuala.png");
+        ImageIcon kuva = new ImageIcon("src/Images/Life.png");
         image = kuva.getImage();
             
         setX(-100);
@@ -76,11 +75,9 @@ public class Life implements Spawnables {
     public Image getImage() {
         return image;
     }
-    
     @Override
     public void randomizeXY() {
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));
     }
-    
 }

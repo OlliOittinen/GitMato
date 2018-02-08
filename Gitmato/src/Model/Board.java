@@ -57,6 +57,8 @@ public final class Board extends JPanel implements ActionListener {
     private Slower slower;
     private Reverse reverse;
     private Life HP;
+    private boolean shield;
+    private boolean shield2;
     private int life = 1;
     private int life2 = 1;
     private boolean ingame;
@@ -235,7 +237,7 @@ public final class Board extends JPanel implements ActionListener {
             }
         }
 
-        if (this.life == 0 || this.life2 == 0) {
+        if (this.life <= 0 || this.life2 <= 0) {
             drawGameOver(g);
         }
 
@@ -321,9 +323,10 @@ public final class Board extends JPanel implements ActionListener {
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
-            if (Matokuutio2.intersects(Matotail)) {
-                System.out.println("SINISEE SATTU SATTU");
+            if (Matokuutio2.intersects(Matotail) && shield2 == false) {
+                System.out.println("SINISEE SATTU");
                 if(life2 > 1){
+                    Shield2();
                     worm2.randomizeXY();
                 }else{
                     System.out.println("Blue dead");
@@ -336,9 +339,10 @@ public final class Board extends JPanel implements ActionListener {
 
         for (int i = 0; i < body2.size(); i++) {
             Rectangle Matotail2 = body2.get(i).getBounds();
-            if (Matokuutio.intersects(Matotail2)) {
+            if (Matokuutio.intersects(Matotail2) && shield == false) {
                 System.out.println("PUNASEE SATTU");
                 if(life > 1){
+                    Shield();
                     worm.randomizeXY();
                 }else{
                     System.out.println("Red dead");
@@ -381,6 +385,7 @@ public final class Board extends JPanel implements ActionListener {
         
         
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5 || worm.getY() > 550) {
+            System.out.println("PUNASEE SATTU");
             if(life > 1){
                 worm.randomizeXY();
             }
@@ -415,6 +420,7 @@ public final class Board extends JPanel implements ActionListener {
         }
 
         if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) {
+            System.out.println("SINISEE SATTU");
             if(life2 > 1){
                 worm2.randomizeXY();
             }
@@ -491,14 +497,14 @@ public final class Board extends JPanel implements ActionListener {
 
                 Random rand = new Random();
 
-                int n = rand.nextInt(3);
+                int n = rand.nextInt(4);
                 
                 switch(n) {
                     case 0:
-                        faster.randomizeXY();
+                        HP.randomizeXY();
                         break;
                     case 1:
-                        HP.randomizeXY();
+                        faster.randomizeXY();
                         break;
                     case 2:
                         slower.randomizeXY();
@@ -512,5 +518,31 @@ public final class Board extends JPanel implements ActionListener {
                 
             }
         }, 5000); //aika (ms), joka odotetaan
+    }
+    
+    public void Shield() {
+        shield = true;
+        
+        //säätää nopeuden väliaikseks
+        java.util.Timer timer = new java.util.Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                shield = false;
+            }
+        }, 50); //aika (ms), joka odotetaan
+    }
+    
+    public void Shield2() {
+        shield2 = true;
+        
+        //säätää nopeuden väliaikseks
+        java.util.Timer timer = new java.util.Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                shield2 = false;
+            }
+        }, 50); //aika (ms), joka odotetaan
     }
 }
