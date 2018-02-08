@@ -57,13 +57,14 @@ public final class Board extends JPanel implements ActionListener {
     private Slower slower;
     private Reverse reverse;
     private Life HP;
+    private Iron Ironhead;
     private boolean shield, shield2;
     //private int life, life2 = 1;
     private boolean ingame;
     private int Pituus;
     private int Pituus2;
     private MainFrame frame;
-
+    private ImageIcon Ironpic;
     //Lista Tail paloista
     private final List<Tail> body;
     private final List<Tail> body2;
@@ -78,6 +79,7 @@ public final class Board extends JPanel implements ActionListener {
     private final List<Point2D> cordinates;
     private final List<Point2D> cordinates2;
     private static List<Worm> worms;
+    
 
     private Matopeli engine;
 
@@ -102,7 +104,7 @@ public final class Board extends JPanel implements ActionListener {
 
     private void initBoard() {
         //TODO: Tähän täytyy tehdä kaikki mahdolliset pelimuodot
-
+        
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
@@ -114,6 +116,7 @@ public final class Board extends JPanel implements ActionListener {
         slower = new Slower();
         reverse = new Reverse();
         HP = new Life();
+        Ironhead = new Iron();
         powerUpCD(); //piilottaa powerupit alussa
         
         snack = new Snack();
@@ -128,6 +131,8 @@ public final class Board extends JPanel implements ActionListener {
         ImageIcon kuvamato = new ImageIcon("src/Images/BlueBG800x600.png");
         background = kuvamato.getImage();
         System.out.println("In initBoard");
+        Ironhead.setX(-100);
+        Ironhead.setY(-100);
 
     }
 
@@ -157,6 +162,7 @@ public final class Board extends JPanel implements ActionListener {
 
             tailNro = 0;
             tailNro2 = 0;
+            
         }
 
     }
@@ -213,6 +219,7 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(slower.getImage(), slower.getX(), slower.getY(), this);
         g2d.drawImage(reverse.getImage(), reverse.getX(), reverse.getY(), this);
         g2d.drawImage(HP.getImage(), HP.getX(), HP.getY(), this);
+        g2d.drawImage(Ironhead.getImage(), Ironhead.getX(), Ironhead.getY(), this);
 
         //tarkistetaan onko häntiä piirrettäväksi
         if (tailNro > 0) {
@@ -305,7 +312,7 @@ public final class Board extends JPanel implements ActionListener {
     }
 
     public void checkCollisions() {
-
+        System.out.println(shield);
         Rectangle Matokuutio = worm.getBounds();
         Rectangle Matokuutio2 = worm2.getBounds();
 
@@ -314,13 +321,14 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle ps = slower.getBounds();
         Rectangle pr = reverse.getBounds();
         Rectangle pl = HP.getBounds();
+        Rectangle pih = Ironhead.getBounds();
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
             if (Matokuutio2.intersects(Matotail) && shield2 == false) {
                 System.out.println("SINISEE SATTU");
                 if(worm2.getLife() > 1){
-                    Shield2();
+                    Shield2(50);
                     worm2.randomizeXY();
                     worm2.setSuuntaAdv(0);
                     worm2.setSuunta(0);
@@ -338,7 +346,7 @@ public final class Board extends JPanel implements ActionListener {
             if (Matokuutio.intersects(Matotail2) && shield == false) {
                 System.out.println("PUNASEE SATTU");
                 if(worm.getLife() > 1){
-                    Shield();
+                    Shield(50);
                     worm.randomizeXY();
                     worm.setSuuntaAdv(0);
                     worm.setSuunta(0);
@@ -380,6 +388,11 @@ public final class Board extends JPanel implements ActionListener {
             powerUpCD();
         }
         
+        if (pih.intersects(Matokuutio)) {
+            Shield(10000);
+            powerUpCD();
+        }
+        
         
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5 || worm.getY() > 550) {
             System.out.println("PUNASEE SATTU");
@@ -415,6 +428,11 @@ public final class Board extends JPanel implements ActionListener {
         
         if (pl.intersects(Matokuutio2)) {
             HP.Life(worm2);
+            powerUpCD();
+        }
+        
+        if (pih.intersects(Matokuutio2)) {
+            Shield2(10000);
             powerUpCD();
         }
 
@@ -489,6 +507,9 @@ public final class Board extends JPanel implements ActionListener {
         reverse.setY(-100);
         HP.setX(-100);
         HP.setY(-100);
+        Ironhead.setX(-100);
+        Ironhead.setY(-100);
+        
 
         java.util.Timer timer2 = new java.util.Timer();
         timer2.schedule(new TimerTask() {
@@ -498,11 +519,11 @@ public final class Board extends JPanel implements ActionListener {
 
                 Random rand = new Random();
 
-                int n = rand.nextInt(4);
+                int n = rand.nextInt(1);
                 
                 switch(n) {
                     case 0:
-                        HP.randomizeXY();
+                        Ironhead.randomizeXY();
                         break;
                     case 1:
                         faster.randomizeXY();
@@ -513,6 +534,9 @@ public final class Board extends JPanel implements ActionListener {
                     case 3:
                         reverse.randomizeXY();
                         break;
+                    case 4:
+                        HP.randomizeXY();
+                        break;
                     default:
                         System.out.println("WHAT");
                 }
@@ -521,7 +545,8 @@ public final class Board extends JPanel implements ActionListener {
         }, 5000); //aika (ms), joka odotetaan
     }
     
-    public void Shield() {
+    public void Shield(int luku) {
+        
         shield = true;
         
         //säätää nopeuden väliaikseks
@@ -531,10 +556,11 @@ public final class Board extends JPanel implements ActionListener {
             public void run() {
                 shield = false;
             }
-        }, 50); //aika (ms), joka odotetaan
+        }, luku); //aika (ms), joka odotetaan
     }
     
-    public void Shield2() {
+    public void Shield2(int luku) {
+        
         shield2 = true;
         
         //säätää nopeuden väliaikseks
@@ -544,6 +570,6 @@ public final class Board extends JPanel implements ActionListener {
             public void run() {
                 shield2 = false;
             }
-        }, 50); //aika (ms), joka odotetaan
+        }, luku); //aika (ms), joka odotetaan
     }
 }
