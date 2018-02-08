@@ -79,6 +79,8 @@ public final class Board extends JPanel implements ActionListener {
     private final List<Point2D> cordinates;
     private final List<Point2D> cordinates2;
     private static List<Worm> worms;
+    private Image halo;
+    private Image halo2;
     
 
     private Matopeli engine;
@@ -519,7 +521,7 @@ public final class Board extends JPanel implements ActionListener {
 
                 Random rand = new Random();
 
-                int n = rand.nextInt(1);
+                int n = rand.nextInt(5);
                 
                 switch(n) {
                     case 0:
@@ -572,4 +574,6 @@ public final class Board extends JPanel implements ActionListener {
             }
         }, luku); //aika (ms), joka odotetaan
     }
+    
+    
 }
