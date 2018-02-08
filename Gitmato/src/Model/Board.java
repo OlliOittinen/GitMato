@@ -245,8 +245,8 @@ public final class Board extends JPanel implements ActionListener {
 
     private void drawPisteet(Graphics g) {
 
-        String msg = "P1 HP: " + life;
-        String msg2 = "P2 HP: " + life2;
+        String msg = "Punaisen HP: " + life;
+        String msg2 = "Sinisen HP: " + life2;
         
 
         Font small = new Font("Helvetica", Font.BOLD, 20);
@@ -328,6 +328,8 @@ public final class Board extends JPanel implements ActionListener {
                 if(life2 > 1){
                     Shield2();
                     worm2.randomizeXY();
+                    worm2.setSuuntaAdv(0);
+                    worm2.setSuunta(0);
                 }else{
                     System.out.println("Blue dead");
                 }
@@ -344,6 +346,8 @@ public final class Board extends JPanel implements ActionListener {
                 if(life > 1){
                     Shield();
                     worm.randomizeXY();
+                    worm.setSuuntaAdv(0);
+                    worm.setSuunta(0);
                 }else{
                     System.out.println("Red dead");
                 }
@@ -388,6 +392,8 @@ public final class Board extends JPanel implements ActionListener {
             System.out.println("PUNASEE SATTU");
             if(life > 1){
                 worm.randomizeXY();
+                worm.setSuuntaAdv(0);
+                worm.setSuunta(0);
             }
             life--;
         }
@@ -423,6 +429,8 @@ public final class Board extends JPanel implements ActionListener {
             System.out.println("SINISEE SATTU");
             if(life2 > 1){
                 worm2.randomizeXY();
+                worm2.setSuuntaAdv(0);
+                worm2.setSuunta(0);
             }
             life2--;
         }
@@ -431,7 +439,7 @@ public final class Board extends JPanel implements ActionListener {
     private void drawGameOver(Graphics g) {
 
         if (life <= 0) {
-            String msg = "Pelaaja 2 voitti pelin!!! Paina Space pelataksesi uudelleen";
+            String msg = "Sininen voitti pelin!!! Paina Space pelataksesi uudelleen";
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);
 
@@ -443,7 +451,7 @@ public final class Board extends JPanel implements ActionListener {
         }
 
         if (life2 <= 0) {
-            String msg = "Pelaaja 1 voitti pelin!!! Paina Space pelataksesi uudelleen";
+            String msg = "Punainen voitti pelin!!! Paina Space pelataksesi uudelleen";
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);
 
