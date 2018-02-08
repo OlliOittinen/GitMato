@@ -396,6 +396,7 @@ public final class Board extends JPanel implements ActionListener {
             g.setColor(Color.white);
             g.setFont(small);
             g.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
+            Sound.Music.sound1.stop();
             ingame = false;
         }
 
@@ -407,6 +408,7 @@ public final class Board extends JPanel implements ActionListener {
             g.setColor(Color.white);
             g.setFont(small);
             g.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
+            Sound.Music.sound1.stop();
             ingame = false;
         }
 
