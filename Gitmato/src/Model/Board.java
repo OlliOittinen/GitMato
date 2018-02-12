@@ -233,16 +233,21 @@ public final class Board extends JPanel implements ActionListener {
 
     private void drawPisteet(Graphics g) {
 
-        String msg = "Punaisen HP: " + worm.getLife()+", pisteet: "+worm.getPoints();
-        String msg2 = "Sinisen HP: " + worm2.getLife()+", pisteet: "+worm2.getPoints();
+        String hp = "Punaisen HP: " + worm.getLife();
+        String hp2 = "Sinisen HP: " + worm2.getLife();
+        
+        String pt = "Pisteet: "+worm.getPoints();
+        String pt2 = "Pisteet: "+worm2.getPoints();
 
         Font small = new Font("Helvetica", Font.BOLD, 20);
         FontMetrics fm = getFontMetrics(small);
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msg, 10, 25);
-        g.drawString(msg2, (790-fm.stringWidth(msg2)), 25);
+        g.drawString(hp, 10, 25);
+        g.drawString(pt, 10, 50);
+        g.drawString(hp2, (790-fm.stringWidth(hp2)), 25);
+        g.drawString(pt2, (790-fm.stringWidth(pt2)), 50);
         
     }
 
