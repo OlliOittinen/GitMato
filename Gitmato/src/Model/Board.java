@@ -177,7 +177,7 @@ public final class Board extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
 
-        if (ingame == true) {
+        if (ingame) {
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
 
@@ -239,8 +239,9 @@ public final class Board extends JPanel implements ActionListener {
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msg, (150 - fm.stringWidth(msg)) / 2, 50 / 2);
-        g.drawString(msg2, (150 - fm.stringWidth(msg2)) / 2, 100 / 2);
+        g.drawString(msg, 10, 25);
+        g.drawString(msg2, (790-fm.stringWidth(msg2)), 25);
+        
     }
 
     @Override

@@ -23,7 +23,7 @@ public class Worm {
     private int suunta = 1;
     private int suuntaAdv = 0;
     private int playerNro;
-    private boolean shield = false; //shield powerup
+    private boolean shield = false; //shield power-up
 
     private Image image;    
     private ImageIcon wormup;
@@ -56,7 +56,7 @@ public class Worm {
              wormright = new ImageIcon("src/Images/RedWormRight(800x600).png");
             shielded = new ImageIcon("src/Images/AppleActual.png");
             x = 200;
-            y = 400;
+            y = 279; //oma puoli kentästä-kuvan korkeus
         }
         if(playerNro==2){
              wormup = new ImageIcon("src/Images/BlueWormUp(800x600).png");
@@ -64,8 +64,8 @@ public class Worm {
              wormleft = new ImageIcon("src/Images/BlueWormLeft(800x600).png");
              wormright = new ImageIcon("src/Images/BlueWormRight(800x600).png");
              shielded = new ImageIcon("src/Images/AppleActual.png");
-            x = 400;
-            y = 400;
+            x = 565; //kentän puoliväli-kuvan leveys
+            y = 279; //oma puoli kentästä-kuvan korkeus
         }
     }
     
@@ -141,6 +141,7 @@ public class Worm {
     }
     
     public void moveCont(){
+        //if shield is NOT active on worm
         if(suunta == 1 && !(getShield(this))){
             setImage (wormleft.getImage());
             dx = -1 * nopeus;
@@ -162,7 +163,7 @@ public class Worm {
             dy = 1 * nopeus;
             
         }
-        
+        //if shield IS active on worm
         if(suunta == 1 && (getShield(this))){
             setImage (shielded.getImage());
             dx = -1 * nopeus;
