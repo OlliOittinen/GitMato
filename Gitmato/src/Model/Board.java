@@ -61,8 +61,7 @@ public final class Board extends JPanel implements ActionListener {
     private boolean shield, shield2;
     //private int life, life2 = 1;
     private boolean ingame;
-    private int Pituus;
-    private int Pituus2;
+    
     private MainFrame frame;
     private ImageIcon Ironpic;
     //Lista Tail paloista
@@ -133,8 +132,7 @@ public final class Board extends JPanel implements ActionListener {
         ImageIcon kuvamato = new ImageIcon("src/Images/BlueBG800x600.png");
         background = kuvamato.getImage();
         System.out.println("In initBoard");
-        Ironhead.setX(-100);
-        Ironhead.setY(-100);
+        
 
     }
 
@@ -159,8 +157,7 @@ public final class Board extends JPanel implements ActionListener {
             cordinates2.clear();
             body.clear();
             body2.clear();
-            Pituus = 0;
-            Pituus2 = 0;
+            
 
             tailNro = 0;
             tailNro2 = 0;
@@ -366,7 +363,7 @@ public final class Board extends JPanel implements ActionListener {
         //mato 1 collisions
         if (r1.intersects(Matokuutio)) {
             snack.randomizeXY();
-            Pituus += 1;
+            
             spawnTail();
         }
 
@@ -409,7 +406,7 @@ public final class Board extends JPanel implements ActionListener {
         //mato 2 collisions
         if (r1.intersects(Matokuutio2)) {
             snack.randomizeXY();
-            Pituus2 += 1;
+            
             spawnTail2();
         }
 
@@ -575,5 +572,19 @@ public final class Board extends JPanel implements ActionListener {
         }, luku); //aika (ms), joka odotetaan
     }
     
+    private void addTail(int luku){
+        //HUOM ei toimi heti pelin alusta koska ei ole koordinaatteja
+        while(luku>0){
+            spawnTail();
+            luku--;
+        }
+    }
     
+    private void addTail2(int luku){
+        //HUOM ei toimi heti pelin alusta koska ei ole koordinaatteja
+        while(luku>0){
+            spawnTail2();
+            luku--;
+        }
+    }
 }
