@@ -4,9 +4,6 @@
  * and open the template in the editor.
  */
 package Spawnables;
-
-
-
 import Model.Worm;
 import java.awt.Image;
 import java.awt.Rectangle;

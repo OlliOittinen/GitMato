@@ -28,7 +28,6 @@ import GUI.MainFrame;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.util.TimerTask;
-
 import javax.swing.ImageIcon;
 import javafx.application.Platform;
 
