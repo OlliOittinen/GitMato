@@ -7,12 +7,6 @@ package Model;
 
 import Spawnables.*;
 import Controller.Matopeli;
-import javafx.application.*;
-import javafx.stage.*;
-import javafx.scene.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Color;
@@ -29,8 +23,6 @@ import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import Controller.PlayerController;
 import GUI.MainFrame;
 import java.awt.Image;

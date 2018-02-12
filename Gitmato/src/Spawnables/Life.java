@@ -8,8 +8,6 @@ package Spawnables;
 import Model.Worm;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.swing.ImageIcon;
 import Model.Board;
 /**
