@@ -147,6 +147,10 @@ public class Worm {
         this.shield = active;
     }
     
+    public void setReverse(boolean active) {
+        this.reverse = active;
+    }
+    
     public void randomizeXY() {
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));
