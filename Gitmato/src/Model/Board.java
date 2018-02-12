@@ -45,8 +45,8 @@ import javax.swing.ImageIcon;
  */
 public final class Board extends JPanel implements ActionListener {
 
-    private Worm worm;
-    private Worm worm2;
+    private Worm punainen;
+    private Worm sininen;
     private PlayerController control;
     private Tail tail;
     private Tail tail2;
@@ -57,8 +57,7 @@ public final class Board extends JPanel implements ActionListener {
     private Slower slower;
     private Reverse reverse;
     private Life HP;
-    private Iron Ironhead;
-    private boolean shield, shield2;
+    private Shield shield;
     //private int life, life2 = 1;
     private boolean ingame;
     private int Pituus;
@@ -81,7 +80,6 @@ public final class Board extends JPanel implements ActionListener {
     private static List<Worm> worms;
     private Image halo;
     private Image halo2;
-    
 
     private Matopeli engine;
 
@@ -106,21 +104,21 @@ public final class Board extends JPanel implements ActionListener {
 
     private void initBoard() {
         //TODO: Tähän täytyy tehdä kaikki mahdolliset pelimuodot
-        
+
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
 
-        worms.add(worm = new Worm(1)); //lista worm olioista
-        worms.add(worm2 = new Worm(2));
+        worms.add(punainen = new Worm(1)); //lista worm olioista
+        worms.add(sininen = new Worm(2));
 
         faster = new Faster();
         slower = new Slower();
         reverse = new Reverse();
         HP = new Life();
-        Ironhead = new Iron();
+        shield = new Shield();
         powerUpCD(); //piilottaa powerupit alussa
-        
+
         snack = new Snack();
         timer = new Timer(DELAY, this);
         timer.start();
@@ -133,8 +131,6 @@ public final class Board extends JPanel implements ActionListener {
         ImageIcon kuvamato = new ImageIcon("src/Images/BlueBG800x600.png");
         background = kuvamato.getImage();
         System.out.println("In initBoard");
-        Ironhead.setX(-100);
-        Ironhead.setY(-100);
 
     }
 
@@ -143,39 +139,35 @@ public final class Board extends JPanel implements ActionListener {
             ingame = true;
             powerUpCD();
             snack.randomizeXY();
-            
+
             worms.remove(0);
             worms.remove(0);
 
-            worms.add(worm = new Worm(1)); //lista worm olioista
-            worms.add(worm2 = new Worm(2));
-            
+            worms.add(punainen = new Worm(1)); //lista worm olioista
+            worms.add(sininen = new Worm(2));
+
             timer.start();
 
             control.updateWorms();
             control.updateBoard(this);
-            
+
             cordinates.clear();
             cordinates2.clear();
             body.clear();
             body2.clear();
             Pituus = 0;
             Pituus2 = 0;
-
             tailNro = 0;
             tailNro2 = 0;
-            
+
         }
 
     }
 
     private void inGame() {
-
         if (!ingame) {
-
             repaint();
             timer.stop();
-
         }
     }
 
@@ -184,7 +176,6 @@ public final class Board extends JPanel implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
             control.keyPressed(e);
-
         }
     }
 
@@ -202,10 +193,8 @@ public final class Board extends JPanel implements ActionListener {
 
             Toolkit.getDefaultToolkit().sync();
         } else {
-
             drawGameOver(g);
             inGame();
-
         }
     }
 
@@ -214,14 +203,14 @@ public final class Board extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         drawPisteet(g);
 
-        g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
-        g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
+        g2d.drawImage(punainen.getImage(), punainen.getX(), punainen.getY(), this);
+        g2d.drawImage(sininen.getImage(), sininen.getX(), sininen.getY(), this);
         g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);
         g2d.drawImage(faster.getImage(), faster.getX(), faster.getY(), this);
         g2d.drawImage(slower.getImage(), slower.getX(), slower.getY(), this);
         g2d.drawImage(reverse.getImage(), reverse.getX(), reverse.getY(), this);
         g2d.drawImage(HP.getImage(), HP.getX(), HP.getY(), this);
-        g2d.drawImage(Ironhead.getImage(), Ironhead.getX(), Ironhead.getY(), this);
+        g2d.drawImage(shield.getImage(), shield.getX(), shield.getY(), this);
 
         //tarkistetaan onko häntiä piirrettäväksi
         if (tailNro > 0) {
@@ -240,17 +229,15 @@ public final class Board extends JPanel implements ActionListener {
             }
         }
 
-        if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
+        if (punainen.getLife() <= 0 || sininen.getLife() <= 0) {
             drawGameOver(g);
         }
-
     }
 
     private void drawPisteet(Graphics g) {
 
-        String msg = "Punaisen HP: " + worm.getLife();
-        String msg2 = "Sinisen HP: " + worm2.getLife();
-        
+        String msg = "Punaisen HP: " + punainen.getLife();
+        String msg2 = "Sinisen HP: " + sininen.getLife();
 
         Font small = new Font("Helvetica", Font.BOLD, 20);
         FontMetrics fm = getFontMetrics(small);
@@ -259,22 +246,21 @@ public final class Board extends JPanel implements ActionListener {
         g.setFont(small);
         g.drawString(msg, (150 - fm.stringWidth(msg)) / 2, 50 / 2);
         g.drawString(msg2, (150 - fm.stringWidth(msg2)) / 2, 100 / 2);
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
         checkCollisions();
-        worm.move();
-        worm.moveCont();
-        worm2.move();
-        worm2.moveCont();
+        punainen.move();
+        punainen.moveCont();
+        sininen.move();
+        sininen.moveCont();
         //tallennnetaan wormin coordinaatit yhteen 2D muuttujaan
-        x = worm.getX();
-        y = worm.getY();
-        x2 = worm2.getX();
-        y2 = worm2.getY();
+        x = punainen.getX();
+        y = punainen.getY();
+        x2 = sininen.getX();
+        y2 = sininen.getY();
         p = new Point2D.Double(x, y);
         p2 = new Point2D.Double(x2, y2);
         //Lisätään coortinaatit listan cordinates alkuun (0).
@@ -309,149 +295,140 @@ public final class Board extends JPanel implements ActionListener {
             body2.get(i).setX(x2);
             body2.get(i).setY(y2);
         }
-
         repaint();
     }
 
     public void checkCollisions() {
-        System.out.println(shield);
-        Rectangle Matokuutio = worm.getBounds();
-        Rectangle Matokuutio2 = worm2.getBounds();
+        Rectangle Matokuutio = punainen.getBounds();
+        Rectangle Matokuutio2 = sininen.getBounds();
 
-        Rectangle r1 = snack.getBounds();
-        Rectangle pu = faster.getBounds();
+        Rectangle s = snack.getBounds();
+        Rectangle pf = faster.getBounds();
         Rectangle ps = slower.getBounds();
         Rectangle pr = reverse.getBounds();
         Rectangle pl = HP.getBounds();
-        Rectangle pih = Ironhead.getBounds();
+        Rectangle psh = shield.getBounds();
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
-            if (Matokuutio2.intersects(Matotail) && shield2 == false) {
+            if (Matokuutio2.intersects(Matotail) && shield.isActive(punainen)) {
                 System.out.println("SINISEE SATTU");
-                if(worm2.getLife() > 1){
-                    Shield2(50);
-                    worm2.randomizeXY();
-                    worm2.setSuuntaAdv(0);
-                    worm2.setSuunta(0);
-                }else{
+                if (sininen.getLife() > 1) {
+                    shield.shield(sininen, 50);
+                    sininen.randomizeXY();
+                    sininen.setSuuntaAdv(0);
+                    sininen.setSuunta(0);
+                } else {
                     System.out.println("Blue dead");
                 }
-                
-                worm2.setLife(worm2.getLife()-1);
-
+                sininen.setLife(sininen.getLife() - 1);
             }
         }
 
         for (int i = 0; i < body2.size(); i++) {
             Rectangle Matotail2 = body2.get(i).getBounds();
-            if (Matokuutio.intersects(Matotail2) && shield == false) {
+            if (Matokuutio.intersects(Matotail2) && shield.isActive(sininen)) {
                 System.out.println("PUNASEE SATTU");
-                if(worm.getLife() > 1){
-                    Shield(50);
-                    worm.randomizeXY();
-                    worm.setSuuntaAdv(0);
-                    worm.setSuunta(0);
-                }else{
+                if (punainen.getLife() > 1) {
+                    shield.shield(punainen, 50);
+                    punainen.randomizeXY();
+                    punainen.setSuuntaAdv(0);
+                    punainen.setSuunta(0);
+                } else {
                     System.out.println("Red dead");
                 }
-                
-                worm.setLife(worm.getLife()-1);
-            
-                
-
+                punainen.setLife(punainen.getLife() - 1);
             }
         }
 
         //mato 1 collisions
-        if (r1.intersects(Matokuutio)) {
+        if (s.intersects(Matokuutio)) {
             snack.randomizeXY();
             Pituus += 1;
             spawnTail();
         }
 
-        if (pu.intersects(Matokuutio)) {
-            faster.faster(worm);
+        if (pf.intersects(Matokuutio)) {
+            faster.faster(punainen);
             powerUpCD();
         }
 
         if (ps.intersects(Matokuutio)) {
-            slower.slower(worm, worm2);
+            slower.slower(punainen, sininen);
             powerUpCD();
         }
 
         if (pr.intersects(Matokuutio)) {
-            reverse.reverse(worm, worm2);
+            reverse.reverse(punainen, sininen);
             powerUpCD();
         }
-        
+
         if (pl.intersects(Matokuutio)) {
-            HP.Life(worm);
+            HP.Life(punainen);
             powerUpCD();
         }
-        
-        if (pih.intersects(Matokuutio)) {
-            Shield(10000);
+
+        if (psh.intersects(Matokuutio)) {
+            shield.shield(punainen, 10000);
             powerUpCD();
         }
-        
-        
-        if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5 || worm.getY() > 550) {
+
+        if (punainen.getX() < 5 || punainen.getX() > 760 || punainen.getY() < 5 || punainen.getY() > 550) {
             System.out.println("PUNASEE SATTU");
-            if(worm.getLife() > 1){
-                worm.randomizeXY();
-                worm.setSuuntaAdv(0);
-                worm.setSuunta(0);
+            if (punainen.getLife() > 1) {
+                punainen.randomizeXY();
+                punainen.setSuuntaAdv(0);
+                punainen.setSuunta(0);
             }
-            worm.setLife(worm.getLife()-1);
+            punainen.setLife(punainen.getLife() - 1);
         }
 
         //mato 2 collisions
-        if (r1.intersects(Matokuutio2)) {
+        if (s.intersects(Matokuutio2)) {
             snack.randomizeXY();
             Pituus2 += 1;
             spawnTail2();
         }
 
-        if (pu.intersects(Matokuutio2)) {
-            faster.faster(worm2);
+        if (pf.intersects(Matokuutio2)) {
+            faster.faster(sininen);
             powerUpCD();
         }
 
         if (ps.intersects(Matokuutio2)) {
-            slower.slower(worm2, worm);
+            slower.slower(sininen, punainen);
             powerUpCD();
         }
 
         if (pr.intersects(Matokuutio2)) {
-            reverse.reverse(worm2, worm);
-            powerUpCD();
-        }
-        
-        if (pl.intersects(Matokuutio2)) {
-            HP.Life(worm2);
-            powerUpCD();
-        }
-        
-        if (pih.intersects(Matokuutio2)) {
-            Shield2(10000);
+            reverse.reverse(sininen, punainen);
             powerUpCD();
         }
 
-        if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) {
+        if (pl.intersects(Matokuutio2)) {
+            HP.Life(sininen);
+            powerUpCD();
+        }
+
+        if (psh.intersects(Matokuutio2)) {
+            shield.shield(sininen, 10000);
+            powerUpCD();
+        }
+
+        if (sininen.getX() < 5 || sininen.getX() > 760 || sininen.getY() < 5 || sininen.getY() > 550) {
             System.out.println("SINISEE SATTU");
-            if(worm2.getLife() > 1){
-                worm2.randomizeXY();
-                worm2.setSuuntaAdv(0);
-                worm2.setSuunta(0);
+            if (sininen.getLife() > 1) {
+                sininen.randomizeXY();
+                sininen.setSuuntaAdv(0);
+                sininen.setSuunta(0);
             }
-            worm2.setLife(worm2.getLife()-1);
+            sininen.setLife(sininen.getLife() - 1);
         }
     }
 
     private void drawGameOver(Graphics g) {
 
-        if (worm.getLife() <= 0) {
+        if (punainen.getLife() <= 0) {
             String msg = "Sininen voitti pelin!!! Paina Space pelataksesi uudelleen";
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);
@@ -463,7 +440,7 @@ public final class Board extends JPanel implements ActionListener {
             ingame = false;
         }
 
-        if (worm2.getLife() <= 0) {
+        if (sininen.getLife() <= 0) {
             String msg = "Punainen voitti pelin!!! Paina Space pelataksesi uudelleen";
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);
@@ -482,8 +459,6 @@ public final class Board extends JPanel implements ActionListener {
         tailNro++;
         // lisätään wormin bodiin Tail pala ja annetaan sille järjestyslukunsa
         body.add(tail = new Tail(tailNro * 15, 1));
-        
-
     }
 
     private void spawnTail2() {
@@ -491,8 +466,6 @@ public final class Board extends JPanel implements ActionListener {
         tailNro2++;
         // lisätään wormin bodiin Tail pala ja annetaan sille järjestyslukunsa
         body2.add(tail = new Tail(tailNro2 * 15, 2));
-        
-
     }
 
     public static List getWorms() {
@@ -509,23 +482,20 @@ public final class Board extends JPanel implements ActionListener {
         reverse.setY(-100);
         HP.setX(-100);
         HP.setY(-100);
-        Ironhead.setX(-100);
-        Ironhead.setY(-100);
-        
+        shield.setX(-100);
+        shield.setY(-100);
 
         java.util.Timer timer2 = new java.util.Timer();
         timer2.schedule(new TimerTask() {
 
             @Override
             public void run() {
-
-                Random rand = new Random();
-
-                int n = rand.nextInt(5);
                 
-                switch(n) {
+                int n = (int) Math.random()*5;
+                
+                switch (n) {
                     case 0:
-                        Ironhead.randomizeXY();
+                        shield.randomizeXY();
                         break;
                     case 1:
                         faster.randomizeXY();
@@ -542,38 +512,9 @@ public final class Board extends JPanel implements ActionListener {
                     default:
                         System.out.println("WHAT");
                 }
-                
+
             }
         }, 5000); //aika (ms), joka odotetaan
     }
-    
-    public void Shield(int luku) {
-        
-        shield = true;
-        
-        //säätää nopeuden väliaikseks
-        java.util.Timer timer = new java.util.Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                shield = false;
-            }
-        }, luku); //aika (ms), joka odotetaan
-    }
-    
-    public void Shield2(int luku) {
-        
-        shield2 = true;
-        
-        //säätää nopeuden väliaikseks
-        java.util.Timer timer = new java.util.Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                shield2 = false;
-            }
-        }, luku); //aika (ms), joka odotetaan
-    }
-    
-    
+
 }

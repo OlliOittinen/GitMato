@@ -16,34 +16,30 @@ import javax.swing.ImageIcon;
  *
  * @author maxki
  */
-public class Iron  implements Spawnables{
+public class Shield  implements Spawnables{
     private int xe;
     private int ye;
     private Image image;
 
-    public Iron() {
+    public Shield() {
         init();
     }
     
-    public void Iron(Worm worm) {
-        
-        
-        //säätää nopeuden väliaikseks
+    public void shield(Worm worm, int luku) {
+        worm.setShield(true);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                
+                worm.setShield(false);
             }
-        }, 5000); //aika (ms), joka odotetaan
+        }, luku); //aika (ms), joka odotetaan
     }
     
-    @Override
+@Override
     public void init() {
-        
-        ImageIcon kuva = new ImageIcon("src/Images/Iron.png");
+        ImageIcon kuva = new ImageIcon("src/Images/maxinidealol.png");
         image = kuva.getImage();
-            
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));
     }
@@ -83,5 +79,8 @@ public class Iron  implements Spawnables{
         setY((int) (Math.random() * 550));
     }
 
+    public boolean isActive(Worm worm) {
+        return worm.getShield(worm);
+    }
     
 }

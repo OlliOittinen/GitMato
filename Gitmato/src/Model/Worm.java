@@ -25,6 +25,9 @@ public class Worm {
     private int suunta = 1;
     private int suuntaAdv = 0;
     private int playerNro;
+    private boolean shield = false; //shield powerup
+
+
     private Image image;
     
     private ImageIcon wormup;
@@ -123,6 +126,14 @@ public class Worm {
 
     public void setNopeus(double nopeus) {
         this.nopeus = nopeus;
+    }
+    
+    public boolean getShield(Worm worm) {
+        return this.shield;
+    }
+    
+    public void setShield(boolean active) {
+        this.shield = active;
     }
     
     public void randomizeXY() {
