@@ -58,10 +58,7 @@ public final class Board extends JPanel implements ActionListener {
     private Reverse reverse;
     private Life HP;
     private Shield shield;
-    //private int life, life2 = 1;
     private boolean ingame;
-    private int Pituus;
-    private int Pituus2;
     private MainFrame frame;
     private ImageIcon Ironpic;
     //Lista Tail paloista
@@ -155,8 +152,6 @@ public final class Board extends JPanel implements ActionListener {
             cordinates2.clear();
             body.clear();
             body2.clear();
-            Pituus = 0;
-            Pituus2 = 0;
             tailNro = 0;
             tailNro2 = 0;
 

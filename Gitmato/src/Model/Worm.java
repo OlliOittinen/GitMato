@@ -15,9 +15,7 @@ import javax.swing.ImageIcon;
  * @author maxki
  */
 public class Worm {
-    
-    //private int playerNro;
-    
+
     private double dx;
     private double dy;
     private int x;
@@ -27,13 +25,12 @@ public class Worm {
     private int playerNro;
     private boolean shield = false; //shield powerup
 
-
-    private Image image;
-    
+    private Image image;    
     private ImageIcon wormup;
     private ImageIcon wormdown;
     private ImageIcon wormleft;
     private ImageIcon wormright;
+    private ImageIcon shielded;
     
     double nopeus = 2;
     private int life=1;
@@ -57,6 +54,7 @@ public class Worm {
              wormdown = new ImageIcon("src/Images/RedWormDown(800x600).png");
              wormleft = new ImageIcon("src/Images/RedWormLeft(800x600).png");
              wormright = new ImageIcon("src/Images/RedWormRight(800x600).png");
+            shielded = new ImageIcon("src/Images/AppleActual.png");
             x = 200;
             y = 400;
         }
@@ -65,6 +63,7 @@ public class Worm {
              wormdown = new ImageIcon("src/Images/BlueWormDown(800x600).png");
              wormleft = new ImageIcon("src/Images/BlueWormLeft(800x600).png");
              wormright = new ImageIcon("src/Images/BlueWormRight(800x600).png");
+             shielded = new ImageIcon("src/Images/AppleActual.png");
             x = 400;
             y = 400;
         }
@@ -142,25 +141,43 @@ public class Worm {
     }
     
     public void moveCont(){
-        if(suunta == 1){
+        if(suunta == 1 && !(getShield(this))){
             setImage (wormleft.getImage());
             dx = -1 * nopeus;
         }
         
-        if(suunta == 2){
+        if(suunta == 2 && !(getShield(this))){
             setImage (wormright.getImage());
             dx = 1 * nopeus;
         }
         
-        if(suunta == 3){
+        if(suunta == 3 && !(getShield(this))){
             setImage (wormup.getImage());
             dy = -1 * nopeus;
+            
         }
         
-        if(suunta == 4){
+        if(suunta == 4 && !(getShield(this))){
             setImage (wormdown.getImage());
             dy = 1 * nopeus;
             
+        }
+        
+        if(suunta == 1 && (getShield(this))){
+            setImage (shielded.getImage());
+            dx = -1 * nopeus;
+        }
+        if(suunta == 2 && (getShield(this))){
+            setImage (shielded.getImage());
+            dx = 1 * nopeus;
+        }
+        if(suunta == 3 && (getShield(this))){
+            setImage (shielded.getImage());
+            dy = -1 * nopeus;
+        }
+        if(suunta == 4 && (getShield(this))){
+            setImage (shielded.getImage());
+            dy = 1 * nopeus;
         }
     }
     
