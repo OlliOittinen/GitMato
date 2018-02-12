@@ -23,13 +23,14 @@ public class Reverse implements Spawnables {
             
     public void reverse(Worm worm, Worm worm2) {
         worm2.setNopeus(worm2.getNopeus()*-1);
-        
+        worm2.setShield(true);
         //säätää nopeuden väliaikseks
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 worm2.setNopeus(worm2.getNopeus()*-1);
+                worm2.setShield(false);
             }
         }, 5000); //aika (ms), joka odotetaan
     }

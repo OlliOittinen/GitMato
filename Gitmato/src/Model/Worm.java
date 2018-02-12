@@ -24,6 +24,7 @@ public class Worm {
     private int suuntaAdv = 0;
     private int playerNro;
     private boolean shield = false; //shield power-up
+    private boolean reverse = false; //Reverse debuff up
 
     private Image image;    
     private ImageIcon wormup;
