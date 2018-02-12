@@ -314,7 +314,7 @@ public final class Board extends JPanel implements ActionListener {
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
-            if (Matokuutio2.intersects(Matotail) && shield.isActive(worm)) {
+            if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm)) {
                 System.out.println("SINISEE SATTU");
                 if (worm2.getLife() > 1) {
                     shield.shield(worm2, 50);
@@ -330,7 +330,7 @@ public final class Board extends JPanel implements ActionListener {
 
         for (int i = 0; i < body2.size(); i++) {
             Rectangle Matotail2 = body2.get(i).getBounds();
-            if (Matokuutio.intersects(Matotail2) && shield.isActive(worm2)) {
+            if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm2)) {
                 System.out.println("PUNASEE SATTU");
                 if (worm.getLife() > 1) {
                     shield.shield(worm, 50);
