@@ -7,12 +7,6 @@ package Model;
 
 import Spawnables.*;
 import Controller.Matopeli;
-import javafx.application.*;
-import javafx.stage.*;
-import javafx.scene.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Color;
@@ -29,8 +23,6 @@ import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import Controller.PlayerController;
 import GUI.MainFrame;
 import java.awt.Image;
@@ -233,16 +225,21 @@ public final class Board extends JPanel implements ActionListener {
 
     private void drawPisteet(Graphics g) {
 
-        String msg = "Punaisen HP: " + worm.getLife()+", pisteet: "+worm.getPoints();
-        String msg2 = "Sinisen HP: " + worm2.getLife()+", pisteet: "+worm2.getPoints();
+        String hp = "Punaisen HP: " + worm.getLife();
+        String hp2 = "Sinisen HP: " + worm2.getLife();
+        
+        String pt = "Pisteet: "+worm.getPoints();
+        String pt2 = "Pisteet: "+worm2.getPoints();
 
         Font small = new Font("Helvetica", Font.BOLD, 20);
         FontMetrics fm = getFontMetrics(small);
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msg, 10, 25);
-        g.drawString(msg2, (790-fm.stringWidth(msg2)), 25);
+        g.drawString(hp, 10, 25);
+        g.drawString(pt, 10, 50);
+        g.drawString(hp2, (790-fm.stringWidth(hp2)), 25);
+        g.drawString(pt2, (790-fm.stringWidth(pt2)), 50);
         
     }
 
@@ -309,7 +306,7 @@ public final class Board extends JPanel implements ActionListener {
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
-            if (Matokuutio2.intersects(Matotail) && shield.isActive(worm)) {
+            if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm)) {
                 System.out.println("SINISEE SATTU");
                 if (worm2.getLife() > 1) {
                     shield.shield(worm2, 50);
@@ -325,7 +322,7 @@ public final class Board extends JPanel implements ActionListener {
 
         for (int i = 0; i < body2.size(); i++) {
             Rectangle Matotail2 = body2.get(i).getBounds();
-            if (Matokuutio.intersects(Matotail2) && shield.isActive(worm2)) {
+            if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm2)) {
                 System.out.println("PUNASEE SATTU");
                 if (worm.getLife() > 1) {
                     shield.shield(worm, 50);
