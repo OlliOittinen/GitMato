@@ -30,6 +30,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
+import javafx.application.Platform;
 
 /**
  *
@@ -146,6 +147,7 @@ public final class Board extends JPanel implements ActionListener {
             body2.clear();
             tailNro = 0;
             tailNro2 = 0;
+            Sound.Music.sound1.loop();
 
         }
 
@@ -340,7 +342,7 @@ public final class Board extends JPanel implements ActionListener {
         if (s.intersects(Matokuutio)) {
             snack.randomizeXY();
             worm.setPoints(worm.getPoints()+100);
-            spawnTail();
+            spawnTail(1);
         }
 
         if (pf.intersects(Matokuutio)) {
@@ -383,7 +385,7 @@ public final class Board extends JPanel implements ActionListener {
         if (s.intersects(Matokuutio2)) {
             snack.randomizeXY();
             worm2.setPoints(worm2.getPoints()+100);
-            spawnTail2();
+            spawnTail(2);
         }
 
         if (pf.intersects(Matokuutio2)) {
@@ -424,9 +426,13 @@ public final class Board extends JPanel implements ActionListener {
     }
 
     private void drawGameOver(Graphics g) {
-
+        String msg = null;
         if (worm.getLife() <= 0) {
-            String msg = "Sininen voitti pelin!!! Paina Space pelataksesi uudelleen";
+            msg = "Sininen voitti pelin!!! Paina Space pelataksesi uudelleen";
+        } 
+        else if (worm2.getLife() <= 0) {
+            msg = "Punainen voitti pelin!!! Paina Space pelataksesi uudelleen";
+        }
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);
 
@@ -435,35 +441,26 @@ public final class Board extends JPanel implements ActionListener {
             g.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
             Sound.Music.sound1.stop();
             ingame = false;
+            /*
+            Platform.runLater(() -> {
+                engine.setScene(3);
+    });
+*/
         }
 
-        if (worm2.getLife() <= 0) {
-            String msg = "Punainen voitti pelin!!! Paina Space pelataksesi uudelleen";
-            Font small = new Font("Helvetica", Font.BOLD, 20);
-            FontMetrics fm = getFontMetrics(small);
-
-            g.setColor(Color.white);
-            g.setFont(small);
-            g.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
-            Sound.Music.sound1.stop();
-            ingame = false;
+    private void spawnTail(int n) {
+        //tulee yksi Tail pala lisää
+        switch(n) {
+            case 1:
+                tailNro++;
+                body.add(tail = new Tail(tailNro * 15, 1));
+                break;
+            case 2:
+               tailNro2++;
+               body2.add(tail = new Tail(tailNro2 * 15, 2));
         }
-
     }
 
-    private void spawnTail() {
-        //tulee yksi Tail pala lisää
-        tailNro++;
-        // lisätään wormin bodiin Tail pala ja annetaan sille järjestyslukunsa
-        body.add(tail = new Tail(tailNro * 15, 1));
-    }
-
-    private void spawnTail2() {
-        //tulee yksi Tail pala lisää
-        tailNro2++;
-        // lisätään wormin bodiin Tail pala ja annetaan sille järjestyslukunsa
-        body2.add(tail = new Tail(tailNro2 * 15, 2));
-    }
 
     public static List getWorms() {
         return worms;

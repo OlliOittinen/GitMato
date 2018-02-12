@@ -15,7 +15,7 @@ import javax.swing.SwingUtilities;
 public class Matopeli extends Application {
 
     Stage window;
-    Scene scene1, scene2;
+    Scene scene1, scene2, scene3;
     
     private static Board board;
     private static MainFrame peli;
@@ -65,21 +65,26 @@ public class Matopeli extends Application {
         //-----------------------------------
         
         //------GAME OVER SCENE---------------
-        /*
+        
         //Layout 3- Game over
         VBox layout3 = new VBox(20);
+        layout3.setAlignment(Pos.CENTER);
        
         Label label3 = new Label("GAME OVER");
         Button restart = new Button("Restart");
-        restart.setOnAction(e -> window.setScene(scene2));
+        restart.setOnAction(e -> {
+            setScene(2);
+            window.show();
+                });
         
         Button backToSS = new Button("Back to Main menu");
-        backToSS.setOnAction(e -> window.setScene(scene1));
+        backToSS.setOnAction(e -> setScene(1));
         
         layout3.getChildren().addAll(label3, restart, backToSS); // Adding swing node
-        scene2 = new Scene(layout2, 800, 600);
+        scene3 = new Scene(layout3, 800, 600);
+        scene3.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
-        */
+        
         
         //Display scene 1 at first
         window.setScene(scene1);
@@ -94,6 +99,19 @@ public class Matopeli extends Application {
              JPanel board = new Board(m);
              swingNode.setContent(board);
          });
+     }
+     public void setScene(int n){
+         switch(n) {
+             case 1:
+                 window.setScene(scene1);
+                 break;
+             case 2:
+                 window.setScene(scene2);
+                 break;  
+            case 3:
+                 window.setScene(scene3);
+                 break;
+         }
      }
 
 }
