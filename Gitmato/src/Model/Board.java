@@ -198,8 +198,7 @@ public final class Board extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         drawPisteet(g);
 
-        g2d.drawImage(punainen.getImage(), punainen.getX(), punainen.getY(), this);
-        g2d.drawImage(sininen.getImage(), sininen.getX(), sininen.getY(), this);
+        
         g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);
         g2d.drawImage(faster.getImage(), faster.getX(), faster.getY(), this);
         g2d.drawImage(slower.getImage(), slower.getX(), slower.getY(), this);
@@ -224,6 +223,9 @@ public final class Board extends JPanel implements ActionListener {
             }
         }
 
+        g2d.drawImage(punainen.getImage(), punainen.getX(), punainen.getY(), this);
+        g2d.drawImage(sininen.getImage(), sininen.getX(), sininen.getY(), this);
+        
         if (punainen.getLife() <= 0 || sininen.getLife() <= 0) {
             drawGameOver(g);
         }
@@ -487,7 +489,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
                 
-                int n = (int) Math.random()*5;
+                int n = (int) (Math.random()*5);
                 
                 switch (n) {
                     case 0:
