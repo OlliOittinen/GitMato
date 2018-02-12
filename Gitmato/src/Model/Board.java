@@ -344,7 +344,7 @@ public final class Board extends JPanel implements ActionListener {
         //mato 1 collisions
         if (s.intersects(Matokuutio)) {
             snack.randomizeXY();
-            Pituus += 1;
+            
             spawnTail();
         }
 
@@ -386,7 +386,7 @@ public final class Board extends JPanel implements ActionListener {
         //mato 2 collisions
         if (s.intersects(Matokuutio2)) {
             snack.randomizeXY();
-            Pituus2 += 1;
+            
             spawnTail2();
         }
 
@@ -516,5 +516,5 @@ public final class Board extends JPanel implements ActionListener {
             }
         }, 5000); //aika (ms), joka odotetaan
     }
-
+    
 }
