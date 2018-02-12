@@ -25,6 +25,7 @@ public class Slower implements Spawnables{
     private Image image;
             
     public void slower(Worm worm, Worm worm2) {
+        worm.setPoints(worm.getPoints()+100);
         worm2.setNopeus(1);
         
         //säätää nopeuden väliaikseks

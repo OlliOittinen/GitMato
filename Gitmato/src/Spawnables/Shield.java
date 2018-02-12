@@ -26,6 +26,7 @@ public class Shield  implements Spawnables{
     }
     
     public void shield(Worm worm, int luku) {
+        worm.setPoints(worm.getPoints()+100);
         worm.setShield(true);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {

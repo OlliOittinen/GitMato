@@ -25,6 +25,7 @@ public class Faster implements Spawnables {
     
     
     public void faster(Worm worm) {
+        worm.setPoints(worm.getPoints()+100);
         worm.setNopeus(3);
         Sound.Music.sound1.stop();
         Sound.Music.sound2.play();

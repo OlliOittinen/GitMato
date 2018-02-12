@@ -22,6 +22,7 @@ public class Reverse implements Spawnables {
     private Image image;
             
     public void reverse(Worm worm, Worm worm2) {
+        worm.setPoints(worm.getPoints()+100);
         worm2.setNopeus(worm2.getNopeus()*-1);
         worm2.setReverse(true);
         //säätää nopeuden väliaikseks

@@ -25,6 +25,8 @@ public class Worm {
     private int playerNro;
     private boolean shield = false; //shield power-up
     private boolean reverse = false; //Reverse debuff up
+    private int points;
+
 
     private Image image;    
     private ImageIcon wormup;
@@ -151,6 +153,13 @@ public class Worm {
         this.reverse = active;
     }
     
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
     public void randomizeXY() {
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));

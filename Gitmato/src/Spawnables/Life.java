@@ -24,6 +24,7 @@ public class Life implements Spawnables {
     private Board board;
     
     public void Life(Worm worm) {
+        worm.setPoints(worm.getPoints()+100);
         worm.setLife(worm.getLife()+1);
     }
     
