@@ -38,7 +38,7 @@ public class Life implements Spawnables {
 
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/Images/Life.png");
+        ImageIcon kuva = new ImageIcon("src/Images/Life_1.png");
         image = kuva.getImage();
             
         setX(-100);

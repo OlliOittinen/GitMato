@@ -47,7 +47,7 @@ public class Reverse implements Spawnables {
 
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/Images/reverse_icon.png");
+        ImageIcon kuva = new ImageIcon("src/Images/Reverse.png");
         image = kuva.getImage();
             
         setX(-100);
