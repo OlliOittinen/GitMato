@@ -50,6 +50,7 @@ public final class Board extends JPanel implements ActionListener {
     private Reverse reverse;
     private Life HP;
     private Shield shield;
+    private Bombs bombs;
     private boolean ingame;
     private MainFrame frame;
     private ImageIcon Ironpic;
@@ -108,6 +109,7 @@ public final class Board extends JPanel implements ActionListener {
         reverse = new Reverse();
         HP = new Life();
         shield = new Shield();
+        bombs = new Bombs();
         powerUpCD(); //piilottaa powerupit alussa
 
         snack = new Snack();
@@ -199,6 +201,8 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(reverse.getImage(), reverse.getX(), reverse.getY(), this);
         g2d.drawImage(HP.getImage(), HP.getX(), HP.getY(), this);
         g2d.drawImage(shield.getImage(), shield.getX(), shield.getY(), this);
+        g2d.drawImage(bombs.getImage(), bombs.getX(), bombs.getY(), this);
+        g2d.drawImage(bombs.getImage2(), bombs.getX2(), bombs.getY2(), this);
 
         //tarkistetaan onko häntiä piirrettäväksi
         if (tailNro > 0) {
@@ -305,6 +309,8 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle pr = reverse.getBounds();
         Rectangle pl = HP.getBounds();
         Rectangle psh = shield.getBounds();
+        Rectangle pb = bombs.getBounds();
+        Rectangle pb2 = bombs.getBounds2();
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
@@ -369,6 +375,15 @@ public final class Board extends JPanel implements ActionListener {
             shield.shield(worm, 10000);
             powerUpCD();
         }
+        if (pb.intersects(Matokuutio)) {
+            bombs.bombs(worm);
+            bombs.bombZone();
+            powerUpCD();
+        }
+        if (pb2.intersects(Matokuutio)) {
+            bombs.bombs2(worm);
+        }
+        
 
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5 || worm.getY() > 550) {
             System.out.println("PUNASEE SATTU");
@@ -411,6 +426,14 @@ public final class Board extends JPanel implements ActionListener {
         if (psh.intersects(Matokuutio2)) {
             shield.shield(worm2, 10000);
             powerUpCD();
+        }
+        if (pb.intersects(Matokuutio2)) {
+            bombs.bombs(worm2);
+            bombs.bombZone();
+            powerUpCD();
+        }
+        if (pb2.intersects(Matokuutio2)) {
+            bombs.bombs2(worm2);
         }
 
         if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) {
@@ -478,6 +501,8 @@ public final class Board extends JPanel implements ActionListener {
         HP.setY(-100);
         shield.setX(-100);
         shield.setY(-100);
+        bombs.setY(-100);
+        bombs.setX(-100);
 
         java.util.Timer timer2 = new java.util.Timer();
         timer2.schedule(new TimerTask() {
@@ -485,7 +510,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
                 
-                int n = (int) (Math.random()*5);
+                int n = 5;//(int) (Math.random()*6);
                 
                 switch (n) {
                     case 0:
@@ -503,6 +528,8 @@ public final class Board extends JPanel implements ActionListener {
                     case 4:
                         HP.randomizeXY();
                         break;
+                    case 5:
+                        bombs.randomizeXY();
                     default:
                         System.out.println("WHAT");
                 }
