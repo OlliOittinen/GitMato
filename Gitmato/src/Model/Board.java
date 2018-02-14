@@ -428,24 +428,24 @@ public final class Board extends JPanel implements ActionListener {
     private void drawGameOver(Graphics g) {
         filter = filtteri.getImage();
         String msg = null;
+        Graphics2D g3 = (Graphics2D) g;
+        g3.drawImage(filter, 0, 0, null);
+
+        Font small = new Font("Helvetica", Font.BOLD, 20);
+        FontMetrics fm = getFontMetrics(small);
+        g3.setFont(small);
+        
+        Sound.Music.sound1.stop();
+        ingame = false;
         if (worm.getLife() <= 0) {
             msg = "Sininen voitti pelin!!! Paina Space pelataksesi uudelleen";
+            g3.setColor(Color.blue);
         } 
         else if (worm2.getLife() <= 0) {
             msg = "Punainen voitti pelin!!! Paina Space pelataksesi uudelleen";
+            g3.setColor(Color.red);
         }
-        Graphics2D g3 = (Graphics2D) g;
-            g3.drawImage(filter, 0, 0, null);
-        
-            Font small = new Font("Helvetica", Font.BOLD, 20);
-            FontMetrics fm = getFontMetrics(small);
-
-            g3.setColor(Color.white);
-            g3.setFont(small);
-            g3.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
-            Sound.Music.sound1.stop();
-            ingame = false;
-
+        g3.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
         }
 
     private void spawnTail(int n) {
