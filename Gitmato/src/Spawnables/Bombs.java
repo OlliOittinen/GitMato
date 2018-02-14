@@ -22,8 +22,11 @@ public class Bombs implements Spawnables {
     private int ye;
     private int xe2;
     private int ye2;
+    private int xe3;
+    private int ye3;
     private Image image;
     private Image image2;
+    private Image image3;
     private Board board;
     
     public void bombs(Worm worm) {
@@ -47,8 +50,10 @@ public class Bombs implements Spawnables {
     public void init() {
         ImageIcon kuva = new ImageIcon("src/Images/Bombs(800-600).png");
         image = kuva.getImage();
-        ImageIcon kuva2 = new ImageIcon("src/Images/DangerArea.png");
+        ImageIcon kuva2 = new ImageIcon("src/Images/Target.png");
         image2 = kuva2.getImage();
+        ImageIcon kuva3 = new ImageIcon("src/Images/firestorm.png");
+        image3 = kuva3.getImage();
             
         setX(-100);
         setY(-100);
@@ -63,9 +68,18 @@ public class Bombs implements Spawnables {
             public void run() {
                 randomizeXY2();
             }
-        }, 3000); //aika (ms), joka odotetaan
-        setX2(-100);
-        setY2(-100);
+        }, 1000); //aika (ms), joka odotetaan
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                setX2(-100);
+                setX2(-100);
+                setX3(xe2);
+                setY3(xe2);
+            }
+        }, 2000); //aika (ms), joka odotetaan
+        setX3(-100);
+        setY3(-100);
     }
 
     @Override
@@ -91,6 +105,12 @@ public class Bombs implements Spawnables {
     public int getY2() {
         return ye2;
     }
+     public int getX3() {
+        return xe3;    
+    }
+    public int getY3() {
+        return ye3;
+    }
 
     @Override
     public void setX(int x) {
@@ -109,13 +129,32 @@ public class Bombs implements Spawnables {
     public void setY2(int y) {
         this.ye2 = y;
     }
+    public void setX3(int x) {
+        this.xe3 = x;
+    }
 
+    public void setY3(int y) {
+        this.ye3 = y;
+    }
+    
     @Override
     public Image getImage() {
         return image;
     }
-    public Image getImage2() {
-        return image2;
+    public Image getImage(int n) {
+        Image img = null;
+        switch(n) {
+            case 1:
+                img =  image;
+                break;
+            case 2:
+                img = image2;
+                break;
+            case 3:
+                img = image3;
+                break;
+        }
+        return img;
     }
     @Override
     public void randomizeXY() {
