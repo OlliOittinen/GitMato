@@ -10,6 +10,7 @@ import Model.Board;
 import Model.Worm;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.Platform;
 /**
  *
  * @author gedst
@@ -18,6 +19,7 @@ public class PlayerController  {
     
     private List<Worm> worms = new ArrayList<>(); 
     private Board board;
+    private Matopeli peli;
     
     public PlayerController(){
         initPlayerController();
@@ -129,14 +131,10 @@ public class PlayerController  {
         }
         
         //GAME RESET
-        if (key == KeyEvent.VK_SPACE) {
+        if (key == KeyEvent.VK_SPACE || key == KeyEvent.VK_ENTER) {
             board.restartGame();
         }
-
-                
-            
-            
-        
+                    
         // controlls for player 2 
         // --- Here ---
     }  
