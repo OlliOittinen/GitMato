@@ -50,6 +50,7 @@ public final class Board extends JPanel implements ActionListener {
     private Reverse reverse;
     private Life HP;
     private Shield shield;
+    private Laaser laser;
     private boolean ingame;
     private MainFrame frame;
     private ImageIcon Ironpic;
@@ -106,6 +107,7 @@ public final class Board extends JPanel implements ActionListener {
         reverse = new Reverse();
         HP = new Life();
         shield = new Shield();
+        laser = new Laaser(this);
         powerUpCD(); //piilottaa powerupit alussa
 
         snack = new Snack();
@@ -190,7 +192,6 @@ public final class Board extends JPanel implements ActionListener {
 
         Graphics2D g2d = (Graphics2D) g;
         drawPisteet(g);
-
         
         g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);
         g2d.drawImage(faster.getImage(), faster.getX(), faster.getY(), this);
@@ -198,6 +199,7 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(reverse.getImage(), reverse.getX(), reverse.getY(), this);
         g2d.drawImage(HP.getImage(), HP.getX(), HP.getY(), this);
         g2d.drawImage(shield.getImage(), shield.getX(), shield.getY(), this);
+        g2d.drawImage(laser.getImage(), laser.getX(), laser.getY(), this);
 
         //tarkistetaan onko häntiä piirrettäväksi
         if (tailNro > 0) {
@@ -235,10 +237,11 @@ public final class Board extends JPanel implements ActionListener {
         Font small = new Font("Helvetica", Font.BOLD, 20);
         FontMetrics fm = getFontMetrics(small);
 
-        g.setColor(Color.white);
+        g.setColor(Color.red);
         g.setFont(small);
         g.drawString(hp, 10, 25);
         g.drawString(pt, 10, 50);
+        g.setColor(Color.blue);
         g.drawString(hp2, (790-fm.stringWidth(hp2)), 25);
         g.drawString(pt2, (790-fm.stringWidth(pt2)), 50);
         
@@ -304,6 +307,7 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle pr = reverse.getBounds();
         Rectangle pl = HP.getBounds();
         Rectangle psh = shield.getBounds();
+        Rectangle l = laser.getBounds();
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
@@ -317,7 +321,7 @@ public final class Board extends JPanel implements ActionListener {
                 } else {
                     System.out.println("Blue dead");
                 }
-                worm2.setLife(worm2.getLife() - 1);
+                Life.loseLife(worm2);
             }
         }
 
@@ -333,7 +337,7 @@ public final class Board extends JPanel implements ActionListener {
                 } else {
                     System.out.println("Red dead");
                 }
-                worm.setLife(worm.getLife() - 1);
+                Life.loseLife(worm);
             }
         }
 
@@ -368,7 +372,13 @@ public final class Board extends JPanel implements ActionListener {
             shield.shield(worm, 10000);
             powerUpCD();
         }
-
+        
+        if(l.intersects(Matokuutio)) {
+            laser.Laaser(worm, worm2);
+            powerUpCD();
+        }
+        
+        //koskeeko seinään
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5 || worm.getY() > 550) {
             System.out.println("PUNASEE SATTU");
             if (worm.getLife() > 1) {
@@ -376,7 +386,7 @@ public final class Board extends JPanel implements ActionListener {
                 worm.setSuuntaAdv(0);
                 worm.setSuunta(0);
             }
-            worm.setLife(worm.getLife() - 1);
+            Life.loseLife(worm);
             worm.setPoints(worm.getPoints()-100);
         }
 
@@ -411,7 +421,12 @@ public final class Board extends JPanel implements ActionListener {
             shield.shield(worm2, 10000);
             powerUpCD();
         }
-
+        
+        if (l.intersects(Matokuutio2)) {
+            laser.Laaser(worm2, worm);
+            powerUpCD();
+        }
+        //koskeeko seinään
         if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) {
             System.out.println("SINISEE SATTU");
             if (worm2.getLife() > 1) {
@@ -419,7 +434,7 @@ public final class Board extends JPanel implements ActionListener {
                 worm2.setSuuntaAdv(0);
                 worm2.setSuunta(0);
             }
-            worm2.setLife(worm2.getLife() - 1);
+            Life.loseLife(worm2);
             worm2.setPoints(worm2.getPoints()-100);
         }
     }
@@ -477,6 +492,8 @@ public final class Board extends JPanel implements ActionListener {
         HP.setY(-100);
         shield.setX(-100);
         shield.setY(-100);
+        laser.setX(-100);
+        laser.setY(-100);
 
         java.util.Timer timer2 = new java.util.Timer();
         timer2.schedule(new TimerTask() {
@@ -484,8 +501,9 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
                 
-                int n = (int) (Math.random()*5);
+                //int n = (int) (Math.random()*5);
                 
+                int n = 5;
                 switch (n) {
                     case 0:
                         shield.randomizeXY();
@@ -502,6 +520,8 @@ public final class Board extends JPanel implements ActionListener {
                     case 4:
                         HP.randomizeXY();
                         break;
+                    case 5:
+                        laser.randomizeXY();
                     default:
                         System.out.println("WHAT");
                 }

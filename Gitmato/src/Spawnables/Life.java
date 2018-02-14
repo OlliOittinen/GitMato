@@ -19,17 +19,24 @@ public class Life implements Spawnables {
     private int xe;
     private int ye;
     private Image image;
-    private Board board;
     
     public void Life(Worm worm) {
         worm.setPoints(worm.getPoints()+100);
-        worm.setLife(worm.getLife()+1);
+        addLife(worm);
     }
     
     public Life() {
         init();
     }
     
+    public static void addLife (Worm worm) {
+        worm.setLife(worm.getLife()+1);
+    }
+    
+    public static void loseLife(Worm worm) {
+        worm.setLife(worm.getLife()-1);
+    }
+     
     @Override
     public void loadImage(String imageName) {
         ImageIcon ii = new ImageIcon(imageName);
