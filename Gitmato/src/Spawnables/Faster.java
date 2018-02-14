@@ -53,7 +53,7 @@ public class Faster implements Spawnables {
 
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/Images/Bottle(800x600).png");
+        ImageIcon kuva = new ImageIcon("src/Images/SpeedUp.png");
         image = kuva.getImage();
             
         setX(-100);
