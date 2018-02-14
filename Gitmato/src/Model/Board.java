@@ -133,6 +133,8 @@ public final class Board extends JPanel implements ActionListener {
             powerUpCD();
             bombs.setX2(-100);
             bombs.setY2(-100);
+            bombs.setX3(-100);
+            bombs.setY3(-100);
             snack.randomizeXY();
 
             worms.remove(0);
@@ -205,7 +207,7 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(shield.getImage(), shield.getX(), shield.getY(), this);
         g2d.drawImage(bombs.getImage(1), bombs.getX(), bombs.getY(), this);
         g2d.drawImage(bombs.getImage(2), bombs.getX2(), bombs.getY2(), this);
-        g2d.drawImage(bombs.getImage(3), bombs.getX2(), bombs.getY2(), this);
+        g2d.drawImage(bombs.getImage(3), bombs.getX3(), bombs.getY3(), this);
 
         //tarkistetaan onko häntiä piirrettäväksi
         if (tailNro > 0) {
@@ -533,6 +535,7 @@ public final class Board extends JPanel implements ActionListener {
                         break;
                     case 5:
                         bombs.randomizeXY();
+                        
                     default:
                         System.out.println("WHAT");
                 }

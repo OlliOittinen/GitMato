@@ -28,11 +28,13 @@ public class Bombs implements Spawnables {
     private Image image2;
     private Image image3;
     private Board board;
+    private boolean tappava = false;
     
     public void bombs(Worm worm) {
         worm.setPoints(worm.getPoints()+100);
     }
     public void bombs2(Worm worm) {
+        if (tappava)
         worm.setLife(worm.getLife()-1);
     }
     
@@ -59,6 +61,8 @@ public class Bombs implements Spawnables {
         setY(-100);
         setX2(-100);
         setY2(-100);
+        setX3(-100);
+        setY3(-100);
     }
     
     public void bombZone(){
@@ -72,14 +76,21 @@ public class Bombs implements Spawnables {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                setX2(-100);
-                setX2(-100);
-                setX3(xe2);
-                setY3(xe2);
+                setX3(getX2());
+                setY3(getY2());
+                tappava = true;
             }
-        }, 2000); //aika (ms), joka odotetaan
-        setX3(-100);
-        setY3(-100);
+        }, 5000); //aika (ms), joka odotetaan
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                setX2(-100);
+                setY2(-100);
+                setX3(-100);
+                setY3(-100);
+            }
+        }, 5000); //aika (ms), joka odotetaan
+
     }
 
     @Override
@@ -88,6 +99,9 @@ public class Bombs implements Spawnables {
     }
     public Rectangle getBounds2() {
         return new Rectangle(xe2+3, ye2+3, 100, 100);
+    }
+    public boolean tappava(){
+        return tappava;
     }
 
     @Override
