@@ -74,7 +74,8 @@ public final class Board extends JPanel implements ActionListener {
 
     private Image background;
     private Image filter;
-
+    ImageIcon filtteri = new ImageIcon("src/Images/BlackFilter.png");
+    
     public Board(Matopeli e) {
         this.engine = e;
 
@@ -120,8 +121,6 @@ public final class Board extends JPanel implements ActionListener {
 
         ImageIcon kuvamato = new ImageIcon("src/Images/BlueBG800x600.png");
         background = kuvamato.getImage();
-        ImageIcon filtteri = new ImageIcon("src/Images/BlackFilter (1).png");
-        filter = filtteri.getImage();
         System.out.println("In initBoard");
 
     }
@@ -427,6 +426,7 @@ public final class Board extends JPanel implements ActionListener {
     }
 
     private void drawGameOver(Graphics g) {
+        filter = filtteri.getImage();
         String msg = null;
         if (worm.getLife() <= 0) {
             msg = "Sininen voitti pelin!!! Paina Space pelataksesi uudelleen";
