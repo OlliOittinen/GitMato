@@ -73,6 +73,7 @@ public final class Board extends JPanel implements ActionListener {
     private Matopeli engine;
 
     private Image background;
+    private Image filter;
 
     public Board(Matopeli e) {
         this.engine = e;
@@ -119,6 +120,8 @@ public final class Board extends JPanel implements ActionListener {
 
         ImageIcon kuvamato = new ImageIcon("src/Images/BlueBG800x600.png");
         background = kuvamato.getImage();
+        ImageIcon filtteri = new ImageIcon("src/Images/BlackFilter (1).png");
+        filter = filtteri.getImage();
         System.out.println("In initBoard");
 
     }
@@ -154,7 +157,6 @@ public final class Board extends JPanel implements ActionListener {
 
     private void inGame() {
         if (!ingame) {
-            repaint();
             timer.stop();
         }
     }
@@ -432,19 +434,18 @@ public final class Board extends JPanel implements ActionListener {
         else if (worm2.getLife() <= 0) {
             msg = "Punainen voitti pelin!!! Paina Space pelataksesi uudelleen";
         }
+        Graphics2D g3 = (Graphics2D) g;
+            g3.drawImage(filter, 0, 0, null);
+        
             Font small = new Font("Helvetica", Font.BOLD, 20);
             FontMetrics fm = getFontMetrics(small);
 
-            g.setColor(Color.white);
-            g.setFont(small);
-            g.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
+            g3.setColor(Color.white);
+            g3.setFont(small);
+            g3.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
             Sound.Music.sound1.stop();
             ingame = false;
-            /*
-            Platform.runLater(() -> {
-                engine.setScene(3);
-    });
-*/
+
         }
 
     private void spawnTail(int n) {

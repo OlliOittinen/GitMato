@@ -67,15 +67,12 @@ public class Matopeli extends Application {
         //------GAME OVER SCENE---------------
         
         //Layout 3- Game over
+        /*
         VBox layout3 = new VBox(20);
         layout3.setAlignment(Pos.CENTER);
        
         Label label3 = new Label("GAME OVER");
         Button restart = new Button("Restart");
-        restart.setOnAction(e -> {
-            setScene(2);
-            window.show();
-                });
         
         Button backToSS = new Button("Back to Main menu");
         backToSS.setOnAction(e -> setScene(1));
@@ -84,6 +81,7 @@ public class Matopeli extends Application {
         scene3 = new Scene(layout3, 800, 600);
         scene3.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
+        */
         
         
         //Display scene 1 at first
@@ -99,19 +97,6 @@ public class Matopeli extends Application {
              JPanel board = new Board(m);
              swingNode.setContent(board);
          });
-     }
-     public void setScene(int n){
-         switch(n) {
-             case 1:
-                 window.setScene(scene1);
-                 break;
-             case 2:
-                 window.setScene(scene2);
-                 break;  
-            case 3:
-                 window.setScene(scene3);
-                 break;
-         }
      }
 
 }
