@@ -32,11 +32,6 @@ public class Worm {
     private ImageIcon wormdown;
     private ImageIcon wormleft;
     private ImageIcon wormright;
-    private ImageIcon shieldup;
-    private ImageIcon shielddown;
-    private ImageIcon shieldleft;
-    private ImageIcon shieldright;
-    private ImageIcon shieldeffect = new ImageIcon("src/Images/ShieldEffect.png");
 
     
     double nopeus = 2;
@@ -108,10 +103,6 @@ public class Worm {
     public Image getImage() {
         return image;
     }
-    public Image getShieldImage() {
-       Image img = shieldeffect.getImage();
-       return img;
-    }
     
     public void setImage(Image img) {
         this.image = img;
@@ -146,6 +137,9 @@ public class Worm {
     
     public void setReverse(boolean active) {
         this.reverse = active;
+    }
+    public boolean getReverse(Worm worm) {
+        return this.reverse;
     }
     
     public int getPoints() {

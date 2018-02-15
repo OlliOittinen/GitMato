@@ -224,14 +224,21 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
         g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
         if (worm.getShield(worm)) {
-        g2d.drawImage(worm.getShieldImage(), worm.getX()-5, worm.getY()-4, this);
+        g2d.drawImage(shield.getShieldImage(), worm.getX()-5, worm.getY()-4, this);
         }
         if (worm2.getShield(worm2)) {
-        g2d.drawImage(worm2.getShieldImage(), worm2.getX()-5, worm2.getY()-4, this);
+        g2d.drawImage(shield.getShieldImage(), worm2.getX()-5, worm2.getY()-4, this);
         }
         if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
             drawGameOver(g);
         }
+        if (worm.getReverse(worm)) {
+            g2d.drawImage(reverse.getConfusionImage(), worm.getX()-5, worm.getY()-4, this);
+        }
+        if (worm2.getReverse(worm2)) {
+            g2d.drawImage(reverse.getConfusionImage(), worm2.getX()-5, worm2.getY()-4, this);
+        }
+        
     }
 
     private void drawPisteet(Graphics g) {
@@ -519,7 +526,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
                 
-                int n = 0;// (int) (Math.random()*6);
+                int n = (int) (Math.random()*6);
                 
                 switch (n) {
                     case 0:

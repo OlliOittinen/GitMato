@@ -20,6 +20,7 @@ public class Reverse implements Spawnables {
     private int xe;
     private int ye;
     private Image image;
+    private Image confusion;
             
     public void reverse(Worm worm, Worm worm2) {
         worm.setPoints(worm.getPoints()+100);
@@ -49,6 +50,9 @@ public class Reverse implements Spawnables {
     public void init() {
         ImageIcon kuva = new ImageIcon("src/Images/Reverse.png");
         image = kuva.getImage();
+        ImageIcon kuva2 = new ImageIcon("src/Images/confusion.png");
+        confusion = kuva2.getImage();
+        
             
         setX(-100);
         setY(-100);
@@ -82,6 +86,9 @@ public class Reverse implements Spawnables {
     @Override
     public Image getImage() {
         return image;
+    }
+    public Image getConfusionImage() {
+        return confusion;
     }
     @Override
     public void randomizeXY() {
