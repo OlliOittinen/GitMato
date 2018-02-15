@@ -228,14 +228,21 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
         g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
         if (worm.getShield(worm)) {
-        g2d.drawImage(worm.getShieldImage(), worm.getX()-5, worm.getY()-4, this);
+        g2d.drawImage(shield.getShieldImage(), worm.getX()-5, worm.getY()-4, this);
         }
         if (worm2.getShield(worm2)) {
-        g2d.drawImage(worm2.getShieldImage(), worm2.getX()-5, worm2.getY()-4, this);
+        g2d.drawImage(shield.getShieldImage(), worm2.getX()-5, worm2.getY()-4, this);
         }
         if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
             drawGameOver(g);
         }
+        if (worm.getReverse(worm)) {
+            g2d.drawImage(reverse.getConfusionImage(), worm.getX()-5, worm.getY()-4, this);
+        }
+        if (worm2.getReverse(worm2)) {
+            g2d.drawImage(reverse.getConfusionImage(), worm2.getX()-5, worm2.getY()-4, this);
+        }
+        
     }
 
     private void drawPisteet(Graphics g) {
@@ -325,7 +332,7 @@ public final class Board extends JPanel implements ActionListener {
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
-            if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm)) {
+            if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2)) {
                 System.out.println("SINISEE SATTU");
                 if (worm2.getLife() > 1) {
                     shield.shield(worm2, 50);
@@ -341,7 +348,7 @@ public final class Board extends JPanel implements ActionListener {
 
         for (int i = 0; i < body2.size(); i++) {
             Rectangle Matotail2 = body2.get(i).getBounds();
-            if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm2)) {
+            if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                 System.out.println("PUNASEE SATTU");
                 if (worm.getLife() > 1) {
                     shield.shield(worm, 50);
@@ -545,7 +552,11 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
                 
+<<<<<<< HEAD
                 int n = 6;// (int) (Math.random()*6);
+=======
+                int n = (int) (Math.random()*6);
+>>>>>>> 81c7a3f41a0565ff3e126f9fe182d0781b122537
                 
                 switch (n) {
                     case 0:

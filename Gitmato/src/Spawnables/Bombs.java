@@ -89,7 +89,7 @@ public class Bombs implements Spawnables {
                     setX3(-1000);
                     setY3(-1000);
                     }
-                }, 3000);
+                }, 5000);
             }
         }, 2500); //aika (ms), joka odotetaan
     }
@@ -174,7 +174,7 @@ public class Bombs implements Spawnables {
         setY((int) (Math.random() * 550));
     }
     public void randomizeXY2() {
-        setX2((int) (Math.random() * 750));
-        setY2((int) (Math.random() * 550));
+        setX2((int) (Math.random() * 600));
+        setY2((int) (Math.random() * 400));
     }
 }

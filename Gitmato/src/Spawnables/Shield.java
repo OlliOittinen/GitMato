@@ -20,6 +20,7 @@ public class Shield  implements Spawnables{
     private int xe;
     private int ye;
     private Image image;
+    private ImageIcon shieldeffect = new ImageIcon("src/Images/ShieldEffect.png");
 
     public Shield() {
         init();
@@ -52,6 +53,10 @@ public class Shield  implements Spawnables{
 @Override
     public Image getImage() {
         return image;
+    }
+ public Image getShieldImage() {
+       Image img = shieldeffect.getImage();
+       return img;
     }
 @Override
     public int getX() {
