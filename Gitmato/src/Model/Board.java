@@ -222,7 +222,16 @@ public final class Board extends JPanel implements ActionListener {
                 //System.out.println("tätä tehdään");
             }
         }
-
+        // piirretään power-upit matojen päälle, jotta ne ovat helpommit nähtävissä
+        g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);
+        g2d.drawImage(faster.getImage(), faster.getX(), faster.getY(), this);
+        g2d.drawImage(slower.getImage(), slower.getX(), slower.getY(), this);
+        g2d.drawImage(reverse.getImage(), reverse.getX(), reverse.getY(), this);
+        g2d.drawImage(HP.getImage(), HP.getX(), HP.getY(), this);
+        g2d.drawImage(shield.getImage(), shield.getX(), shield.getY(), this);
+        g2d.drawImage(bombs.getImage(1), bombs.getX(), bombs.getY(), this);
+        g2d.drawImage(bombs.getImage(2), bombs.getX2(), bombs.getY2(), this);
+        g2d.drawImage(bombs.getImage(3), bombs.getX3(), bombs.getY3(), this);
         g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
         g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
         
@@ -516,7 +525,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
                 
-                int n = 5;//(int) (Math.random()*6);
+                int n = (int) (Math.random()*6);
                 
                 switch (n) {
                     case 0:
