@@ -91,7 +91,7 @@ public class Bombs implements Spawnables {
                     }
                 }, 3000);
             }
-        }, 4000); //aika (ms), joka odotetaan
+        }, 2500); //aika (ms), joka odotetaan
     }
 
     @Override
