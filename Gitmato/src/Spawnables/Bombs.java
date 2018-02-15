@@ -8,6 +8,7 @@ package Spawnables;
 import Model.Worm;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.geom.Ellipse2D;
 import javax.swing.ImageIcon;
 import Model.Board;
 import java.util.Timer;
@@ -28,14 +29,15 @@ public class Bombs implements Spawnables {
     private Image image2;
     private Image image3;
     private Board board;
-    private boolean tappava = false;
+    private boolean lethal = false;
     
     public void bombs(Worm worm) {
         worm.setPoints(worm.getPoints()+100);
     }
-    public void bombs2(Worm worm) {
-        if (tappava)
+    public void damage(Worm worm) {
+        if (lethal) {
         worm.setLife(worm.getLife()-1);
+        }
     }
     
     public Bombs() {
@@ -78,30 +80,26 @@ public class Bombs implements Spawnables {
             public void run() {
                 setX3(getX2());
                 setY3(getY2());
-                tappava = true;
-            }
-        }, 5000); //aika (ms), joka odotetaan
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
                 setX2(-100);
                 setY2(-100);
-                setX3(-100);
-                setY3(-100);
+                lethal = true;
+                timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    setX3(-100);
+                    setY3(-100);
+                    }
+                }, 3000);
             }
-        }, 5000); //aika (ms), joka odotetaan
-
+        }, 4000); //aika (ms), joka odotetaan
     }
 
     @Override
     public Rectangle getBounds() {
         return new Rectangle(xe+3, ye+3, 30, 30);
     }
-    public Rectangle getBounds2() {
-        return new Rectangle(xe2+3, ye2+3, 100, 100);
-    }
-    public boolean tappava(){
-        return tappava;
+    public Ellipse2D getBounds2() {
+        return new Ellipse2D.Double(xe3+3, ye3+3, 100, 100);
     }
 
     @Override

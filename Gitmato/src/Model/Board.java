@@ -26,6 +26,7 @@ import java.util.List;
 import Controller.PlayerController;
 import GUI.MainFrame;
 import java.awt.Image;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.TimerTask;
 import javax.swing.ImageIcon;
@@ -315,7 +316,7 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle pl = HP.getBounds();
         Rectangle psh = shield.getBounds();
         Rectangle pb = bombs.getBounds();
-        Rectangle pb2 = bombs.getBounds2();
+        Ellipse2D pb2 = bombs.getBounds2();
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
@@ -386,7 +387,7 @@ public final class Board extends JPanel implements ActionListener {
             powerUpCD();
         }
         if (pb2.intersects(Matokuutio)) {
-            bombs.bombs2(worm);
+            bombs.damage(worm);
         }
         
 
@@ -438,7 +439,7 @@ public final class Board extends JPanel implements ActionListener {
             powerUpCD();
         }
         if (pb2.intersects(Matokuutio2)) {
-            bombs.bombs2(worm2);
+            bombs.damage(worm2);
         }
 
         if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) {
