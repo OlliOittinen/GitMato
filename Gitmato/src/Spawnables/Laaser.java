@@ -5,16 +5,12 @@
  */
 package Spawnables;
 
-import Model.Board;
 import Model.Worm;
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.ImageIcon;
-
 /**
  *
  * @author Olli
@@ -31,6 +27,8 @@ public class Laaser implements Spawnables{
     private int ye3;
     private Image image3;
     private boolean lethal = false;
+    private Rectangle beam;
+
     
     public Laaser() {
         init();
@@ -61,8 +59,10 @@ public class Laaser implements Spawnables{
             
         setX(-100);
         setY(-100);
-        setX2(-100);
-        setY2(-100);
+        setX2(-1000);
+        setY2(-1000);
+        setX3(-1000);
+        setY3(-1000);
     }
 
     
@@ -76,7 +76,6 @@ public class Laaser implements Spawnables{
         //horisontaalinen vai vertikaalinen säde, random arvo 0...1
         double r = Math.random();
         //hae luotavan säteen rajat, laita sijainti 2. madon nykypaikkaan
-        Rectangle beam;
         if (r<0.5) {
             beam = getBoundsHorizontal();
             beam.setFrameFromCenter(wormLocX, wormLocY, (wormLocX+800)/2, 0);
@@ -107,6 +106,10 @@ public class Laaser implements Spawnables{
     
     public Rectangle getBoundsHorizontal() {
         return new Rectangle (xe+3, ye+3, 100, 600);
+    }
+    
+    public Rectangle getBeam() {
+        return beam;
     }
 
     @Override
@@ -172,10 +175,10 @@ public class Laaser implements Spawnables{
     public Image getImageVert() {
         return image3;
     }
-    
     @Override
     public void randomizeXY() {
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));
     }
+
 }

@@ -30,7 +30,6 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.TimerTask;
 import javax.swing.ImageIcon;
-import javafx.application.Platform;
 
 /**
  *
@@ -52,6 +51,7 @@ public final class Board extends JPanel implements ActionListener {
     private Life HP;
     private Shield shield;
     private Bombs bombs;
+    private Laaser laser;
     private boolean ingame;
     private MainFrame frame;
     private ImageIcon Ironpic;
@@ -111,6 +111,7 @@ public final class Board extends JPanel implements ActionListener {
         HP = new Life();
         shield = new Shield();
         bombs = new Bombs();
+        laser = new Laaser();
         powerUpCD(); //piilottaa powerupit alussa
 
         snack = new Snack();
@@ -221,6 +222,9 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(bombs.getImage(1), bombs.getX(), bombs.getY(), this);
         g2d.drawImage(bombs.getImage(2), bombs.getX2(), bombs.getY2(), this);
         g2d.drawImage(bombs.getImage(3), bombs.getX3(), bombs.getY3(), this);
+        g2d.drawImage(laser.getImage(), laser.getX(), laser.getY(), this);
+        g2d.drawImage(laser.getImageHori(), laser.getXe2(), laser.getYe2(), this);
+        g2d.drawImage(laser.getImageVert(), laser.getXe3(), laser.getYe3(), this);
         g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
         g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
         if (worm.getShield(worm)) {
@@ -316,6 +320,8 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle psh = shield.getBounds();
         Rectangle pb = bombs.getBounds();
         Ellipse2D pb2 = bombs.getBounds2();
+        Rectangle pla = laser.getBounds();
+        Rectangle beam = laser.getBounds();
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
@@ -329,7 +335,7 @@ public final class Board extends JPanel implements ActionListener {
                 } else {
                     System.out.println("Blue dead");
                 }
-                worm2.setLife(worm2.getLife() - 1);
+                Life.loseLife(worm2);
             }
         }
 
@@ -345,7 +351,7 @@ public final class Board extends JPanel implements ActionListener {
                 } else {
                     System.out.println("Red dead");
                 }
-                worm.setLife(worm.getLife() - 1);
+                Life.loseLife(worm);
             }
         }
 
@@ -388,7 +394,14 @@ public final class Board extends JPanel implements ActionListener {
         if (pb2.intersects(Matokuutio)) {
             bombs.damage(worm);
         }
-        
+        if (pla.intersects(Matokuutio)) {
+            laser.onPickup(worm, worm2);
+            beam = laser.getBeam();
+            powerUpCD();
+        }
+        if(beam.intersects(Matokuutio)) {
+            laser.damage(worm);
+        }
 
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5 || worm.getY() > 550) {
             System.out.println("PUNASEE SATTU");
@@ -440,7 +453,14 @@ public final class Board extends JPanel implements ActionListener {
         if (pb2.intersects(Matokuutio2)) {
             bombs.damage(worm2);
         }
-
+        if(pla.intersects(Matokuutio2)) {
+            laser.onPickup(worm2, worm);
+            beam = laser.getBeam();
+            powerUpCD();
+        }
+        if(beam.intersects(Matokuutio2)) {
+            laser.damage(worm2);
+        }
         if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) {
             System.out.println("SINISEE SATTU");
             if (worm2.getLife() > 1) {
@@ -512,14 +532,20 @@ public final class Board extends JPanel implements ActionListener {
         bombs.setY2(-1000);
         bombs.setX3(-1000);
         bombs.setY3(-1000);
-
+        laser.setY(-100);
+        laser.setX(-100);
+        laser.setX2(-1000);
+        laser.setY2(-1000);
+        laser.setX3(-1000);
+        laser.setY3(-1000);
+        
         java.util.Timer timer2 = new java.util.Timer();
         timer2.schedule(new TimerTask() {
 
             @Override
             public void run() {
                 
-                int n = 0;// (int) (Math.random()*6);
+                int n = 6;// (int) (Math.random()*6);
                 
                 switch (n) {
                     case 0:
@@ -539,7 +565,8 @@ public final class Board extends JPanel implements ActionListener {
                         break;
                     case 5:
                         bombs.randomizeXY();
-                        
+                    case 6:
+                        laser.randomizeXY();
                     default:
                         System.out.println("WHAT");
                 }
