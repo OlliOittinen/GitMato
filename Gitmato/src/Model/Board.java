@@ -47,7 +47,7 @@ public final class Board extends JPanel implements ActionListener {
     private Snack snack;
     private Faster faster;
     private Slower slower;
-    private Reverse reverse;
+    private Confuse reverse;
     private Life HP;
     private Shield shield;
     private Bombs bombs;
@@ -107,7 +107,7 @@ public final class Board extends JPanel implements ActionListener {
 
         faster = new Faster();
         slower = new Slower();
-        reverse = new Reverse();
+        reverse = new Confuse();
         HP = new Life();
         shield = new Shield();
         bombs = new Bombs();
@@ -380,7 +380,7 @@ public final class Board extends JPanel implements ActionListener {
         }
 
         if (pr.intersects(Matokuutio)) {
-            reverse.reverse(worm, worm2);
+            reverse.confuse(worm, worm2);
             powerUpCD();
         }
 
@@ -439,7 +439,7 @@ public final class Board extends JPanel implements ActionListener {
         }
 
         if (pr.intersects(Matokuutio2)) {
-            reverse.reverse(worm2, worm);
+            reverse.confuse(worm2, worm);
             powerUpCD();
         }
 
@@ -552,11 +552,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
                 
-<<<<<<< HEAD
                 int n = 6;// (int) (Math.random()*6);
-=======
-                int n = (int) (Math.random()*6);
->>>>>>> 81c7a3f41a0565ff3e126f9fe182d0781b122537
                 
                 switch (n) {
                     case 0:
@@ -578,8 +574,6 @@ public final class Board extends JPanel implements ActionListener {
                         bombs.randomizeXY();
                     case 6:
                         laser.randomizeXY();
-                    default:
-                        System.out.println("WHAT");
                 }
 
             }
