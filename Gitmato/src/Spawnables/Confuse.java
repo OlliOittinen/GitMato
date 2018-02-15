@@ -16,13 +16,13 @@ import javax.swing.ImageIcon;
  *
  * @author Olli
  */
-public class Reverse implements Spawnables {
+public class Confuse implements Spawnables {
     private int xe;
     private int ye;
     private Image image;
     private Image confusion;
             
-    public void reverse(Worm worm, Worm worm2) {
+    public void confuse(Worm worm, Worm worm2) {
         worm.setPoints(worm.getPoints()+100);
         worm2.setNopeus(worm2.getNopeus()*-1);
         worm2.setReverse(true);
@@ -37,7 +37,7 @@ public class Reverse implements Spawnables {
         }, 5000); //aika (ms), joka odotetaan
     }
     
-    public Reverse() {
+    public Confuse() {
         init();
     }
     
