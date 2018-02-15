@@ -132,10 +132,6 @@ public final class Board extends JPanel implements ActionListener {
         if (!ingame) {
             ingame = true;
             powerUpCD();
-            bombs.setX2(-100);
-            bombs.setY2(-100);
-            bombs.setX3(-100);
-            bombs.setY3(-100);
             snack.randomizeXY();
 
             worms.remove(0);
@@ -509,6 +505,10 @@ public final class Board extends JPanel implements ActionListener {
         shield.setY(-100);
         bombs.setY(-100);
         bombs.setX(-100);
+        bombs.setX2(-1000);
+        bombs.setY2(-1000);
+        bombs.setX3(-1000);
+        bombs.setY3(-1000);
 
         java.util.Timer timer2 = new java.util.Timer();
         timer2.schedule(new TimerTask() {

@@ -54,17 +54,17 @@ public class Bombs implements Spawnables {
     public void init() {
         ImageIcon kuva = new ImageIcon("src/Images/Bombs(800-600).png");
         image = kuva.getImage();
-        ImageIcon kuva2 = new ImageIcon("src/Images/Target.png");
+        ImageIcon kuva2 = new ImageIcon("src/Images/Target2.png");
         image2 = kuva2.getImage();
-        ImageIcon kuva3 = new ImageIcon("src/Images/firestorm.png");
+        ImageIcon kuva3 = new ImageIcon("src/Images/firestorm2.png");
         image3 = kuva3.getImage();
             
         setX(-100);
         setY(-100);
-        setX2(-100);
-        setY2(-100);
-        setX3(-100);
-        setY3(-100);
+        setX2(-1000);
+        setY2(-1000);
+        setX3(-1000);
+        setY3(-1000);
     }
     
     public void bombZone(){
@@ -80,14 +80,14 @@ public class Bombs implements Spawnables {
             public void run() {
                 setX3(getX2());
                 setY3(getY2());
-                setX2(-100);
-                setY2(-100);
+                setX2(-1000);
+                setY2(-1000);
                 lethal = true;
                 timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    setX3(-100);
-                    setY3(-100);
+                    setX3(-1000);
+                    setY3(-1000);
                     }
                 }, 3000);
             }
@@ -99,7 +99,7 @@ public class Bombs implements Spawnables {
         return new Rectangle(xe+3, ye+3, 30, 30);
     }
     public Ellipse2D getBounds2() {
-        return new Ellipse2D.Double(xe3+3, ye3+3, 100, 100);
+        return new Ellipse2D.Double(xe3+3, ye3+3, 200, 200);
     }
 
     @Override
