@@ -195,17 +195,6 @@ public final class Board extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         drawPisteet(g);
 
-        
-        g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);
-        g2d.drawImage(faster.getImage(), faster.getX(), faster.getY(), this);
-        g2d.drawImage(slower.getImage(), slower.getX(), slower.getY(), this);
-        g2d.drawImage(reverse.getImage(), reverse.getX(), reverse.getY(), this);
-        g2d.drawImage(HP.getImage(), HP.getX(), HP.getY(), this);
-        g2d.drawImage(shield.getImage(), shield.getX(), shield.getY(), this);
-        g2d.drawImage(bombs.getImage(1), bombs.getX(), bombs.getY(), this);
-        g2d.drawImage(bombs.getImage(2), bombs.getX2(), bombs.getY2(), this);
-        g2d.drawImage(bombs.getImage(3), bombs.getX3(), bombs.getY3(), this);
-
         //tarkistetaan onko häntiä piirrettäväksi
         if (tailNro > 0) {
             for (int i = 0; i < body.size(); i++) {
@@ -234,7 +223,12 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(bombs.getImage(3), bombs.getX3(), bombs.getY3(), this);
         g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
         g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
-        
+        if (worm.getShield(worm)) {
+        g2d.drawImage(worm.getShieldImage(), worm.getX()-5, worm.getY()-4, this);
+        }
+        if (worm2.getShield(worm2)) {
+        g2d.drawImage(worm2.getShieldImage(), worm2.getX()-5, worm2.getY()-4, this);
+        }
         if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
             drawGameOver(g);
         }
@@ -525,7 +519,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
                 
-                int n = (int) (Math.random()*6);
+                int n = 0;// (int) (Math.random()*6);
                 
                 switch (n) {
                     case 0:

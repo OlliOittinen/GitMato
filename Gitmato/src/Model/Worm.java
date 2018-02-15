@@ -36,6 +36,7 @@ public class Worm {
     private ImageIcon shielddown;
     private ImageIcon shieldleft;
     private ImageIcon shieldright;
+    private ImageIcon shieldeffect = new ImageIcon("src/Images/ShieldEffect.png");
 
     
     double nopeus = 2;
@@ -60,10 +61,6 @@ public class Worm {
              wormdown = new ImageIcon("src/Images/RedWormDown(800x600).png");
              wormleft = new ImageIcon("src/Images/RedWormLeft(800x600).png");
              wormright = new ImageIcon("src/Images/RedWormRight(800x600).png");
-             shieldup = new ImageIcon("src/Images/RedWormUpShield.png");
-             shieldleft = new ImageIcon("src/Images/RedWormLeftShield.png");
-             shieldright = new ImageIcon("src/Images/RedWormRightShield.png");
-             shielddown = new ImageIcon("src/Images/RedWormDownShield.png");
             x = 200;
             y = 279; //oma puoli kentästä-kuvan korkeus
         }
@@ -72,11 +69,6 @@ public class Worm {
              wormdown = new ImageIcon("src/Images/BlueWormDown(800x600).png");
              wormleft = new ImageIcon("src/Images/BlueWormLeft(800x600).png");
              wormright = new ImageIcon("src/Images/BlueWormRight(800x600).png");
-             shieldup = new ImageIcon("src/Images/BlueWormUpShield.png");             
-             shieldleft = new ImageIcon("src/Images/BlueWormLeftShield.png");
-             shieldright = new ImageIcon("src/Images/BlueWormRightShield.png");
-             shielddown = new ImageIcon("src/Images/BlueWormDownShield.png");
-
             x = 565; //kentän puoliväli-kuvan leveys
             y = 279; //oma puoli kentästä-kuvan korkeus
         }
@@ -115,6 +107,10 @@ public class Worm {
 
     public Image getImage() {
         return image;
+    }
+    public Image getShieldImage() {
+       Image img = shieldeffect.getImage();
+       return img;
     }
     
     public void setImage(Image img) {
@@ -166,43 +162,26 @@ public class Worm {
     
     public void moveCont(){
         //if shield is NOT active on worm
-        if(suunta == 1 && !(getShield(this))){
+        if(suunta == 1){
             setImage (wormleft.getImage());
             dx = -1 * nopeus;
         }
         
-        if(suunta == 2 && !(getShield(this))){
+        if(suunta == 2){
             setImage (wormright.getImage());
             dx = 1 * nopeus;
         }
         
-        if(suunta == 3 && !(getShield(this))){
+        if(suunta == 3){
             setImage (wormup.getImage());
             dy = -1 * nopeus;
             
         }
         
-        if(suunta == 4 && !(getShield(this))){
+        if(suunta == 4){
             setImage (wormdown.getImage());
             dy = 1 * nopeus;
             
-        }
-        //if shield IS active on worm
-        if(suunta == 1 && (getShield(this))){
-            setImage (shieldleft.getImage());
-            dx = -1 * nopeus;
-        }
-        if(suunta == 2 && (getShield(this))){
-            setImage (shieldright.getImage());
-            dx = 1 * nopeus;
-        }
-        if(suunta == 3 && (getShield(this))){
-            setImage (shieldup.getImage());
-            dy = -1 * nopeus;
-        }
-        if(suunta == 4 && (getShield(this))){
-            setImage (shielddown.getImage());
-            dy = 1 * nopeus;
         }
     }
     
