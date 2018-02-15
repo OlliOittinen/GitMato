@@ -10,6 +10,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 import Model.Board;
+import java.util.Timer;
+import java.util.TimerTask;
 /**
  *
  * @author maxki
@@ -19,17 +21,33 @@ public class Life implements Spawnables {
     private int xe;
     private int ye;
     private Image image;
-    private Board board;
     
     public void Life(Worm worm) {
         worm.setPoints(worm.getPoints()+100);
-        worm.setLife(worm.getLife()+1);
+        addLife(worm);
     }
     
     public Life() {
         init();
     }
     
+    public static void addLife (Worm worm) {
+        worm.setLife(worm.getLife()+1);
+    }
+    
+    public static void loseLife(Worm worm) {
+        worm.setLife(worm.getLife()-1);
+        worm.setShield(true);
+        
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                worm.setShield(false);
+                }
+            }, 1000);
+    }
+     
     @Override
     public void loadImage(String imageName) {
         ImageIcon ii = new ImageIcon(imageName);
