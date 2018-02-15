@@ -107,7 +107,7 @@ public final class Board extends JPanel implements ActionListener {
         reverse = new Reverse();
         HP = new Life();
         shield = new Shield();
-        laser = new Laaser(this);
+        laser = new Laaser();
         powerUpCD(); //piilottaa powerupit alussa
 
         snack = new Snack();
@@ -307,7 +307,9 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle pr = reverse.getBounds();
         Rectangle pl = HP.getBounds();
         Rectangle psh = shield.getBounds();
-        Rectangle l = laser.getBounds();
+        Rectangle lpu = laser.getBounds();
+        Rectangle lh = laser.getBoundsHorizontal();
+        Rectangle lv = laser.getBoundsVertical();
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
@@ -373,9 +375,13 @@ public final class Board extends JPanel implements ActionListener {
             powerUpCD();
         }
         
-        if(l.intersects(Matokuutio)) {
-            laser.Laaser(worm, worm2);
+        if(lpu.intersects(Matokuutio)) {
+            laser.onPickup(worm, worm2);
             powerUpCD();
+        }
+        
+        if (lh.intersects(Matokuutio) || lv.intersects(Matokuutio)) {
+            Life.loseLife(worm);
         }
         
         //koskeeko seinään
@@ -422,10 +428,15 @@ public final class Board extends JPanel implements ActionListener {
             powerUpCD();
         }
         
-        if (l.intersects(Matokuutio2)) {
-            laser.Laaser(worm2, worm);
+        if (lpu.intersects(Matokuutio2)) {
+            laser.onPickup(worm2, worm);
             powerUpCD();
         }
+        
+        if (lh.intersects(Matokuutio2) || lv.intersects(Matokuutio2)) {
+            Life.loseLife(worm2);
+        }
+        
         //koskeeko seinään
         if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) {
             System.out.println("SINISEE SATTU");

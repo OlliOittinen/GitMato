@@ -24,52 +24,16 @@ public class Laaser implements Spawnables{
     private int xe;
     private int ye;
     private Image image;
-    private Board board;
+    private int xe2;
+    private int ye2;
+    private Image image2;
+    private Image image3;
     
-    public Laaser(Board board) {
+    public Laaser() {
         init();
     }
     
-    public void Laaser(Worm worm, Worm worm2) {
-        Timer timer = new Timer();
-        worm.setPoints(worm.getPoints()+100);
-        
-        int wx = worm2.getX();
-        int wy = worm2.getY();
-        
-        Rectangle laserpointer = new Rectangle(); //laserosoitin, joka varoittaa pelaajia tulevasta
-        laserpointer.setLocation(wx, wy);
-        if((wx<400 && wy>300) || (wx>400 && wy>300)){   //jos mato jommassa kummassa ylänurkassa
-            laserpointer.setSize(100, 600); //leveys, korkeus
-        }
-        else { //jos alanurkassa
-            laserpointer.setSize(800, 100);
-        }
-        
-        Graphics g = board.getGraphics();
-        g.setColor(Color.red); //väri, jolla piirretään
-        board.paintImmediately(laserpointer);
 
-        //buffer laaserille, jotta ei tapa heti vaan odottaa hetken
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                //mitä tehdään ajan jälkeen
-                
-                Rectangle laser = new Rectangle(); //oikea laser, joka ammutaan
-                laser.setBounds(laserpointer);
-        
-                if (laser.intersects(worm.getBounds())) { //jos osuu matoon, joka otti powerupin
-                    Life.loseLife(worm);
-                }
-                else if (laser.intersects(worm2.getBounds())) { //jos osuu toiseen matoon
-                    Life.loseLife(worm2);
-                }
-            }
-        }, 3000); //aika (ms), joka odotetaan
-        
-
-    }
     
     @Override
     public void loadImage(String imageName) {
@@ -81,14 +45,50 @@ public class Laaser implements Spawnables{
     public void init() {
         ImageIcon kuva = new ImageIcon("src/Images/Bombs(800-600).png");
         image = kuva.getImage();
+        ImageIcon kuva2 = new ImageIcon("src/Images/IronHorizontal.png");
+        image2 = kuva2.getImage();
+        ImageIcon kuva3 = new ImageIcon("src/Images/IronVertical.png");
+        image3 = kuva3.getImage();
             
         setX(-100);
         setY(-100);
+        setX2(-100);
+        setY2(-100);
     }
 
+    
+    public void onPickup(Worm worm, Worm worm2) {
+        worm.setPoints(worm.getPoints()+100);
+        
+        //hae kohteen nykysijainti, tallenna muuttujiin
+        int currentLocX = worm2.getX();
+        int currentLocY = worm2.getY();
+        
+        //horisontaalinen vai vertikaalinen säde, random arvo 0...1
+        double r = Math.random();
+        //hae luotavan säteen rajat, laita sijainti 2. madon nykypaikkaan
+        Rectangle beam;
+        if (r<0.5) {
+            beam = getBoundsHorizontal();
+            beam.setFrameFromCenter(currentLocX, currentLocY, (currentLocX+800)/2, 0);
+        }
+        else {
+            beam = getBoundsVertical();
+            beam.setFrameFromCenter(currentLocX, currentLocY, 0, (currentLocY+600)/2);
+        }   
+    }
+    //ikoni powerupille
     @Override
     public Rectangle getBounds() {
         return new Rectangle(xe+3, ye+3, 30, 30);
+    }
+    
+    public Rectangle getBoundsVertical() {
+        return new Rectangle(xe+3, ye+3, 800, 100);
+    }
+    
+    public Rectangle getBoundsHorizontal() {
+        return new Rectangle (xe+3, ye+3, 100, 600);
     }
 
     @Override
@@ -105,16 +105,29 @@ public class Laaser implements Spawnables{
     public void setX(int x) {
         this.xe = x;
     }
+    
+    public void setX2(int x) {
+        this.xe2 = x;
+    }
 
     @Override
     public void setY(int y) {
         this.ye = y;
     }
-
+    
+    public void setY2(int y) {
+        this.ye2 = y;
+    }
+    
     @Override
     public Image getImage() {
         return image;
     }
+    
+    public Image getImage2() {
+        return image2;
+    }
+    
     @Override
     public void randomizeXY() {
         setX((int) (Math.random() * 750));

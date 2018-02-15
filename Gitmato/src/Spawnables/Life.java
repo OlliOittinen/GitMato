@@ -10,6 +10,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 import Model.Board;
+import java.util.Timer;
+import java.util.TimerTask;
 /**
  *
  * @author maxki
@@ -34,7 +36,13 @@ public class Life implements Spawnables {
     }
     
     public static void loseLife(Worm worm) {
-        worm.setLife(worm.getLife()-1);
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                worm.setLife(worm.getLife()-1);
+                }
+            }, 1000);
     }
      
     @Override
