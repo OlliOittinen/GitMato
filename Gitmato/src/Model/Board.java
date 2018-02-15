@@ -26,7 +26,6 @@ import java.util.List;
 import Controller.PlayerController;
 import GUI.MainFrame;
 import java.awt.Image;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.TimerTask;
 import javax.swing.ImageIcon;
@@ -193,20 +192,6 @@ public final class Board extends JPanel implements ActionListener {
 
         Graphics2D g2d = (Graphics2D) g;
         drawPisteet(g);
-        
-        g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);
-        g2d.drawImage(faster.getImage(), faster.getX(), faster.getY(), this);
-        g2d.drawImage(slower.getImage(), slower.getX(), slower.getY(), this);
-        g2d.drawImage(reverse.getImage(), reverse.getX(), reverse.getY(), this);
-        g2d.drawImage(HP.getImage(), HP.getX(), HP.getY(), this);
-        g2d.drawImage(shield.getImage(), shield.getX(), shield.getY(), this);
-<<<<<<< HEAD
-        g2d.drawImage(laser.getImage(), laser.getX(), laser.getY(), this);
-=======
-        g2d.drawImage(bombs.getImage(1), bombs.getX(), bombs.getY(), this);
-        g2d.drawImage(bombs.getImage(2), bombs.getX2(), bombs.getY2(), this);
-        g2d.drawImage(bombs.getImage(3), bombs.getX3(), bombs.getY3(), this);
->>>>>>> 93925f2fab3779a8c6bf21d2a56701041c458ff7
 
         //tarkistetaan onko häntiä piirrettäväksi
         if (tailNro > 0) {
@@ -224,16 +209,13 @@ public final class Board extends JPanel implements ActionListener {
                 //System.out.println("tätä tehdään");
             }
         }
-        // piirretään power-upit matojen päälle, jotta ne ovat helpommit nähtävissä
         g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);
         g2d.drawImage(faster.getImage(), faster.getX(), faster.getY(), this);
         g2d.drawImage(slower.getImage(), slower.getX(), slower.getY(), this);
         g2d.drawImage(reverse.getImage(), reverse.getX(), reverse.getY(), this);
         g2d.drawImage(HP.getImage(), HP.getX(), HP.getY(), this);
         g2d.drawImage(shield.getImage(), shield.getX(), shield.getY(), this);
-        g2d.drawImage(bombs.getImage(1), bombs.getX(), bombs.getY(), this);
-        g2d.drawImage(bombs.getImage(2), bombs.getX2(), bombs.getY2(), this);
-        g2d.drawImage(bombs.getImage(3), bombs.getX3(), bombs.getY3(), this);
+        g2d.drawImage(laser.getImage(), laser.getX(), laser.getY(), this);
         g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
         g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
         
@@ -323,14 +305,9 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle pr = reverse.getBounds();
         Rectangle pl = HP.getBounds();
         Rectangle psh = shield.getBounds();
-<<<<<<< HEAD
         Rectangle lpu = laser.getBounds();
         Rectangle lh = laser.getBoundsHorizontal();
         Rectangle lv = laser.getBoundsVertical();
-=======
-        Rectangle pb = bombs.getBounds();
-        Ellipse2D pb2 = bombs.getBounds2();
->>>>>>> 93925f2fab3779a8c6bf21d2a56701041c458ff7
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
@@ -400,14 +377,9 @@ public final class Board extends JPanel implements ActionListener {
             laser.onPickup(worm, worm2);
             powerUpCD();
         }
-<<<<<<< HEAD
         
         if (lh.intersects(Matokuutio) || lv.intersects(Matokuutio)) {
             Life.loseLife(worm);
-=======
-        if (pb2.intersects(Matokuutio)) {
-            bombs.damage(worm);
->>>>>>> 93925f2fab3779a8c6bf21d2a56701041c458ff7
         }
         
         //koskeeko seinään
@@ -458,14 +430,9 @@ public final class Board extends JPanel implements ActionListener {
             laser.onPickup(worm2, worm);
             powerUpCD();
         }
-<<<<<<< HEAD
         
         if (lh.intersects(Matokuutio2) || lv.intersects(Matokuutio2)) {
             Life.loseLife(worm2);
-=======
-        if (pb2.intersects(Matokuutio2)) {
-            bombs.damage(worm2);
->>>>>>> 93925f2fab3779a8c6bf21d2a56701041c458ff7
         }
         
         //koskeeko seinään
@@ -534,17 +501,8 @@ public final class Board extends JPanel implements ActionListener {
         HP.setY(-100);
         shield.setX(-100);
         shield.setY(-100);
-<<<<<<< HEAD
         laser.setX(-100);
         laser.setY(-100);
-=======
-        bombs.setY(-100);
-        bombs.setX(-100);
-        bombs.setX2(-1000);
-        bombs.setY2(-1000);
-        bombs.setX3(-1000);
-        bombs.setY3(-1000);
->>>>>>> 93925f2fab3779a8c6bf21d2a56701041c458ff7
 
         java.util.Timer timer2 = new java.util.Timer();
         timer2.schedule(new TimerTask() {
@@ -552,11 +510,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
                 
-<<<<<<< HEAD
                 //int n = (int) (Math.random()*5);
-=======
-                int n = (int) (Math.random()*6);
->>>>>>> 93925f2fab3779a8c6bf21d2a56701041c458ff7
                 
                 int n = 5;
                 switch (n) {
@@ -576,12 +530,7 @@ public final class Board extends JPanel implements ActionListener {
                         HP.randomizeXY();
                         break;
                     case 5:
-<<<<<<< HEAD
                         laser.randomizeXY();
-=======
-                        bombs.randomizeXY();
-                        
->>>>>>> 93925f2fab3779a8c6bf21d2a56701041c458ff7
                     default:
                         System.out.println("WHAT");
                 }

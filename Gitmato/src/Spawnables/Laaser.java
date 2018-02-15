@@ -27,6 +27,10 @@ public class Laaser implements Spawnables{
     private int xe2;
     private int ye2;
     private Image image2;
+    private int xe3;
+
+
+    private int ye3;
     private Image image3;
     
     public Laaser() {
@@ -61,8 +65,8 @@ public class Laaser implements Spawnables{
         worm.setPoints(worm.getPoints()+100);
         
         //hae kohteen nykysijainti, tallenna muuttujiin
-        int currentLocX = worm2.getX();
-        int currentLocY = worm2.getY();
+        int wormLocX = worm2.getX();
+        int wormLocY = worm2.getY();
         
         //horisontaalinen vai vertikaalinen säde, random arvo 0...1
         double r = Math.random();
@@ -70,11 +74,11 @@ public class Laaser implements Spawnables{
         Rectangle beam;
         if (r<0.5) {
             beam = getBoundsHorizontal();
-            beam.setFrameFromCenter(currentLocX, currentLocY, (currentLocX+800)/2, 0);
+            beam.setFrameFromCenter(wormLocX, wormLocY, (wormLocX+800)/2, 0);
         }
         else {
             beam = getBoundsVertical();
-            beam.setFrameFromCenter(currentLocX, currentLocY, 0, (currentLocY+600)/2);
+            beam.setFrameFromCenter(wormLocX, wormLocY, 0, (wormLocY+600)/2);
         }   
     }
     //ikoni powerupille
@@ -100,7 +104,23 @@ public class Laaser implements Spawnables{
     public int getY() {
         return ye;
     }
+    
+    public int getXe2() {
+        return xe2;
+    }
 
+    public int getYe2() {
+        return ye2;
+    }
+
+    public int getXe3() {
+        return xe3;
+    }
+
+    public int getYe3() {
+        return ye3;
+    }
+    
     @Override
     public void setX(int x) {
         this.xe = x;
@@ -108,6 +128,10 @@ public class Laaser implements Spawnables{
     
     public void setX2(int x) {
         this.xe2 = x;
+    }
+    
+    public void setX3(int x) {
+        this.xe3 = x;
     }
 
     @Override
@@ -119,13 +143,20 @@ public class Laaser implements Spawnables{
         this.ye2 = y;
     }
     
+    public void setY3(int y) {
+        this.ye3 = y;
+    }
     @Override
     public Image getImage() {
         return image;
     }
     
-    public Image getImage2() {
+    public Image getImageHori() {
         return image2;
+    }
+    
+    public Image getImageVert() {
+        return image3;
     }
     
     @Override
