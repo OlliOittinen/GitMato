@@ -28,10 +28,9 @@ public class Laaser implements Spawnables{
     private int ye2;
     private Image image2;
     private int xe3;
-
-
     private int ye3;
     private Image image3;
+    private boolean lethal = false;
     
     public Laaser() {
         init();
@@ -45,6 +44,12 @@ public class Laaser implements Spawnables{
         image = ii.getImage();
     }
 
+    public void damage(Worm worm) {
+        if (lethal) {
+            Life.loseLife(worm);
+        }
+    }
+    
     @Override
     public void init() {
         ImageIcon kuva = new ImageIcon("src/Images/Bombs(800-600).png");
@@ -80,6 +85,15 @@ public class Laaser implements Spawnables{
             beam = getBoundsVertical();
             beam.setFrameFromCenter(wormLocX, wormLocY, 0, (wormLocY+600)/2);
         }   
+        //ajastin säteelle, jonka jälkeen säteestä tappava
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                lethal = true;
+                }
+            }, 2000);
+        
     }
     //ikoni powerupille
     @Override

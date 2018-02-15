@@ -36,11 +36,14 @@ public class Life implements Spawnables {
     }
     
     public static void loseLife(Worm worm) {
+        worm.setLife(worm.getLife()-1);
+        worm.setShield(true);
+        
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                worm.setLife(worm.getLife()-1);
+                worm.setShield(false);
                 }
             }, 1000);
     }

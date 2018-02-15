@@ -379,7 +379,7 @@ public final class Board extends JPanel implements ActionListener {
         }
         
         if (lh.intersects(Matokuutio) || lv.intersects(Matokuutio)) {
-            Life.loseLife(worm);
+            laser.damage(worm);
         }
         
         //koskeeko seinään
@@ -432,7 +432,7 @@ public final class Board extends JPanel implements ActionListener {
         }
         
         if (lh.intersects(Matokuutio2) || lv.intersects(Matokuutio2)) {
-            Life.loseLife(worm2);
+            laser.damage(worm2);
         }
         
         //koskeeko seinään
