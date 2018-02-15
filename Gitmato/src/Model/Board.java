@@ -112,7 +112,7 @@ public final class Board extends JPanel implements ActionListener {
         shield = new Shield();
         bombs = new Bombs();
         powerUpCD(); //piilottaa powerupit alussa
-
+        
         snack = new Snack();
         timer = new Timer(DELAY, this);
         timer.start();
@@ -130,9 +130,9 @@ public final class Board extends JPanel implements ActionListener {
 
     public void restartGame() {
         if (!ingame) {
+            snack.init();
             ingame = true;
             powerUpCD();
-            snack.init();
 
             worms.remove(0);
             worms.remove(0);
@@ -263,7 +263,6 @@ public final class Board extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         checkCollisions();
         worm.move();
         worm.moveCont();

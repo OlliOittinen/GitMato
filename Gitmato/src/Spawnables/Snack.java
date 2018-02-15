@@ -26,18 +26,10 @@ public class Snack implements Spawnables{
     
     @Override
     public void init() {
-        setX(-100);
-        setY(-100);
         ImageIcon kuva = new ImageIcon("src/Images/Apple(800x600).png");
         image = kuva.getImage();
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                setX((int) (Math.random() * 750));
-                setY((int) (Math.random() * 550));
-            }
-        }, 2000);
+        setX( 600-(int)(Math.random()*400));
+        setY(200);
     }
 @Override    
     public void loadImage(String imageName) {
