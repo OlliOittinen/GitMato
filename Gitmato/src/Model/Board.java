@@ -132,7 +132,7 @@ public final class Board extends JPanel implements ActionListener {
         if (!ingame) {
             ingame = true;
             powerUpCD();
-            snack.randomizeXY();
+            snack.init();
 
             worms.remove(0);
             worms.remove(0);
