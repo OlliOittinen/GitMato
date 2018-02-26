@@ -144,7 +144,10 @@ public final class Board extends JPanel implements ActionListener {
         ImageIcon kuvamato = new ImageIcon("src/Images/BlueBG800x600.png");
         background = kuvamato.getImage();
         System.out.println("In initBoard");
-
+        if(yksinpeli == true){
+            worm2.setSuuntaAdv(1);
+            worm2.setSuunta(3);
+        }
     }
 
     public void restartGame() {
@@ -171,7 +174,10 @@ public final class Board extends JPanel implements ActionListener {
             tailNro = 0;
             tailNro2 = 0;
             Sound.Music.sound1.loop();
-
+            if(yksinpeli == true){
+                worm2.setSuuntaAdv(1);
+                worm2.setSuunta(3);
+            }
         }
 
     }
@@ -494,8 +500,14 @@ public final class Board extends JPanel implements ActionListener {
             System.out.println("SINISEE SATTU");
             if (worm2.getLife() > 1) {
                 worm2.randomizeXY();
-                worm2.setSuuntaAdv(0);
-                worm2.setSuunta(0);
+                if(yksinpeli == true){
+                    worm2.setSuuntaAdv(1);
+                    worm2.setSuunta(3);
+                }else{
+                    worm2.setSuuntaAdv(0);
+                    worm2.setSuunta(0);
+                }
+                
             }
             worm2.setLife(worm2.getLife() - 1);
             worm2.setPoints(worm2.getPoints()-100);
