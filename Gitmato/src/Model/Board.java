@@ -58,6 +58,7 @@ public final class Board extends JPanel implements ActionListener {
     //Lista Tail paloista
     private final List<Tail> body;
     private final List<Tail> body2;
+    private final List<Spawnables> pickableList;
     //pidetään lukua kuinka monta Tail objektia on.
     private int tailNro = 0;
     private int tailNro2 = 0;
@@ -84,7 +85,9 @@ public final class Board extends JPanel implements ActionListener {
         this.yksinpeli = pelimoodi;
 
         //alustetaan listat
+        pickableList = new ArrayList<>();
         Board.worms = new ArrayList<>();
+        
         this.cordinates = new ArrayList<>();
         this.body = new ArrayList<>();
         this.p = new Point2D.Double(0, 0);
@@ -99,14 +102,12 @@ public final class Board extends JPanel implements ActionListener {
 
     private void initBoard() {
         //TODO: Tähän täytyy tehdä kaikki mahdolliset pelimuodot
-
+        
+        
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
-
-        worms.add(worm = new Worm(1)); //lista worm olioista
-        worms.add(worm2 = new Worm(2));
-
+        
         faster = new Faster();
         slower = new Slower();
         reverse = new Confuse();
@@ -114,9 +115,23 @@ public final class Board extends JPanel implements ActionListener {
         shield = new Shield();
         bombs = new Bombs();
         laser = new Laaser();
+        
+        
         powerUpCD(); //piilottaa powerupit alussa
         
         snack = new Snack();
+        
+        pickableList.add(faster);
+        pickableList.add(slower);
+        pickableList.add(reverse);
+        pickableList.add(HP);
+        pickableList.add(shield);
+        pickableList.add(bombs);
+        pickableList.add(laser);
+        pickableList.add(snack);
+        worms.add(worm = new Worm(1)); //lista worm olioista
+        worms.add(worm2 = new Worm(2));
+        
         timer = new Timer(DELAY, this);
         timer.start();
         ingame = true;
@@ -587,54 +602,59 @@ public final class Board extends JPanel implements ActionListener {
     }
     
     public void BlueAIBot(){
-         
-            if(worms.get(1).getX() < (snack.getX() + 10) && worms.get(1).getX() > (snack.getX() - 10)){
-                if(worms.get(1).getX() < snack.getX()){
-                    worms.get(1).setSuunta(4);
+         for(int i = 0; i < pickableList.size(); i++){
+            
+            if(worms.get(1).getX() < (pickableList.get(i).getX() + 10) && worms.get(1).getX() > (pickableList.get(i).getX() - 10)){
+                if(worms.get(1).getX() < pickableList.get(i).getX()){
+                    worms.get(1).setSuunta(3);
                     worms.get(1).setSuuntaAdv(1);
                     //ylös
                 }else{
-                    worms.get(1).setSuunta(3);
+                    worms.get(1).setSuunta(4);
                     worms.get(1).setSuuntaAdv(1);
                     //alas
                 }
                 
             }
+         
             
-            if(worms.get(1).getY() < (snack.getY() + 10) && worms.get(1).getY() > (snack.getY() - 10)){
-                if(worms.get(1).getY() < snack.getY()){
-                    worms.get(1).setSuunta(1);
-                    worms.get(1).setSuuntaAdv(2);
-                    //oikea
-                }else{
-                    worms.get(1).setSuunta(2);
-                    worms.get(1).setSuuntaAdv(2);
-                    //vasen
+            if(worms.get(1).getY() < (pickableList.get(i).getY() + 10) && worms.get(1).getY() > (pickableList.get(i).getY() - 10)){
+                
+                    if(worms.get(1).getY() < pickableList.get(i).getY()){
+                        worms.get(1).setSuunta(2);
+                        worms.get(1).setSuuntaAdv(2);
+                        //oikea
+                    }else{
+                        worms.get(1).setSuunta(1);
+                        worms.get(1).setSuuntaAdv(2);
+                        //vasen
+                    }
+
                 }
-                
             }
+            
     
-            if(worms.get(1).getX() < 20 && worms.get(1).getSuunta() != 3){
+            if(worms.get(1).getX() < 20 && worms.get(1).getSuunta() != 4){
                 
-                worms.get(1).setSuunta(3);
+                worms.get(1).setSuunta(4);
                 worms.get(1).setSuuntaAdv(1);
                 worms.get(1).setX(25);
             }
 
-            if(worms.get(1).getX() > 725 && worms.get(1).getSuunta() != 4){
-                worms.get(1).setSuunta(4);
+            if(worms.get(1).getX() > 725 && worms.get(1).getSuunta() != 3){
+                worms.get(1).setSuunta(3);
                 worms.get(1).setSuuntaAdv(1);
                 worms.get(1).setX(720);
             }
 
-            if(worms.get(1).getY() > 545 && worms.get(1).getSuunta() != 1){
-                worms.get(1).setSuunta(1);
+            if(worms.get(1).getY() > 545 && worms.get(1).getSuunta() != 2){
+                worms.get(1).setSuunta(2);
                 worms.get(1).setSuuntaAdv(2);
                 worms.get(1).setY(540);
             }
 
-            if(worms.get(1).getY() < 20 && worms.get(1).getSuunta() != 2){
-                worms.get(1).setSuunta(2) ;
+            if(worms.get(1).getY() < 20 && worms.get(1).getSuunta() != 1){
+                worms.get(1).setSuunta(1) ;
                 worms.get(1).setSuuntaAdv(2) ;
                 worms.get(1).setY(25);
             }
@@ -669,7 +689,7 @@ public final class Board extends JPanel implements ActionListener {
                         worms.get(1).setSuunta(2);
                         worms.get(1).setSuuntaAdv(2);
                 }
-                
+            //kek    
             }
             
             Rectangle AIdown = getBoundsDown();
