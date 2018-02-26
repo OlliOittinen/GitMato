@@ -90,6 +90,7 @@ public class PlayerController  {
         
         
         // controlls for player 2 
+        if(yksinpeli == false){
         if (key == KeyEvent.VK_A) {
             
 
@@ -134,7 +135,7 @@ public class PlayerController  {
                         worms.get(1).setSuunta(4);
                         worms.get(1).setSuuntaAdv(1);
                     }
-                
+                }
         }
         
         //GAME RESET

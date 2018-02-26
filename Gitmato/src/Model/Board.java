@@ -331,7 +331,7 @@ public final class Board extends JPanel implements ActionListener {
         }
         repaint();
         
-        if (yksinpeli = true){
+        if (yksinpeli == true){
         BlueAIBot();
         }
     }
