@@ -312,6 +312,7 @@ public final class Board extends JPanel implements ActionListener {
             body2.get(i).setY(y2);
         }
         repaint();
+        BlueAIBot();
     }
 
     public void checkCollisions() {
@@ -577,6 +578,122 @@ public final class Board extends JPanel implements ActionListener {
 
             }
         }, 5000); //aika (ms), joka odotetaan
+    }
+    
+    public void BlueAIBot(){
+         
+            if(worms.get(1).getX() < (snack.getX() + 10) && worms.get(1).getX() > (snack.getX() - 10)){
+                if(worms.get(1).getX() < snack.getX()){
+                    worms.get(1).setSuunta(4);
+                    worms.get(1).setSuuntaAdv(1);
+                    //ylös
+                }else{
+                    worms.get(1).setSuunta(3);
+                    worms.get(1).setSuuntaAdv(1);
+                    //alas
+                }
+                
+            }
+            
+            if(worms.get(1).getY() < (snack.getY() + 10) && worms.get(1).getY() > (snack.getY() - 10)){
+                if(worms.get(1).getY() < snack.getY()){
+                    worms.get(1).setSuunta(1);
+                    worms.get(1).setSuuntaAdv(2);
+                    //oikea
+                }else{
+                    worms.get(1).setSuunta(2);
+                    worms.get(1).setSuuntaAdv(2);
+                    //vasen
+                }
+                
+            }
+    
+            if(worms.get(1).getX() < 20 && worms.get(1).getSuunta() != 3){
+                
+                worms.get(1).setSuunta(3);
+                worms.get(1).setSuuntaAdv(1);
+                worms.get(1).setX(25);
+            }
+
+            if(worms.get(1).getX() > 725 && worms.get(1).getSuunta() != 4){
+                worms.get(1).setSuunta(4);
+                worms.get(1).setSuuntaAdv(1);
+                worms.get(1).setX(720);
+            }
+
+            if(worms.get(1).getY() > 545 && worms.get(1).getSuunta() != 1){
+                worms.get(1).setSuunta(1);
+                worms.get(1).setSuuntaAdv(2);
+                worms.get(1).setY(540);
+            }
+
+            if(worms.get(1).getY() < 20 && worms.get(1).getSuunta() != 2){
+                worms.get(1).setSuunta(2) ;
+                worms.get(1).setSuuntaAdv(2) ;
+                worms.get(1).setY(25);
+            }
+            
+            Rectangle AIleft = getBoundsLeft();
+            for (int i = 0; i < body.size(); i++) {
+                Rectangle MatotailForAI = body.get(i).getBounds();
+                Ellipse2D pb2 = bombs.getBounds2();
+                    if(AIleft.intersects(MatotailForAI) || pb2.intersects(AIleft)) {
+                        worms.get(1).setSuunta(3);
+                        worms.get(1).setSuuntaAdv(1);
+                }
+                
+            }
+            
+            Rectangle AIright = getBoundsRight();
+            for (int i = 0; i < body.size(); i++) {
+                Rectangle MatotailForAI = body.get(i).getBounds();
+                Ellipse2D pb2 = bombs.getBounds2();
+                    if(AIright.intersects(MatotailForAI) || pb2.intersects(AIright)) {
+                        worms.get(1).setSuunta(4);
+                        worms.get(1).setSuuntaAdv(1);
+                }
+                
+            }
+            
+            Rectangle AIup = getBoundsUp();
+            for (int i = 0; i < body.size(); i++) {
+                Rectangle MatotailForAI = body.get(i).getBounds();
+                Ellipse2D pb2 = bombs.getBounds2();
+                    if(AIup.intersects(MatotailForAI) || pb2.intersects(AIright)) {
+                        worms.get(1).setSuunta(2);
+                        worms.get(1).setSuuntaAdv(2);
+                }
+                
+            }
+            
+            Rectangle AIdown = getBoundsDown();
+            for (int i = 0; i < body.size(); i++) {
+                Rectangle MatotailForAI = body.get(i).getBounds();
+                Ellipse2D pb2 = bombs.getBounds2();
+                    if(AIdown.intersects(MatotailForAI) || pb2.intersects(AIright)) {
+                        worms.get(1).setSuunta(1);
+                        worms.get(1).setSuuntaAdv(2);
+                }
+                
+            }
+
+    }
+
+
+    public Rectangle getBoundsLeft() {
+        return new Rectangle(worms.get(1).getX()-50, worms.get(1).getY(), 35, 42);
+    }
+    
+    public Rectangle getBoundsRight() {
+        return new Rectangle(worms.get(1).getX(), worms.get(1).getY(), 85, 42);
+    }
+    
+    public Rectangle getBoundsUp() {
+        return new Rectangle(worms.get(1).getX(), worms.get(1).getY()-50, 35, 42);
+    }
+    
+    public Rectangle getBoundsDown() {
+        return new Rectangle(worms.get(1).getX(), worms.get(1).getY(), 35, 92);
     }
     
 }
