@@ -123,6 +123,7 @@ public final class Board extends JPanel implements ActionListener {
 
         control = new PlayerController(); // 
         control.updateWorms(); // Worms-lista liitetään playercontrolleriin
+        control.yksinPeli(yksinpeli);
         control.updateBoard(this);
 
         ImageIcon kuvamato = new ImageIcon("src/Images/BlueBG800x600.png");
