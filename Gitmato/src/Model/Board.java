@@ -334,13 +334,9 @@ public final class Board extends JPanel implements ActionListener {
         }
         repaint();
         
-<<<<<<< HEAD
         if (yksinpeli == true){
         BlueAIBot();
         }
-=======
-        
->>>>>>> cff17a8a8840da2d083a58aac0cd854901c8420e
     }
 
     public void checkCollisions() {
