@@ -20,6 +20,7 @@ public class PlayerController  {
     private List<Worm> worms = new ArrayList<>(); 
     private Board board;
     private Matopeli peli;
+    private boolean yksinpeli= false;
     
     public PlayerController(){
         initPlayerController();
@@ -27,6 +28,9 @@ public class PlayerController  {
     
     private void initPlayerController(){
         
+    }
+    public void yksinPeli(boolean peliMoodi){
+        this.yksinpeli = peliMoodi;
     }
    
     public void updateWorms(){ // tätä täytyy kutsua joka pelin alussa!!!!
@@ -87,47 +91,50 @@ public class PlayerController  {
         
         // controlls for player 2 
         if (key == KeyEvent.VK_A) {
-            if(worms.get(1).getSuunta() != 2){
-                if(worms.get(1).getSuunta() != 1 && (worms.get(1).getX() < 20 || worms.get(1).getX() > 740)){
-                    worms.get(1).setX(worms.get(1).getX()-9);
-                }
-                worms.get(1).setSuunta(1);
-                worms.get(1).setSuuntaAdv(2);
-            }
             
-        }
 
-        if (key == KeyEvent.VK_D) {
-            if(worms.get(1).getSuunta() != 1){
-                if(worms.get(1).getSuunta() != 2 && (worms.get(1).getX() < 20 || worms.get(1).getX() > 740)){
-                    worms.get(1).setX(worms.get(1).getX()+9);
+                    if(worms.get(1).getSuunta() != 2){
+                        if(worms.get(1).getSuunta() != 1 && (worms.get(1).getX() < 20 || worms.get(1).getX() > 740)){
+                            worms.get(1).setX(worms.get(1).getX()-9);
+                        }
+                        worms.get(1).setSuunta(1);
+                        worms.get(1).setSuuntaAdv(2);
+                    }
+
                 }
-                worms.get(1).setSuunta(2) ;
-                worms.get(1).setSuuntaAdv(2) ;
 
-            }
-        }
+                if (key == KeyEvent.VK_D) {
+                    if(worms.get(1).getSuunta() != 1){
+                        if(worms.get(1).getSuunta() != 2 && (worms.get(1).getX() < 20 || worms.get(1).getX() > 740)){
+                            worms.get(1).setX(worms.get(1).getX()+9);
+                        }
+                        worms.get(1).setSuunta(2) ;
+                        worms.get(1).setSuuntaAdv(2) ;
 
-        if (key == KeyEvent.VK_W) {
-            if(worms.get(1).getSuunta() != 4){
-                if(worms.get(1).getSuunta() != 3 && (worms.get(1).getY() < 20 || worms.get(1).getY() > 530)){
-                    worms.get(1).setY(worms.get(1).getY()-9);
+                    }
                 }
+
+                if (key == KeyEvent.VK_W) {
+                    if(worms.get(1).getSuunta() != 4){
+                        if(worms.get(1).getSuunta() != 3 && (worms.get(1).getY() < 20 || worms.get(1).getY() > 530)){
+                            worms.get(1).setY(worms.get(1).getY()-9);
+                        }
+
+                        worms.get(1).setSuunta(3);
+                        worms.get(1).setSuuntaAdv(1);
+                    }
+                }
+
+                if (key == KeyEvent.VK_S) {
+                    if(worms.get(1).getSuunta() != 3){
+                        if(worms.get(1).getSuunta() != 4 && (worms.get(1).getY() < 20 || worms.get(1).getY() > 530)){
+                            worms.get(1).setY(worms.get(1).getY()+9);
+                        }
+
+                        worms.get(1).setSuunta(4);
+                        worms.get(1).setSuuntaAdv(1);
+                    }
                 
-                worms.get(1).setSuunta(3);
-                worms.get(1).setSuuntaAdv(1);
-            }
-        }
-
-        if (key == KeyEvent.VK_S) {
-            if(worms.get(1).getSuunta() != 3){
-                if(worms.get(1).getSuunta() != 4 && (worms.get(1).getY() < 20 || worms.get(1).getY() > 530)){
-                    worms.get(1).setY(worms.get(1).getY()+9);
-                }
-                
-                worms.get(1).setSuunta(4);
-                worms.get(1).setSuuntaAdv(1);
-            }
         }
         
         //GAME RESET
