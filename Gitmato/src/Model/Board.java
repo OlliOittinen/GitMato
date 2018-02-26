@@ -72,6 +72,7 @@ public final class Board extends JPanel implements ActionListener {
     private static List<Worm> worms;
     private Image halo;
     private Image halo2;
+    private boolean yksinpeli = false;
 
     private Matopeli engine;
 
@@ -79,8 +80,9 @@ public final class Board extends JPanel implements ActionListener {
     private Image filter;
     ImageIcon filtteri = new ImageIcon("src/Images/BlackFilter.png");
     
-    public Board(Matopeli e) {
+    public Board(Matopeli e, boolean pelimoodi) {
         this.engine = e;
+        this.yksinpeli = pelimoodi;
 
         //alustetaan listat
         pickableList = new ArrayList<>();
@@ -327,7 +329,10 @@ public final class Board extends JPanel implements ActionListener {
             body2.get(i).setY(y2);
         }
         repaint();
+        
+        if (yksinpeli = true){
         BlueAIBot();
+        }
     }
 
     public void checkCollisions() {
@@ -716,4 +721,7 @@ public final class Board extends JPanel implements ActionListener {
         return new Rectangle(worms.get(1).getX(), worms.get(1).getY(), 35, 92);
     }
     
+    public void yksinpeliTrue(){
+        this.yksinpeli = true;
+    }
 }
