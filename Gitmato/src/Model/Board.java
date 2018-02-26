@@ -83,7 +83,7 @@ public final class Board extends JPanel implements ActionListener {
     public Board(Matopeli e, boolean pelimoodi) {
         this.engine = e;
         this.yksinpeli = pelimoodi;
-
+        
         //alustetaan listat
         pickableList = new ArrayList<>();
         Board.worms = new ArrayList<>();
@@ -328,11 +328,12 @@ public final class Board extends JPanel implements ActionListener {
             body2.get(i).setX(x2);
             body2.get(i).setY(y2);
         }
+        if (yksinpeli == true){
+            BlueAIBot();
+        }
         repaint();
         
-        if (yksinpeli = true){
-        BlueAIBot();
-        }
+        
     }
 
     public void checkCollisions() {
