@@ -145,8 +145,7 @@ public final class Board extends JPanel implements ActionListener {
         background = kuvamato.getImage();
         System.out.println("In initBoard");
         if(yksinpeli == true){
-            worm2.setSuuntaAdv(1);
-            worm2.setSuunta(3);
+            BotTurnDown();
         }
     }
 
@@ -175,8 +174,7 @@ public final class Board extends JPanel implements ActionListener {
             tailNro2 = 0;
             Sound.Music.sound1.loop();
             if(yksinpeli == true){
-                worm2.setSuuntaAdv(1);
-                worm2.setSuunta(3);
+                BotTurnDown();
             }
         }
 
@@ -341,7 +339,7 @@ public final class Board extends JPanel implements ActionListener {
         repaint();
         
         if (yksinpeli == true){
-        BlueAIBot();
+            BlueAIBot();
         }
     }
 
@@ -367,8 +365,10 @@ public final class Board extends JPanel implements ActionListener {
                 if (worm2.getLife() > 1) {
                     shield.shield(worm2, 50);
                     worm2.randomizeXY();
-                    worm2.setSuuntaAdv(0);
-                    worm2.setSuunta(0);
+                    if(yksinpeli){
+                        BotTurnDown();
+                    }
+                    
                 } else {
                     System.out.println("Blue dead");
                 }
@@ -503,8 +503,7 @@ public final class Board extends JPanel implements ActionListener {
             if (worm2.getLife() > 1) {
                 worm2.randomizeXY();
                 if(yksinpeli == true){
-                    worm2.setSuuntaAdv(1);
-                    worm2.setSuunta(3);
+                    BotTurnDown();
                 }else{
                     worm2.setSuuntaAdv(0);
                     worm2.setSuunta(0);
@@ -616,14 +615,14 @@ public final class Board extends JPanel implements ActionListener {
          for(int i = 0; i < pickableList.size(); i++){
             
             if(worms.get(1).getX() < (pickableList.get(i).getX() + 10) && worms.get(1).getX() > (pickableList.get(i).getX() - 10)){
-                if(worms.get(1).getX() < pickableList.get(i).getX()){
-                    worms.get(1).setSuunta(3);
-                    worms.get(1).setSuuntaAdv(1);
-                    //ylös
-                }else{
-                    worms.get(1).setSuunta(4);
-                    worms.get(1).setSuuntaAdv(1);
+                if(worms.get(1).getY() < pickableList.get(i).getY()){
+                    BotTurnDown();
+                    
                     //alas
+                }else{
+                    BotTurnUp();
+                    
+                    //ylös
                 }
                 
             }
@@ -631,13 +630,13 @@ public final class Board extends JPanel implements ActionListener {
             
             if(worms.get(1).getY() < (pickableList.get(i).getY() + 10) && worms.get(1).getY() > (pickableList.get(i).getY() - 10)){
                 
-                    if(worms.get(1).getY() < pickableList.get(i).getY()){
-                        worms.get(1).setSuunta(2);
-                        worms.get(1).setSuuntaAdv(2);
+                    if(worms.get(1).getX() < pickableList.get(i).getX()){
+                        BotTurnRight();
+                        
                         //oikea
                     }else{
-                        worms.get(1).setSuunta(1);
-                        worms.get(1).setSuuntaAdv(2);
+                        BotTurnLeft();
+                        
                         //vasen
                     }
 
@@ -645,28 +644,24 @@ public final class Board extends JPanel implements ActionListener {
             }
             
     
-            if(worms.get(1).getX() < 20 && worms.get(1).getSuunta() != 4){
+            if(worms.get(1).getX() < 20 && worms.get(1).getSuunta() != 4 && worms.get(1).getSuunta() != 2){
                 
-                worms.get(1).setSuunta(4);
-                worms.get(1).setSuuntaAdv(1);
+                BotTurnUp();
                 worms.get(1).setX(25);
             }
 
-            if(worms.get(1).getX() > 725 && worms.get(1).getSuunta() != 3){
-                worms.get(1).setSuunta(3);
-                worms.get(1).setSuuntaAdv(1);
-                worms.get(1).setX(720);
+            if(worms.get(1).getX() > 715 && worms.get(1).getSuunta() != 3 && worms.get(1).getSuunta() != 1){
+                BotTurnDown();
+                worms.get(1).setX(710);
             }
 
-            if(worms.get(1).getY() > 545 && worms.get(1).getSuunta() != 2){
-                worms.get(1).setSuunta(2);
-                worms.get(1).setSuuntaAdv(2);
-                worms.get(1).setY(540);
+            if(worms.get(1).getY() > 540 && worms.get(1).getSuunta() != 2 && worms.get(1).getSuunta() != 3){
+                BotTurnLeft();
+                worms.get(1).setY(535);
             }
 
-            if(worms.get(1).getY() < 20 && worms.get(1).getSuunta() != 1){
-                worms.get(1).setSuunta(1) ;
-                worms.get(1).setSuuntaAdv(2) ;
+            if((worms.get(1).getY() < 20 && worms.get(1).getSuunta() != 1 && worms.get(1).getSuunta() != 4)){
+                BotTurnRight();
                 worms.get(1).setY(25);
             }
             
@@ -674,10 +669,18 @@ public final class Board extends JPanel implements ActionListener {
             for (int i = 0; i < body.size(); i++) {
                 Rectangle MatotailForAI = body.get(i).getBounds();
                 Ellipse2D pb2 = bombs.getBounds2();
-                    if(AIleft.intersects(MatotailForAI) || pb2.intersects(AIleft)) {
-                        worms.get(1).setSuunta(3);
-                        worms.get(1).setSuuntaAdv(1);
-                }
+                    if((AIleft.intersects(MatotailForAI) || pb2.intersects(AIleft)) &&  worms.get(1).getSuunta() == 1) {
+                        int n = (int) (Math.random()*1);
+                
+                        switch (n) {
+                            case 0:
+                                BotTurnUp();
+                                break;
+                            case 1:
+                                BotTurnDown();
+                                break;
+                        }
+                    }
                 
             }
             
@@ -685,9 +688,17 @@ public final class Board extends JPanel implements ActionListener {
             for (int i = 0; i < body.size(); i++) {
                 Rectangle MatotailForAI = body.get(i).getBounds();
                 Ellipse2D pb2 = bombs.getBounds2();
-                    if(AIright.intersects(MatotailForAI) || pb2.intersects(AIright)) {
-                        worms.get(1).setSuunta(4);
-                        worms.get(1).setSuuntaAdv(1);
+                    if((AIright.intersects(MatotailForAI) || pb2.intersects(AIright)) &&  worms.get(1).getSuunta() == 2) {
+                        int n = (int) (Math.random()*1);
+                
+                        switch (n) {
+                            case 0:
+                                BotTurnUp();
+                                break;
+                            case 1:
+                                BotTurnDown();
+                                break;
+                        }
                 }
                 
             }
@@ -696,9 +707,17 @@ public final class Board extends JPanel implements ActionListener {
             for (int i = 0; i < body.size(); i++) {
                 Rectangle MatotailForAI = body.get(i).getBounds();
                 Ellipse2D pb2 = bombs.getBounds2();
-                    if(AIup.intersects(MatotailForAI) || pb2.intersects(AIright)) {
-                        worms.get(1).setSuunta(2);
-                        worms.get(1).setSuuntaAdv(2);
+                    if((AIup.intersects(MatotailForAI) || pb2.intersects(AIup)) &&  worms.get(1).getSuunta() == 3) {
+                        int n = (int) (Math.random()*1);
+                
+                        switch (n) {
+                            case 0:
+                                BotTurnLeft();
+                                break;
+                            case 1:
+                                BotTurnRight();
+                                break;
+                        }
                 }
             //kek    
             }
@@ -707,9 +726,17 @@ public final class Board extends JPanel implements ActionListener {
             for (int i = 0; i < body.size(); i++) {
                 Rectangle MatotailForAI = body.get(i).getBounds();
                 Ellipse2D pb2 = bombs.getBounds2();
-                    if(AIdown.intersects(MatotailForAI) || pb2.intersects(AIright)) {
-                        worms.get(1).setSuunta(1);
-                        worms.get(1).setSuuntaAdv(2);
+                    if((AIdown.intersects(MatotailForAI) || pb2.intersects(AIdown)) &&  worms.get(1).getSuunta() == 4) {
+                        int n = (int) (Math.random()*1);
+                
+                        switch (n) {
+                            case 0:
+                                BotTurnLeft();
+                                break;
+                            case 1:
+                                BotTurnRight();
+                                break;
+                        }
                 }
                 
             }
@@ -731,6 +758,26 @@ public final class Board extends JPanel implements ActionListener {
     
     public Rectangle getBoundsDown() {
         return new Rectangle(worms.get(1).getX(), worms.get(1).getY(), 35, 92);
+    }
+    
+    public void BotTurnLeft(){
+        worms.get(1).setSuunta(1);
+        worms.get(1).setSuuntaAdv(2);
+    }
+    
+    public void BotTurnRight(){
+        worms.get(1).setSuunta(2);
+        worms.get(1).setSuuntaAdv(2);
+    }
+    
+    public void BotTurnUp(){
+        worms.get(1).setSuunta(3);
+        worms.get(1).setSuuntaAdv(1);
+    }
+    
+    public void BotTurnDown(){
+        worms.get(1).setSuunta(4);
+        worms.get(1).setSuuntaAdv(1);
     }
     
     public void yksinpeliTrue(){
