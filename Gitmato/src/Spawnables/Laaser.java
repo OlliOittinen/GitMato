@@ -27,6 +27,8 @@ public class Laaser implements Spawnables {
     private int xe3;
     private int ye3;
     private Image image3;
+    private Image image4;
+    private Image image5;
     private boolean lethal = false;
     private Rectangle beam = new Rectangle(-1000, -1000, 1, 1);
 
@@ -54,6 +56,10 @@ public class Laaser implements Spawnables {
         image2 = kuva2.getImage();
         ImageIcon kuva3 = new ImageIcon("src/Images/lazerV.png");
         image3 = kuva3.getImage();
+        ImageIcon kuva4 = new ImageIcon("src/Images/lasersightV.png");
+        image4 = kuva4.getImage();
+        ImageIcon kuva5 = new ImageIcon("src/Images/lasersightH.png");
+        image5 = kuva5.getImage();
 
         setX(-100);
         setY(-100);
@@ -94,6 +100,7 @@ public class Laaser implements Spawnables {
             @Override
             public void run() {
                 lethal = true;
+                Sound.Music.sound3.play();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
@@ -183,6 +190,17 @@ public class Laaser implements Spawnables {
 
     public Image getImageVert() {
         return image3;
+    }
+
+    public Image getLasersightV() {
+        return image4;
+    }
+
+    public Image getlasersightH() {
+        return image5;
+    }
+    public boolean getLethal() {
+        return lethal;
     }
 
     @Override

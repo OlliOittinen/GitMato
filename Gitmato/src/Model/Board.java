@@ -79,15 +79,15 @@ public final class Board extends JPanel implements ActionListener {
     private Image background;
     private Image filter;
     ImageIcon filtteri = new ImageIcon("src/Images/BlackFilter.png");
-    
+
     public Board(Matopeli e, boolean pelimoodi) {
         this.engine = e;
         this.yksinpeli = pelimoodi;
-        
+
         //alustetaan listat
         pickableList = new ArrayList<>();
         Board.worms = new ArrayList<>();
-        
+
         this.cordinates = new ArrayList<>();
         this.body = new ArrayList<>();
         this.p = new Point2D.Double(0, 0);
@@ -102,12 +102,11 @@ public final class Board extends JPanel implements ActionListener {
 
     private void initBoard() {
         //TODO: Tähän täytyy tehdä kaikki mahdolliset pelimuodot
-        
-        
+
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
-        
+
         faster = new Faster();
         slower = new Slower();
         reverse = new Confuse();
@@ -115,12 +114,11 @@ public final class Board extends JPanel implements ActionListener {
         shield = new Shield();
         bombs = new Bombs();
         laser = new Laaser();
-        
-        
+
         powerUpCD(); //piilottaa powerupit alussa
-        
+
         snack = new Snack();
-        
+
         pickableList.add(faster);
         pickableList.add(slower);
         pickableList.add(reverse);
@@ -131,7 +129,7 @@ public final class Board extends JPanel implements ActionListener {
         pickableList.add(snack);
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
-        
+
         timer = new Timer(DELAY, this);
         timer.start();
         ingame = true;
@@ -144,7 +142,7 @@ public final class Board extends JPanel implements ActionListener {
         ImageIcon kuvamato = new ImageIcon("src/Images/BlueBG800x600.png");
         background = kuvamato.getImage();
         System.out.println("In initBoard");
-        if(yksinpeli == true){
+        if (yksinpeli == true) {
             BotTurnDown();
         }
     }
@@ -173,7 +171,7 @@ public final class Board extends JPanel implements ActionListener {
             tailNro = 0;
             tailNro2 = 0;
             Sound.Music.sound1.loop();
-            if(yksinpeli == true){
+            if (yksinpeli == true) {
                 BotTurnDown();
             }
         }
@@ -245,35 +243,41 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(bombs.getImage(2), bombs.getX2(), bombs.getY2(), this);
         g2d.drawImage(bombs.getImage(3), bombs.getX3(), bombs.getY3(), this);
         g2d.drawImage(laser.getImage(), laser.getX(), laser.getY(), this);
-        g2d.drawImage(laser.getImageHori(), laser.getX3(), laser.getY3(), this);
-        g2d.drawImage(laser.getImageVert(), laser.getX2(), laser.getY2(), this);
+        if (!laser.getLethal()) {
+            g2d.drawImage(laser.getlasersightH(), laser.getX3(), laser.getY3(), this);
+            g2d.drawImage(laser.getLasersightV(), laser.getX2(), laser.getY2(), this);
+
+        } else {
+            g2d.drawImage(laser.getImageHori(), laser.getX3(), laser.getY3(), this);
+            g2d.drawImage(laser.getImageVert(), laser.getX2(), laser.getY2(), this);
+        }
         g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
         g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
         if (worm.getShield(worm)) {
-        g2d.drawImage(shield.getShieldImage(), worm.getX()-5, worm.getY()-4, this);
+            g2d.drawImage(shield.getShieldImage(), worm.getX() - 5, worm.getY() - 4, this);
         }
         if (worm2.getShield(worm2)) {
-        g2d.drawImage(shield.getShieldImage(), worm2.getX()-5, worm2.getY()-4, this);
+            g2d.drawImage(shield.getShieldImage(), worm2.getX() - 5, worm2.getY() - 4, this);
         }
         if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
             drawGameOver(g);
         }
         if (worm.getReverse(worm)) {
-            g2d.drawImage(reverse.getConfusionImage(), worm.getX()-5, worm.getY()-4, this);
+            g2d.drawImage(reverse.getConfusionImage(), worm.getX() - 5, worm.getY() - 4, this);
         }
         if (worm2.getReverse(worm2)) {
-            g2d.drawImage(reverse.getConfusionImage(), worm2.getX()-5, worm2.getY()-4, this);
+            g2d.drawImage(reverse.getConfusionImage(), worm2.getX() - 5, worm2.getY() - 4, this);
         }
-        
+
     }
 
     private void drawPisteet(Graphics g) {
 
         String hp = "Punaisen HP: " + worm.getLife();
         String hp2 = "Sinisen HP: " + worm2.getLife();
-        
-        String pt = "Pisteet: "+worm.getPoints();
-        String pt2 = "Pisteet: "+worm2.getPoints();
+
+        String pt = "Pisteet: " + worm.getPoints();
+        String pt2 = "Pisteet: " + worm2.getPoints();
 
         Font small = new Font("Helvetica", Font.BOLD, 20);
         FontMetrics fm = getFontMetrics(small);
@@ -282,9 +286,9 @@ public final class Board extends JPanel implements ActionListener {
         g.setFont(small);
         g.drawString(hp, 10, 25);
         g.drawString(pt, 10, 50);
-        g.drawString(hp2, (790-fm.stringWidth(hp2)), 25);
-        g.drawString(pt2, (790-fm.stringWidth(pt2)), 50);
-        
+        g.drawString(hp2, (790 - fm.stringWidth(hp2)), 25);
+        g.drawString(pt2, (790 - fm.stringWidth(pt2)), 50);
+
     }
 
     @Override
@@ -333,12 +337,12 @@ public final class Board extends JPanel implements ActionListener {
             body2.get(i).setX(x2);
             body2.get(i).setY(y2);
         }
-        if (yksinpeli == true){
+        if (yksinpeli == true) {
             BlueAIBot();
         }
         repaint();
-        
-        if (yksinpeli == true){
+
+        if (yksinpeli == true) {
             BlueAIBot();
         }
     }
@@ -365,10 +369,10 @@ public final class Board extends JPanel implements ActionListener {
                 if (worm2.getLife() > 1) {
                     shield.shield(worm2, 50);
                     worm2.randomizeXY();
-                    if(yksinpeli){
+                    if (yksinpeli) {
                         BotTurnDown();
                     }
-                    
+
                 } else {
                     System.out.println("Blue dead");
                 }
@@ -395,7 +399,7 @@ public final class Board extends JPanel implements ActionListener {
         //mato 1 collisions
         if (s.intersects(Matokuutio)) {
             snack.randomizeXY();
-            worm.setPoints(worm.getPoints()+100);
+            worm.setPoints(worm.getPoints() + 100);
             spawnTail(1);
         }
 
@@ -436,7 +440,7 @@ public final class Board extends JPanel implements ActionListener {
             beam = laser.getBoundsB();
             powerUpCD();
         }
-        if(beam.intersects(Matokuutio)) {
+        if (beam.intersects(Matokuutio)) {
             laser.damage(worm);
         }
 
@@ -448,13 +452,13 @@ public final class Board extends JPanel implements ActionListener {
                 worm.setSuunta(0);
             }
             worm.setLife(worm.getLife() - 1);
-            worm.setPoints(worm.getPoints()-100);
+            worm.setPoints(worm.getPoints() - 100);
         }
 
         //mato 2 collisions
         if (s.intersects(Matokuutio2)) {
             snack.randomizeXY();
-            worm2.setPoints(worm2.getPoints()+100);
+            worm2.setPoints(worm2.getPoints() + 100);
             spawnTail(2);
         }
 
@@ -490,28 +494,28 @@ public final class Board extends JPanel implements ActionListener {
         if (pb2.intersects(Matokuutio2)) {
             bombs.damage(worm2);
         }
-        if(pla.intersects(Matokuutio2)) {
+        if (pla.intersects(Matokuutio2)) {
             laser.onPickup(worm2, worm);
             beam = laser.getBoundsB();
             powerUpCD();
         }
-        if(beam.intersects(Matokuutio2)) {
+        if (beam.intersects(Matokuutio2)) {
             laser.damage(worm2);
         }
         if (worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) {
             System.out.println("SINISEE SATTU");
             if (worm2.getLife() > 1) {
                 worm2.randomizeXY();
-                if(yksinpeli == true){
+                if (yksinpeli == true) {
                     BotTurnDown();
-                }else{
+                } else {
                     worm2.setSuuntaAdv(0);
                     worm2.setSuunta(0);
                 }
-                
+
             }
             worm2.setLife(worm2.getLife() - 1);
-            worm2.setPoints(worm2.getPoints()-100);
+            worm2.setPoints(worm2.getPoints() - 100);
         }
     }
 
@@ -524,33 +528,31 @@ public final class Board extends JPanel implements ActionListener {
         Font small = new Font("Helvetica", Font.BOLD, 20);
         FontMetrics fm = getFontMetrics(small);
         g3.setFont(small);
-        
+
         Sound.Music.sound1.stop();
         ingame = false;
         if (worm.getLife() <= 0) {
             msg = "Sininen voitti pelin!!! Paina Space pelataksesi uudelleen";
             g3.setColor(Color.blue);
-        } 
-        else if (worm2.getLife() <= 0) {
+        } else if (worm2.getLife() <= 0) {
             msg = "Punainen voitti pelin!!! Paina Space pelataksesi uudelleen";
             g3.setColor(Color.red);
         }
         g3.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
-        }
+    }
 
     private void spawnTail(int n) {
         //tulee yksi Tail pala lisää
-        switch(n) {
+        switch (n) {
             case 1:
                 tailNro++;
                 body.add(tail = new Tail(tailNro * 15, 1));
                 break;
             case 2:
-               tailNro2++;
-               body2.add(tail = new Tail(tailNro2 * 15, 2));
+                tailNro2++;
+                body2.add(tail = new Tail(tailNro2 * 15, 2));
         }
     }
-
 
     public static List getWorms() {
         return worms;
@@ -576,15 +578,15 @@ public final class Board extends JPanel implements ActionListener {
         bombs.setY3(-1000);
         laser.setY(-100);
         laser.setX(-100);
-        
+
         java.util.Timer timer2 = new java.util.Timer();
         timer2.schedule(new TimerTask() {
 
             @Override
             public void run() {
-                
+
                 int n = 6; //(int) (Math.random()*5);
-                
+
                 switch (n) {
                     case 0:
                         shield.randomizeXY();
@@ -610,177 +612,174 @@ public final class Board extends JPanel implements ActionListener {
             }
         }, 5000); //aika (ms), joka odotetaan
     }
-    
-    public void BlueAIBot(){
-         for(int i = 0; i < pickableList.size(); i++){
-            
-            if(worms.get(1).getX() < (pickableList.get(i).getX() + 10) && worms.get(1).getX() > (pickableList.get(i).getX() - 10)){
-                if(worms.get(1).getY() < pickableList.get(i).getY()){
+
+    public void BlueAIBot() {
+        for (int i = 0; i < pickableList.size(); i++) {
+
+            if (worms.get(1).getX() < (pickableList.get(i).getX() + 10) && worms.get(1).getX() > (pickableList.get(i).getX() - 10)) {
+                if (worms.get(1).getY() < pickableList.get(i).getY()) {
                     BotTurnDown();
-                    
+
                     //alas
-                }else{
+                } else {
                     BotTurnUp();
-                    
+
                     //ylös
                 }
-                
+
             }
-         
-            
-            if(worms.get(1).getY() < (pickableList.get(i).getY() + 10) && worms.get(1).getY() > (pickableList.get(i).getY() - 10)){
-                
-                    if(worms.get(1).getX() < pickableList.get(i).getX()){
-                        BotTurnRight();
-                        
-                        //oikea
-                    }else{
+
+            if (worms.get(1).getY() < (pickableList.get(i).getY() + 10) && worms.get(1).getY() > (pickableList.get(i).getY() - 10)) {
+
+                if (worms.get(1).getX() < pickableList.get(i).getX()) {
+                    BotTurnRight();
+
+                    //oikea
+                } else {
+                    BotTurnLeft();
+
+                    //vasen
+                }
+
+            }
+        }
+
+        if (worms.get(1).getX() < 20 && worms.get(1).getSuunta() != 4 && worms.get(1).getSuunta() != 2) {
+
+            BotTurnUp();
+            worms.get(1).setX(25);
+        }
+
+        if (worms.get(1).getX() > 715 && worms.get(1).getSuunta() != 3 && worms.get(1).getSuunta() != 1) {
+            BotTurnDown();
+            worms.get(1).setX(710);
+        }
+
+        if (worms.get(1).getY() > 540 && worms.get(1).getSuunta() != 2 && worms.get(1).getSuunta() != 3) {
+            BotTurnLeft();
+            worms.get(1).setY(535);
+        }
+
+        if ((worms.get(1).getY() < 20 && worms.get(1).getSuunta() != 1 && worms.get(1).getSuunta() != 4)) {
+            BotTurnRight();
+            worms.get(1).setY(25);
+        }
+
+        Rectangle AIleft = getBoundsLeft();
+        for (int i = 0; i < body.size(); i++) {
+            Rectangle MatotailForAI = body.get(i).getBounds();
+            Ellipse2D pb2 = bombs.getBounds2();
+            if ((AIleft.intersects(MatotailForAI) || pb2.intersects(AIleft)) && worms.get(1).getSuunta() == 1) {
+                int n = (int) (Math.random() * 1);
+
+                switch (n) {
+                    case 0:
+                        BotTurnUp();
+                        break;
+                    case 1:
+                        BotTurnDown();
+                        break;
+                }
+            }
+
+        }
+
+        Rectangle AIright = getBoundsRight();
+        for (int i = 0; i < body.size(); i++) {
+            Rectangle MatotailForAI = body.get(i).getBounds();
+            Ellipse2D pb2 = bombs.getBounds2();
+            if ((AIright.intersects(MatotailForAI) || pb2.intersects(AIright)) && worms.get(1).getSuunta() == 2) {
+                int n = (int) (Math.random() * 1);
+
+                switch (n) {
+                    case 0:
+                        BotTurnUp();
+                        break;
+                    case 1:
+                        BotTurnDown();
+                        break;
+                }
+            }
+
+        }
+
+        Rectangle AIup = getBoundsUp();
+        for (int i = 0; i < body.size(); i++) {
+            Rectangle MatotailForAI = body.get(i).getBounds();
+            Ellipse2D pb2 = bombs.getBounds2();
+            if ((AIup.intersects(MatotailForAI) || pb2.intersects(AIup)) && worms.get(1).getSuunta() == 3) {
+                int n = (int) (Math.random() * 1);
+
+                switch (n) {
+                    case 0:
                         BotTurnLeft();
-                        
-                        //vasen
-                    }
-
+                        break;
+                    case 1:
+                        BotTurnRight();
+                        break;
                 }
             }
-            
-    
-            if(worms.get(1).getX() < 20 && worms.get(1).getSuunta() != 4 && worms.get(1).getSuunta() != 2){
-                
-                BotTurnUp();
-                worms.get(1).setX(25);
-            }
-
-            if(worms.get(1).getX() > 715 && worms.get(1).getSuunta() != 3 && worms.get(1).getSuunta() != 1){
-                BotTurnDown();
-                worms.get(1).setX(710);
-            }
-
-            if(worms.get(1).getY() > 540 && worms.get(1).getSuunta() != 2 && worms.get(1).getSuunta() != 3){
-                BotTurnLeft();
-                worms.get(1).setY(535);
-            }
-
-            if((worms.get(1).getY() < 20 && worms.get(1).getSuunta() != 1 && worms.get(1).getSuunta() != 4)){
-                BotTurnRight();
-                worms.get(1).setY(25);
-            }
-            
-            Rectangle AIleft = getBoundsLeft();
-            for (int i = 0; i < body.size(); i++) {
-                Rectangle MatotailForAI = body.get(i).getBounds();
-                Ellipse2D pb2 = bombs.getBounds2();
-                    if((AIleft.intersects(MatotailForAI) || pb2.intersects(AIleft)) &&  worms.get(1).getSuunta() == 1) {
-                        int n = (int) (Math.random()*1);
-                
-                        switch (n) {
-                            case 0:
-                                BotTurnUp();
-                                break;
-                            case 1:
-                                BotTurnDown();
-                                break;
-                        }
-                    }
-                
-            }
-            
-            Rectangle AIright = getBoundsRight();
-            for (int i = 0; i < body.size(); i++) {
-                Rectangle MatotailForAI = body.get(i).getBounds();
-                Ellipse2D pb2 = bombs.getBounds2();
-                    if((AIright.intersects(MatotailForAI) || pb2.intersects(AIright)) &&  worms.get(1).getSuunta() == 2) {
-                        int n = (int) (Math.random()*1);
-                
-                        switch (n) {
-                            case 0:
-                                BotTurnUp();
-                                break;
-                            case 1:
-                                BotTurnDown();
-                                break;
-                        }
-                }
-                
-            }
-            
-            Rectangle AIup = getBoundsUp();
-            for (int i = 0; i < body.size(); i++) {
-                Rectangle MatotailForAI = body.get(i).getBounds();
-                Ellipse2D pb2 = bombs.getBounds2();
-                    if((AIup.intersects(MatotailForAI) || pb2.intersects(AIup)) &&  worms.get(1).getSuunta() == 3) {
-                        int n = (int) (Math.random()*1);
-                
-                        switch (n) {
-                            case 0:
-                                BotTurnLeft();
-                                break;
-                            case 1:
-                                BotTurnRight();
-                                break;
-                        }
-                }
             //kek    
-            }
-            
-            Rectangle AIdown = getBoundsDown();
-            for (int i = 0; i < body.size(); i++) {
-                Rectangle MatotailForAI = body.get(i).getBounds();
-                Ellipse2D pb2 = bombs.getBounds2();
-                    if((AIdown.intersects(MatotailForAI) || pb2.intersects(AIdown)) &&  worms.get(1).getSuunta() == 4) {
-                        int n = (int) (Math.random()*1);
-                
-                        switch (n) {
-                            case 0:
-                                BotTurnLeft();
-                                break;
-                            case 1:
-                                BotTurnRight();
-                                break;
-                        }
+        }
+
+        Rectangle AIdown = getBoundsDown();
+        for (int i = 0; i < body.size(); i++) {
+            Rectangle MatotailForAI = body.get(i).getBounds();
+            Ellipse2D pb2 = bombs.getBounds2();
+            if ((AIdown.intersects(MatotailForAI) || pb2.intersects(AIdown)) && worms.get(1).getSuunta() == 4) {
+                int n = (int) (Math.random() * 1);
+
+                switch (n) {
+                    case 0:
+                        BotTurnLeft();
+                        break;
+                    case 1:
+                        BotTurnRight();
+                        break;
                 }
-                
             }
+
+        }
 
     }
-
 
     public Rectangle getBoundsLeft() {
-        return new Rectangle(worms.get(1).getX()-50, worms.get(1).getY(), 35, 42);
+        return new Rectangle(worms.get(1).getX() - 50, worms.get(1).getY(), 35, 42);
     }
-    
+
     public Rectangle getBoundsRight() {
         return new Rectangle(worms.get(1).getX(), worms.get(1).getY(), 85, 42);
     }
-    
+
     public Rectangle getBoundsUp() {
-        return new Rectangle(worms.get(1).getX(), worms.get(1).getY()-50, 35, 42);
+        return new Rectangle(worms.get(1).getX(), worms.get(1).getY() - 50, 35, 42);
     }
-    
+
     public Rectangle getBoundsDown() {
         return new Rectangle(worms.get(1).getX(), worms.get(1).getY(), 35, 92);
     }
-    
-    public void BotTurnLeft(){
+
+    public void BotTurnLeft() {
         worms.get(1).setSuunta(1);
         worms.get(1).setSuuntaAdv(2);
     }
-    
-    public void BotTurnRight(){
+
+    public void BotTurnRight() {
         worms.get(1).setSuunta(2);
         worms.get(1).setSuuntaAdv(2);
     }
-    
-    public void BotTurnUp(){
+
+    public void BotTurnUp() {
         worms.get(1).setSuunta(3);
         worms.get(1).setSuuntaAdv(1);
     }
-    
-    public void BotTurnDown(){
+
+    public void BotTurnDown() {
         worms.get(1).setSuunta(4);
         worms.get(1).setSuuntaAdv(1);
     }
-    
-    public void yksinpeliTrue(){
+
+    public void yksinpeliTrue() {
         this.yksinpeli = true;
     }
 }
