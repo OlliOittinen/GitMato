@@ -245,8 +245,8 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(bombs.getImage(2), bombs.getX2(), bombs.getY2(), this);
         g2d.drawImage(bombs.getImage(3), bombs.getX3(), bombs.getY3(), this);
         g2d.drawImage(laser.getImage(), laser.getX(), laser.getY(), this);
-        g2d.drawImage(laser.getImageHori(), laser.getXe2(), laser.getYe2(), this);
-        g2d.drawImage(laser.getImageVert(), laser.getXe3(), laser.getYe3(), this);
+        g2d.drawImage(laser.getImageHori(), laser.getX2(), laser.getX2(), this);
+        //g2d.drawImage(laser.getImageVert(), laser.getX2(), laser.getY2(), this);
         g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
         g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
         if (worm.getShield(worm)) {
@@ -356,7 +356,7 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle pb = bombs.getBounds();
         Ellipse2D pb2 = bombs.getBounds2();
         Rectangle pla = laser.getBounds();
-        Rectangle beam = laser.getBounds();
+        Rectangle beam = laser.getBoundsB();
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
@@ -433,7 +433,6 @@ public final class Board extends JPanel implements ActionListener {
         }
         if (pla.intersects(Matokuutio)) {
             laser.onPickup(worm, worm2);
-            beam = laser.getBeam();
             powerUpCD();
         }
         if(beam.intersects(Matokuutio)) {
@@ -492,7 +491,6 @@ public final class Board extends JPanel implements ActionListener {
         }
         if(pla.intersects(Matokuutio2)) {
             laser.onPickup(worm2, worm);
-            beam = laser.getBeam();
             powerUpCD();
         }
         if(beam.intersects(Matokuutio2)) {
@@ -576,10 +574,6 @@ public final class Board extends JPanel implements ActionListener {
         bombs.setY3(-1000);
         laser.setY(-100);
         laser.setX(-100);
-        laser.setX2(-1000);
-        laser.setY2(-1000);
-        laser.setX3(-1000);
-        laser.setY3(-1000);
         
         java.util.Timer timer2 = new java.util.Timer();
         timer2.schedule(new TimerTask() {
@@ -587,7 +581,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
                 
-                int n = (int) (Math.random()*5);
+                int n = 6; //(int) (Math.random()*5);
                 
                 switch (n) {
                     case 0:
