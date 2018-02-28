@@ -6,7 +6,7 @@ public class Music {
 
     private Clip clip;
 
-    public static Music sound1 = new Music("Arcade_Funk.wav");
+    public static Music sound1 = new Music("Off Limits.wav");
     public static Music sound2 = new Music("faster.wav");
     public static Music sound3 = new Music("lasershot.wav");
     public static Music sound4 = new Music("Death.wav");
