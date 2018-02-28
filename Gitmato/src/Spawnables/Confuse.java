@@ -6,6 +6,7 @@
 package Spawnables;
 
 import Model.Worm;
+import Sound.Music;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.Timer;
@@ -23,6 +24,7 @@ public class Confuse implements Spawnables {
     private Image confusion;
             
     public void confuse(Worm worm, Worm worm2) {
+        Music.sound9.play();
         worm.setPoints(worm.getPoints()+100);
         worm2.setNopeus(worm2.getNopeus()*-1);
         worm2.setReverse(true);

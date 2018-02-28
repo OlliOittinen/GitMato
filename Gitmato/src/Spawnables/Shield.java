@@ -6,6 +6,7 @@
 package Spawnables;
 
 import Model.Worm;
+import Sound.Music;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.Timer;
@@ -27,6 +28,7 @@ public class Shield  implements Spawnables{
     }
     
     public void shield(Worm worm, int luku) {
+        Music.sound6.play();
         worm.setPoints(worm.getPoints()+100);
         worm.setShield(true);
         Timer timer = new Timer();

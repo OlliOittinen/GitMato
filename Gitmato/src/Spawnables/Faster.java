@@ -6,6 +6,7 @@
 package Spawnables;
 
 import Model.Worm;
+import Sound.Music;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.Timer;
@@ -27,8 +28,7 @@ public class Faster implements Spawnables {
     public void faster(Worm worm) {
         worm.setPoints(worm.getPoints()+100);
         worm.setNopeus(3);
-        Sound.Music.sound1.stop();
-        Sound.Music.sound2.play();
+        Music.sound2.play();
         
         //säätää nopeuden väliaikseks
         Timer timer = new Timer();
@@ -36,8 +36,6 @@ public class Faster implements Spawnables {
             @Override
             public void run() {
                 worm.setNopeus(2);
-                Sound.Music.sound2.stop();
-                Sound.Music.sound1.loop();
             }
         }, 5000); //aika (ms), joka odotetaan
     }

@@ -5,6 +5,7 @@
  */
 package Spawnables;
 
+import Sound.Music;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.Timer;
@@ -63,6 +64,7 @@ public class Snack implements Spawnables{
     }
 @Override
     public void randomizeXY() {
+        Music.sound10.play();
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));
     }

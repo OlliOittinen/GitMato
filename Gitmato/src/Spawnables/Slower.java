@@ -5,6 +5,7 @@
  */
 package Spawnables;
 import Model.Worm;
+import Sound.Music;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.Timer;
@@ -22,6 +23,7 @@ public class Slower implements Spawnables{
     private Image image;
             
     public void slower(Worm worm, Worm worm2) {
+        Music.sound8.play();
         worm.setPoints(worm.getPoints()+100);
         worm2.setNopeus(1);
         

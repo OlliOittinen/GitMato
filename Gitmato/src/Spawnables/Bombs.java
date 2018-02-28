@@ -11,6 +11,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import javax.swing.ImageIcon;
 import Model.Board;
+import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
 /**
@@ -36,7 +37,7 @@ public class Bombs implements Spawnables {
     }
     public void damage(Worm worm) {
         if (lethal) {
-        worm.setLife(worm.getLife()-1);
+        Life.loseLife(worm);
         }
     }
     
@@ -78,6 +79,7 @@ public class Bombs implements Spawnables {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                Music.sound7.play();
                 setX3(getX2());
                 setY3(getY2());
                 setX2(-1000);

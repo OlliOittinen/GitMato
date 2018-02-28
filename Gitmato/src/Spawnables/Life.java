@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 import Model.Board;
+import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
 /**
@@ -32,10 +33,12 @@ public class Life implements Spawnables {
     }
     
     public static void addLife (Worm worm) {
+        Music.sound5.play();
         worm.setLife(worm.getLife()+1);
     }
     
     public static void loseLife(Worm worm) {
+        Music.sound11.play();
         worm.setLife(worm.getLife()-1);
         worm.setShield(true);
         

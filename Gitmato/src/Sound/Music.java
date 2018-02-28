@@ -7,8 +7,17 @@ public class Music {
     private Clip clip;
 
     public static Music sound1 = new Music("Arcade_Funk.wav");
-    public static Music sound2 = new Music("Running In The 90s (Hardcore Rave Edit).wav");
+    public static Music sound2 = new Music("faster.wav");
     public static Music sound3 = new Music("lasershot.wav");
+    public static Music sound4 = new Music("Death.wav");
+    public static Music sound5 = new Music("getlife.wav");
+    public static Music sound6 = new Music("shields.wav");
+    public static Music sound7 = new Music("bombs.wav");
+    public static Music sound8 = new Music("slower.wav");
+    public static Music sound9 = new Music("confusion.wav");
+    public static Music sound10 = new Music("snack.wav");
+    public static Music sound11 = new Music("lostlife.wav");  
+    
 
     public Music(String fileName) {
         try {

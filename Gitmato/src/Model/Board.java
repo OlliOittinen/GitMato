@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import Controller.PlayerController;
 import GUI.MainFrame;
+import Sound.Music;
 import java.awt.Image;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
@@ -451,7 +452,7 @@ public final class Board extends JPanel implements ActionListener {
                 worm.setSuuntaAdv(0);
                 worm.setSuunta(0);
             }
-            worm.setLife(worm.getLife() - 1);
+            Life.loseLife(worm);
             worm.setPoints(worm.getPoints() - 100);
         }
 
@@ -514,12 +515,13 @@ public final class Board extends JPanel implements ActionListener {
                 }
 
             }
-            worm2.setLife(worm2.getLife() - 1);
+            Life.loseLife(worm2);
             worm2.setPoints(worm2.getPoints() - 100);
         }
     }
 
     private void drawGameOver(Graphics g) {
+        Music.sound4.play();
         filter = filtteri.getImage();
         String msg = null;
         Graphics2D g3 = (Graphics2D) g;
@@ -529,7 +531,7 @@ public final class Board extends JPanel implements ActionListener {
         FontMetrics fm = getFontMetrics(small);
         g3.setFont(small);
 
-        Sound.Music.sound1.stop();
+        Music.sound1.stop();
         ingame = false;
         if (worm.getLife() <= 0) {
             msg = "Sininen voitti pelin!!! Paina Space pelataksesi uudelleen";
@@ -585,7 +587,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
 
-                int n = 6; //(int) (Math.random()*5);
+                int n = (int) (Math.random()*7);
 
                 switch (n) {
                     case 0:
@@ -605,8 +607,10 @@ public final class Board extends JPanel implements ActionListener {
                         break;
                     case 5:
                         bombs.randomizeXY();
+                        break;
                     case 6:
                         laser.randomizeXY();
+                        break;
                 }
 
             }
