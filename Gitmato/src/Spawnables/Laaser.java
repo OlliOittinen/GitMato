@@ -28,8 +28,7 @@ public class Laaser implements Spawnables {
     private int ye3;
     private Image image3;
     private boolean lethal = false;
-    private boolean horizontal;
-    private Rectangle beam = new Rectangle (-1000,-1000,1,1);
+    private Rectangle beam = new Rectangle(-1000, -1000, 1, 1);
 
     public Laaser() {
         init();
@@ -77,16 +76,16 @@ public class Laaser implements Spawnables {
                 //horisontaalinen vai vertikaalinen säde, random arvo 0...1
                 double r = Math.random();
                 if (r < 0.5) {
-                    horizontal = false;
-                    beam.setBounds(wormLocX, 0, 100, 600);
+                    //vertical
                     setX2(wormLocX);
                     setY2(0);
+                    beam.setBounds(wormLocX, 0, 100, 600);
 
                 } else {
-                    horizontal = true;
-                    beam.setBounds(0, wormLocY, 800, 100);
+                    //horizontal
                     setX3(0);
                     setY3(wormLocY);
+                    beam.setBounds(0, wormLocY, 800, 100);
                 }
 
             }
@@ -102,7 +101,7 @@ public class Laaser implements Spawnables {
                         setY3(-1000);
                         setX2(-1000);
                         setY2(-1000);
-                        beam.setBounds(-1000,-1000, 1, 1);
+                        beam.setBounds(-1000, -1000, 1, 1);
                         lethal = false;
                     }
                 }, 5000);
