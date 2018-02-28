@@ -48,11 +48,11 @@ public class Laaser implements Spawnables {
 
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/Images/Bombs(800-600).png");
+        ImageIcon kuva = new ImageIcon("src/Images/Lasercannon.png");
         image = kuva.getImage();
-        ImageIcon kuva2 = new ImageIcon("src/Images/IronHorizontal.png");
+        ImageIcon kuva2 = new ImageIcon("src/Images/LazerHorizontal.png");
         image2 = kuva2.getImage();
-        ImageIcon kuva3 = new ImageIcon("src/Images/IronVertical.png");
+        ImageIcon kuva3 = new ImageIcon("src/Images/Lazer_1.png");
         image3 = kuva3.getImage();
 
         setX(-100);
@@ -104,7 +104,7 @@ public class Laaser implements Spawnables {
                         beam.setBounds(-1000, -1000, 1, 1);
                         lethal = false;
                     }
-                }, 5000);
+                }, 2000);
             }
         }, 2500); //aika (ms), joka odotetaanF
 
