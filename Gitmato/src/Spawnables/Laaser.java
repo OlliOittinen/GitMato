@@ -28,9 +28,8 @@ public class Laaser implements Spawnables {
     private int ye3;
     private Image image3;
     private boolean lethal = false;
-    private Rectangle beam;
     private boolean horizontal;
-
+    private Rectangle beam = new Rectangle (-1000,-1000,1,1);
 
     public Laaser() {
         init();
@@ -43,7 +42,9 @@ public class Laaser implements Spawnables {
     }
 
     public void damage(Worm worm) {
+        if (lethal) {
             Life.loseLife(worm);
+        }
     }
 
     @Override
@@ -66,22 +67,48 @@ public class Laaser implements Spawnables {
     public void onPickup(Worm worm, Worm worm2) {
         worm.setPoints(worm.getPoints() + 100);
 
-        //hae kohteen nykysijainti, tallenna muuttujiin
-        int wormLocX = worm2.getX();
-        int wormLocY = worm2.getY();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //hae kohteen nykysijainti, tallenna muuttujiin
+                int wormLocX = worm2.getX();
+                int wormLocY = worm2.getY();
+                //horisontaalinen vai vertikaalinen säde, random arvo 0...1
+                double r = Math.random();
+                if (r < 0.5) {
+                    horizontal = false;
+                    beam.setBounds(wormLocX, 0, 100, 600);
+                    setX2(wormLocX);
+                    setY2(0);
 
-        //horisontaalinen vai vertikaalinen säde, random arvo 0...1
-        double r = Math.random();
-        //hae luotavan säteen rajat, laita sijainti 2. madon nykypaikkaan
-        if (r < 0.5) {
-            horizontal = false;
-            randomizeXY2();
-            
-        } else {
-            horizontal = true;
-            randomizeXY2();
+                } else {
+                    horizontal = true;
+                    beam.setBounds(0, wormLocY, 800, 100);
+                    setX3(0);
+                    setY3(wormLocY);
+                }
 
-    }
+            }
+        }, 1000); //aika (ms), joka odotetaan
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                lethal = true;
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        setX3(-1000);
+                        setY3(-1000);
+                        setX2(-1000);
+                        setY2(-1000);
+                        beam.setBounds(-1000,-1000, 1, 1);
+                        lethal = false;
+                    }
+                }, 5000);
+            }
+        }, 2500); //aika (ms), joka odotetaanF
+
     }
 
     //ikoni powerupille
@@ -91,15 +118,6 @@ public class Laaser implements Spawnables {
     }
 
     public Rectangle getBoundsB() {
-        if (horizontal == true) {
-            return new Rectangle(xe3 + 3, ye3 + 3, 100, 600);
-        } else {
-            return new Rectangle(xe2 + 3, ye2 + 3, 800, 100);
-        }
-    }
-
-
-    public Rectangle getBeam() {
         return beam;
     }
 
@@ -174,14 +192,14 @@ public class Laaser implements Spawnables {
         setY((int) (Math.random() * 550));
     }
 
-    public void randomizeXY2() {
-        setX2((int) (Math.random() * 750));
+    public void randomizeXY2(int x) {
+        setX2(x);
         setY2(0);
     }
 
-    public void randomizeXY3() {
+    public void randomizeXY3(int y) {
         setX3(0);
-        setY3((int) (Math.random() * 550));
+        setY3(y);
     }
 
 }

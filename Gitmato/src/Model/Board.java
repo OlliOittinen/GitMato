@@ -247,8 +247,8 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(bombs.getImage(2), bombs.getX2(), bombs.getY2(), this);
         g2d.drawImage(bombs.getImage(3), bombs.getX3(), bombs.getY3(), this);
         g2d.drawImage(laser.getImage(), laser.getX(), laser.getY(), this);
-        g2d.drawImage(laser.getImageHori(), laser.getX2(), laser.getX2(), this);
-        //g2d.drawImage(laser.getImageVert(), laser.getX2(), laser.getY2(), this);
+        g2d.drawImage(laser.getImageHori(), laser.getX3(), laser.getX3(), this);
+        g2d.drawImage(laser.getImageVert(), laser.getX2(), laser.getY2(), this);
         g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
         g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
         if (worm.getShield(worm)) {
@@ -433,6 +433,7 @@ public final class Board extends JPanel implements ActionListener {
         }
         if (pla.intersects(Matokuutio)) {
             laser.onPickup(worm, worm2);
+            beam = laser.getBoundsB();
             powerUpCD();
         }
         if(beam.intersects(Matokuutio)) {
@@ -491,6 +492,7 @@ public final class Board extends JPanel implements ActionListener {
         }
         if(pla.intersects(Matokuutio2)) {
             laser.onPickup(worm2, worm);
+            beam = laser.getBoundsB();
             powerUpCD();
         }
         if(beam.intersects(Matokuutio2)) {
