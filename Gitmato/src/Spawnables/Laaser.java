@@ -50,9 +50,9 @@ public class Laaser implements Spawnables {
     public void init() {
         ImageIcon kuva = new ImageIcon("src/Images/Lasercannon.png");
         image = kuva.getImage();
-        ImageIcon kuva2 = new ImageIcon("src/Images/LazerHorizontal.png");
+        ImageIcon kuva2 = new ImageIcon("src/Images/LazerH.png");
         image2 = kuva2.getImage();
-        ImageIcon kuva3 = new ImageIcon("src/Images/Lazer_1.png");
+        ImageIcon kuva3 = new ImageIcon("src/Images/lazerV.png");
         image3 = kuva3.getImage();
 
         setX(-100);
