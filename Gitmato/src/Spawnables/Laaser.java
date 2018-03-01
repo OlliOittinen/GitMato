@@ -116,7 +116,7 @@ public class Laaser implements Spawnables {
                     }
                 }, 2000);
             }
-        }, 2500); //aika (ms), joka odotetaanF
+        }, 1800); //aika (ms), joka odotetaanF
 
     }
 
