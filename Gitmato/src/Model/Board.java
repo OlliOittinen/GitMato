@@ -588,7 +588,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
 
-                int n = 6;//(int) (Math.random()*7);
+                int n = (int) (Math.random()*7);
 
                 switch (n) {
                     case 0:
