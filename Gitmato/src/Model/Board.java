@@ -587,7 +587,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
 
-                int n = 5;//(int) (Math.random()*7);
+                int n = 6;//(int) (Math.random()*7);
 
                 switch (n) {
                     case 0:
@@ -705,7 +705,8 @@ public final class Board extends JPanel implements ActionListener {
             Rectangle MatotailForAI = body.get(i).getBounds();
             Ellipse2D pb2 = bombs.getBounds2();
             Ellipse2D pb3 = bombs.getBounds3();
-            if ((AIleft.intersects(MatotailForAI) || pb2.intersects(AIleft) || pb3.intersects(AIleft)) && worms.get(1).getSuunta() == 1) {
+            Rectangle2D l2 = laser.getBoundsB();
+            if ((AIleft.intersects(MatotailForAI) || pb2.intersects(AIleft) || pb3.intersects(AIleft) || l2.intersects(AIleft)) && worms.get(1).getSuunta() == 1) {
                 int n = (int) (Math.random() * 1);
 
                 switch (n) {
@@ -725,7 +726,8 @@ public final class Board extends JPanel implements ActionListener {
             Rectangle MatotailForAI = body.get(i).getBounds();
             Ellipse2D pb2 = bombs.getBounds2();
             Ellipse2D pb3 = bombs.getBounds3();
-            if ((AIright.intersects(MatotailForAI) || pb2.intersects(AIright) || pb3.intersects(AIright)) && worms.get(1).getSuunta() == 2) {
+            Rectangle2D l2 = laser.getBoundsB();
+            if ((AIright.intersects(MatotailForAI) || pb2.intersects(AIright) || pb3.intersects(AIright) || l2.intersects(AIright)) && worms.get(1).getSuunta() == 2) {
                 int n = (int) (Math.random() * 1);
 
                 switch (n) {
@@ -745,7 +747,8 @@ public final class Board extends JPanel implements ActionListener {
             Rectangle MatotailForAI = body.get(i).getBounds();
             Ellipse2D pb2 = bombs.getBounds2();
             Ellipse2D pb3 = bombs.getBounds3();
-            if ((AIup.intersects(MatotailForAI) || pb2.intersects(AIup) || pb3.intersects(AIup)) && worms.get(1).getSuunta() == 3) {
+            Rectangle2D l2 = laser.getBoundsB();
+            if ((AIup.intersects(MatotailForAI) || pb2.intersects(AIup) || pb3.intersects(AIup) || l2.intersects(AIup)) && worms.get(1).getSuunta() == 3) {
                 int n = (int) (Math.random() * 1);
 
                 switch (n) {
@@ -765,7 +768,8 @@ public final class Board extends JPanel implements ActionListener {
             Rectangle MatotailForAI = body.get(i).getBounds();
             Ellipse2D pb2 = bombs.getBounds2();
             Ellipse2D pb3 = bombs.getBounds3();
-            if ((AIdown.intersects(MatotailForAI) || pb2.intersects(AIdown) || pb3.intersects(AIdown)) && worms.get(1).getSuunta() == 4) {
+            Rectangle2D l2 = laser.getBoundsB();
+            if ((AIdown.intersects(MatotailForAI) || pb2.intersects(AIdown) || pb3.intersects(AIdown) || l2.intersects(AIdown)) && worms.get(1).getSuunta() == 4) {
                 int n = (int) (Math.random() * 1);
 
                 switch (n) {

@@ -30,6 +30,7 @@ public class Laaser implements Spawnables {
     private Image image4;
     private Image image5;
     private boolean lethal = false;
+    
     private Rectangle beam = new Rectangle(-1000, -1000, 1, 1);
 
     public Laaser() {
@@ -83,15 +84,15 @@ public class Laaser implements Spawnables {
                 double r = Math.random();
                 if (r < 0.5) {
                     //vertical
-                    setX2(wormLocX);
+                    setX2(wormLocX-30);
                     setY2(0);
-                    beam.setBounds(wormLocX, 0, 100, 600);
+                    beam.setBounds(wormLocX-30, 0, 100, 600);
 
                 } else {
                     //horizontal
                     setX3(0);
-                    setY3(wormLocY);
-                    beam.setBounds(0, wormLocY, 800, 100);
+                    setY3(wormLocY-30);
+                    beam.setBounds(0, wormLocY-30, 800, 100);
                 }
 
             }
