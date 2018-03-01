@@ -35,7 +35,7 @@ public class Worm {
 
     
     double nopeus = 2;
-    private int life=1;
+    private int life=3;
 
     public int getLife() {
         return life;
