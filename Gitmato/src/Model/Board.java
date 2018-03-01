@@ -273,20 +273,20 @@ public final class Board extends JPanel implements ActionListener {
     }
 
     private void drawPisteet(Graphics g) {
-
-        String hp = "Punaisen HP: " + worm.getLife();
-        String hp2 = "Sinisen HP: " + worm2.getLife();
-
-        String pt = "Pisteet: " + worm.getPoints();
-        String pt2 = "Pisteet: " + worm2.getPoints();
-
         Font small = new Font("Helvetica", Font.BOLD, 20);
         FontMetrics fm = getFontMetrics(small);
 
-        g.setColor(Color.white);
+        g.setColor(Color.RED);
         g.setFont(small);
+        String hp = "HP: " + worm.getLife();
+        String pt = "Pisteet: " + worm.getPoints();
         g.drawString(hp, 10, 25);
         g.drawString(pt, 10, 50);
+
+        g.setColor(Color.BLUE);
+        String hp2 = "HP: " + worm2.getLife();
+        String pt2 = "Pisteet: " + worm2.getPoints();
+
         g.drawString(hp2, (790 - fm.stringWidth(hp2)), 25);
         g.drawString(pt2, (790 - fm.stringWidth(pt2)), 50);
 
@@ -522,6 +522,7 @@ public final class Board extends JPanel implements ActionListener {
 
     private void drawGameOver(Graphics g) {
         Music.sound4.play();
+        laser.hide();
         filter = filtteri.getImage();
         String msg = null;
         Graphics2D g3 = (Graphics2D) g;
@@ -649,55 +650,55 @@ public final class Board extends JPanel implements ActionListener {
         }
 
         if (worms.get(1).getX() < 20 && worms.get(1).getSuunta() != 4) {
-            if(worms.get(1).getSuunta() != 2){
+            if (worms.get(1).getSuunta() != 2) {
                 BotTurnUp();
                 worms.get(1).setX(25);
             }
-            
-            if(worms.get(1).getReverse(worms.get(1))){
+
+            if (worms.get(1).getReverse(worms.get(1))) {
                 BotTurnUp();
                 worms.get(1).setX(25);
             }
-            
+
         }
 
         if (worms.get(1).getX() > 715 && worms.get(1).getSuunta() != 3) {
-            if(worms.get(1).getSuunta() != 1){
+            if (worms.get(1).getSuunta() != 1) {
                 BotTurnDown();
                 worms.get(1).setX(710);
             }
-            
-            if(worms.get(1).getReverse(worms.get(1))){
+
+            if (worms.get(1).getReverse(worms.get(1))) {
                 BotTurnDown();
                 worms.get(1).setX(710);
             }
-            
+
         }
 
         if (worms.get(1).getY() > 540 && worms.get(1).getSuunta() != 2) {
-            if(worms.get(1).getSuunta() != 3){
+            if (worms.get(1).getSuunta() != 3) {
                 BotTurnLeft();
                 worms.get(1).setY(535);
             }
-            
-            if(worms.get(1).getReverse(worms.get(1))){
+
+            if (worms.get(1).getReverse(worms.get(1))) {
                 BotTurnLeft();
                 worms.get(1).setY(535);
             }
-            
+
         }
 
         if ((worms.get(1).getY() < 20 && worms.get(1).getSuunta() != 1)) {
-            if(worms.get(1).getSuunta() != 4){
+            if (worms.get(1).getSuunta() != 4) {
                 BotTurnRight();
                 worms.get(1).setY(25);
             }
-            
-            if(worms.get(1).getReverse(worms.get(1))){
+
+            if (worms.get(1).getReverse(worms.get(1))) {
                 BotTurnRight();
                 worms.get(1).setY(25);
             }
-            
+
         }
 
         Rectangle AIleft = getBoundsLeft();
