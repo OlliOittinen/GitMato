@@ -216,14 +216,12 @@ public class Laaser implements Spawnables {
         setY((int) (Math.random() * 550));
     }
 
-    public void randomizeXY2(int x) {
-        setX2(x);
-        setY2(0);
-    }
-
-    public void randomizeXY3(int y) {
-        setX3(0);
-        setY3(y);
+    public void hide() {
+        setX2(-1000);
+        setY2(-1000);
+        setX3(-1000);
+        setY3(-1000);
+        beam.setBounds(-1000, -1000, 1, 1);
     }
 
 }
