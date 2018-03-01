@@ -587,7 +587,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
 
-                int n = (int) (Math.random()*7);
+                int n = 3;//(int) (Math.random()*7);
 
                 switch (n) {
                     case 0:
@@ -620,7 +620,7 @@ public final class Board extends JPanel implements ActionListener {
     public void BlueAIBot() {
         for (int i = 0; i < pickableList.size(); i++) {
 
-            if (worms.get(1).getX() < (pickableList.get(i).getX() + 10) && worms.get(1).getX() > (pickableList.get(i).getX() - 10)) {
+            if (worms.get(1).getX() < (pickableList.get(i).getX() + 10) && worms.get(1).getX() > (pickableList.get(i).getX() - 10) && !worms.get(1).getReverse(worms.get(1))) {
                 if (worms.get(1).getY() < pickableList.get(i).getY()) {
                     BotTurnDown();
 
@@ -633,7 +633,7 @@ public final class Board extends JPanel implements ActionListener {
 
             }
 
-            if (worms.get(1).getY() < (pickableList.get(i).getY() + 10) && worms.get(1).getY() > (pickableList.get(i).getY() - 10)) {
+            if (worms.get(1).getY() < (pickableList.get(i).getY() + 10) && worms.get(1).getY() > (pickableList.get(i).getY() - 10) && !worms.get(1).getReverse(worms.get(1))) {
 
                 if (worms.get(1).getX() < pickableList.get(i).getX()) {
                     BotTurnRight();
@@ -648,25 +648,56 @@ public final class Board extends JPanel implements ActionListener {
             }
         }
 
-        if (worms.get(1).getX() < 20 && worms.get(1).getSuunta() != 4 && worms.get(1).getSuunta() != 2) {
-
-            BotTurnUp();
-            worms.get(1).setX(25);
+        if (worms.get(1).getX() < 20 && worms.get(1).getSuunta() != 4) {
+            if(worms.get(1).getSuunta() != 2){
+                BotTurnUp();
+                worms.get(1).setX(25);
+            }
+            
+            if(worms.get(1).getReverse(worms.get(1))){
+                BotTurnUp();
+                worms.get(1).setX(25);
+            }
+            
         }
 
-        if (worms.get(1).getX() > 715 && worms.get(1).getSuunta() != 3 && worms.get(1).getSuunta() != 1) {
-            BotTurnDown();
-            worms.get(1).setX(710);
+        if (worms.get(1).getX() > 715 && worms.get(1).getSuunta() != 3) {
+            if(worms.get(1).getSuunta() != 1){
+                BotTurnDown();
+                worms.get(1).setX(710);
+            }
+            
+            if(worms.get(1).getReverse(worms.get(1))){
+                BotTurnDown();
+                worms.get(1).setX(710);
+            }
+            
         }
 
-        if (worms.get(1).getY() > 540 && worms.get(1).getSuunta() != 2 && worms.get(1).getSuunta() != 3) {
-            BotTurnLeft();
-            worms.get(1).setY(535);
+        if (worms.get(1).getY() > 540 && worms.get(1).getSuunta() != 2) {
+            if(worms.get(1).getSuunta() != 3){
+                BotTurnLeft();
+                worms.get(1).setY(535);
+            }
+            
+            if(worms.get(1).getReverse(worms.get(1))){
+                BotTurnLeft();
+                worms.get(1).setY(535);
+            }
+            
         }
 
-        if ((worms.get(1).getY() < 20 && worms.get(1).getSuunta() != 1 && worms.get(1).getSuunta() != 4)) {
-            BotTurnRight();
-            worms.get(1).setY(25);
+        if ((worms.get(1).getY() < 20 && worms.get(1).getSuunta() != 1)) {
+            if(worms.get(1).getSuunta() != 4){
+                BotTurnRight();
+                worms.get(1).setY(25);
+            }
+            
+            if(worms.get(1).getReverse(worms.get(1))){
+                BotTurnRight();
+                worms.get(1).setY(25);
+            }
+            
         }
 
         Rectangle AIleft = getBoundsLeft();
