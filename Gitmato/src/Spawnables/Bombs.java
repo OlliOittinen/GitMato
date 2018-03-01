@@ -103,6 +103,10 @@ public class Bombs implements Spawnables {
     public Ellipse2D getBounds2() {
         return new Ellipse2D.Double(xe3+3, ye3+3, 200, 200);
     }
+    
+    public Ellipse2D getBounds3(){
+        return new Ellipse2D.Double(xe2+3, ye2+3, 200, 200);
+    }
 
     @Override
     public int getX() {
