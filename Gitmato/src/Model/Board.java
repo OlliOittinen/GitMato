@@ -164,7 +164,7 @@ public final class Board extends JPanel implements ActionListener {
             
 
             worms.clear();
-            
+
             worms.add(worm = new Worm(1)); //lista worm olioista
             if (pelimoodi != 2) {
                 
