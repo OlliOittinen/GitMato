@@ -72,7 +72,7 @@ public class Matopeli extends Application {
         VBox layout1 = new VBox(20);
         layout1.setAlignment(Pos.CENTER);
         layout1.getChildren().addAll(label1, button2, button1, button3);
-        scene1 = new Scene(layout1, 800, 590);
+        scene1 = new Scene(layout1, 800, 506);
         layout1.setId("pane");
         scene1.getStylesheets().add("Styling/styling.css");
         //---------------------------------
