@@ -565,29 +565,36 @@ public final class Board extends JPanel implements ActionListener {
         laser.hide();
         filter = filtteri.getImage();
         String msg = null;
+        String msg2;
         Graphics2D g3 = (Graphics2D) g;
         g3.drawImage(filter, 0, 0, null);
 
         Font small = new Font("Helvetica", Font.BOLD, 20);
-        FontMetrics fm = getFontMetrics(small);
-        g3.setFont(small);
+        Font big = new Font("Helvetica", Font.BOLD, 30);
+        FontMetrics fm2 = getFontMetrics(small);
+        FontMetrics fm = getFontMetrics(big);
+        g3.setFont(big);
 
         Music.sound1.stop();
         ingame = false;
         if (worm.getLife() <= 0) {
             if(pelimoodi != 2){
-            msg = "BLUE Won!!! Press SPACE To Play Again.";
+            msg = "BLUE Won!";
             g3.setColor(Color.blue);
             }
             else {
-                msg = "GAME OVER, consider buying some of our merchandise!!! Press SPACE to play again.";
+                msg = "GAME OVER!";
                 g3.setColor(Color.white);
             }
         } else if (worm2.getLife() <= 0) {
-            msg = "RED Won!!! Press SPACE To Play Again.";
+            msg = "RED Won!";
             g3.setColor(Color.red);
         }
-        g3.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 500 / 2);
+        msg2 = "Press SPACE to play again.";
+        g3.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 270);
+        g3.setFont(small);
+        g3.setColor(Color.white);
+        g3.drawString(msg2, (806 - fm2.stringWidth(msg2)) / 2, 600 / 2);
     }
 
     private void spawnTail(int n) {
