@@ -31,7 +31,7 @@ public class Laaser implements Spawnables {
     private Image image5;
     private boolean horizontal = false;
     private boolean lethal = false;
-    
+
     private Rectangle beam = new Rectangle(-1000, -1000, 1, 1);
 
     public Laaser() {
@@ -46,6 +46,11 @@ public class Laaser implements Spawnables {
 
     public void damage(Worm worm) {
         if (lethal) {
+            if (worm.getLife() > 1) {
+                worm.randomizeXY();
+                worm.setSuuntaAdv(0);
+                worm.setSuunta(0);
+            }
             Life.loseLife(worm);
         }
     }
@@ -85,15 +90,15 @@ public class Laaser implements Spawnables {
                 double r = Math.random();
                 if (r < 0.5) {
                     //vertical
-                    setX2(wormLocX-30);
+                    setX2(wormLocX - 30);
                     setY2(0);
-                    beam.setBounds(wormLocX-30, 0, 100, 600);
+                    beam.setBounds(wormLocX - 30, 0, 100, 600);
                     horizontal = false;
                 } else {
                     //horizontal
                     setX3(0);
-                    setY3(wormLocY-30);
-                    beam.setBounds(0, wormLocY-30, 800, 100);
+                    setY3(wormLocY - 30);
+                    beam.setBounds(0, wormLocY - 30, 800, 100);
                     horizontal = true;
                 }
 
@@ -129,8 +134,8 @@ public class Laaser implements Spawnables {
     public Rectangle getBoundsB() {
         return beam;
     }
-    
-    public boolean getHorizontal(){
+
+    public boolean getHorizontal() {
         return horizontal;
     }
 
@@ -206,6 +211,7 @@ public class Laaser implements Spawnables {
     public Image getlasersightH() {
         return image5;
     }
+
     public boolean getLethal() {
         return lethal;
     }
