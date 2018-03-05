@@ -82,16 +82,18 @@ public class PlayerController  {
             if(worms.get(0).getSuunta() != 3){
                if(worms.get(0).getSuunta() != 4 && (worms.get(0).getY() < 20 || worms.get(0).getY() > 530)){
                     worms.get(0).setY(worms.get(0).getY()+9);
+                    
                 }
                worms.get(0).setSuunta(4);
                worms.get(0).setSuuntaAdv(1);
+               
             }
         }
         
         
         // controlls for player 2 
         if(pelimoodi == 0){
-        if (key == KeyEvent.VK_A) {
+            if (key == KeyEvent.VK_A) {
             
 
                     if(worms.get(1).getSuunta() != 2){
@@ -136,7 +138,7 @@ public class PlayerController  {
                         worms.get(1).setSuuntaAdv(1);
                     }
                 }
-        }
+            }
         
         //GAME RESET
         if (key == KeyEvent.VK_SPACE || key == KeyEvent.VK_ENTER) {
