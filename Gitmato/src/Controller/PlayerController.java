@@ -20,7 +20,7 @@ public class PlayerController  {
     private List<Worm> worms = new ArrayList<>(); 
     private Board board;
     private Matopeli peli;
-    private boolean yksinpeli= false;
+    private int pelimoodi= 0;
     
     public PlayerController(){
         initPlayerController();
@@ -29,8 +29,8 @@ public class PlayerController  {
     private void initPlayerController(){
         
     }
-    public void yksinPeli(boolean peliMoodi){
-        this.yksinpeli = peliMoodi;
+    public void yksinPeli(int peliMoodi){
+        this.pelimoodi = peliMoodi;
     }
    
     public void updateWorms(){ // tätä täytyy kutsua joka pelin alussa!!!!
@@ -90,7 +90,7 @@ public class PlayerController  {
         
         
         // controlls for player 2 
-        if(yksinpeli == false){
+        if(pelimoodi == 0){
         if (key == KeyEvent.VK_A) {
             
 
