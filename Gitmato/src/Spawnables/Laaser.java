@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
  *
  * @author Olli
  */
-public class Laser implements Spawnables {
+public class Laaser implements Spawnables {
 
     private int xe;
     private int ye;
@@ -34,7 +34,7 @@ public class Laser implements Spawnables {
 
     private Rectangle beam = new Rectangle(-1000, -1000, 1, 1);
 
-    public Laser() {
+    public Laaser() {
         init();
     }
 
