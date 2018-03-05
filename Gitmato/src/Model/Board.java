@@ -162,13 +162,8 @@ public final class Board extends JPanel implements ActionListener {
             snack.init();
             ingame = true;
             
-
             worms.clear();
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> 9acb0987e28edc0ecca2e814e546114491ac4c21
             worms.add(worm = new Worm(1)); //lista worm olioista
             if (pelimoodi != 2) {
                 
