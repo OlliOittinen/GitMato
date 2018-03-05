@@ -44,8 +44,8 @@ public class Shield  implements Spawnables{
     public void init() {
         ImageIcon kuva = new ImageIcon("src/Images/Shield.png");
         image = kuva.getImage();
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
+        xe = -100;
+        ye = -100;
     }
 @Override    
     public void loadImage(String imageName) {
