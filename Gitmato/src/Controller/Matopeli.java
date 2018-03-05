@@ -65,6 +65,7 @@ public class Matopeli extends Application {
                 StackPane layout4 = new StackPane();
                 layout4.getChildren().add(swingNode);
                 scene4 = new Scene(layout4, 800, 590);
+                layout4.getChildren().remove(0);
                 window.setScene(scene4);
                 });
         
@@ -121,6 +122,7 @@ public class Matopeli extends Application {
          SwingUtilities.invokeLater(() -> {
              JPanel board = new Board(m, pelimoodi);
              swingNode.setContent(board);
+             
          });
      }
 
