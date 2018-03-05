@@ -52,7 +52,7 @@ public final class Board extends JPanel implements ActionListener {
     private Life HP;
     private Shield shield;
     private Bombs bombs;
-    private Laser laser;
+    private Laaser laser;
     private boolean ingame;
     private MainFrame frame;
     private ImageIcon Ironpic;
@@ -114,7 +114,7 @@ public final class Board extends JPanel implements ActionListener {
         HP = new Life();
         shield = new Shield();
         bombs = new Bombs();
-        laser = new Laser();
+        laser = new Laaser();
 
          
 
