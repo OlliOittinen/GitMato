@@ -116,7 +116,7 @@ public final class Board extends JPanel implements ActionListener {
         bombs = new Bombs();
         laser = new Laaser();
 
-        powerUpCD(); //piilottaa powerupit alussa
+         
 
         snack = new Snack();
 
@@ -149,6 +149,11 @@ public final class Board extends JPanel implements ActionListener {
         if (pelimoodi == 2) {
             worm2.setX(-1000);
             worm2.setY(-2000); //läpäl
+            worm.setLife(1);
+        }
+        
+        if(pelimoodi != 2){
+            powerUpCD(); //piilottaa powerupit alussa
         }
     }
 
@@ -156,7 +161,7 @@ public final class Board extends JPanel implements ActionListener {
         if (!ingame) {
             snack.init();
             ingame = true;
-            powerUpCD();
+            
 
             worms.remove(0);
             worms.remove(0);
@@ -164,6 +169,7 @@ public final class Board extends JPanel implements ActionListener {
             worms.add(worm = new Worm(1)); //lista worm olioista
             if (pelimoodi != 2) {
                 worms.add(worm2 = new Worm(2));
+                powerUpCD();
             }
 
             timer.start();
@@ -185,6 +191,7 @@ public final class Board extends JPanel implements ActionListener {
             if (pelimoodi == 2) {
                 worm2.setX(-1000);
                 worm2.setY(-2000); //läpäl
+                worm.setLife(1);
             }
         }
 
@@ -409,6 +416,23 @@ public final class Board extends JPanel implements ActionListener {
                     System.out.println("Red dead");
                 }
                 Life.loseLife(worm);
+            }
+        }
+        if(pelimoodi == 2){
+            for (int i = 2; i < body.size(); i++) {
+                Rectangle Matotail2 = body.get(i).getBounds();
+                if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
+                    System.out.println("PUNASEE SATTU");
+                    if (worm.getLife() > 1) {
+                        shield.shield(worm, 50);
+                        worm.randomizeXY();
+                        worm.setSuuntaAdv(0);
+                        worm.setSuunta(0);
+                    } else {
+                        System.out.println("Red dead");
+                    }
+                    Life.loseLife(worm);
+                }
             }
         }
 
