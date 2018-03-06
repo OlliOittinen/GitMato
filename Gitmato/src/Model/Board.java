@@ -190,7 +190,7 @@ public final class Board extends JPanel implements ActionListener {
 
             if (pelimoodi == 2) {
                 worm2.setX(-1000);
-                worm2.setY(-2000); //läpäl
+                worm2.setY(-2000);
                 worm.setLife(1);
             }
         }
@@ -477,9 +477,7 @@ public final class Board extends JPanel implements ActionListener {
             powerUpCD();
         }
 
-        //if (pb2.intersects(Matokuutio) || pb3.intersects(Matokuutio) || pb4.intersects(Matokuutio)) {
-
-        if (pb2.intersects(Matokuutio) && !shield.isActive(worm)) {
+        if (pb2.intersects(Matokuutio) || pb3.intersects(Matokuutio) || pb4.intersects(Matokuutio) && !shield.isActive(worm)) {
             bombs.damage(worm);
         }
         if (pla.intersects(Matokuutio)) {
@@ -538,9 +536,8 @@ public final class Board extends JPanel implements ActionListener {
             bombs.bombZone();
             powerUpCD();
         }
-        //if (pb2.intersects(Matokuutio2) || pb3.intersects(Matokuutio2) || pb4.intersects(Matokuutio2)) {
 
-        if (pb2.intersects(Matokuutio2) && !shield.isActive(worm2)) {
+        if (pb2.intersects(Matokuutio2)|| pb3.intersects(Matokuutio2) || pb4.intersects(Matokuutio2) && !shield.isActive(worm2)) {
             bombs.damage(worm2);
         }
         if (pla.intersects(Matokuutio2)) {
@@ -636,8 +633,8 @@ public final class Board extends JPanel implements ActionListener {
         bombs.setY(-100);
         bombs.setX(-100);
         for (int i = 1; i < 7; i++) {
-            bombs.setXBombs(i,-1000);
-            bombs.setYBombs(i,-1000);
+            bombs.setXBombs(i, -1000);
+            bombs.setYBombs(i, -1000);
         }
         laser.setY(-100);
         laser.setX(-100);
@@ -648,11 +645,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
 
-
-                //int n = (int) 5;//(Math.random() * 7);
-
-                int n = (int) 6;//(Math.random() * 7);
-
+                int n = (int) (Math.random() * 7);
 
                 switch (n) {
                     case 0:
@@ -683,11 +676,11 @@ public final class Board extends JPanel implements ActionListener {
     }
 
     public void BlueAIBot() {
-        if(tailNro2 > 3){
-            if(worm2.getBounds().intersects(body2.get(body2.size()-1).getBounds()) && body2.size() > 3){
+        if (tailNro2 > 3) {
+            if (worm2.getBounds().intersects(body2.get(body2.size() - 1).getBounds()) && body2.size() > 3) {
                 BotTurnDown();
             }
-        
+
         }
         for (int i = 0; i < pickableList.size(); i++) {
 
