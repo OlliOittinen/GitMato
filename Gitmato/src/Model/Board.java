@@ -116,8 +116,6 @@ public final class Board extends JPanel implements ActionListener {
         bombs = new Bombs();
         laser = new Laaser();
 
-         
-
         snack = new Snack();
 
         pickableList.add(faster);
@@ -151,8 +149,8 @@ public final class Board extends JPanel implements ActionListener {
             worm2.setY(-2000); //läpäl
             worm.setLife(1);
         }
-        
-        if(pelimoodi != 2){
+
+        if (pelimoodi != 2) {
             powerUpCD(); //piilottaa powerupit alussa
         }
     }
@@ -161,13 +159,12 @@ public final class Board extends JPanel implements ActionListener {
         if (!ingame) {
             snack.init();
             ingame = true;
-            
 
             worms.clear();
 
             worms.add(worm = new Worm(1)); //lista worm olioista
             if (pelimoodi != 2) {
-                
+
                 worms.add(worm2 = new Worm(2));
                 powerUpCD();
                 cordinates2.clear();
@@ -181,11 +178,11 @@ public final class Board extends JPanel implements ActionListener {
             control.updateBoard(this);
 
             cordinates.clear();
-            
+
             body.clear();
-            
+
             tailNro = 0;
-            
+
             Sound.Music.sound1.loop();
             if (pelimoodi == 1) {
                 BotTurnDown();
@@ -262,8 +259,12 @@ public final class Board extends JPanel implements ActionListener {
         g2d.drawImage(HP.getImage(), HP.getX(), HP.getY(), this);
         g2d.drawImage(shield.getImage(), shield.getX(), shield.getY(), this);
         g2d.drawImage(bombs.getImage(1), bombs.getX(), bombs.getY(), this);
-        g2d.drawImage(bombs.getImage(2), bombs.getX2(), bombs.getY2(), this);
-        g2d.drawImage(bombs.getImage(3), bombs.getX3(), bombs.getY3(), this);
+        g2d.drawImage(bombs.getImage(2), bombs.getXBombs(1), bombs.getYBombs(1), this);
+        g2d.drawImage(bombs.getImage(3), bombs.getXBombs(2), bombs.getYBombs(2), this);
+        g2d.drawImage(bombs.getImage(2), bombs.getXBombs(3), bombs.getYBombs(3), this);
+        g2d.drawImage(bombs.getImage(3), bombs.getXBombs(4), bombs.getYBombs(4), this);
+        g2d.drawImage(bombs.getImage(2), bombs.getXBombs(5), bombs.getYBombs(5), this);
+        g2d.drawImage(bombs.getImage(3), bombs.getXBombs(6), bombs.getYBombs(6), this);
         g2d.drawImage(laser.getImage(), laser.getX(), laser.getY(), this);
         if (!laser.getLethal()) {
             g2d.drawImage(laser.getlasersightH(), laser.getX3(), laser.getY3(), this);
@@ -363,7 +364,7 @@ public final class Board extends JPanel implements ActionListener {
             body2.get(i).setX(x2);
             body2.get(i).setY(y2);
         }
-        
+
         repaint();
 
         if (pelimoodi == 1) {
@@ -382,7 +383,9 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle pl = HP.getBounds();
         Rectangle psh = shield.getBounds();
         Rectangle pb = bombs.getBounds();
-        Ellipse2D pb2 = bombs.getBounds2();
+        Ellipse2D pb2 = bombs.getBoundsBombs(2);
+        Ellipse2D pb3 = bombs.getBoundsBombs(4);
+        Ellipse2D pb4 = bombs.getBoundsBombs(6);
         Rectangle pla = laser.getBounds();
         Rectangle beam = laser.getBoundsB();
 
@@ -419,7 +422,7 @@ public final class Board extends JPanel implements ActionListener {
                 Life.loseLife(worm);
             }
         }
-        if(pelimoodi == 2){
+        if (pelimoodi == 2) {
             for (int i = 2; i < body.size(); i++) {
                 Rectangle Matotail2 = body.get(i).getBounds();
                 if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
@@ -473,7 +476,7 @@ public final class Board extends JPanel implements ActionListener {
             bombs.bombZone();
             powerUpCD();
         }
-        if (pb2.intersects(Matokuutio)) {
+        if (pb2.intersects(Matokuutio) || pb3.intersects(Matokuutio) || pb4.intersects(Matokuutio)) {
             bombs.damage(worm);
         }
         if (pla.intersects(Matokuutio)) {
@@ -532,7 +535,7 @@ public final class Board extends JPanel implements ActionListener {
             bombs.bombZone();
             powerUpCD();
         }
-        if (pb2.intersects(Matokuutio2)) {
+        if (pb2.intersects(Matokuutio2) || pb3.intersects(Matokuutio2) || pb4.intersects(Matokuutio2)) {
             bombs.damage(worm2);
         }
         if (pla.intersects(Matokuutio2)) {
@@ -578,11 +581,10 @@ public final class Board extends JPanel implements ActionListener {
         Music.sound1.stop();
         ingame = false;
         if (worm.getLife() <= 0) {
-            if(pelimoodi != 2){
-            msg = "BLUE Won!";
-            g3.setColor(Color.blue);
-            }
-            else {
+            if (pelimoodi != 2) {
+                msg = "BLUE Won!";
+                g3.setColor(Color.blue);
+            } else {
                 msg = "GAME OVER!";
                 g3.setColor(Color.white);
             }
@@ -628,10 +630,10 @@ public final class Board extends JPanel implements ActionListener {
         shield.setY(-100);
         bombs.setY(-100);
         bombs.setX(-100);
-        bombs.setX2(-1000);
-        bombs.setY2(-1000);
-        bombs.setX3(-1000);
-        bombs.setY3(-1000);
+        for (int i = 1; i < 7; i++) {
+            bombs.setXBombs(i,-1000);
+            bombs.setYBombs(i,-1000);
+        }
         laser.setY(-100);
         laser.setX(-100);
 
@@ -641,7 +643,7 @@ public final class Board extends JPanel implements ActionListener {
             @Override
             public void run() {
 
-                int n = (int) 3;//(Math.random() * 7);
+                int n = (int) 5;//(Math.random() * 7);
 
                 switch (n) {
                     case 0:
@@ -757,8 +759,8 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle AIleft = getBoundsLeft();
         for (int i = 0; i < body.size(); i++) {
             Rectangle MatotailForAI = body.get(i).getBounds();
-            Ellipse2D pb2 = bombs.getBounds2();
-            Ellipse2D pb3 = bombs.getBounds3();
+            Ellipse2D pb2 = bombs.getBoundsBombs(3);
+            Ellipse2D pb3 = bombs.getBoundsBombs(4);
             Rectangle2D l2 = laser.getBoundsB();
             if ((AIleft.intersects(MatotailForAI) || pb2.intersects(AIleft) || pb3.intersects(AIleft) || (l2.intersects(AIleft) && laser.getHorizontal()) || (l2.intersects(AIleft) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getSuunta() == 1 || worms.get(1).getReverse(worms.get(1)))) {
                 int n = (int) (Math.random() * 1);
@@ -783,8 +785,8 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle AIright = getBoundsRight();
         for (int i = 0; i < body.size(); i++) {
             Rectangle MatotailForAI = body.get(i).getBounds();
-            Ellipse2D pb2 = bombs.getBounds2();
-            Ellipse2D pb3 = bombs.getBounds3();
+            Ellipse2D pb2 = bombs.getBoundsBombs(3);
+            Ellipse2D pb3 = bombs.getBoundsBombs(4);
             Rectangle2D l2 = laser.getBoundsB();
             if ((AIright.intersects(MatotailForAI) || pb2.intersects(AIright) || pb3.intersects(AIright) || (l2.intersects(AIright) && laser.getHorizontal()) || (l2.intersects(AIright) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getSuunta() == 2 || worms.get(1).getReverse(worms.get(1)))) {
                 int n = (int) (Math.random() * 2);
@@ -809,8 +811,8 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle AIup = getBoundsUp();
         for (int i = 0; i < body.size(); i++) {
             Rectangle MatotailForAI = body.get(i).getBounds();
-            Ellipse2D pb2 = bombs.getBounds2();
-            Ellipse2D pb3 = bombs.getBounds3();
+            Ellipse2D pb2 = bombs.getBoundsBombs(3);
+            Ellipse2D pb3 = bombs.getBoundsBombs(4);
             Rectangle2D l2 = laser.getBoundsB();
             if ((AIup.intersects(MatotailForAI) || pb2.intersects(AIup) || pb3.intersects(AIup) || (l2.intersects(AIup) && !laser.getHorizontal()) || (l2.intersects(AIup) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getSuunta() == 3 || worms.get(1).getReverse(worms.get(1)))) {
                 int n = (int) (Math.random() * 2);
@@ -835,8 +837,8 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle AIdown = getBoundsDown();
         for (int i = 0; i < body.size(); i++) {
             Rectangle MatotailForAI = body.get(i).getBounds();
-            Ellipse2D pb2 = bombs.getBounds2();
-            Ellipse2D pb3 = bombs.getBounds3();
+            Ellipse2D pb2 = bombs.getBoundsBombs(3);
+            Ellipse2D pb3 = bombs.getBoundsBombs(4);
             Rectangle2D l2 = laser.getBoundsB();
             if ((AIdown.intersects(MatotailForAI) || pb2.intersects(AIdown) || pb3.intersects(AIdown) || (l2.intersects(AIdown) && !laser.getHorizontal()) || (l2.intersects(AIdown) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getSuunta() == 4 || worms.get(1).getReverse(worms.get(1)))) {
                 int n = (int) (Math.random() * 2);
