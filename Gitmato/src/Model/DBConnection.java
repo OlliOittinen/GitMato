@@ -15,14 +15,39 @@ public class DBConnection {
 
     public static void main(String args[]) {
         try {
-            Connection con = DriverManager.getConnection("jdbc:mariadb://10.114.34.14:3306/DB?user=Olli&password=laiskajaakko");
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from highscore");
-            while (rs.next()) {
-                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
+            Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:4444/score", "Olli", "laiskajaakko");
+            PreparedStatement query = null;
+            try {
+                query = con.prepareStatement(
+                        "select * from highscore");
+                ResultSet result = query.executeQuery();
+                try {
+                    while(result.next()) {
+                        System.out.println(result.getString("nimi" +" "
+                        +result.getString("pisteet") + "\n"));
+                    }
+                } catch (SQLException e) {
+                    do {
+                        System.err.println("Viesti: "+e.getMessage());
+                        System.err.println("Koodi: "+ e.getErrorCode());
+                        System.err.println("SQL-tilakoodi: "+ e.getSQLState());
+                    } while (e.getNextException()!=null);
+                } finally {
+                    result.close();
+                    System.out.println("Tulosjoukko suljettu.");
+                }
+            } catch (Exception e) {
+                System.out.println("Epäonnistui. ");
+            } finally {
+                try {
+                    query.close();
+                    System.out.println("Kysely suljettu");
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
-            con.close();
-        } catch (Exception e) {
+
+        } catch (SQLException e) {
             System.out.println(e);
         }
     }

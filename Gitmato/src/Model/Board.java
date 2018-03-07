@@ -38,13 +38,24 @@ import javax.swing.ImageIcon;
  */
 public final class Board extends JPanel implements ActionListener {
 
+    private static List<Worm> worms;
+    private final int DELAY = 10;
+    //Lista Tail paloista
+    private final List<Tail> body;
+    private final List<Tail> body2;
+    private final List<Spawnables> pickableList;
+    private final List<Point2D> cordinates;
+    private final List<Point2D> cordinates2;
+    // Wormin locaatio muuttujat:
+    Point2D p;
+    Point2D p2;// coordinaatit
+    ImageIcon filtteri = new ImageIcon("src/Images/BlackFilter.png");
     private Worm worm;
     private Worm worm2;
     private PlayerController control;
     private Tail tail;
     private Tail tail2;
     private Timer timer;
-    private final int DELAY = 10;
     private Snack snack;
     private Faster faster;
     private Slower slower;
@@ -56,30 +67,17 @@ public final class Board extends JPanel implements ActionListener {
     private boolean ingame;
     private MainFrame frame;
     private ImageIcon Ironpic;
-    //Lista Tail paloista
-    private final List<Tail> body;
-    private final List<Tail> body2;
-    private final List<Spawnables> pickableList;
     //pidetään lukua kuinka monta Tail objektia on.
     private int tailNro = 0;
     private int tailNro2 = 0;
-    // Wormin locaatio muuttujat:
-    Point2D p;
-    Point2D p2;// coordinaatit
     private int x, y;
     private int x2, y2;
-    private final List<Point2D> cordinates;
-    private final List<Point2D> cordinates2;
-    private static List<Worm> worms;
     private Image halo;
     private Image halo2;
     private int pelimoodi = 0;
-
     private Matopeli engine;
-
     private Image background;
     private Image filter;
-    ImageIcon filtteri = new ImageIcon("src/Images/BlackFilter.png");
 
     public Board(Matopeli e, int pelimoodi) {
         this.engine = e;
@@ -99,6 +97,10 @@ public final class Board extends JPanel implements ActionListener {
 
         initBoard();
 
+    }
+
+    public static List getWorms() {
+        return worms;
     }
 
     private void initBoard() {
@@ -135,7 +137,7 @@ public final class Board extends JPanel implements ActionListener {
         timer.start();
         ingame = true;
 
-        control = new PlayerController(); // 
+        control = new PlayerController(); //
         control.updateWorms(); // Worms-lista liitetään playercontrolleriin
         control.yksinPeli(pelimoodi);
         control.updateBoard(this);
@@ -193,14 +195,6 @@ public final class Board extends JPanel implements ActionListener {
     private void inGame() {
         if (!ingame) {
             timer.stop();
-        }
-    }
-
-    private class TAdapter extends KeyAdapter {
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            control.keyPressed(e);
         }
     }
 
@@ -578,10 +572,6 @@ public final class Board extends JPanel implements ActionListener {
         }
     }
 
-    public static List getWorms() {
-        return worms;
-    }
-
     public void powerUpCD() {
 
         faster.setX(-100);
@@ -797,7 +787,7 @@ public final class Board extends JPanel implements ActionListener {
                         } while (l2.intersects(worms.get(1).getBounds()));
                 }
             }
-            //kek    
+            //kek
         }
 
         Rectangle AIdown = getBoundsDown();
@@ -866,5 +856,13 @@ public final class Board extends JPanel implements ActionListener {
 
     public void yksinpeliTrue() {
         this.pelimoodi = 1;
+    }
+
+    private class TAdapter extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            control.keyPressed(e);
+        }
     }
 }
