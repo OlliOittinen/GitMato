@@ -23,8 +23,7 @@ public class DBConnection {
                 ResultSet result = query.executeQuery();
                 try {
                     while(result.next()) {
-                        System.out.println(result.getString("nimi" +" "
-                        +result.getString("pisteet") + "\n"));
+                        System.out.println("Nimi: " + result.getString("nimi") + ", Pisteet: " + result.getInt("pisteet"));
                     }
                 } catch (SQLException e) {
                     do {
