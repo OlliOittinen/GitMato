@@ -144,6 +144,9 @@ public class PlayerController  {
         if (key == KeyEvent.VK_SPACE || key == KeyEvent.VK_ENTER) {
             board.restartGame();
         }
+        if (key == KeyEvent.VK_H) {
+            board.submitHighscore();
+        }
                     
         // controlls for player 2 
         // --- Here ---
