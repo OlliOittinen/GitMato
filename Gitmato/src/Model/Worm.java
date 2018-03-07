@@ -150,8 +150,8 @@ public class Worm {
         this.points = points;
     }
     public void randomizeXY() {
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
+        setX((int) (Math.random() * 740) + 10);
+        setY((int) (Math.random() * 540) + 10);
     }
     
     public void moveCont(){
