@@ -140,7 +140,6 @@ public final class Board extends JPanel implements ActionListener {
 
         ImageIcon kuvamato = new ImageIcon("src/Images/BlueBG800x600.png");
         background = kuvamato.getImage();
-        System.out.println("In initBoard");
         if (pelimoodi == 1) {
             BotTurnDown();
         }
@@ -392,7 +391,6 @@ public final class Board extends JPanel implements ActionListener {
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
             if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2) && pelimoodi != 2) {
-                System.out.println("SINISEE SATTU");
                 if (worm2.getLife() > 1) {
                     shield.shield(worm2, 50);
                     worm2.randomizeXY();
@@ -400,8 +398,6 @@ public final class Board extends JPanel implements ActionListener {
                         BotTurnDown();
                     }
 
-                } else {
-                    System.out.println("Blue dead");
                 }
                 Life.loseLife(worm2);
             }
@@ -410,14 +406,11 @@ public final class Board extends JPanel implements ActionListener {
         for (int i = 0; i < body2.size(); i++) {
             Rectangle Matotail2 = body2.get(i).getBounds();
             if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
-                System.out.println("PUNASEE SATTU");
                 if (worm.getLife() > 1) {
                     shield.shield(worm, 50);
                     worm.randomizeXY();
                     worm.setSuuntaAdv(0);
                     worm.setSuunta(0);
-                } else {
-                    System.out.println("Red dead");
                 }
                 Life.loseLife(worm);
             }
@@ -426,14 +419,11 @@ public final class Board extends JPanel implements ActionListener {
             for (int i = 2; i < body.size(); i++) {
                 Rectangle Matotail2 = body.get(i).getBounds();
                 if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
-                    System.out.println("PUNASEE SATTU");
                     if (worm.getLife() > 1) {
                         shield.shield(worm, 50);
                         worm.randomizeXY();
                         worm.setSuuntaAdv(0);
                         worm.setSuunta(0);
-                    } else {
-                        System.out.println("Red dead");
                     }
                     Life.loseLife(worm);
                 }
@@ -490,7 +480,6 @@ public final class Board extends JPanel implements ActionListener {
         }
 
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5 || worm.getY() > 550) {
-            System.out.println("PUNASEE SATTU");
             if (worm.getLife() > 1) {
                 worm.randomizeXY();
                 worm.setSuuntaAdv(0);
@@ -549,7 +538,6 @@ public final class Board extends JPanel implements ActionListener {
             laser.damage(worm2);
         }
         if ((worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) && pelimoodi != 2) {
-            System.out.println("SINISEE SATTU");
             if (worm2.getLife() > 1) {
                 worm2.randomizeXY();
                 if (pelimoodi == 1) {
