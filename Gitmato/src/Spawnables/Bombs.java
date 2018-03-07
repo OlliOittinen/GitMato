@@ -21,17 +21,15 @@ import java.util.TimerTask;
  */
 public class Bombs implements Spawnables {
 
-    private int xe;
-    private int ye;
-    private int xe2;
-    private int ye2;
-    private int xe3;
-    private int ye3;
-    private Image image;
-    private Image image2;
-    private Image image3;
+    private int xe, ye, xe2, ye2, xe3, ye3, xe4, ye4, xe5, ye5, xe6, ye6, xe7, ye7;
+
+    private Image image, image2, image3;
+
     private Board board;
     private boolean lethal = false;
+
+    private int xlist[] = new int[]{xe, xe2, xe3, xe4, xe5, xe6, xe7};
+    private int ylist[] = new int[]{ye, ye2, ye3, ye4, ye5, ye6, ye7};
 
     public void bombs(Worm worm) {
         worm.setPoints(worm.getPoints() + 100);
@@ -69,10 +67,10 @@ public class Bombs implements Spawnables {
 
         setX(-100);
         setY(-100);
-        setX2(-1000);
-        setY2(-1000);
-        setX3(-1000);
-        setY3(-1000);
+        for (int i = 0; i < xlist.length; i++) {
+            setXBombs(i, -1000);
+            setYBombs(i, -1000);
+        }
     }
 
     public void bombZone() {
@@ -80,23 +78,29 @@ public class Bombs implements Spawnables {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                randomizeXY2();
+                randomizeXYBombs();
             }
         }, 1000); //aika (ms), joka odotetaan
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 Music.sound7.play();
-                setX3(getX2());
-                setY3(getY2());
-                setX2(-1000);
-                setY2(-1000);
+                for (int i = 2; i < xlist.length; i = i + 2) {
+                    setXBombs(i, xlist[i - 1]);
+                    setYBombs(i, ylist[i - 1]);
+                }
+                for (int i = 1; i <= 5; i = i + 2) {
+                    setXBombs(i, -1000);
+                    setYBombs(i, -1000);
+                }
                 lethal = true;
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        setX3(-1000);
-                        setY3(-1000);
+                        for (int i = 2; i <=6; i = i + 2) {
+                            setXBombs(i, -1000);
+                            setYBombs(i, -1000);
+                        }
                     }
                 }, 5000);
             }
@@ -108,12 +112,8 @@ public class Bombs implements Spawnables {
         return new Rectangle(xe + 3, ye + 3, 30, 30);
     }
 
-    public Ellipse2D getBounds2() {
-        return new Ellipse2D.Double(xe3 + 3, ye3 + 3, 200, 200);
-    }
-
-    public Ellipse2D getBounds3() {
-        return new Ellipse2D.Double(xe2 + 3, ye2 + 3, 200, 200);
+    public Ellipse2D getBoundsBombs(int n) {
+        return new Ellipse2D.Double(xlist[n] + 3, ylist[n] + 3, 200, 200);
     }
 
     @Override
@@ -126,46 +126,30 @@ public class Bombs implements Spawnables {
         return ye;
     }
 
-    public int getX2() {
-        return xe2;
-    }
-
-    public int getY2() {
-        return ye2;
-    }
-
-    public int getX3() {
-        return xe3;
-    }
-
-    public int getY3() {
-        return ye3;
-    }
-
     @Override
     public void setX(int x) {
-        this.xe = x;
+        xe = x;
     }
 
     @Override
     public void setY(int y) {
-        this.ye = y;
+        ye = y;
     }
 
-    public void setX2(int x) {
-        this.xe2 = x;
+    public int getXBombs(int n) {
+        return xlist[n];
     }
 
-    public void setY2(int y) {
-        this.ye2 = y;
+    public int getYBombs(int n) {
+        return ylist[n];
     }
 
-    public void setX3(int x) {
-        this.xe3 = x;
+    public void setXBombs(int n, int value) {
+        xlist[n] = value;
     }
 
-    public void setY3(int y) {
-        this.ye3 = y;
+    public void setYBombs(int n, int value) {
+        ylist[n] = value;
     }
 
     @Override
@@ -195,8 +179,10 @@ public class Bombs implements Spawnables {
         setY((int) (Math.random() * 550));
     }
 
-    public void randomizeXY2() {
-        setX2((int) (Math.random() * 600));
-        setY2((int) (Math.random() * 400));
+    public void randomizeXYBombs() {
+        for (int i = 1; i < xlist.length; i = i + 2) {
+            setXBombs(i, (int) (Math.random() * 600));
+            setYBombs(i, (int) (Math.random() * 400));
+        }
     }
 }
