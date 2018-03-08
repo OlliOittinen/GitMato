@@ -84,6 +84,11 @@ public final class Board extends JPanel implements ActionListener {
     private Highscore hscore = new Highscore();
     private int score;
     DBConnection connection = new DBConnection();
+    private long currentTime = 0; // nykyinen aika (ms)
+    private long previousTime = 0; // viime framen aika (ms)
+    private double timeCounter = 0; // aikalaskuri (sec)
+    private int frameCounter = 0;
+    private double theRealFpsCounter = 0; // näyttää jatkuvasti oikean fps:n
 
     public Board(Matopeli e, int pelimoodi) {
         this.engine = e;
@@ -230,7 +235,7 @@ public final class Board extends JPanel implements ActionListener {
     }
 
     private void doDrawing(Graphics g) {
-
+        
         Graphics2D g2d = (Graphics2D) g;
         drawPisteet(g);
 
@@ -297,8 +302,11 @@ public final class Board extends JPanel implements ActionListener {
 
     private void drawPisteet(Graphics g) {
         Font small = new Font("Helvetica", Font.BOLD, 20);
+        Font smaller = new Font("Helvetica", Font.PLAIN, 15);
         FontMetrics fm = getFontMetrics(small);
-
+        FontMetrics fm2 = getFontMetrics(smaller);
+        String pt3 = "FPS: " + theRealFpsCounter;
+        
         g.setColor(Color.RED);
         g.setFont(small);
         String hp = "HP: " + worm.getLife();
@@ -314,11 +322,30 @@ public final class Board extends JPanel implements ActionListener {
             g.drawString(hp2, (790 - fm.stringWidth(hp2)), 25);
             g.drawString(pt2, (790 - fm.stringWidth(pt2)), 50);
         }
+        g.setColor(Color.WHITE);
+        g.setFont(smaller);
+        g.drawString(pt3, ((790 - fm2.stringWidth(pt3))/2), 20);//piirtää fps
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        
+        currentTime = System.currentTimeMillis();
+        double deltaTime = (double) (currentTime - previousTime) / 1_000;
+        // 1/deltaTime); <- kertoo nykyisen fps joka frame.
+       
+        double interval = 0.5;
+        if(timeCounter > interval){
+            theRealFpsCounter = frameCounter;
+            frameCounter = 0;
+            timeCounter = 0;
+        }
+        else{
+            timeCounter += deltaTime;
+            frameCounter = frameCounter + (int)(1/interval);
+        }
+        
         checkCollisions();
         worm.move();
         worm.moveCont();
@@ -369,6 +396,8 @@ public final class Board extends JPanel implements ActionListener {
         if (pelimoodi == 1) {
             BlueAIBot();
         }
+        
+        previousTime = currentTime;
     }
 
     public void checkCollisions() {
