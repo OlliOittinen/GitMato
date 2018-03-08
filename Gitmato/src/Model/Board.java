@@ -83,7 +83,7 @@ public final class Board extends JPanel implements ActionListener {
     private Image filter;
     private Highscore hscore = new Highscore();
     private int score;
-    DBConnection connection;
+    DBConnection connection = new DBConnection();
 
     public Board(Matopeli e, int pelimoodi) {
         this.engine = e;
@@ -927,7 +927,9 @@ public final class Board extends JPanel implements ActionListener {
                         hscore.setHighscore(score);
                         hscore.setName(result.get());
                         System.out.println("Your name: " + result.get());
-                        connection = new DBConnection();
+                        connection.submitScore(hscore.getHighscore(), hscore.getName());
+                        connection.showHighscore();
+                        
                     }
                 }
             });

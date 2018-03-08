@@ -16,16 +16,21 @@ public class DBConnection {
     Highscore hscore = new Highscore();
     int points = hscore.getHighscore();
     String name = hscore.getName();
+    Connection con = null;
 
-    public static void main(String args[]) {
+    public DBConnection() {
         try {
-            Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:4444/score", "Olli", "laiskajaakko");
+        con = DriverManager.getConnection("jdbc:mariadb://localhost:4444/score", "Olli", "laiskajaakko");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void showHighscore(){
+        try {
             PreparedStatement query = null;
-            PreparedStatement query2 = null;
             try {
                 query = con.prepareStatement("select * from highscore");
-                query2 = con.prepareStatement("INSERT INTO highscore VALUES('name',points)");
-                query2.executeQuery();
                 ResultSet result = query.executeQuery();
                 try {
                     while (result.next()) {
@@ -46,15 +51,49 @@ public class DBConnection {
             } finally {
                 try {
                     query.close();
-                    query2.close();
                     System.out.println("Kysely suljettu");
                 } catch (Exception e) {
                     System.out.println(e);
                 }
             }
 
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void submitScore(int score, String name){
+         try {
+            PreparedStatement query = null;
+            try {
+                query = con.prepareStatement("INSERT INTO highscore VALUES('"+name+"', '"+score+"')");
+                ResultSet result = query.executeQuery();
+                try {
+                    while (result.next()) {
+                        System.out.println("Nimi: " + result.getString("nimi") + ", Pisteet: " + result.getInt("pisteet"));
+                    }
+                } catch (SQLException e) {
+                    do {
+                        System.err.println("Viesti: " + e.getMessage());
+                        System.err.println("Koodi: " + e.getErrorCode());
+                        System.err.println("SQL-tilakoodi: " + e.getSQLState());
+                    } while (e.getNextException() != null);
+                } finally {
+                    result.close();
+                    System.out.println("Tulosjoukko suljettu.");
+                }
+            } catch (Exception e) {
+                System.out.println("Epäonnistui. ");
+            } finally {
+                try {
+                    query.close();
+                    System.out.println("Kysely suljettu");
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
 }
