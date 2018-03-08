@@ -29,7 +29,10 @@ import Sound.Music;
 import java.awt.Image;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Optional;
 import java.util.TimerTask;
+import javafx.application.Platform;
+import javafx.scene.control.TextInputDialog;
 import javax.swing.ImageIcon;
 
 /**
@@ -78,6 +81,9 @@ public final class Board extends JPanel implements ActionListener {
     private Matopeli engine;
     private Image background;
     private Image filter;
+    private Highscore hscore = new Highscore();
+    private int score;
+    DBConnection connection;
 
     public Board(Matopeli e, int pelimoodi) {
         this.engine = e;
@@ -553,6 +559,7 @@ public final class Board extends JPanel implements ActionListener {
         filter = filtteri.getImage();
         String msg = null;
         String msg2;
+        String msg3;
         Graphics2D g3 = (Graphics2D) g;
         g3.drawImage(filter, 0, 0, null);
 
@@ -566,6 +573,7 @@ public final class Board extends JPanel implements ActionListener {
         ingame = false;
         if (worm.getLife() <= 0) {
             if (pelimoodi != 2) {
+                score = worm2.getPoints();
                 msg = "BLUE Won!";
                 g3.setColor(Color.blue);
             } else {
@@ -573,14 +581,17 @@ public final class Board extends JPanel implements ActionListener {
                 g3.setColor(Color.white);
             }
         } else if (worm2.getLife() <= 0) {
+            score = worm.getPoints();
             msg = "RED Won!";
             g3.setColor(Color.red);
         }
         msg2 = "Press SPACE to play again.";
+        msg3 = "Press H to submit your highscore";
         g3.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 270);
         g3.setFont(small);
         g3.setColor(Color.white);
         g3.drawString(msg2, (806 - fm2.stringWidth(msg2)) / 2, 600 / 2);
+        g3.drawString(msg3, (806 - fm2.stringWidth(msg3)) / 2, 320);
     }
 
     private void spawnTail(int n) {
@@ -753,7 +764,7 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle AIleft = getBoundsLeft();
         for (int i = 0; i < body.size(); i++) {
             Rectangle MatotailForAI = body.get(i).getBounds();
-            
+
             Rectangle2D l2 = laser.getBoundsB();
             if ((AIleft.intersects(MatotailForAI) || pb1.intersects(AIleft) || pb2.intersects(AIleft) || pb3.intersects(AIleft) || pb4.intersects(AIleft) || pb5.intersects(AIleft) || pb6.intersects(AIleft) || (l2.intersects(AIleft) && laser.getHorizontal()) || (l2.intersects(AIleft) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getSuunta() == 1 || worms.get(1).getReverse(worms.get(1)))) {
                 int n = (int) (Math.random() * 1);
@@ -778,7 +789,7 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle AIright = getBoundsRight();
         for (int i = 0; i < body.size(); i++) {
             Rectangle MatotailForAI = body.get(i).getBounds();
-            
+
             Rectangle2D l2 = laser.getBoundsB();
             if ((AIright.intersects(MatotailForAI) || pb1.intersects(AIright) || pb2.intersects(AIright) || pb3.intersects(AIright) || pb4.intersects(AIright) || pb5.intersects(AIright) || pb6.intersects(AIright) || (l2.intersects(AIright) && laser.getHorizontal()) || (l2.intersects(AIright) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getSuunta() == 2 || worms.get(1).getReverse(worms.get(1)))) {
                 int n = (int) (Math.random() * 2);
@@ -803,7 +814,7 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle AIup = getBoundsUp();
         for (int i = 0; i < body.size(); i++) {
             Rectangle MatotailForAI = body.get(i).getBounds();
-            
+
             Rectangle2D l2 = laser.getBoundsB();
             if ((AIup.intersects(MatotailForAI) || pb1.intersects(AIup) || pb2.intersects(AIup) || pb3.intersects(AIup) || pb4.intersects(AIup) || pb5.intersects(AIup) || pb6.intersects(AIup) || (l2.intersects(AIup) && !laser.getHorizontal()) || (l2.intersects(AIup) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getSuunta() == 3 || worms.get(1).getReverse(worms.get(1)))) {
                 int n = (int) (Math.random() * 2);
@@ -828,7 +839,7 @@ public final class Board extends JPanel implements ActionListener {
         Rectangle AIdown = getBoundsDown();
         for (int i = 0; i < body.size(); i++) {
             Rectangle MatotailForAI = body.get(i).getBounds();
-            
+
             Rectangle2D l2 = laser.getBoundsB();
             if ((AIdown.intersects(MatotailForAI) || pb1.intersects(AIdown) || pb2.intersects(AIdown) || pb3.intersects(AIdown) || pb4.intersects(AIdown) || pb5.intersects(AIdown) || pb6.intersects(AIdown) || (l2.intersects(AIdown) && !laser.getHorizontal()) || (l2.intersects(AIdown) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getSuunta() == 4 || worms.get(1).getReverse(worms.get(1)))) {
                 int n = (int) (Math.random() * 2);
@@ -898,5 +909,29 @@ public final class Board extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
             control.keyPressed(e);
         }
+    }
+
+    public void submitHighscore() {
+        if (!ingame) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    TextInputDialog dialog = new TextInputDialog("Highscore");
+                    dialog.setTitle("Highscore");
+                    dialog.setHeaderText("Submit your highscore");
+                    dialog.setContentText("Please enter your name:");
+
+                    Optional<String> result = dialog.showAndWait();
+                    if (result.isPresent()) {
+                        System.out.println(score);
+                        hscore.setHighscore(score);
+                        hscore.setName(result.get());
+                        System.out.println("Your name: " + result.get());
+                        connection = new DBConnection();
+                    }
+                }
+            });
+        }
+
     }
 }

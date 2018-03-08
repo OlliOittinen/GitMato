@@ -10,7 +10,7 @@ package Model;
  * @author Eero
  */
 public class Highscore {
-
+    
     private int highscore;
     private String name;
 
