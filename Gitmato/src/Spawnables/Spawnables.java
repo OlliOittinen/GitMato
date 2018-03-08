@@ -14,17 +14,15 @@ import javax.swing.ImageIcon;
  * @author Olli
  */
 public interface Spawnables {
-    int xe = 200;
-    int ye = 200;
    void loadImage(String imageName);
    void init();
-   public Rectangle getBounds();
-   public int getX();
-   public int getY();
-   public void setX(int x);
-   public void setY(int y);
-   public Image getImage();
-   public void randomizeXY();
+   Rectangle getBounds();
+   int getX();
+   int getY();
+   void setX(int x);
+   void setY(int y);
+   Image getImage();
+   void randomizePowerUpLocation();
 }
 
     

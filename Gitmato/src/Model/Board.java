@@ -426,7 +426,7 @@ public final class Board extends JPanel implements ActionListener {
 
         //mato 1 collisions
         if (s.intersects(Matokuutio)) {
-            snack.randomizeXY();
+            snack.randomizePowerUpLocation();
             worm.setPoints(worm.getPoints() + 100);
             spawnTail(1);
         }
@@ -485,7 +485,7 @@ public final class Board extends JPanel implements ActionListener {
 
         //mato 2 collisions
         if (s.intersects(Matokuutio2)) {
-            snack.randomizeXY();
+            snack.randomizePowerUpLocation();
             worm2.setPoints(worm2.getPoints() + 100);
             spawnTail(2);
         }
@@ -627,25 +627,25 @@ public final class Board extends JPanel implements ActionListener {
 
                 switch (n) {
                     case 0:
-                        shield.randomizeXY();
+                        shield.randomizePowerUpLocation();
                         break;
                     case 1:
-                        faster.randomizeXY();
+                        faster.randomizePowerUpLocation();
                         break;
                     case 2:
-                        slower.randomizeXY();
+                        slower.randomizePowerUpLocation();
                         break;
                     case 3:
-                        reverse.randomizeXY();
+                        reverse.randomizePowerUpLocation();
                         break;
                     case 4:
-                        HP.randomizeXY();
+                        HP.randomizePowerUpLocation();
                         break;
                     case 5:
-                        bombs.randomizeXY();
+                        bombs.randomizePowerUpLocation();
                         break;
                     case 6:
-                        laser.randomizeXY();
+                        laser.randomizePowerUpLocation();
                         break;
                 }
 

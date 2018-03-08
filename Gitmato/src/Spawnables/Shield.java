@@ -82,7 +82,7 @@ public class Shield  implements Spawnables{
         return new Rectangle(xe, ye, 41, 55);
     }
 @Override
-    public void randomizeXY() {
+    public void randomizePowerUpLocation() {
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));
     }

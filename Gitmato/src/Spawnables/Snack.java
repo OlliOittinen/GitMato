@@ -63,7 +63,7 @@ public class Snack implements Spawnables{
         return new Rectangle(xe, ye, 41, 55);
     }
 @Override
-    public void randomizeXY() {
+    public void randomizePowerUpLocation() {
         Music.sound10.play();
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));

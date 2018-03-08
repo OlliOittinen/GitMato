@@ -93,7 +93,7 @@ public class Confuse implements Spawnables {
         return confusion;
     }
     @Override
-    public void randomizeXY() {
+    public void randomizePowerUpLocation() {
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));
     }

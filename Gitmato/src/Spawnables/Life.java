@@ -96,7 +96,7 @@ public class Life implements Spawnables {
         return image;
     }
     @Override
-    public void randomizeXY() {
+    public void randomizePowerUpLocation() {
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));
     }
