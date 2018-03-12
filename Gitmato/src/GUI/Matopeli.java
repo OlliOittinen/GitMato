@@ -9,8 +9,6 @@ import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -38,7 +36,6 @@ public class Matopeli extends Application {
         //----GAME MODE SELECTOR SCENE-----------
 
         //Button to Single player
-        //Label label1 = new Label("Choose your gamemode!");
         Button button1 = new Button("Player VS AI");
         button1.setOnAction(e ->
                 {
@@ -77,38 +74,6 @@ public class Matopeli extends Application {
         scene1 = new Scene(layout1, 800, 506);
         layout1.setId("pane");
         scene1.getStylesheets().add("Styling/styling.css");
-        //---------------------------------
-        
-         //------VERSUS SCENE---------------
-
-        //Layout 3 - Singleplayer
-        
-        //-----------------------------------
-        
-        //------VERSUS SCENE---------------
-
-        //Layout 2 - Versus
-     
-        
-        
-        //------GAME OVER SCENE---------------
-        
-        //Layout 3- Game over
-        /*
-        VBox layout3 = new VBox(20);
-        layout3.setAlignment(Pos.CENTER);
-       
-        Label label3 = new Label("GAME OVER");
-        Button restart = new Button("Restart");
-        
-        Button backToSS = new Button("Back to Main menu");
-        backToSS.setOnAction(e -> setScene(1));
-        
-        layout3.getChildren().addAll(label3, restart, backToSS); // Adding swing node
-        scene3 = new Scene(layout3, 800, 600);
-        scene3.getStylesheets().add("Styling/styling.css");
-        //-----------------------------------
-        */
         
         
         //Display scene 1 at first
@@ -128,39 +93,4 @@ public class Matopeli extends Application {
      }
 
 }
-/*
-public class Matopeli{
-    
-    private static MainFrame peli;
-    private static UIController uic;
-    private static PlayerController pc;
 
-   
-    public static void main(String[] args) {
-
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {     
-                /*lpane = new JLayeredPane();
-                peli = new MainFrame();
-                peli.setLayout(new BorderLayout());
-                peli.add(lpane, BorderLayout.CENTER);
-                peliOhi = new GameOver(peli);
-
-                peliOhi.setOpaque(true);
-
-                lpane.add(board, 0, 0);
-                lpane.add(peliOhi, 1, 0);
-
-                peli.pack();
-                peli.setVisible(true);
-                uic = new UIController();
-                pc = new PlayerController();
-                peli = new MainFrame(uic);
-                //peli.pack();
-                peli.setVisible(true);
-            }
-        });         
-    } 
-}
-    */ 
