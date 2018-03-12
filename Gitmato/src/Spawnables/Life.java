@@ -10,6 +10,9 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 import Model.Board;
+import Sound.Music;
+import java.util.Timer;
+import java.util.TimerTask;
 /**
  *
  * @author maxki
@@ -19,17 +22,35 @@ public class Life implements Spawnables {
     private int xe;
     private int ye;
     private Image image;
-    private Board board;
     
     public void Life(Worm worm) {
         worm.setPoints(worm.getPoints()+100);
-        worm.setLife(worm.getLife()+1);
+        addLife(worm);
     }
     
     public Life() {
         init();
     }
     
+    public static void addLife (Worm worm) {
+        Music.sound5.play();
+        worm.setLife(worm.getLife()+1);
+    }
+    
+    public static void loseLife(Worm worm) {
+        Music.sound11.play();
+        worm.setLife(worm.getLife()-1);
+        worm.setShield(true);
+        
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                worm.setShield(false);
+                }
+            }, 1000);
+    }
+     
     @Override
     public void loadImage(String imageName) {
         ImageIcon ii = new ImageIcon(imageName);
@@ -38,7 +59,7 @@ public class Life implements Spawnables {
 
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/Images/Life.png");
+        ImageIcon kuva = new ImageIcon("src/Images/Life_1.png");
         image = kuva.getImage();
             
         setX(-100);
@@ -75,7 +96,7 @@ public class Life implements Spawnables {
         return image;
     }
     @Override
-    public void randomizeXY() {
+    public void randomizePowerUpLocation() {
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));
     }

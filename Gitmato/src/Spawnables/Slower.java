@@ -4,10 +4,8 @@
  * and open the template in the editor.
  */
 package Spawnables;
-
-
-
 import Model.Worm;
+import Sound.Music;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.Timer;
@@ -25,6 +23,7 @@ public class Slower implements Spawnables{
     private Image image;
             
     public void slower(Worm worm, Worm worm2) {
+        Music.sound8.play();
         worm.setPoints(worm.getPoints()+100);
         worm2.setNopeus(1);
         
@@ -49,7 +48,7 @@ public class Slower implements Spawnables{
 
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/Images/BottleRed(800x600).png");
+        ImageIcon kuva = new ImageIcon("src/Images/SlowDown.png");
         image = kuva.getImage();
             
         setX(-100);
@@ -86,7 +85,7 @@ public class Slower implements Spawnables{
         return image;
     }
     @Override
-    public void randomizeXY() {
+    public void randomizePowerUpLocation() {
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));
     }

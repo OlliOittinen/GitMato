@@ -5,8 +5,11 @@
  */
 package Spawnables;
 
+import Sound.Music;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.ImageIcon;
 
 /**
@@ -24,12 +27,10 @@ public class Snack implements Spawnables{
     
     @Override
     public void init() {
-        
         ImageIcon kuva = new ImageIcon("src/Images/Apple(800x600).png");
         image = kuva.getImage();
-            
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
+        setX( 600-(int)(Math.random()*400));
+        setY(200);
     }
 @Override    
     public void loadImage(String imageName) {
@@ -62,7 +63,8 @@ public class Snack implements Spawnables{
         return new Rectangle(xe, ye, 41, 55);
     }
 @Override
-    public void randomizeXY() {
+    public void randomizePowerUpLocation() {
+        Music.sound10.play();
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));
     }

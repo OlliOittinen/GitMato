@@ -15,11 +15,12 @@ import javax.swing.SwingUtilities;
 public class Matopeli extends Application {
 
     Stage window;
-    Scene scene1, scene2;
+    Scene scene1, scene2, scene3, scene4;
     
     private static Board board;
     private static MainFrame peli;
     private static PlayerController pc;
+    final SwingNode swingNode = new SwingNode();
 
     public static void main(String[] args) {
         launch(args);
@@ -37,49 +38,77 @@ public class Matopeli extends Application {
 
         //Button to Single player
         Label label1 = new Label("Choose your gamemode!");
-        Button button1 = new Button("Single player");
-        //button1.setOnAction(e -> window.setScene(scene2));
+        Button button1 = new Button("Player VS AI");
+        button1.setOnAction(e ->
+                {
+                createAndSetSwingContent(swingNode, this, "vs AI");
+                StackPane layout2 = new StackPane();
+                layout2.getChildren().add(swingNode); // Adding swing node
+                scene2 = new Scene(layout2, 800, 590);
+                window.setScene(scene2);
+                });
         
          //Button to Versus
-        //Label label1 = new Label("Versus!");
         Button button2 = new Button("Versus");
-        button2.setOnAction(e -> window.setScene(scene2));
-
+        button2.setOnAction(e ->
+                {
+                createAndSetSwingContent(swingNode, this, "versus");
+                StackPane layout3 = new StackPane();
+                layout3.getChildren().add(swingNode); // Adding swing node
+                scene3 = new Scene(layout3, 800, 590);
+                window.setScene(scene3);
+                });
+        Button button3 = new Button("Single player");
+        button3.setOnAction(e ->
+                {
+                createAndSetSwingContent(swingNode, this, "sp");
+                StackPane layout4 = new StackPane();
+                layout4.getChildren().add(swingNode);
+                scene4 = new Scene(layout4, 800, 590);
+                //layout4.getChildren().remove(0);
+                window.setScene(scene4);
+                });
+        
         //Layout 1 - Game mode selector
         VBox layout1 = new VBox(20);
         layout1.setAlignment(Pos.CENTER);
-        layout1.getChildren().addAll(label1, button2, button1);
-        scene1 = new Scene(layout1, 800, 590);
+        layout1.getChildren().addAll(label1, button2, button1, button3);
+        scene1 = new Scene(layout1, 800, 506);
         layout1.setId("pane");
         scene1.getStylesheets().add("Styling/styling.css");
         //---------------------------------
         
+         //------VERSUS SCENE---------------
+
+        //Layout 3 - Singleplayer
+        
+        //-----------------------------------
+        
         //------VERSUS SCENE---------------
 
         //Layout 2 - Versus
-        StackPane layout2 = new StackPane();
-        final SwingNode swingNode = new SwingNode();
-        createAndSetSwingContent(swingNode, this);
-        layout2.getChildren().add(swingNode); // Adding swing node
-        scene2 = new Scene(layout2, 800, 590);
-        //-----------------------------------
+     
+        
         
         //------GAME OVER SCENE---------------
-        /*
+        
         //Layout 3- Game over
+        /*
         VBox layout3 = new VBox(20);
+        layout3.setAlignment(Pos.CENTER);
        
         Label label3 = new Label("GAME OVER");
         Button restart = new Button("Restart");
-        restart.setOnAction(e -> window.setScene(scene2));
         
         Button backToSS = new Button("Back to Main menu");
-        backToSS.setOnAction(e -> window.setScene(scene1));
+        backToSS.setOnAction(e -> setScene(1));
         
         layout3.getChildren().addAll(label3, restart, backToSS); // Adding swing node
-        scene2 = new Scene(layout2, 800, 600);
+        scene3 = new Scene(layout3, 800, 600);
+        scene3.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
         */
+        
         
         //Display scene 1 at first
         window.setScene(scene1);
@@ -89,10 +118,11 @@ public class Matopeli extends Application {
     }
     
     //So this shit makes it so that we can add the board into a JavaFX Scene
-     private void createAndSetSwingContent(final SwingNode swingNode, Matopeli m) {
+     private void createAndSetSwingContent(final SwingNode swingNode, Matopeli m, String pelimoodi) {
          SwingUtilities.invokeLater(() -> {
-             JPanel board = new Board(m);
+             JPanel board = new Board(m, pelimoodi);
              swingNode.setContent(board);
+             
          });
      }
 
