@@ -1,6 +1,6 @@
 
-package Controller;
-import GUI.MainFrame;
+package GUI;
+import Controller.PlayerController;
 import Model.Board;
 import javafx.application.*;
 import javafx.embed.swing.SwingNode;
@@ -18,7 +18,6 @@ public class Matopeli extends Application {
     Scene scene1, scene2, scene3, scene4;
     
     private static Board board;
-    private static MainFrame peli;
     private static PlayerController pc;
     final SwingNode swingNode = new SwingNode();
 

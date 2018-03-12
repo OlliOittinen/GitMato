@@ -1,0 +1,25 @@
+Gitmato
+
+Kuvaus
+Gitmato on perinteistä matopeliä mukaileva Java pohjainen 2D-peli. Pelissä on kolme pelimuotoa; yksinpeli, yksinpeli tietokonevastusta vastaan ja kaksinpeli, jossa pelaajat voivat pelata toisiaan vastaan. Jokaisessa pelimuodossa on omat haasteensa pelaajalle.
+
+Toiminnallisuudet
+    Kolme eri pelimuotoa
+        Yksinpeli
+        Yksinpeli tietokonevastausta vastaan
+        Kaksinpeli
+    Powerupit
+        Faster (nopeuttaa powerupin poiminutta pelaajaa)
+        Slower (hidastaa vastustajaa)
+        Confuse (kääntää vastustajan kontrollit)
+        Life (antaa pelaajalle yhden elämän)
+        Bombs (asettaa pelikentälle kolme satunnaisiin koordinaatteihin sijoitetut ”pommialueet”)
+        Laser (asettaa pelikentälle vastustajan pään koordinaatteihin laserin, jonka suuntaus(pysty/vaakasuora) on määritetty satunnaisesti)
+        Shield (antaa pelaajalle hetkittäisen suojan vastustajan häntää sekä pommeja ja lasereita vastaan)
+    Musiikki ja ääniefektit
+        Taustamusiikki
+        Ääniefekti kun otat powerupin
+    FPS-laskuri(Frames Per Second)
+
+Arkkitehtuuri
+Pelin arkkitehtuuri perustuu MVC- malliin.  Näkymä-tasolla on yksi luokka joka näyttää käyttäjälle nykyisen tilanteen ja päivittää sitä jatkuvasi.  Malli-tasolla on 5 luokkaa, joista tärkein on Board, jossa tapahtuu pelin toiminnan kannalta kaikki olennainen. Boardissa luodaan myös kaikki PowerUpit, jotka implementoivat Spawnables-rajapintaa. Board on myös yhteydessä Ohjain-tason PlayerController- luokkaan joka vastaa matojen ohjailusta. Model-tasolta löytyy myös tietokannan päivittämiseen liittyvät luokat; DBConnection ja Highscore. Musiikki ja kuvat löytyvät omista kansioistaan ja niitä käytetään useissa luokissa.

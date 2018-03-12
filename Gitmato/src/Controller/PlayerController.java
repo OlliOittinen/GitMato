@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import GUI.Matopeli;
 import java.awt.event.KeyEvent;
 import Model.Board;
 import Model.Worm;
