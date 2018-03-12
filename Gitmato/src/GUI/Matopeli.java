@@ -9,6 +9,8 @@ import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
