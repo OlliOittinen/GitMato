@@ -30,11 +30,11 @@ public class DBConnection {
         try {
             PreparedStatement query = null;
             try {
-                query = con.prepareStatement("select * from highscore where pelimoodi='"+pelimoodi+"' order by pisteet desc limit 10");
+                query = con.prepareStatement("select * from highscore where pelimuoto='"+pelimoodi+"' order by pisteet desc limit 10");
                 ResultSet result = query.executeQuery();
                 try {
                     while (result.next()) {
-                        System.out.println("Nimi: " + result.getString("nimi") + ", Pisteet: " + result.getInt("pisteet"));
+                        System.out.println("Nimi: " + result.getString("nimi") + ", pisteet: " + result.getInt("pisteet"));
                     }
                 } catch (SQLException e) {
                     do {
@@ -65,7 +65,11 @@ public class DBConnection {
          try {
             PreparedStatement query = null;
             try {
-                query = con.prepareStatement("INSERT INTO highscore VALUES('"+name+"', '"+score+"', '"+pelimoodi+"')");
+                query = con.prepareStatement("INSERT INTO highscore VALUES(?, ?, ?)");
+                query.setString(1, name);
+                query.setInt(2, score);
+                query.setString(3, pelimoodi);
+                System.out.println(query);
                 ResultSet result = query.executeQuery();
                 try {
                     while (result.next()) {
