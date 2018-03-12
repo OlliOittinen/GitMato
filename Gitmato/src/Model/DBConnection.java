@@ -30,7 +30,7 @@ public class DBConnection {
         try {
             PreparedStatement query = null;
             try {
-                query = con.prepareStatement("select * from highscore");
+                query = con.prepareStatement("select * from highscore order by pisteet desc");
                 ResultSet result = query.executeQuery();
                 try {
                     while (result.next()) {
