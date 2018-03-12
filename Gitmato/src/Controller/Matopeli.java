@@ -37,7 +37,7 @@ public class Matopeli extends Application {
         //----GAME MODE SELECTOR SCENE-----------
 
         //Button to Single player
-        Label label1 = new Label("Choose your gamemode!");
+        //Label label1 = new Label("Choose your gamemode!");
         Button button1 = new Button("Player VS AI");
         button1.setOnAction(e ->
                 {
@@ -72,7 +72,7 @@ public class Matopeli extends Application {
         //Layout 1 - Game mode selector
         VBox layout1 = new VBox(20);
         layout1.setAlignment(Pos.CENTER);
-        layout1.getChildren().addAll(label1, button2, button1, button3);
+        layout1.getChildren().addAll( button2, button1, button3);
         scene1 = new Scene(layout1, 800, 506);
         layout1.setId("pane");
         scene1.getStylesheets().add("Styling/styling.css");
