@@ -956,8 +956,8 @@ public final class Board extends JPanel implements ActionListener {
                         hscore.setHighscore(score);
                         hscore.setName(result.get());
                         System.out.println("Your name: " + result.get());
-                        connection.submitScore(hscore.getHighscore(), hscore.getName());
-                        connection.showHighscore();
+                        connection.submitScore(hscore.getHighscore(), hscore.getName(), pelimoodi);
+                        connection.showHighscore(pelimoodi);
                         
                     }
                 }

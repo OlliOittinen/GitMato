@@ -26,11 +26,11 @@ public class DBConnection {
         }
     }
 
-    public void showHighscore(){
+    public void showHighscore(String pelimoodi){
         try {
             PreparedStatement query = null;
             try {
-                query = con.prepareStatement("select * from highscore order by pisteet desc limit 10");
+                query = con.prepareStatement("select * from highscore where pelimoodi='"+pelimoodi+"' order by pisteet desc limit 10");
                 ResultSet result = query.executeQuery();
                 try {
                     while (result.next()) {
@@ -61,11 +61,11 @@ public class DBConnection {
             e.printStackTrace();
         }
     }
-    public void submitScore(int score, String name){
+    public void submitScore(int score, String name, String pelimoodi){
          try {
             PreparedStatement query = null;
             try {
-                query = con.prepareStatement("INSERT INTO highscore VALUES('"+name+"', '"+score+"')");
+                query = con.prepareStatement("INSERT INTO highscore VALUES('"+name+"', '"+score+"', '"+pelimoodi+"')");
                 ResultSet result = query.executeQuery();
                 try {
                     while (result.next()) {
