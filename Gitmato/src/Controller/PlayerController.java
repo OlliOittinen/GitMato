@@ -20,7 +20,7 @@ public class PlayerController  {
     private List<Worm> worms = new ArrayList<>(); 
     private Board board;
     private Matopeli peli;
-    private int pelimoodi= 0;
+    private String pelimoodi= "versus";
     
     public PlayerController(){
         initPlayerController();
@@ -29,7 +29,7 @@ public class PlayerController  {
     private void initPlayerController(){
         
     }
-    public void yksinPeli(int peliMoodi){
+    public void yksinPeli(String peliMoodi){
         this.pelimoodi = peliMoodi;
     }
    
@@ -92,7 +92,7 @@ public class PlayerController  {
         
         
         // controlls for player 2 
-        if(pelimoodi == 0){
+        if(pelimoodi == "versus"){
             if (key == KeyEvent.VK_A) {
             
 

@@ -41,7 +41,7 @@ public class Matopeli extends Application {
         Button button1 = new Button("Player VS AI");
         button1.setOnAction(e ->
                 {
-                createAndSetSwingContent(swingNode, this, 1);
+                createAndSetSwingContent(swingNode, this, "vs AI");
                 StackPane layout2 = new StackPane();
                 layout2.getChildren().add(swingNode); // Adding swing node
                 scene2 = new Scene(layout2, 800, 590);
@@ -52,7 +52,7 @@ public class Matopeli extends Application {
         Button button2 = new Button("Versus");
         button2.setOnAction(e ->
                 {
-                createAndSetSwingContent(swingNode, this, 0);
+                createAndSetSwingContent(swingNode, this, "versus");
                 StackPane layout3 = new StackPane();
                 layout3.getChildren().add(swingNode); // Adding swing node
                 scene3 = new Scene(layout3, 800, 590);
@@ -61,7 +61,7 @@ public class Matopeli extends Application {
         Button button3 = new Button("Single player");
         button3.setOnAction(e ->
                 {
-                createAndSetSwingContent(swingNode, this, 2);
+                createAndSetSwingContent(swingNode, this, "sp");
                 StackPane layout4 = new StackPane();
                 layout4.getChildren().add(swingNode);
                 scene4 = new Scene(layout4, 800, 590);
@@ -118,7 +118,7 @@ public class Matopeli extends Application {
     }
     
     //So this shit makes it so that we can add the board into a JavaFX Scene
-     private void createAndSetSwingContent(final SwingNode swingNode, Matopeli m, int pelimoodi) {
+     private void createAndSetSwingContent(final SwingNode swingNode, Matopeli m, String pelimoodi) {
          SwingUtilities.invokeLater(() -> {
              JPanel board = new Board(m, pelimoodi);
              swingNode.setContent(board);

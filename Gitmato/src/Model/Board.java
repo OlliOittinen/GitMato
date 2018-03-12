@@ -77,7 +77,7 @@ public final class Board extends JPanel implements ActionListener {
     private int x2, y2;
     private Image halo;
     private Image halo2;
-    private int pelimoodi = 0;
+    private String pelimoodi = "versus";
     private Matopeli engine;
     private Image background;
     private Image filter;
@@ -90,7 +90,7 @@ public final class Board extends JPanel implements ActionListener {
     private int frameCounter = 0;
     private double theRealFpsCounter = 0; // näyttää jatkuvasti oikean fps:n
 
-    public Board(Matopeli e, int pelimoodi) {
+    public Board(Matopeli e, String pelimoodi) {
         this.engine = e;
         this.pelimoodi = pelimoodi;
 
@@ -153,16 +153,16 @@ public final class Board extends JPanel implements ActionListener {
 
         ImageIcon kuvamato = new ImageIcon("src/Images/BlueBG800x600.png");
         background = kuvamato.getImage();
-        if (pelimoodi == 1) {
+        if (pelimoodi == "vs AI") {
             BotTurnDown();
         }
-        if (pelimoodi == 2) {
+        if (pelimoodi == "sp") {
             worm2.setX(-1000);
             worm2.setY(-2000); //läpäl
             worm.setLife(1);
         }
 
-        if (pelimoodi != 2) {
+        if (pelimoodi != "sp") {
             powerUpCD(); //piilottaa powerupit alussa
         }
     }
@@ -175,7 +175,7 @@ public final class Board extends JPanel implements ActionListener {
             worms.clear();
 
             worms.add(worm = new Worm(1)); //lista worm olioista
-            if (pelimoodi != 2) {
+            if (pelimoodi != "sp") {
 
                 worms.add(worm2 = new Worm(2));
                 powerUpCD();
@@ -196,11 +196,11 @@ public final class Board extends JPanel implements ActionListener {
             tailNro = 0;
 
             Sound.Music.sound1.loop();
-            if (pelimoodi == 1) {
+            if (pelimoodi == "vs AI") {
                 BotTurnDown();
             }
 
-            if (pelimoodi == 2) {
+            if (pelimoodi == "sp") {
                 worm2.setX(-1000);
                 worm2.setY(-2000);
                 worm.setLife(1);
@@ -279,7 +279,7 @@ public final class Board extends JPanel implements ActionListener {
             g2d.drawImage(laser.getImageVert(), laser.getX2(), laser.getY2(), this);
         }
         g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
-        if (pelimoodi != 2) {
+        if (pelimoodi != "sp") {
             g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
         }
         if (worm.getShield(worm)) {
@@ -314,7 +314,7 @@ public final class Board extends JPanel implements ActionListener {
         g.drawString(hp, 10, 25);
         g.drawString(pt, 10, 50);
 
-        if (pelimoodi != 2) {
+        if (pelimoodi != "sp") {
             g.setColor(Color.BLUE);
             String hp2 = "HP: " + worm2.getLife();
             String pt2 = "Pisteet: " + worm2.getPoints();
@@ -393,7 +393,7 @@ public final class Board extends JPanel implements ActionListener {
 
         repaint();
 
-        if (pelimoodi == 1) {
+        if (pelimoodi == "vs AI") {
             BlueAIBot();
         }
         
@@ -419,11 +419,11 @@ public final class Board extends JPanel implements ActionListener {
 
         for (int i = 0; i < body.size(); i++) {
             Rectangle Matotail = body.get(i).getBounds();
-            if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2) && pelimoodi != 2) {
+            if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2) && pelimoodi != "sp") {
                 if (worm2.getLife() > 1) {
                     shield.shield(worm2, 50);
                     worm2.randomizeXY();
-                    if (pelimoodi == 1) {
+                    if (pelimoodi == "vs AI") {
                         BotTurnDown();
                     }
 
@@ -444,7 +444,7 @@ public final class Board extends JPanel implements ActionListener {
                 Life.loseLife(worm);
             }
         }
-        if (pelimoodi == 2) {
+        if (pelimoodi == "sp") {
             for (int i = 2; i < body.size(); i++) {
                 Rectangle Matotail2 = body.get(i).getBounds();
                 if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
@@ -566,10 +566,10 @@ public final class Board extends JPanel implements ActionListener {
         if (beam.intersects(Matokuutio2) && !shield.isActive(worm2)) {
             laser.damage(worm2);
         }
-        if ((worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) && pelimoodi != 2) {
+        if ((worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) && pelimoodi != "sp") {
             if (worm2.getLife() > 1) {
                 worm2.randomizeXY();
-                if (pelimoodi == 1) {
+                if (pelimoodi == "vs AI") {
                     BotTurnDown();
                 } else {
                     worm2.setSuuntaAdv(0);
@@ -601,7 +601,7 @@ public final class Board extends JPanel implements ActionListener {
         Music.sound1.stop();
         ingame = false;
         if (worm.getLife() <= 0) {
-            if (pelimoodi != 2) {
+            if (pelimoodi != "sp") {
                 score = worm2.getPoints();
                 msg = "BLUE Won!";
                 g3.setColor(Color.blue);
@@ -929,7 +929,7 @@ public final class Board extends JPanel implements ActionListener {
     }
 
     public void yksinpeliTrue() {
-        this.pelimoodi = 1;
+        this.pelimoodi = "sp";
     }
 
     private class TAdapter extends KeyAdapter {
