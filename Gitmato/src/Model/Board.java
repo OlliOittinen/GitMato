@@ -604,6 +604,7 @@ public final class Board extends JPanel implements ActionListener {
                 msg = "BLUE Won!";
                 g3.setColor(Color.blue);
             } else {
+                score = worm.getPoints();
                 msg = "GAME OVER!";
                 g3.setColor(Color.white);
             }
@@ -950,10 +951,8 @@ public final class Board extends JPanel implements ActionListener {
 
                     Optional<String> result = dialog.showAndWait();
                     if (result.isPresent()) {
-                        System.out.println(score);
                         hscore.setHighscore(score);
                         hscore.setName(result.get());
-                        System.out.println("Your name: " + result.get());
                         connection.submitScore(hscore.getHighscore(), hscore.getName(), pelimoodi);
                         connection.showHighscore(pelimoodi);
                         
