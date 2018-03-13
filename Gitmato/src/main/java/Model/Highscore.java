@@ -14,6 +14,7 @@ public class Highscore {
     private int highscore;
     private String name;
 
+
     public String getName() {
         return name;
     }
