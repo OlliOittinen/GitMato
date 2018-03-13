@@ -945,7 +945,7 @@ public final class Board extends JPanel implements ActionListener {
                 public void run() {
                     TextInputDialog dialog = new TextInputDialog("Type your name here!");
                     dialog.setTitle("Highscore");
-                    dialog.setHeaderText("Submit your highscore!");
+                    dialog.setHeaderText("Submit your highscore!\n " + score);
                     dialog.setContentText("Please enter your name:");
 
                     Optional<String> result = dialog.showAndWait();

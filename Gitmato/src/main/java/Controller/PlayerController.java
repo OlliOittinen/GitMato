@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import GUI.Matopeli;
 import java.awt.event.KeyEvent;
 
 import GUI.Matopeli;
