@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Spawnables;
+package main.java.Spawnables;
 
-import Model.Worm;
+import main.java.Model.Worm;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import javax.swing.ImageIcon;
-import Model.Board;
+import main.java.Model.Board;
 import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;

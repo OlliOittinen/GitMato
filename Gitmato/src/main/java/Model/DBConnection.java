@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package main.java.Model;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -40,7 +40,6 @@ public class DBConnection {
                 try {
                     while (result.next()) {
                         scores.add(result.getString("nimi") + " " + result.getInt("pisteet"));
-                        System.out.println("Nimi: " + result.getString("nimi") + ", pisteet: " + result.getInt("pisteet"));
                     }
                     int i = 0;
                     for (String s : scores) {
@@ -66,14 +65,14 @@ public class DBConnection {
                     } while (e.getNextException() != null);
                 } finally {
                     result.close();
-                    System.out.println("Tulosjoukko suljettu.");
+                    //System.out.println("Tulosjoukko suljettu.");
                 }
             } catch (Exception e) {
                 System.out.println("Epäonnistui. ");
             } finally {
                 try {
                     query.close();
-                    System.out.println("Kysely suljettu");
+                    //System.out.println("Kysely suljettu");
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -94,11 +93,10 @@ public class DBConnection {
                 query.setString(1, name);
                 query.setInt(2, score);
                 query.setString(3, pelimoodi);
-                System.out.println(query);
+                //System.out.println(query);
                 ResultSet result = query.executeQuery();
                 try {
                     while (result.next()) {
-                        System.out.println("Nimi: " + result.getString("nimi") + ", Pisteet: " + result.getInt("pisteet"));
                     }
                 } catch (SQLException e) {
                     do {
@@ -108,14 +106,14 @@ public class DBConnection {
                     } while (e.getNextException() != null);
                 } finally {
                     result.close();
-                    System.out.println("Tulosjoukko suljettu.");
+                    //System.out.println("Tulosjoukko suljettu.");
                 }
             } catch (Exception e) {
                 System.out.println("Epäonnistui. ");
             } finally {
                 try {
                     query.close();
-                    System.out.println("Kysely suljettu");
+                    //System.out.println("Kysely suljettu");
                 } catch (Exception e) {
                     System.out.println(e);
                 }
