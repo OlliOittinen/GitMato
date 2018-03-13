@@ -6,7 +6,7 @@
 package Model;
 
 import Spawnables.*;
-import Controller.Matopeli;
+import GUI.Matopeli;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Color;
@@ -24,7 +24,6 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import Controller.PlayerController;
-import GUI.MainFrame;
 import Sound.Music;
 import java.awt.Image;
 import java.awt.geom.Ellipse2D;
@@ -68,7 +67,6 @@ public final class Board extends JPanel implements ActionListener {
     private Bombs bombs;
     private Laaser laser;
     private boolean ingame;
-    private MainFrame frame;
     private ImageIcon Ironpic;
     //pidetään lukua kuinka monta Tail objektia on.
     private int tailNro = 0;
@@ -947,7 +945,7 @@ public final class Board extends JPanel implements ActionListener {
                 public void run() {
                     TextInputDialog dialog = new TextInputDialog("Type your name here!");
                     dialog.setTitle("Highscore");
-                    dialog.setHeaderText("Submit your highscore!");
+                    dialog.setHeaderText("Submit your highscore!\n " + score);
                     dialog.setContentText("Please enter your name:");
 
                     Optional<String> result = dialog.showAndWait();

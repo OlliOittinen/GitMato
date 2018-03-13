@@ -6,6 +6,9 @@
 package Model;
 
 import java.sql.*;
+import java.util.ArrayList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  *
@@ -17,25 +20,40 @@ public class DBConnection {
     int points = hscore.getHighscore();
     String name = hscore.getName();
     Connection con = null;
+    ArrayList<String> scores = new ArrayList();
+    String highscore = "";
 
     public DBConnection() {
         try {
-        con = DriverManager.getConnection("jdbc:mariadb://localhost:4444/score", "Olli", "laiskajaakko");
+            con = DriverManager.getConnection("jdbc:mariadb://localhost:4444/score", "Olli", "laiskajaakko");
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
 
-    public void showHighscore(String pelimoodi){
+    public void showHighscore(String pelimoodi) {
         try {
             PreparedStatement query = null;
             try {
-                query = con.prepareStatement("select * from highscore where pelimuoto='"+pelimoodi+"' order by pisteet desc limit 10");
+                query = con.prepareStatement("select * from highscore where pelimuoto='" + pelimoodi + "' order by pisteet desc limit 10");
                 ResultSet result = query.executeQuery();
                 try {
                     while (result.next()) {
+                        scores.add(result.getString("nimi") + " " + result.getInt("pisteet"));
                         System.out.println("Nimi: " + result.getString("nimi") + ", pisteet: " + result.getInt("pisteet"));
                     }
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Highscore");
+                    alert.setHeaderText("Top 10");
+                    int i=0;
+                    for (String s: scores){
+                        i++;
+                        highscore += +i+ ". " + s+'\n';
+                    }
+                    alert.setContentText(highscore);
+                    alert.showAndWait();
+                    scores.clear();
+                    highscore = null;
                 } catch (SQLException e) {
                     do {
                         System.err.println("Viesti: " + e.getMessage());
@@ -57,12 +75,13 @@ public class DBConnection {
                 }
             }
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void submitScore(int score, String name, String pelimoodi){
-         try {
+
+    public void submitScore(int score, String name, String pelimoodi) {
+        try {
             PreparedStatement query = null;
             try {
                 query = con.prepareStatement("INSERT INTO highscore VALUES(?, ?, ?)");
@@ -96,7 +115,7 @@ public class DBConnection {
                 }
             }
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
