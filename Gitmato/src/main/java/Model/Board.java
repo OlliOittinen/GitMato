@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package main.java.Model;
 
-import Spawnables.*;
-import GUI.Matopeli;
+import main.java.Spawnables.*;
+import main.java.GUI.Matopeli;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Color;
@@ -23,7 +23,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-import Controller.PlayerController;
+import main.java.Controller.PlayerController;
 import Sound.Music;
 import java.awt.Image;
 import java.awt.geom.Ellipse2D;
