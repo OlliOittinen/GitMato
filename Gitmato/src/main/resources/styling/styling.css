@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+#pane {
+    -fx-background-image: url("MainMenuBG.png");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: 900 606;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
+}
+
+Button {
+    -fx-font-family:'Press Start 2P', cursive;
+    -fx-min-height: 44px;
+    -fx-min-width: 150px;
+    -fx-background-image: url("VersusButton.png");
+    -fx-background-size: 150px 44px;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-font-size: 10px;
+}
