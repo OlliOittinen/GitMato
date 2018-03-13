@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.Controller;
+package Controller;
 
-import main.java.GUI.Matopeli;
 import java.awt.event.KeyEvent;
 
-import main.java.GUI.Matopeli;
-import main.java.Model.Board;
-import main.java.Model.Worm;
+import GUI.Matopeli;
+import Model.Board;
+import Model.Worm;
 import java.util.ArrayList;
 import java.util.List;
 

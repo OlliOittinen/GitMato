@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.Model;
+package Model;
 
-import main.java.Spawnables.*;
-import main.java.GUI.Matopeli;
+import GUI.Matopeli;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Color;
@@ -23,13 +22,15 @@ import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-import main.java.Controller.PlayerController;
+import Controller.PlayerController;
 import Sound.Music;
 import java.awt.Image;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Optional;
 import java.util.TimerTask;
+
+import Spawnables.*;
 import javafx.application.Platform;
 import javafx.scene.control.TextInputDialog;
 import javax.swing.ImageIcon;
@@ -955,7 +956,7 @@ public final class Board extends JPanel implements ActionListener {
                         hscore.setName(result.get());
                         connection.submitScore(hscore.getHighscore(), hscore.getName(), pelimoodi);
                         connection.showHighscore(pelimoodi);
-                        
+
                     }
                 }
             });

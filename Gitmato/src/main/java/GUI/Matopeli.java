@@ -1,7 +1,7 @@
 
-package main.java.GUI;
-import main.java.Controller.PlayerController;
-import main.java.Model.Board;
+package GUI;
+import Controller.PlayerController;
+import Model.Board;
 import javafx.application.*;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;

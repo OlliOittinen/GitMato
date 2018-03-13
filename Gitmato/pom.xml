@@ -11,6 +11,8 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <compilerArgument>-Xlint:unchecked</compilerArgument>
+
     </properties>
 
     
