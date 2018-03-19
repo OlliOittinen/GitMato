@@ -1,25 +1,28 @@
+package main.java.GUI;
 
-package GUI;
-import Controller.PlayerController;
-import Model.Board;
+import Sound.Music;
+import main.java.Controller.PlayerController;
+import main.java.Model.Board;
 import javafx.application.*;
-import javafx.embed.swing.SwingNode;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Matopeli extends Application {
 
     Stage window;
     Scene scene1, scene2, scene3, scene4;
-    
+    ImageView kuvamato = new ImageView("src/main/resources/images/BlueBG800x600.png");
+    Image filter = new Image("src/main/resources/images/BlackFilter.png");
+    ImageView filtteri = new ImageView(filter);
+
     private static Board board;
     private static PlayerController pc;
-    final SwingNode swingNode = new SwingNode();
 
     public static void main(String[] args) {
         launch(args);
@@ -30,43 +33,33 @@ public class Matopeli extends Application {
         window = primaryStage;
         window.setTitle("Gitmato");
         Sound.Music.sound1.loop();
-        
-        
-        
-        //----GAME MODE SELECTOR SCENE-----------
 
+        //----GAME MODE SELECTOR SCENE-----------
         //Button to Single player
         Button button1 = new Button("Player VS AI");
-        button1.setOnAction(e ->
-                {
-                createAndSetSwingContent(swingNode, this, "vs AI");
-                StackPane layout2 = new StackPane();
-                layout2.getChildren().add(swingNode); // Adding swing node
-                scene2 = new Scene(layout2, 800, 590);
-                window.setScene(scene2);
-                });
-        
-         //Button to Versus
+        button1.setOnAction(e
+                -> {
+            StackPane layout2 = new StackPane();
+            scene2 = new Scene(layout2, 800, 590);
+            window.setScene(scene2);
+        });
+
+        //Button to Versus
         Button button2 = new Button("Versus");
-        button2.setOnAction(e ->
-                {
-                createAndSetSwingContent(swingNode, this, "versus");
-                StackPane layout3 = new StackPane();
-                layout3.getChildren().add(swingNode); // Adding swing node
-                scene3 = new Scene(layout3, 800, 590);
-                window.setScene(scene3);
-                });
+        button2.setOnAction(e
+                -> {
+            StackPane layout3 = new StackPane();
+            scene3 = new Scene(layout3, 800, 590);
+            window.setScene(scene3);
+        });
         Button button3 = new Button("Single player");
-        button3.setOnAction(e ->
-                {
-                createAndSetSwingContent(swingNode, this, "sp");
-                StackPane layout4 = new StackPane();
-                layout4.getChildren().add(swingNode);
-                scene4 = new Scene(layout4, 800, 590);
-                //layout4.getChildren().remove(0);
-                window.setScene(scene4);
-                });
-        
+        button3.setOnAction(e
+                -> {
+            StackPane layout4 = new StackPane();
+            scene4 = new Scene(layout4, 800, 590);
+            window.setScene(scene4);
+        });
+
         //Layout 1 - Game mode selector
         VBox layout1 = new VBox(20);
         layout1.setAlignment(Pos.CENTER);
@@ -75,21 +68,13 @@ public class Matopeli extends Application {
         layout1.setId("pane");
         scene1.getStylesheets().add("Styling/styling.css");
         //---------------------------------
-        
-         //------VERSUS SCENE---------------
 
-        //Layout 3 - Singleplayer
-        
-        //-----------------------------------
-        
         //------VERSUS SCENE---------------
-
+        //Layout 3 - Singleplayer
+        //-----------------------------------
+        //------VERSUS SCENE---------------
         //Layout 2 - Versus
-     
-        
-        
         //------GAME OVER SCENE---------------
-        
         //Layout 3- Game over
         /*
         VBox layout3 = new VBox(20);
@@ -105,24 +90,169 @@ public class Matopeli extends Application {
         scene3 = new Scene(layout3, 800, 600);
         scene3.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
-        */
-        
-        
+         */
         //Display scene 1 at first
         window.setScene(scene1);
-        window.setOnCloseRequest(e->System.exit(0));
+        window.setOnCloseRequest(e -> System.exit(0));
         window.setTitle("Gitmato");
         window.show();
     }
-    
-    //So this shit makes it so that we can add the board into a JavaFX Scene
-     private void createAndSetSwingContent(final SwingNode swingNode, Matopeli m, String pelimoodi) {
-         SwingUtilities.invokeLater(() -> {
-             JPanel board = new Board(m, pelimoodi);
-             swingNode.setContent(board);
-             
-         });
-     }
+
+    public void paintComponent(Graphics g) {
+
+        if (ingame) {
+            super.paintComponent(g);
+            Graphics2D g2 = (Graphics2D) g;
+
+            g2.setPaint(Color.BLACK);
+            g2.fill(new Rectangle2D.Double(0, 0, getWidth(), getHeight()));
+            g.drawImage(this.background, 0, 0, null);
+            doDrawing(g);
+
+            Toolkit.getDefaultToolkit().sync();
+        } else {
+            drawGameOver(g);
+            inGame();
+        }
+    }
+
+    private void doDrawing(Graphics g) {
+
+        Graphics2D g2d = (Graphics2D) g;
+        drawPisteet(g);
+
+        //tarkistetaan onko häntiä piirrettäväksi
+        if (tailNro > 0) {
+            for (int i = 0; i < body.size(); i++) {
+                // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
+                g2d.drawImage(body.get(i).getImage(), body.get(i).getX(), body.get(i).getY(), this);
+                //System.out.println("tätä tehdään");
+            }
+        }
+
+        if (tailNro2 > 0) {
+            for (int i = 0; i < body2.size(); i++) {
+                // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
+                g2d.drawImage(body2.get(i).getImage(), body2.get(i).getX(), body2.get(i).getY(), this);
+                //System.out.println("tätä tehdään");
+            }
+        }
+        // piirretään power-upit matojen päälle, jotta ne ovat helpommit nähtävissä
+        g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);
+        g2d.drawImage(faster.getImage(), faster.getX(), faster.getY(), this);
+        g2d.drawImage(slower.getImage(), slower.getX(), slower.getY(), this);
+        g2d.drawImage(reverse.getImage(), reverse.getX(), reverse.getY(), this);
+        g2d.drawImage(HP.getImage(), HP.getX(), HP.getY(), this);
+        g2d.drawImage(shield.getImage(), shield.getX(), shield.getY(), this);
+        g2d.drawImage(bombs.getImage(1), bombs.getX(), bombs.getY(), this);
+        g2d.drawImage(bombs.getImage(2), bombs.getXBombs(1), bombs.getYBombs(1), this);
+        g2d.drawImage(bombs.getImage(3), bombs.getXBombs(2), bombs.getYBombs(2), this);
+        g2d.drawImage(bombs.getImage(2), bombs.getXBombs(3), bombs.getYBombs(3), this);
+        g2d.drawImage(bombs.getImage(3), bombs.getXBombs(4), bombs.getYBombs(4), this);
+        g2d.drawImage(bombs.getImage(2), bombs.getXBombs(5), bombs.getYBombs(5), this);
+        g2d.drawImage(bombs.getImage(3), bombs.getXBombs(6), bombs.getYBombs(6), this);
+        g2d.drawImage(laser.getImage(), laser.getX(), laser.getY(), this);
+        if (!laser.getLethal()) {
+            g2d.drawImage(laser.getlasersightH(), laser.getX3(), laser.getY3(), this);
+            g2d.drawImage(laser.getLasersightV(), laser.getX2(), laser.getY2(), this);
+
+        } else {
+            g2d.drawImage(laser.getImageHori(), laser.getX3(), laser.getY3(), this);
+            g2d.drawImage(laser.getImageVert(), laser.getX2(), laser.getY2(), this);
+        }
+        g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
+        if (pelimoodi != "sp") {
+            g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
+        }
+        if (worm.getShield(worm)) {
+            g2d.drawImage(shield.getShieldImage(), worm.getX() - 5, worm.getY() - 4, this);
+        }
+        if (worm2.getShield(worm2)) {
+            g2d.drawImage(shield.getShieldImage(), worm2.getX() - 5, worm2.getY() - 4, this);
+        }
+        if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
+            drawGameOver(g);
+        }
+        if (worm.getReverse(worm)) {
+            g2d.drawImage(reverse.getConfusionImage(), worm.getX() - 5, worm.getY() - 4, this);
+        }
+        if (worm2.getReverse(worm2)) {
+            g2d.drawImage(reverse.getConfusionImage(), worm2.getX() - 5, worm2.getY() - 4, this);
+        }
+
+    }
+
+    private void drawPisteet(Graphics g) {
+        Font small = new Font("Helvetica", Font.BOLD, 20);
+        Font smaller = new Font("Helvetica", Font.PLAIN, 15);
+        FontMetrics fm = getFontMetrics(small);
+        FontMetrics fm2 = getFontMetrics(smaller);
+        String pt3 = "FPS: " + theRealFpsCounter;
+
+        g.setColor(Color.RED);
+        g.setFont(small);
+        String hp = "HP: " + worm.getLife();
+        String pt = "Pisteet: " + worm.getPoints();
+        g.drawString(hp, 10, 25);
+        g.drawString(pt, 10, 50);
+
+        if (pelimoodi != "sp") {
+            g.setColor(Color.BLUE);
+            String hp2 = "HP: " + worm2.getLife();
+            String pt2 = "Pisteet: " + worm2.getPoints();
+
+            g.drawString(hp2, (790 - fm.stringWidth(hp2)), 25);
+            g.drawString(pt2, (790 - fm.stringWidth(pt2)), 50);
+        }
+        g.setColor(Color.WHITE);
+        g.setFont(smaller);
+        g.drawString(pt3, ((790 - fm2.stringWidth(pt3)) / 2), 20);//piirtää fps
+
+    }
+
+
+
+    private void drawGameOver(Graphics g) {
+        Music.sound4.play();
+        laser.hide();
+        filter = filtteri.getImage();
+        String msg = null;
+        String msg2;
+        String msg3;
+        Graphics2D g3 = (Graphics2D) g;
+        g3.drawImage(filter, 0, 0, null);
+
+        Font small = new Font("Helvetica", Font.BOLD, 20);
+        Font big = new Font("Helvetica", Font.BOLD, 30);
+        FontMetrics fm2 = getFontMetrics(small);
+        FontMetrics fm = getFontMetrics(big);
+        g3.setFont(big);
+
+        Music.sound1.stop();
+        ingame = false;
+        if (worm.getLife() <= 0) {
+            if (pelimoodi != "sp") {
+                score = worm2.getPoints();
+                msg = "BLUE Won!";
+                g3.setColor(Color.blue);
+            } else {
+                score = worm.getPoints();
+                msg = "GAME OVER!";
+                g3.setColor(Color.white);
+            }
+        } else if (worm2.getLife() <= 0) {
+            score = worm.getPoints();
+            msg = "RED Won!";
+            g3.setColor(Color.red);
+        }
+        msg2 = "Press SPACE to play again.";
+        msg3 = "Press H to submit your highscore";
+        g3.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 270);
+        g3.setFont(small);
+        g3.setColor(Color.white);
+        g3.drawString(msg2, (806 - fm2.stringWidth(msg2)) / 2, 600 / 2);
+        g3.drawString(msg3, (806 - fm2.stringWidth(msg3)) / 2, 320);
+    }
 
 }
 /*
@@ -160,4 +290,4 @@ public class Matopeli{
         });         
     } 
 }
-    */ 
+ */
