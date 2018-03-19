@@ -18,7 +18,3 @@ Button {
     -fx-background-position: center;
     -fx-font-size: 10px;
 }
-
-Label {
-    -fx-font-size: 40px;
-}

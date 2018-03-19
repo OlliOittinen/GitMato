@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.Spawnables;
-import main.java.Model.Worm;
+package Spawnables;
+import Model.Worm;
 import Sound.Music;
 import java.awt.Image;
 import java.awt.Rectangle;
