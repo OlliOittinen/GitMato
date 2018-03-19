@@ -2,7 +2,10 @@ package GUI;
 
 import Controller.PlayerController;
 import Model.Board;
+import Model.Tail;
 import Sound.Music;
+import Spawnables.*;
+import java.util.List;
 import javafx.application.*;
 import javafx.geometry.Pos;
 import javafx.stage.*;
@@ -19,17 +22,24 @@ public class Matopeli extends Application {
 
     Stage mainMenu;
     Scene mainMenuScene, vsAIScene, versusScene, spScene;
-<<<<<<< HEAD
+
     ImageView backGround = new ImageView("src/main/resources/images/BlueBG800x600.png");
-=======
-    ImageView kuvamato = new ImageView("src/main/resources/images/BlueBG800x600.png");
-    Image background = kuvamato.getImage();
->>>>>>> 3004cea44b6ea5c67c4723e95d5aa8587e9ed04e
+    Image background = backGround.getImage();
+
     Image filter = new Image("src/main/resources/images/BlackFilter.png");
     ImageView filtteri = new ImageView(filter);
 
     private static Board board;
     private static PlayerController pc;
+    Snack snack;
+    Bombs bombs;
+    Confuse reverse;
+    Faster faster;
+    Laser laser;
+    Life HP;
+    Shield shield;
+    Slower slower;
+    
 
     public static void main(String[] args) {
         launch(args);
@@ -37,6 +47,14 @@ public class Matopeli extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        faster = (Faster)board.getPickableList().get(0);
+        slower = (Slower)board.getPickableList().get(1);
+        reverse = (Confuse)board.getPickableList().get(2);
+        HP = (Life)board.getPickableList().get(3);
+        shield = (Shield)board.getPickableList().get(4);
+        bombs = (Bombs)board.getPickableList().get(5);
+        laser = (Laser)board.getPickableList().get(6);
+        snack = (Snack)board.getPickableList().get(7);
         mainMenu = primaryStage;
         mainMenu.setTitle("Gitmato");
         Sound.Music.sound1.loop();
@@ -106,7 +124,6 @@ public class Matopeli extends Application {
     }
 
     public void paintComponent(GraphicsContext g) {
-
         if (true) {
             Paint p = Color.BLACK;
             g.setFill(p);
@@ -122,64 +139,67 @@ public class Matopeli extends Application {
     private void doDrawing(GraphicsContext g) {
 
         drawPisteet(g);
-
+        int tailsize = board.getTailList().size();
+        int tailsize2 = board.getTailList2().size();
+        List<Tail> body = board.getTailList();
+        List<Tail> body2 = board.getTailList2();
         //tarkistetaan onko häntiä piirrettäväksi
-        if (tailNro > 0) {
-            for (int i = 0; i < body.size(); i++) {
+        if (tailsize > 0) {
+            for (int i = 0; i < tailsize; i++) {
                 // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
-                g2d.drawImage(body.get(i).getImage(), body.get(i).getX(), body.get(i).getY(), this);
+                g.drawImage(body.get(i).getImage(), body.get(i).getX(), body.get(i).getY());
                 //System.out.println("tätä tehdään");
             }
         }
 
-        if (tailNro2 > 0) {
-            for (int i = 0; i < body2.size(); i++) {
+        if (tailsize2 > 0) {
+            for (int i = 0; i < tailsize2; i++) {
                 // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
-                g2d.drawImage(body2.get(i).getImage(), body2.get(i).getX(), body2.get(i).getY(), this);
+                g.drawImage(body2.get(i).getImage(), body2.get(i).getX(), body2.get(i).getY());
                 //System.out.println("tätä tehdään");
             }
         }
         // piirretään power-upit matojen päälle, jotta ne ovat helpommit nähtävissä
-        g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);
-        g2d.drawImage(faster.getImage(), faster.getX(), faster.getY(), this);
-        g2d.drawImage(slower.getImage(), slower.getX(), slower.getY(), this);
-        g2d.drawImage(reverse.getImage(), reverse.getX(), reverse.getY(), this);
-        g2d.drawImage(HP.getImage(), HP.getX(), HP.getY(), this);
-        g2d.drawImage(shield.getImage(), shield.getX(), shield.getY(), this);
-        g2d.drawImage(bombs.getImage(1), bombs.getX(), bombs.getY(), this);
-        g2d.drawImage(bombs.getImage(2), bombs.getXBombs(1), bombs.getYBombs(1), this);
-        g2d.drawImage(bombs.getImage(3), bombs.getXBombs(2), bombs.getYBombs(2), this);
-        g2d.drawImage(bombs.getImage(2), bombs.getXBombs(3), bombs.getYBombs(3), this);
-        g2d.drawImage(bombs.getImage(3), bombs.getXBombs(4), bombs.getYBombs(4), this);
-        g2d.drawImage(bombs.getImage(2), bombs.getXBombs(5), bombs.getYBombs(5), this);
-        g2d.drawImage(bombs.getImage(3), bombs.getXBombs(6), bombs.getYBombs(6), this);
-        g2d.drawImage(laser.getImage(), laser.getX(), laser.getY(), this);
+        g.drawImage(snack.getImage(), snack.getX(), snack.getY());
+        g.drawImage(faster.getImage(), faster.getX(), faster.getY());
+        g.drawImage(slower.getImage(), slower.getX(), slower.getY());
+        g.drawImage(reverse.getImage(), reverse.getX(), reverse.getY());
+        g.drawImage(HP.getImage(), HP.getX(), HP.getY());
+        g.drawImage(shield.getImage(), shield.getX(), shield.getY());
+        g.drawImage(bombs.getImage(1), bombs.getX(), bombs.getY());
+        g.drawImage(bombs.getImage(2), bombs.getXBombs(1), bombs.getYBombs(1));
+        g.drawImage(bombs.getImage(3), bombs.getXBombs(2), bombs.getYBombs(2));
+        g.drawImage(bombs.getImage(2), bombs.getXBombs(3), bombs.getYBombs(3));
+        g.drawImage(bombs.getImage(3), bombs.getXBombs(4), bombs.getYBombs(4));
+        g.drawImage(bombs.getImage(2), bombs.getXBombs(5), bombs.getYBombs(5));
+        g.drawImage(bombs.getImage(3), bombs.getXBombs(6), bombs.getYBombs(6));
+        g.drawImage(laser.getImage(), laser.getX(), laser.getY());
         if (!laser.getLethal()) {
-            g2d.drawImage(laser.getlasersightH(), laser.getX3(), laser.getY3(), this);
-            g2d.drawImage(laser.getLasersightV(), laser.getX2(), laser.getY2(), this);
+            g.drawImage(laser.getlasersightH(), laser.getX3(), laser.getY3());
+            g.drawImage(laser.getLasersightV(), laser.getX2(), laser.getY2());
 
         } else {
-            g2d.drawImage(laser.getImageHori(), laser.getX3(), laser.getY3(), this);
-            g2d.drawImage(laser.getImageVert(), laser.getX2(), laser.getY2(), this);
+            g.drawImage(laser.getImageHori(), laser.getX3(), laser.getY3());
+            g.drawImage(laser.getImageVert(), laser.getX2(), laser.getY2());
         }
-        g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);
+        g.drawImage(worm.getImage(), worm.getX(), worm.getY());
         if (pelimoodi != "sp") {
-            g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);
+            g.drawImage(worm2.getImage(), worm2.getX(), worm2.getY());
         }
         if (worm.getShield(worm)) {
-            g2d.drawImage(shield.getShieldImage(), worm.getX() - 5, worm.getY() - 4, this);
+            g.drawImage(shield.getShieldImage(), worm.getX() - 5, worm.getY() - 4);
         }
         if (worm2.getShield(worm2)) {
-            g2d.drawImage(shield.getShieldImage(), worm2.getX() - 5, worm2.getY() - 4, this);
+            g.drawImage(shield.getShieldImage(), worm2.getX() - 5, worm2.getY() - 4);
         }
         if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
             drawGameOver(g);
         }
         if (worm.getReverse(worm)) {
-            g2d.drawImage(reverse.getConfusionImage(), worm.getX() - 5, worm.getY() - 4, this);
+            g.drawImage(reverse.getConfusionImage(), worm.getX() - 5, worm.getY() - 4);
         }
         if (worm2.getReverse(worm2)) {
-            g2d.drawImage(reverse.getConfusionImage(), worm2.getX() - 5, worm2.getY() - 4, this);
+            g.drawImage(reverse.getConfusionImage(), worm2.getX() - 5, worm2.getY() - 4);
         }
 
     }
@@ -212,13 +232,8 @@ public class Matopeli extends Application {
 
     }
 
-<<<<<<< HEAD
-    private void drawGameOver(Graphics g) {
-=======
-
 
     private void drawGameOver(GraphicsContext g) {
->>>>>>> 3004cea44b6ea5c67c4723e95d5aa8587e9ed04e
         Music.sound4.play();
         laser.hide();
         filter = filtteri.getImage();
