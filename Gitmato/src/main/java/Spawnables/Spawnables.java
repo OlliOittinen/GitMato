@@ -5,8 +5,10 @@
  */
 package Spawnables;
 
-import java.awt.Image;
-import java.awt.Rectangle;
+import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
+
+
 
 /**
  *

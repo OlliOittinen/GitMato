@@ -17,6 +17,7 @@ import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.*;
 
 /**
  *

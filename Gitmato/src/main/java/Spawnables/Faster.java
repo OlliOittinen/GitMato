@@ -7,11 +7,11 @@ package Spawnables;
 
 import Model.Worm;
 import Sound.Music;
-import java.awt.Image;
-import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.swing.ImageIcon;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -46,12 +46,12 @@ public class Faster implements Spawnables {
     
     @Override
     public void loadImage(String imageName) {
-        ImageIcon ii = new ImageIcon(imageName);
+        ImageView ii = new ImageView(imageName);
         image = ii.getImage();    }
 
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/main/resources/images/SpeedUp.png");
+        ImageView kuva = new ImageView("src/main/resources/images/SpeedUp.png");
         image = kuva.getImage();
             
         setX(-100);

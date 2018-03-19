@@ -6,14 +6,13 @@
 package Spawnables;
 
 import Model.Worm;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.geom.Ellipse2D;
-import javax.swing.ImageIcon;
 import Model.Board;
 import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.*;
 
 /**
  *
@@ -52,17 +51,17 @@ public class Bombs implements Spawnables {
 
     @Override
     public void loadImage(String imageName) {
-        ImageIcon ii = new ImageIcon(imageName);
+        ImageView ii = new ImageView(imageName);
         image = ii.getImage();
     }
 
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/main/resources/images/Bombs(800-600).png");
+        ImageView kuva = new ImageView("src/main/resources/images/Bombs(800-600).png");
         image = kuva.getImage();
-        ImageIcon kuva2 = new ImageIcon("src/main/resources/images/Target2.png");
+        ImageView kuva2 = new ImageView("src/main/resources/images/Target2.png");
         image2 = kuva2.getImage();
-        ImageIcon kuva3 = new ImageIcon("src/main/resources/images/firestorm2.png");
+        ImageView kuva3 = new ImageView("src/main/resources/images/firestorm2.png");
         image3 = kuva3.getImage();
 
         setX(-100);
@@ -112,8 +111,8 @@ public class Bombs implements Spawnables {
         return new Rectangle(xe + 3, ye + 3, 30, 30);
     }
 
-    public Ellipse2D getBoundsBombs(int n) {
-        return new Ellipse2D.Double(xlist[n] + 3, ylist[n] + 3, 200, 200);
+    public Ellipse getBoundsBombs(int n) {
+        return new Ellipse(xlist[n] + 3, ylist[n] + 3, 200, 200);
     }
 
     @Override
