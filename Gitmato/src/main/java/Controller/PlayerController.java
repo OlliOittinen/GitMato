@@ -5,11 +5,14 @@
  */
 package Controller;
 
-import java.awt.event.KeyEvent;
-
 import GUI.Matopeli;
 import Model.Board;
 import Model.Worm;
+import javafx.event.ActionEvent;
+import javafx.geometry.Point2D;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,15 +39,12 @@ public class PlayerController  {
     }
    
     public void updateWorms(){ // tätä täytyy kutsua joka pelin alussa!!!!
-        this.worms = Board.getWorms(); // saadaan oikeat pelaajat.
-    }
-    public void updateBoard(Board b){
-        this.board = b;
+        this.worms = board.getWorms(); // saadaan oikeat pelaajat.
     }
      
     public void keyPressed(KeyEvent e) {
 
-        int key = e.getKeyCode();
+        KeyCode key = e.getCode();
         
         // controlls for player 1      
         if (key == KeyEvent.VK_LEFT) {
@@ -155,32 +155,18 @@ public class PlayerController  {
     }
         public void actionPerformed(ActionEvent e) {
 
-        currentTime = System.currentTimeMillis();
-        double deltaTime = (double) (currentTime - previousTime) / 1_000;
-        // 1/deltaTime); <- kertoo nykyisen fps joka frame.
-
-        double interval = 0.5;
-        if (timeCounter > interval) {
-            theRealFpsCounter = frameCounter;
-            frameCounter = 0;
-            timeCounter = 0;
-        } else {
-            timeCounter += deltaTime;
-            frameCounter = frameCounter + (int) (1 / interval);
-        }
-
-        checkCollisions();
+        board.checkCollisions();
         worm.move();
         worm.moveCont();
         worm2.move();
         worm2.moveCont();
         //tallennnetaan wormin coordinaatit yhteen 2D muuttujaan
-        x = worm.getX();
+            int x = worm.getX();
         y = worm.getY();
         x2 = worm2.getX();
         y2 = worm2.getY();
-        p = new Point2D.Double(x, y);
-        p2 = new Point2D.Double(x2, y2);
+        p = new Point2D(x, y);
+        p2 = new Point2D(x2, y2);
         //Lisätään coortinaatit listan cordinates alkuun (0).
         //siirtää automaattisesti taulukon arvot yhden eteenpäin, 0->1
         cordinates.add(0, p);
@@ -220,6 +206,5 @@ public class PlayerController  {
             BlueAIBot();
         }
 
-        previousTime = currentTime;
     }
 }

@@ -1,5 +1,7 @@
-package main.java.GUI;
+package GUI;
 
+import Controller.PlayerController;
+import Model.Board;
 import Sound.Music;
 import main.java.Controller.PlayerController;
 import main.java.Model.Board;

@@ -3,20 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.Model;
+package Model;
 
-import main.java.Spawnables.*;
-import main.java.GUI.Matopeli;
+import GUI.Matopeli;
+import Spawnables.*;
 import java.util.ArrayList;
 import java.util.List;
-import main.java.Controller.PlayerController;
+import Controller.PlayerController;
 import java.util.Optional;
 import java.util.TimerTask;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Ellipse;
 
 /**
  *
@@ -26,6 +27,7 @@ public final class Board {
 
     private static List<Worm> worms;
     private final int DELAY = 10;
+
     //Lista Tail paloista
     private final List<Tail> body;
     private final List<Tail> body2;
@@ -40,6 +42,7 @@ public final class Board {
     private PlayerController control;
     private Tail tail;
     private Tail tail2;
+
     private Timeline timer;
     private Snack snack;
     private Faster faster;
@@ -49,8 +52,10 @@ public final class Board {
     private Shield shield;
     private Bombs bombs;
     private Laser laser;
+
     private boolean ingame;
-    private ImageView Ironpic;
+    private main.java.Model.Bot bot;
+
     //pidetään lukua kuinka monta Tail objektia on.
     private int tailNro = 0;
     private int tailNro2 = 0;
@@ -94,9 +99,6 @@ public final class Board {
     private void initBoard() {
         //TODO: Tähän täytyy tehdä kaikki mahdolliset pelimuodot
 
-        setFocusable(true);
-        setBackground(Color.BLACK);
-
         faster = new Faster();
         slower = new Slower();
         reverse = new Confuse();
@@ -118,17 +120,14 @@ public final class Board {
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
 
-        timer = new Timer(DELAY, this);
-        timer.start();
         ingame = true;
 
         control = new PlayerController(); //
         control.updateWorms(); // Worms-lista liitetään playercontrolleriin
         control.yksinPeli(pelimoodi);
-        control.updateBoard(this);
 
         if (pelimoodi == "vs AI") {
-            BotTurnDown();
+            bot.BotTurnDown();
         }
         if (pelimoodi == "sp") {
             worm2.setX(-1000);
@@ -158,10 +157,7 @@ public final class Board {
                 tailNro2 = 0;
             }
 
-            timer.start();
-
             control.updateWorms();
-            control.updateBoard(this);
 
             cordinates.clear();
 
@@ -171,7 +167,7 @@ public final class Board {
 
             Sound.Music.sound1.loop();
             if (pelimoodi == "vs AI") {
-                BotTurnDown();
+                bot.BotTurnDown();
             }
 
             if (pelimoodi == "sp") {
@@ -200,9 +196,9 @@ public final class Board {
         Rectangle pl = HP.getBounds();
         Rectangle psh = shield.getBounds();
         Rectangle pb = bombs.getBounds();
-        Ellipse2D pb2 = bombs.getBoundsBombs(2);
-        Ellipse2D pb3 = bombs.getBoundsBombs(4);
-        Ellipse2D pb4 = bombs.getBoundsBombs(6);
+        Ellipse pb2 = bombs.getBoundsBombs(2);
+        Ellipse pb3 = bombs.getBoundsBombs(4);
+        Ellipse pb4 = bombs.getBoundsBombs(6);
         Rectangle pla = laser.getBounds();
         Rectangle beam = laser.getBoundsB();
 
@@ -466,6 +462,25 @@ public final class Board {
                 }
             });
         }
+
+    }
+
+
+    public void FPS() {
+        currentTime = System.currentTimeMillis();
+        double deltaTime = (double) (currentTime - previousTime) / 1_000;
+        // 1/deltaTime); <- kertoo nykyisen fps joka frame.
+
+        double interval = 0.5;
+        if (timeCounter > interval) {
+            theRealFpsCounter = frameCounter;
+            frameCounter = 0;
+            timeCounter = 0;
+        } else {
+            timeCounter += deltaTime;
+            frameCounter = frameCounter + (int) (1 / interval);
+        }
+        previousTime = currentTime;
 
     }
 }
