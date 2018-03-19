@@ -7,16 +7,20 @@ import javafx.application.*;
 import javafx.geometry.Pos;
 import javafx.stage.*;
 import javafx.scene.*;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 public class Matopeli extends Application {
 
     Stage mainMenu;
     Scene mainMenuScene, vsAIScene, versusScene, spScene;
     ImageView kuvamato = new ImageView("src/main/resources/images/BlueBG800x600.png");
+    Image background = kuvamato.getImage();
     Image filter = new Image("src/main/resources/images/BlackFilter.png");
     ImageView filtteri = new ImageView(filter);
 
@@ -97,27 +101,22 @@ public class Matopeli extends Application {
         mainMenu.show();
     }
 
-    public void paintComponent(Graphics g) {
+    public void paintComponent(GraphicsContext g) {
 
-        if (ingame) {
-            super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D) g;
-
-            g2.setPaint(Color.BLACK);
-            g2.fill(new Rectangle2D.Double(0, 0, getWidth(), getHeight()));
-            g.drawImage(this.background, 0, 0, null);
+        if (true) {
+            Paint p = Color.BLACK;
+            g.setFill(p);
+            g.fillRect(0, 0, mainMenu.getWidth(),mainMenu.getHeight());
+            g.drawImage(background, 0, 0);
             doDrawing(g);
-
-            Toolkit.getDefaultToolkit().sync();
         } else {
             drawGameOver(g);
             inGame();
         }
     }
 
-    private void doDrawing(Graphics g) {
+    private void doDrawing(GraphicsContext g) {
 
-        Graphics2D g2d = (Graphics2D) g;
         drawPisteet(g);
 
         //tarkistetaan onko häntiä piirrettäväksi
@@ -181,7 +180,7 @@ public class Matopeli extends Application {
 
     }
 
-    private void drawPisteet(Graphics g) {
+    private void drawPisteet(GraphicsContext g) {
         Font small = new Font("Helvetica", Font.BOLD, 20);
         Font smaller = new Font("Helvetica", Font.PLAIN, 15);
         FontMetrics fm = getFontMetrics(small);
@@ -211,7 +210,7 @@ public class Matopeli extends Application {
 
 
 
-    private void drawGameOver(Graphics g) {
+    private void drawGameOver(GraphicsContext g) {
         Music.sound4.play();
         laser.hide();
         filter = filtteri.getImage();
