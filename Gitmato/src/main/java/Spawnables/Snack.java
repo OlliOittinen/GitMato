@@ -6,9 +6,10 @@
 package Spawnables;
 
 import Sound.Music;
-import java.awt.Image;
-import java.awt.Rectangle;
-import javax.swing.ImageIcon;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
+
 
 /**
  *
@@ -25,14 +26,14 @@ public class Snack implements Spawnables{
     
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/main/resources/images/Apple(800x600).png");
+        ImageView kuva = new ImageView("src/main/resources/images/Apple(800x600).png");
         image = kuva.getImage();
         setX( 600-(int)(Math.random()*400));
         setY(200);
     }
 @Override    
     public void loadImage(String imageName) {
-        ImageIcon ii = new ImageIcon(imageName);
+        ImageView ii = new ImageView(imageName);
         image = ii.getImage();
     }
 @Override

@@ -5,9 +5,10 @@
  */
 package Model;
 
-import java.awt.Image;
-import java.awt.Rectangle;
-import javax.swing.ImageIcon;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
+
 
 /**
  *
@@ -28,11 +29,11 @@ public class Tail{
     }
     private void initTail(){
         if(playerNro==1){
-            ImageIcon kuvamato = new ImageIcon("src/main/resources/images/RedWormTail(800x600).png");
+            ImageView kuvamato = new ImageView("src/main/resources/images/RedWormTail(800x600).png");
             image = kuvamato.getImage();   
         }
          if(playerNro==2){
-            ImageIcon kuvamato = new ImageIcon("src/main/resources/images/BlueWormTail(800x600).png");
+            ImageView kuvamato = new ImageView("src/main/resources/images/BlueWormTail(800x600).png");
             image = kuvamato.getImage();   
         }
     }

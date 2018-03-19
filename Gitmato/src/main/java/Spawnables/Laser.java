@@ -233,7 +233,7 @@ public class Laser implements Spawnables {
         setY2(-1000);
         setX3(-1000);
         setY3(-1000);
-        beam.setBounds(-1000, -1000, 1, 1);
+        setBoundsB(-1000, -1000, 1, 1);
     }
 
 }

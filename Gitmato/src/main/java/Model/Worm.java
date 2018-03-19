@@ -5,9 +5,10 @@
  */
 package Model;
 
-import java.awt.Image;
-import java.awt.Rectangle;
-import javax.swing.ImageIcon;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
+
 
 /**
  *
@@ -28,10 +29,10 @@ public class Worm {
 
 
     private Image image;    
-    private ImageIcon wormup;
-    private ImageIcon wormdown;
-    private ImageIcon wormleft;
-    private ImageIcon wormright;
+    private ImageView wormup;
+    private ImageView wormdown;
+    private ImageView wormleft;
+    private ImageView wormright;
 
     
     double nopeus = 2;
@@ -52,18 +53,18 @@ public class Worm {
     private void initWorm(int p) {
         this.playerNro = p;
         if(playerNro==1){
-             wormup = new ImageIcon("src/main/resources/images/RedWormUp(800x600).png");
-             wormdown = new ImageIcon("src/main/resources/images/RedWormDown(800x600).png");
-             wormleft = new ImageIcon("src/main/resources/images/RedWormLeft(800x600).png");
-             wormright = new ImageIcon("src/main/resources/images/RedWormRight(800x600).png");
+             wormup = new ImageView("src/main/resources/images/RedWormUp(800x600).png");
+             wormdown = new ImageView("src/main/resources/images/RedWormDown(800x600).png");
+             wormleft = new ImageView("src/main/resources/images/RedWormLeft(800x600).png");
+             wormright = new ImageView("src/main/resources/images/RedWormRight(800x600).png");
             x = 200;
             y = 279; //oma puoli kentästä-kuvan korkeus
         }
         if(playerNro==2){
-             wormup = new ImageIcon("src/main/resources/images/BlueWormUp(800x600).png");
-             wormdown = new ImageIcon("src/main/resources/images/BlueWormDown(800x600).png");
-             wormleft = new ImageIcon("src/main/resources/images/BlueWormLeft(800x600).png");
-             wormright = new ImageIcon("src/main/resources/images/BlueWormRight(800x600).png");
+             wormup = new ImageView("src/main/resources/images/BlueWormUp(800x600).png");
+             wormdown = new ImageView("src/main/resources/images/BlueWormDown(800x600).png");
+             wormleft = new ImageView("src/main/resources/images/BlueWormLeft(800x600).png");
+             wormright = new ImageView("src/main/resources/images/BlueWormRight(800x600).png");
             x = 565; //kentän puoliväli-kuvan leveys
             y = 279; //oma puoli kentästä-kuvan korkeus
         }

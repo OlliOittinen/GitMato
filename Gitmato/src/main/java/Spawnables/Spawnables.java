@@ -5,16 +5,9 @@
  */
 package Spawnables;
 
-<<<<<<< HEAD
-
-import javafx.scene.image.Image;
-import javafx.scene.shape.Rectangle;
-=======
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 
-
->>>>>>> 0a5cd5d6fdb6519ca81d422f407ae2389cf7879a
 
 /**
  *
