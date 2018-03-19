@@ -39,7 +39,6 @@ public final class Board {
     Point2D p;
     Point2D p2;// coordinaatit
 
-
     private Worm worm;
     private Worm worm2;
     private PlayerController control;
@@ -101,14 +100,6 @@ public final class Board {
 
     public Tail getTail2() {
         return tail2;
-    }
-
-    public List<Tail> getTailList() {
-        return tailList;
-    }
-
-    public List<Tail> getTailList2() {
-        return tailList2;
     }
 
     public Board(Matopeli e, String pelimoodi) {
@@ -521,5 +512,13 @@ public final class Board {
         }
         previousTime = currentTime;
 
+    }
+
+    public List<Tail> getTailList() {
+        return tailList;
+    }
+
+    public List<Tail> getTailList2() {
+        return tailList2;
     }
 }
