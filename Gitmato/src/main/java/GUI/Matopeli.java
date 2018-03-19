@@ -108,21 +108,21 @@ public class Matopeli extends Application {
         //Layout 2 - Versus
         //------GAME OVER SCENE---------------
         //Layout 3- Game over
-        /*
+
         VBox layout3 = new VBox(20);
         layout3.setAlignment(Pos.CENTER);
-       
+
         Label label3 = new Label("GAME OVER");
         Button restart = new Button("Restart");
-        
+
         Button backToSS = new Button("Back to Main menu");
-        backToSS.setOnAction(e -> setScene(1));
-        
+        backToSS.setOnAction(e -> setScene(mainMenuScene));
+
         layout3.getChildren().addAll(label3, restart, backToSS); // Adding swing node
         versusScene = new Scene(layout3, 800, 600);
         versusScene.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
-         */
+
         //Display scene 1 at first
         mainMenu.setScene(mainMenuScene);
         mainMenu.setOnCloseRequest(e -> System.exit(0));
@@ -138,7 +138,7 @@ public class Matopeli extends Application {
             g.drawImage(background, 0, 0);
             doDrawing(g, s);
         } else {
-            drawGameOver(g);
+            //drawGameOver(g);
             board.setIngame(false);
         }
     }
@@ -200,7 +200,7 @@ public class Matopeli extends Application {
             g.drawImage(shield.getShieldImage(), worm2.getX() - 5, worm2.getY() - 4);
         }
         if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
-            drawGameOver(g);
+            //drawGameOver(g);
         }
         if (worm.getReverse(worm)) {
             g.drawImage(reverse.getConfusionImage(), worm.getX() - 5, worm.getY() - 4);
@@ -212,14 +212,13 @@ public class Matopeli extends Application {
     }
 
     private void drawPoints(Scene s) {
-
         Text red = new Text();
         Text blue = new Text();
         Text white = new Text();
+
         red.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
         red.setFill(Color.RED);
         red.setTextAlignment(TextAlignment.LEFT);
-
 
         String hp = "HP: " + board.getWorm().getLife();
         String pt = "Pisteet: " + board.getWorm().getPoints();
@@ -243,46 +242,46 @@ public class Matopeli extends Application {
     }
 
 
-    private void drawGameOver(GraphicsContext g) {
-        Music.sound4.play();
-        laser.hide();
-        filter = filtteri.getImage();
-        String msg = null;
-        String msg2;
-        String msg3;
-        Graphics2D g3 = (Graphics2D) g;
-        g3.drawImage(filter, 0, 0, null);
-
-        Font small = new Font("Helvetica", Font.BOLD, 20);
-        Font big = new Font("Helvetica", Font.BOLD, 30);
-        FontMetrics fm2 = getFontMetrics(small);
-        FontMetrics fm = getFontMetrics(big);
-        g3.setFont(big);
-
-        Music.sound1.stop();
-        ingame = false;
-        if (worm.getLife() <= 0) {
-            if (pelimoodi != "sp") {
-                score = worm2.getPoints();
-                msg = "BLUE Won!";
-                g3.setColor(Color.blue);
-            } else {
-                score = worm.getPoints();
-                msg = "GAME OVER!";
-                g3.setColor(Color.white);
-            }
-        } else if (worm2.getLife() <= 0) {
-            score = worm.getPoints();
-            msg = "RED Won!";
-            g3.setColor(Color.red);
-        }
-        msg2 = "Press SPACE to play again.";
-        msg3 = "Press H to submit your highscore";
-        g3.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 270);
-        g3.setFont(small);
-        g3.setColor(Color.white);
-        g3.drawString(msg2, (806 - fm2.stringWidth(msg2)) / 2, 600 / 2);
-        g3.drawString(msg3, (806 - fm2.stringWidth(msg3)) / 2, 320);
-    }
+//    private void drawGameOver(GraphicsContext g, Scene s) {
+//        Music.sound4.play();
+//        laser.hide();
+//        filter = filtteri.getImage();
+//        String msg = null;
+//        String msg2;
+//        String msg3;
+//        Graphics2D g3 = (Graphics2D) g;
+//        g3.drawImage(filter, 0, 0, null);
+//
+//        Font small = new Font("Helvetica", Font.BOLD, 20);
+//        Font big = new Font("Helvetica", Font.BOLD, 30);
+//        FontMetrics fm2 = getFontMetrics(small);
+//        FontMetrics fm = getFontMetrics(big);
+//        g3.setFont(big);
+//
+//        Music.sound1.stop();
+//        ingame = false;
+//        if (worm.getLife() <= 0) {
+//            if (s != spScene) {
+//                score = worm2.getPoints();
+//                msg = "BLUE Won!";
+//                g3.setColor(Color.blue);
+//            } else {
+//                score = worm.getPoints();
+//                msg = "GAME OVER!";
+//                g3.setColor(Color.white);
+//            }
+//        } else if (worm2.getLife() <= 0) {
+//            score = worm.getPoints();
+//            msg = "RED Won!";
+//            g3.setColor(Color.red);
+//        }
+//        msg2 = "Press SPACE to play again.";
+//        msg3 = "Press H to submit your highscore";
+//        g3.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 270);
+//        g3.setFont(small);
+//        g3.setColor(Color.white);
+//        g3.drawString(msg2, (806 - fm2.stringWidth(msg2)) / 2, 600 / 2);
+//        g3.drawString(msg3, (806 - fm2.stringWidth(msg3)) / 2, 320);
+//    }
 
 }
