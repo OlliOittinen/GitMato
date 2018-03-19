@@ -8,6 +8,8 @@ package Spawnables;
 import Model.Worm;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
@@ -127,8 +129,9 @@ public class Laser implements Spawnables {
 
     //ikoni powerupille
     @Override
-    public Rectangle getBounds() {
-        return new Rectangle(xe + 3, ye + 3, 30, 30);
+    public Bounds getBounds() {
+        Rectangle laser = new Rectangle(xe + 3, ye + 3, 30, 30);
+        return laser.getLayoutBounds();
     }
 
     public Rectangle getBoundsB() {

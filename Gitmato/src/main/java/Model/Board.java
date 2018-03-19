@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.TimerTask;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.shape.Rectangle;
@@ -188,30 +189,30 @@ public final class Board {
     }
 
     public void checkCollisions() {
-        Rectangle Matokuutio = worm.getBounds();
-        Rectangle Matokuutio2 = worm2.getBounds();
+        Bounds Matokuutio = worm.getBounds();
+        Bounds Matokuutio2 = worm2.getBounds();
 
-        Rectangle s = snack.getBounds();
-        Rectangle pf = faster.getBounds();
-        Rectangle ps = slower.getBounds();
-        Rectangle pr = reverse.getBounds();
-        Rectangle pl = HP.getBounds();
-        Rectangle psh = shield.getBounds();
-        Rectangle pb = bombs.getBounds();
+        Bounds s = snack.getBounds();
+        Bounds pf = faster.getBounds();
+        Bounds ps = slower.getBounds();
+        Bounds pr = reverse.getBounds();
+        Bounds pl = HP.getBounds();
+        Bounds psh = shield.getBounds();
+        Bounds pb = bombs.getBounds();
         Ellipse pb2 = bombs.getBoundsBombs(2);
         Ellipse pb3 = bombs.getBoundsBombs(4);
         Ellipse pb4 = bombs.getBoundsBombs(6);
-        Rectangle pla = laser.getBounds();
+        Bounds pla = laser.getBounds();
         Rectangle beam = laser.getBoundsB();
 
         for (int i = 0; i < body.size(); i++) {
-            Rectangle Matotail = body.get(i).getBounds();
+            Bounds Matotail = body.get(i).getBounds();
             if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2) && pelimoodi != "sp") {
                 if (worm2.getLife() > 1) {
                     shield.shield(worm2, 50);
                     worm2.randomizeXY();
                     if (pelimoodi == "vs AI") {
-                        BotTurnDown();
+                        bot.BotTurnDown();
                     }
 
                 }
@@ -220,7 +221,7 @@ public final class Board {
         }
 
         for (int i = 0; i < body2.size(); i++) {
-            Rectangle Matotail2 = body2.get(i).getBounds();
+            Bounds Matotail2 = body2.get(i).getBounds();
             if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                 if (worm.getLife() > 1) {
                     shield.shield(worm, 50);
@@ -233,7 +234,7 @@ public final class Board {
         }
         if (pelimoodi == "sp") {
             for (int i = 2; i < body.size(); i++) {
-                Rectangle Matotail2 = body.get(i).getBounds();
+                Bounds Matotail2 = body.get(i).getBounds();
                 if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                     if (worm.getLife() > 1) {
                         shield.shield(worm, 50);
@@ -357,7 +358,7 @@ public final class Board {
             if (worm2.getLife() > 1) {
                 worm2.randomizeXY();
                 if (pelimoodi == "vs AI") {
-                    BotTurnDown();
+                    bot.BotTurnDown();
                 } else {
                     worm2.setSuuntaAdv(0);
                     worm2.setSuunta(0);

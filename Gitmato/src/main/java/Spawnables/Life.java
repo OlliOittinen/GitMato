@@ -10,6 +10,8 @@ import Model.Worm;
 import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
@@ -67,8 +69,9 @@ public class Life implements Spawnables {
     }
 
     @Override
-    public Rectangle getBounds() {
-        return new Rectangle(xe+3, ye+3, 30, 30);
+    public Bounds getBounds() {
+        Rectangle life = new Rectangle(xe+3, ye+3, 30, 30);
+        return life.getLayoutBounds();
     }
 
     @Override

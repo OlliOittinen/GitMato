@@ -7,6 +7,7 @@ package Spawnables;
 
 import Model.Worm;
 import Sound.Music;
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
@@ -59,8 +60,9 @@ public class Slower implements Spawnables{
     }
 
     @Override
-    public Rectangle getBounds() {
-        return new Rectangle(xe+3, ye+3, 30, 30);
+    public Bounds getBounds() {
+        Rectangle slower = new Rectangle(xe+3, ye+3, 30, 30);
+        return slower.getLayoutBounds();
     }
 
     @Override

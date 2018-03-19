@@ -5,6 +5,7 @@
  */
 package Model;
 
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
@@ -180,8 +181,9 @@ public class Worm {
         }
     }
     
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, 35, 42);
+    public Bounds getBounds() {
+       Rectangle mato = new Rectangle(x, y, 35, 42);
+       return mato.getLayoutBounds();
     }
     
     

@@ -9,6 +9,8 @@ import Model.Worm;
 import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
@@ -78,8 +80,9 @@ public class Shield  implements Spawnables{
     }
 
 @Override    
-    public Rectangle getBounds() {
-        return new Rectangle(xe, ye, 41, 55);
+    public Bounds getBounds() {
+        Rectangle shield = new Rectangle(xe, ye, 41, 55);
+        return shield.getLayoutBounds();
     }
 @Override
     public void randomizePowerUpLocation() {

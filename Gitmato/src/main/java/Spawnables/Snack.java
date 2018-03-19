@@ -6,6 +6,7 @@
 package Spawnables;
 
 import Sound.Music;
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
@@ -58,8 +59,9 @@ public class Snack implements Spawnables{
     }
 
 @Override    
-    public Rectangle getBounds() {
-        return new Rectangle(xe, ye, 41, 55);
+    public Bounds getBounds() {
+        Rectangle snack = new Rectangle(xe, ye, 41, 55);
+        return snack.getLayoutBounds();
     }
 @Override
     public void randomizePowerUpLocation() {

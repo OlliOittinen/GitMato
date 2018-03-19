@@ -5,8 +5,8 @@
  */
 package Spawnables;
 
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
-import javafx.scene.shape.Rectangle;
 
 
 /**
@@ -16,7 +16,7 @@ import javafx.scene.shape.Rectangle;
 public interface Spawnables {
    void loadImage(String imageName);
    void init();
-   Rectangle getBounds();
+   Bounds getBounds();
    int getX();
    int getY();
    void setX(int x);
