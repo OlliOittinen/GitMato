@@ -3,10 +3,7 @@ package GUI;
 import Controller.PlayerController;
 import Model.Board;
 import Sound.Music;
-import main.java.Controller.PlayerController;
-import main.java.Model.Board;
 import javafx.application.*;
-import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.stage.*;
 import javafx.scene.*;
@@ -17,8 +14,8 @@ import javafx.scene.image.ImageView;
 
 public class Matopeli extends Application {
 
-    Stage window;
-    Scene scene1, scene2, scene3, scene4;
+    Stage mainMenu;
+    Scene mainMenuScene, vsAIScene, versusScene, spScene;
     ImageView kuvamato = new ImageView("src/main/resources/images/BlueBG800x600.png");
     Image filter = new Image("src/main/resources/images/BlackFilter.png");
     ImageView filtteri = new ImageView(filter);
@@ -32,8 +29,8 @@ public class Matopeli extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        window = primaryStage;
-        window.setTitle("Gitmato");
+        mainMenu = primaryStage;
+        mainMenu.setTitle("Gitmato");
         Sound.Music.sound1.loop();
 
         //----GAME MODE SELECTOR SCENE-----------
@@ -42,8 +39,8 @@ public class Matopeli extends Application {
         button1.setOnAction(e
                 -> {
             StackPane layout2 = new StackPane();
-            scene2 = new Scene(layout2, 800, 590);
-            window.setScene(scene2);
+            vsAIScene = new Scene(layout2, 800, 590);
+            mainMenu.setScene(vsAIScene);
         });
 
         //Button to Versus
@@ -51,24 +48,24 @@ public class Matopeli extends Application {
         button2.setOnAction(e
                 -> {
             StackPane layout3 = new StackPane();
-            scene3 = new Scene(layout3, 800, 590);
-            window.setScene(scene3);
+            versusScene = new Scene(layout3, 800, 590);
+            mainMenu.setScene(versusScene);
         });
         Button button3 = new Button("Single player");
         button3.setOnAction(e
                 -> {
             StackPane layout4 = new StackPane();
-            scene4 = new Scene(layout4, 800, 590);
-            window.setScene(scene4);
+            spScene = new Scene(layout4, 800, 590);
+            mainMenu.setScene(spScene);
         });
 
         //Layout 1 - Game mode selector
         VBox layout1 = new VBox(20);
         layout1.setAlignment(Pos.CENTER);
         layout1.getChildren().addAll(button2, button1, button3);
-        scene1 = new Scene(layout1, 800, 506);
+        mainMenuScene = new Scene(layout1, 800, 506);
         layout1.setId("pane");
-        scene1.getStylesheets().add("Styling/styling.css");
+        mainMenuScene.getStylesheets().add("Styling/styling.css");
         //---------------------------------
 
         //------VERSUS SCENE---------------
@@ -89,15 +86,15 @@ public class Matopeli extends Application {
         backToSS.setOnAction(e -> setScene(1));
         
         layout3.getChildren().addAll(label3, restart, backToSS); // Adding swing node
-        scene3 = new Scene(layout3, 800, 600);
-        scene3.getStylesheets().add("Styling/styling.css");
+        versusScene = new Scene(layout3, 800, 600);
+        versusScene.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
          */
         //Display scene 1 at first
-        window.setScene(scene1);
-        window.setOnCloseRequest(e -> System.exit(0));
-        window.setTitle("Gitmato");
-        window.show();
+        mainMenu.setScene(mainMenuScene);
+        mainMenu.setOnCloseRequest(e -> System.exit(0));
+        mainMenu.setTitle("Gitmato");
+        mainMenu.show();
     }
 
     public void paintComponent(Graphics g) {

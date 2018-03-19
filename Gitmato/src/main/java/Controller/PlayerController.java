@@ -26,6 +26,7 @@ public class PlayerController  {
     private Board board;
     private Matopeli peli;
     private String pelimoodi= "versus";
+    private main.java.Model.Bot bot;
     
     public PlayerController(){
         initPlayerController();
@@ -203,7 +204,7 @@ public class PlayerController  {
         repaint();
 
         if (pelimoodi == "vs AI") {
-            BlueAIBot();
+            bot.BlueAIBot();
         }
 
     }
