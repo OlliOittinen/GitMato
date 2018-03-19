@@ -6,13 +6,13 @@
 package Spawnables;
 
 import Model.Worm;
-import java.awt.Image;
-import java.awt.Rectangle;
-import javax.swing.ImageIcon;
 
 import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 /**
  *
  * @author maxki
@@ -53,13 +53,13 @@ public class Life implements Spawnables {
      
     @Override
     public void loadImage(String imageName) {
-        ImageIcon ii = new ImageIcon(imageName);
+        ImageView ii = new ImageView(imageName);
         image = ii.getImage();
     }
 
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/main/resources/images/Life_1.png");
+        ImageView kuva = new ImageView("src/main/resources/images/Life_1.png");
         image = kuva.getImage();
             
         setX(-100);

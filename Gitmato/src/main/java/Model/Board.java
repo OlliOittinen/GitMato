@@ -16,8 +16,13 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.control.TextInputDialog;
+<<<<<<< HEAD
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Ellipse;
+=======
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.*;
+>>>>>>> 0a5cd5d6fdb6519ca81d422f407ae2389cf7879a
 
 /**
  *

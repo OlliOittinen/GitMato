@@ -6,11 +6,19 @@
 package Spawnables;
 import Model.Worm;
 import Sound.Music;
+<<<<<<< HEAD
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.Timer;
 import java.util.TimerTask;
+=======
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
+>>>>>>> 0a5cd5d6fdb6519ca81d422f407ae2389cf7879a
 
 
 /**

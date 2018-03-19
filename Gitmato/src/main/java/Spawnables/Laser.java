@@ -6,11 +6,11 @@
 package Spawnables;
 
 import Model.Worm;
-import java.awt.Image;
-import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.swing.ImageIcon;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -40,7 +40,7 @@ public class Laser implements Spawnables {
 
     @Override
     public void loadImage(String imageName) {
-        ImageIcon ii = new ImageIcon(imageName);
+        ImageView ii = new ImageView(imageName);
         image = ii.getImage();
     }
 
@@ -57,15 +57,15 @@ public class Laser implements Spawnables {
 
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/main/resources/images/Lasercannon.png");
+        ImageView kuva = new ImageView("src/main/resources/images/Lasercannon.png");
         image = kuva.getImage();
-        ImageIcon kuva2 = new ImageIcon("src/main/resources/images/LazerH.png");
+        ImageView kuva2 = new ImageView("src/main/resources/images/LazerH.png");
         image2 = kuva2.getImage();
-        ImageIcon kuva3 = new ImageIcon("src/main/resources/images/lazerV.png");
+        ImageView kuva3 = new ImageView("src/main/resources/images/lazerV.png");
         image3 = kuva3.getImage();
-        ImageIcon kuva4 = new ImageIcon("src/main/resources/images/lasersightV.png");
+        ImageView kuva4 = new ImageView("src/main/resources/images/lasersightV.png");
         image4 = kuva4.getImage();
-        ImageIcon kuva5 = new ImageIcon("src/main/resources/images/lasersightH.png");
+        ImageView kuva5 = new ImageView("src/main/resources/images/lasersightH.png");
         image5 = kuva5.getImage();
 
         setX(-100);
@@ -92,13 +92,13 @@ public class Laser implements Spawnables {
                     //vertical
                     setX2(wormLocX - 30);
                     setY2(0);
-                    beam.setBounds(wormLocX - 30, 0, 100, 600);
+                    setBoundsB(wormLocX - 30, 0, 100, 600);
                     horizontal = false;
                 } else {
                     //horizontal
                     setX3(0);
                     setY3(wormLocY - 30);
-                    beam.setBounds(0, wormLocY - 30, 800, 100);
+                    setBoundsB(0, wormLocY - 30, 800, 100);
                     horizontal = true;
                 }
 
@@ -116,7 +116,7 @@ public class Laser implements Spawnables {
                         setY3(-1000);
                         setX2(-1000);
                         setY2(-1000);
-                        beam.setBounds(-1000, -1000, 1, 1);
+                        setBoundsB(-1000, -1000, 1, 1);
                         lethal = false;
                     }
                 }, 2000);
@@ -189,6 +189,12 @@ public class Laser implements Spawnables {
 
     public void setY3(int y) {
         this.ye3 = y;
+    }
+    public void setBoundsB(int x, int y, int w, int h){
+        beam.setX(x);
+        beam.setY(y);
+        beam.setWidth(w);
+        beam.setHeight(h);
     }
 
     @Override

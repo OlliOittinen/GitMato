@@ -7,11 +7,11 @@ package Spawnables;
 
 import Model.Worm;
 import Sound.Music;
-import java.awt.Image;
-import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.swing.ImageIcon;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -21,7 +21,7 @@ public class Shield  implements Spawnables{
     private int xe;
     private int ye;
     private Image image;
-    private ImageIcon shieldeffect = new ImageIcon("src/main/resources/images/ShieldEffect.png");
+    private ImageView shieldeffect = new ImageView("src/main/resources/images/ShieldEffect.png");
 
     public Shield() {
         init();
@@ -42,14 +42,14 @@ public class Shield  implements Spawnables{
     
 @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/main/resources/images/Shield.png");
+        ImageView kuva = new ImageView("src/main/resources/images/Shield.png");
         image = kuva.getImage();
         xe = -100;
         ye = -100;
     }
 @Override    
     public void loadImage(String imageName) {
-        ImageIcon ii = new ImageIcon(imageName);
+        ImageView ii = new ImageView(imageName);
         image = ii.getImage();
     }
 @Override
