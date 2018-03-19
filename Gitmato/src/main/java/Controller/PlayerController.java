@@ -7,6 +7,7 @@ package Controller;
 
 import GUI.Matopeli;
 import Model.Board;
+import Model.Tail;
 import Model.Worm;
 import javafx.event.ActionEvent;
 import javafx.geometry.Point2D;
@@ -193,25 +194,25 @@ public class PlayerController {
 
         //Päivitetään jokaisen "Tail" olion coordinaatit
 
-        List tail = board.getTailList();
-        List tail2 = board.getTailList2();
+        List<Tail> tailList = board.getTailList();
+        List<Tail> tailList2 = board.getTailList2();
 
-        for (int i = 0; i < tail.size(); i++) {
-            int f = tail.get(i).getCordinateInt();
-            p = coordinates.get(f);
+        for (int i = 0; i < tailList.size(); i++) {
+            int f = tailList.get(i).getCoordinateInt();
+            p = (Point2D) coordinates.get(f);
             x = (int) p.getX();
             y = (int) p.getY();
-            tail.get(i).setX(x);
-            tail.get(i).setY(y);
+            tailList.get(i).setX(x);
+            tailList.get(i).setY(y);
         }
 
-        for (int i = 0; i < tail2.size(); i++) {
-            int f = tail2.get(i).getCordinateInt();
-            p2 = coordinates2.get(f);
+        for (int i = 0; i < tailList2.size(); i++) {
+            int f = tailList2.get(i).getCoordinateInt();
+            p2 = (Point2D) coordinates2.get(f);
             x2 = (int) p2.getX();
             y2 = (int) p2.getY();
-            tail2.get(i).setX(x2);
-            tail2.get(i).setY(y2);
+            tailList2.get(i).setX(x2);
+            tailList2.get(i).setY(y2);
         }
 
 

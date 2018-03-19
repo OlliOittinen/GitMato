@@ -21,10 +21,10 @@ public class Tail{
     private int y;
     private int playerNro;
     // luku jonka mukaan hakee cordinaateista itselleen arvon.
-    private int cordinateInt;
+    private int coordinateInt;
     
      public Tail(int ci, int playerNro) {
-        this.cordinateInt = ci;
+        this.coordinateInt = ci;
         this.playerNro = playerNro;
         initTail();
     }
@@ -42,8 +42,9 @@ public class Tail{
     public Image getImage() {
         return image;
     }
-    public int getCordinateInt(){
-        return cordinateInt;
+
+    public int getCoordinateInt(){
+        return coordinateInt;
     }
     
      public void setX(int luku) {
@@ -53,7 +54,8 @@ public class Tail{
     public void setY(int luku) {
         this.y = luku;
     }
-     public int getX() {
+
+    public int getX() {
         return x;
     }
 
