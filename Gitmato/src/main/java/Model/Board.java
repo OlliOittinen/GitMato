@@ -29,52 +29,16 @@ public final class Board {
     private static List<Worm> worms;
     private final int DELAY = 10;
 
-    public List<Tail> getTailList() {
-        return tailList;
-    }
-
-    public List<Tail> getTailList2() {
-        return tailList2;
-    }
-
     //Lista Tail paloista
     private final List<Tail> tailList;
     private final List<Tail> tailList2;
     private final List<Spawnables> pickableList;
-
-    public List<Spawnables> getPickableList() {
-        return pickableList;
-    }
-
-    public List<Point2D> getCoordinates() {
-        return coordinates;
-    }
-
-    public List<Point2D> getCoordinates2() {
-        return coordinates2;
-    }
-
     private final List<Point2D> coordinates;
     private final List<Point2D> coordinates2;
     // Wormin locaatio muuttujat:
     Point2D p;
     Point2D p2;// coordinaatit
 
-    public Worm getWorm() {
-        return worm;
-    }
-
-    public Worm getWorm2() {
-        return worm2;
-    }
-
-    public Tail getTail() {
-        return tail;
-    }
-
-    public Tail getTail2() {
-        return tail2;
-    }
 
     private Worm worm;
     private Worm worm2;
@@ -110,6 +74,42 @@ public final class Board {
     private double timeCounter = 0; // aikalaskuri (sec)
     private int frameCounter = 0;
     private double theRealFpsCounter = 0; // näyttää jatkuvasti oikean fps:n
+
+    public List<Spawnables> getPickableList() {
+        return pickableList;
+    }
+
+    public List<Point2D> getCoordinates() {
+        return coordinates;
+    }
+
+    public List<Point2D> getCoordinates2() {
+        return coordinates2;
+    }
+
+    public Worm getWorm() {
+        return worm;
+    }
+
+    public Worm getWorm2() {
+        return worm2;
+    }
+
+    public Tail getTail() {
+        return tail;
+    }
+
+    public Tail getTail2() {
+        return tail2;
+    }
+
+    public List<Tail> getTailList() {
+        return tailList;
+    }
+
+    public List<Tail> getTailList2() {
+        return tailList2;
+    }
 
     public Board(Matopeli e, String pelimoodi) {
         this.engine = e;

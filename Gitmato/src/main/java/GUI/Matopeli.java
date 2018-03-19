@@ -16,7 +16,7 @@ public class Matopeli extends Application {
 
     Stage mainMenu;
     Scene mainMenuScene, vsAIScene, versusScene, spScene;
-    ImageView kuvamato = new ImageView("src/main/resources/images/BlueBG800x600.png");
+    ImageView backGround = new ImageView("src/main/resources/images/BlueBG800x600.png");
     Image filter = new Image("src/main/resources/images/BlackFilter.png");
     ImageView filtteri = new ImageView(filter);
 
@@ -209,8 +209,6 @@ public class Matopeli extends Application {
 
     }
 
-
-
     private void drawGameOver(Graphics g) {
         Music.sound4.play();
         laser.hide();
@@ -254,39 +252,3 @@ public class Matopeli extends Application {
     }
 
 }
-/*
-public class Matopeli{
-    
-    private static MainFrame peli;
-    private static UIController uic;
-    private static PlayerController pc;
-
-   
-    public static void main(String[] args) {
-
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {     
-                /*lpane = new JLayeredPane();
-                peli = new MainFrame();
-                peli.setLayout(new BorderLayout());
-                peli.add(lpane, BorderLayout.CENTER);
-                peliOhi = new GameOver(peli);
-
-                peliOhi.setOpaque(true);
-
-                lpane.add(board, 0, 0);
-                lpane.add(peliOhi, 1, 0);
-
-                peli.pack();
-                peli.setVisible(true);
-                uic = new UIController();
-                pc = new PlayerController();
-                peli = new MainFrame(uic);
-                //peli.pack();
-                peli.setVisible(true);
-            }
-        });         
-    } 
-}
- */
