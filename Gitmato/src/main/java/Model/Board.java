@@ -19,8 +19,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Ellipse;
-import javafx.scene.image.ImageView;
-import javafx.scene.shape.*;
 
 /**
  *
@@ -31,15 +29,53 @@ public final class Board {
     private static List<Worm> worms;
     private final int DELAY = 10;
 
+    public List<Tail> getTailList() {
+        return tailList;
+    }
+
+    public List<Tail> getTailList2() {
+        return tailList2;
+    }
+
     //Lista Tail paloista
-    private final List<Tail> body;
-    private final List<Tail> body2;
+    private final List<Tail> tailList;
+    private final List<Tail> tailList2;
     private final List<Spawnables> pickableList;
-    private final List<Point2D> cordinates;
-    private final List<Point2D> cordinates2;
+
+    public List<Spawnables> getPickableList() {
+        return pickableList;
+    }
+
+    public List<Point2D> getCoordinates() {
+        return coordinates;
+    }
+
+    public List<Point2D> getCoordinates2() {
+        return coordinates2;
+    }
+
+    private final List<Point2D> coordinates;
+    private final List<Point2D> coordinates2;
     // Wormin locaatio muuttujat:
     Point2D p;
     Point2D p2;// coordinaatit
+
+    public Worm getWorm() {
+        return worm;
+    }
+
+    public Worm getWorm2() {
+        return worm2;
+    }
+
+    public Tail getTail() {
+        return tail;
+    }
+
+    public Tail getTail2() {
+        return tail2;
+    }
+
     private Worm worm;
     private Worm worm2;
     private PlayerController control;
@@ -83,12 +119,12 @@ public final class Board {
         pickableList = new ArrayList<>();
         Board.worms = new ArrayList<>();
 
-        this.cordinates = new ArrayList<>();
-        this.body = new ArrayList<>();
+        this.coordinates = new ArrayList<>();
+        this.tailList = new ArrayList<>();
         this.p = new Point2D(0, 0);
 
-        this.cordinates2 = new ArrayList<>();
-        this.body2 = new ArrayList<>();
+        this.coordinates2 = new ArrayList<>();
+        this.tailList2 = new ArrayList<>();
         this.p2 = new Point2D(0, 0);
 
         initBoard();
@@ -155,16 +191,16 @@ public final class Board {
 
                 worms.add(worm2 = new Worm(2));
                 powerUpCD();
-                cordinates2.clear();
-                body2.clear();
+                coordinates2.clear();
+                tailList2.clear();
                 tailNro2 = 0;
             }
 
             control.updateWorms();
 
-            cordinates.clear();
+            coordinates.clear();
 
-            body.clear();
+            tailList.clear();
 
             tailNro = 0;
 
@@ -205,8 +241,8 @@ public final class Board {
         Bounds pla = laser.getBounds();
         Rectangle beam = laser.getBoundsB();
 
-        for (int i = 0; i < body.size(); i++) {
-            Bounds Matotail = body.get(i).getBounds();
+        for (int i = 0; i < tailList.size(); i++) {
+            Bounds Matotail = tailList.get(i).getBounds();
             if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2) && pelimoodi != "sp") {
                 if (worm2.getLife() > 1) {
                     shield.shield(worm2, 50);
@@ -220,8 +256,8 @@ public final class Board {
             }
         }
 
-        for (int i = 0; i < body2.size(); i++) {
-            Bounds Matotail2 = body2.get(i).getBounds();
+        for (int i = 0; i < tailList2.size(); i++) {
+            Bounds Matotail2 = tailList2.get(i).getBounds();
             if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                 if (worm.getLife() > 1) {
                     shield.shield(worm, 50);
@@ -233,8 +269,8 @@ public final class Board {
             }
         }
         if (pelimoodi == "sp") {
-            for (int i = 2; i < body.size(); i++) {
-                Bounds Matotail2 = body.get(i).getBounds();
+            for (int i = 2; i < tailList.size(); i++) {
+                Bounds Matotail2 = tailList.get(i).getBounds();
                 if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                     if (worm.getLife() > 1) {
                         shield.shield(worm, 50);
@@ -375,11 +411,11 @@ public final class Board {
         switch (n) {
             case 1:
                 tailNro++;
-                body.add(tail = new Tail(tailNro * 15, 1));
+                tailList.add(tail = new Tail(tailNro * 15, 1));
                 break;
             case 2:
                 tailNro2++;
-                body2.add(tail = new Tail(tailNro2 * 15, 2));
+                tailList2.add(tail = new Tail(tailNro2 * 15, 2));
         }
     }
 
