@@ -153,5 +153,74 @@ public class PlayerController  {
                     
         // controlls for player 2 
         // --- Here ---
-    }  
+    }
+        public void actionPerformed(ActionEvent e) {
+
+        currentTime = System.currentTimeMillis();
+        double deltaTime = (double) (currentTime - previousTime) / 1_000;
+        // 1/deltaTime); <- kertoo nykyisen fps joka frame.
+
+        double interval = 0.5;
+        if (timeCounter > interval) {
+            theRealFpsCounter = frameCounter;
+            frameCounter = 0;
+            timeCounter = 0;
+        } else {
+            timeCounter += deltaTime;
+            frameCounter = frameCounter + (int) (1 / interval);
+        }
+
+        checkCollisions();
+        worm.move();
+        worm.moveCont();
+        worm2.move();
+        worm2.moveCont();
+        //tallennnetaan wormin coordinaatit yhteen 2D muuttujaan
+        x = worm.getX();
+        y = worm.getY();
+        x2 = worm2.getX();
+        y2 = worm2.getY();
+        p = new Point2D.Double(x, y);
+        p2 = new Point2D.Double(x2, y2);
+        //Lisätään coortinaatit listan cordinates alkuun (0).
+        //siirtää automaattisesti taulukon arvot yhden eteenpäin, 0->1
+        cordinates.add(0, p);
+        cordinates2.add(0, p2);
+
+        //jos lista liian suuri poistetaan viimeinen
+        if (cordinates.size() >= 10000) {
+            cordinates.remove(cordinates.size() - 1);
+        }
+
+        if (cordinates2.size() >= 10000) {
+            cordinates2.remove(cordinates2.size() - 1);
+        }
+
+        //Päivitetään jokaisen "Tail" olion coordinaatit
+        for (int i = 0; i < body.size(); i++) {
+            int f = body.get(i).getCordinateInt();
+            p = cordinates.get(f);
+            x = (int) p.getX();
+            y = (int) p.getY();
+            body.get(i).setX(x);
+            body.get(i).setY(y);
+        }
+
+        for (int i = 0; i < body2.size(); i++) {
+            int f = body2.get(i).getCordinateInt();
+            p2 = cordinates2.get(f);
+            x2 = (int) p2.getX();
+            y2 = (int) p2.getY();
+            body2.get(i).setX(x2);
+            body2.get(i).setY(y2);
+        }
+
+        repaint();
+
+        if (pelimoodi == "vs AI") {
+            BlueAIBot();
+        }
+
+        previousTime = currentTime;
+    }
 }

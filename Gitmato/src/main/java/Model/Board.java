@@ -7,32 +7,17 @@ package main.java.Model;
 
 import main.java.Spawnables.*;
 import main.java.GUI.Matopeli;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.JPanel;
-import javax.swing.Timer;
-import java.awt.Rectangle;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import main.java.Controller.PlayerController;
 import Sound.Music;
-import java.awt.Image;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Optional;
 import java.util.TimerTask;
 import javafx.application.Platform;
+import javafx.geometry.Point2D;
 import javafx.scene.control.TextInputDialog;
-import javax.swing.ImageIcon;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -51,7 +36,8 @@ public final class Board extends JPanel implements ActionListener {
     // Wormin locaatio muuttujat:
     Point2D p;
     Point2D p2;// coordinaatit
-    ImageIcon filtteri = new ImageIcon("src/main/resources/images/BlackFilter.png");
+    Image image = new Image("src/main/resources/images/BlackFilter.png");
+    ImageView filtteri = new ImageView(image);
     private Worm worm;
     private Worm worm2;
     private PlayerController control;
