@@ -1,13 +1,16 @@
 package GUI;
 
 import Controller.PlayerController;
-import Model.Board;
-import Model.Tail;
+import Model.*;
 import Sound.Music;
 import Spawnables.*;
 import java.util.List;
 import javafx.application.*;
 import javafx.geometry.Pos;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.canvas.GraphicsContext;
@@ -39,6 +42,8 @@ public class Matopeli extends Application {
     Life HP;
     Shield shield;
     Slower slower;
+    private Worm worm;
+    private Worm worm2;
     
 
     public static void main(String[] args) {
@@ -55,6 +60,8 @@ public class Matopeli extends Application {
         bombs = (Bombs)board.getPickableList().get(5);
         laser = (Laser)board.getPickableList().get(6);
         snack = (Snack)board.getPickableList().get(7);
+        worm = board.getWorm();
+        worm2 = board.getWorm2();
         mainMenu = primaryStage;
         mainMenu.setTitle("Gitmato");
         Sound.Music.sound1.loop();
@@ -123,22 +130,22 @@ public class Matopeli extends Application {
         mainMenu.show();
     }
 
-    public void paintComponent(GraphicsContext g) {
+    public void paintComponent(GraphicsContext g, Scene s) {
         if (true) {
             Paint p = Color.BLACK;
             g.setFill(p);
             g.fillRect(0, 0, mainMenu.getWidth(),mainMenu.getHeight());
             g.drawImage(background, 0, 0);
-            doDrawing(g);
+            doDrawing(g, s);
         } else {
             drawGameOver(g);
-            inGame();
+            board.setIngame(false);
         }
     }
 
-    private void doDrawing(GraphicsContext g) {
+    private void doDrawing(GraphicsContext g, Scene s) {
 
-        drawPisteet(g);
+        drawPoints(s);
         int tailsize = board.getTailList().size();
         int tailsize2 = board.getTailList2().size();
         List<Tail> body = board.getTailList();
@@ -183,7 +190,7 @@ public class Matopeli extends Application {
             g.drawImage(laser.getImageVert(), laser.getX2(), laser.getY2());
         }
         g.drawImage(worm.getImage(), worm.getX(), worm.getY());
-        if (pelimoodi != "sp") {
+        if (s != spScene) {
             g.drawImage(worm2.getImage(), worm2.getX(), worm2.getY());
         }
         if (worm.getShield(worm)) {
@@ -204,32 +211,35 @@ public class Matopeli extends Application {
 
     }
 
-    private void drawPisteet(GraphicsContext g) {
-        Font small = new Font("Helvetica", Font.BOLD, 20);
-        Font smaller = new Font("Helvetica", Font.PLAIN, 15);
-        FontMetrics fm = getFontMetrics(small);
-        FontMetrics fm2 = getFontMetrics(smaller);
-        String pt3 = "FPS: " + theRealFpsCounter;
+    private void drawPoints(Scene s) {
 
-        g.setColor(Color.RED);
-        g.setFont(small);
-        String hp = "HP: " + worm.getLife();
-        String pt = "Pisteet: " + worm.getPoints();
-        g.drawString(hp, 10, 25);
-        g.drawString(pt, 10, 50);
+        Text red = new Text();
+        Text blue = new Text();
+        Text white = new Text();
+        red.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+        red.setFill(Color.RED);
+        red.setTextAlignment(TextAlignment.LEFT);
 
-        if (pelimoodi != "sp") {
-            g.setColor(Color.BLUE);
-            String hp2 = "HP: " + worm2.getLife();
-            String pt2 = "Pisteet: " + worm2.getPoints();
 
-            g.drawString(hp2, (790 - fm.stringWidth(hp2)), 25);
-            g.drawString(pt2, (790 - fm.stringWidth(pt2)), 50);
+        String hp = "HP: " + board.getWorm().getLife();
+        String pt = "Pisteet: " + board.getWorm().getPoints();
+        red.setText(hp);
+        red.setText(pt);
+
+        if (s != spScene) {
+            blue.setFill(Color.BLUE);
+            String hp2 = "HP: " + board.getWorm2().getLife();
+            String pt2 = "Pisteet: " + board.getWorm2().getPoints();
+            blue.setText(hp2);
+            blue.setText(pt2);
+            blue.setTextAlignment(TextAlignment.RIGHT);
         }
-        g.setColor(Color.WHITE);
-        g.setFont(smaller);
-        g.drawString(pt3, ((790 - fm2.stringWidth(pt3)) / 2), 20);//piirtää fps
 
+        String FPS = "FPS: " + board.FPS();
+        white.setText(FPS);
+        white.setFill(Color.WHITE);
+        white.setFont(Font.font(10));
+        white.setTextAlignment(TextAlignment.CENTER);
     }
 
 

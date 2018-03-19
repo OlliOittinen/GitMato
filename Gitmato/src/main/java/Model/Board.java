@@ -55,6 +55,14 @@ public final class Board {
     private Bombs bombs;
     private Laser laser;
 
+    public boolean isIngame() {
+        return ingame;
+    }
+
+    public void setIngame(boolean ingame) {
+        this.ingame = ingame;
+    }
+
     private boolean ingame;
     private main.java.Model.Bot bot;
 
@@ -63,6 +71,11 @@ public final class Board {
     private int tailNro2 = 0;
     private int x, y;
     private int x2, y2;
+
+    public String getPelimoodi() {
+        return pelimoodi;
+    }
+
     private String pelimoodi = "versus";
     private Matopeli engine;
     private Highscore hscore = new Highscore();
@@ -496,12 +509,12 @@ public final class Board {
     }
 
 
-    public void FPS() {
+    public double FPS() {
         currentTime = System.currentTimeMillis();
         double deltaTime = (double) (currentTime - previousTime) / 1_000;
         // 1/deltaTime); <- kertoo nykyisen fps joka frame.
-
         double interval = 0.5;
+
         if (timeCounter > interval) {
             theRealFpsCounter = frameCounter;
             frameCounter = 0;
@@ -511,7 +524,7 @@ public final class Board {
             frameCounter = frameCounter + (int) (1 / interval);
         }
         previousTime = currentTime;
-
+        return theRealFpsCounter;
     }
 
     public List<Tail> getTailList() {
