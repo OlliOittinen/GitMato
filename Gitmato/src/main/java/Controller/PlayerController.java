@@ -48,7 +48,7 @@ public class PlayerController  {
         KeyCode key = e.getCode();
         
         // controlls for player 1      
-        if (key == KeyEvent.VK_LEFT) {
+        if (key == KeyCode.LEFT) {
             if(worms.get(0).getSuunta() != 2){
                 if(worms.get(0).getSuunta() != 1 && (worms.get(0).getX() < 20 || worms.get(0).getX() > 740)){
                     worms.get(0).setX(worms.get(0).getX()-9);
@@ -59,7 +59,7 @@ public class PlayerController  {
             
         }
 
-        if (key == KeyEvent.VK_RIGHT) {
+        if (key == KeyCode.RIGHT) {
             
             if(worms.get(0).getSuunta() != 1){
                 if(worms.get(0).getSuunta() != 2 && (worms.get(0).getX() < 20 || worms.get(0).getX() > 740)){
@@ -71,7 +71,7 @@ public class PlayerController  {
             }
         }
 
-        if (key == KeyEvent.VK_UP) {
+        if (key == KeyCode.UP) {
             if(worms.get(0).getSuunta() != 4){
                 if(worms.get(0).getSuunta() != 3 && (worms.get(0).getY() < 20 || worms.get(0).getY() > 530)){
                     worms.get(0).setY(worms.get(0).getY()-9);
@@ -81,7 +81,7 @@ public class PlayerController  {
             }
         }
 
-        if (key == KeyEvent.VK_DOWN) {
+        if (key == KeyCode.DOWN) {
             if(worms.get(0).getSuunta() != 3){
                if(worms.get(0).getSuunta() != 4 && (worms.get(0).getY() < 20 || worms.get(0).getY() > 530)){
                     worms.get(0).setY(worms.get(0).getY()+9);
@@ -96,7 +96,7 @@ public class PlayerController  {
         
         // controlls for player 2 
         if(pelimoodi == "versus"){
-            if (key == KeyEvent.VK_A) {
+            if (key == KeyCode.A) {
             
 
                     if(worms.get(1).getSuunta() != 2){
@@ -109,7 +109,7 @@ public class PlayerController  {
 
                 }
 
-                if (key == KeyEvent.VK_D) {
+                if (key == KeyCode.D) {
                     if(worms.get(1).getSuunta() != 1){
                         if(worms.get(1).getSuunta() != 2 && (worms.get(1).getX() < 20 || worms.get(1).getX() > 740)){
                             worms.get(1).setX(worms.get(1).getX()+9);
@@ -120,7 +120,7 @@ public class PlayerController  {
                     }
                 }
 
-                if (key == KeyEvent.VK_W) {
+                if (key == KeyCode.W) {
                     if(worms.get(1).getSuunta() != 4){
                         if(worms.get(1).getSuunta() != 3 && (worms.get(1).getY() < 20 || worms.get(1).getY() > 530)){
                             worms.get(1).setY(worms.get(1).getY()-9);
@@ -131,7 +131,7 @@ public class PlayerController  {
                     }
                 }
 
-                if (key == KeyEvent.VK_S) {
+                if (key == KeyCode.S) {
                     if(worms.get(1).getSuunta() != 3){
                         if(worms.get(1).getSuunta() != 4 && (worms.get(1).getY() < 20 || worms.get(1).getY() > 530)){
                             worms.get(1).setY(worms.get(1).getY()+9);
@@ -144,10 +144,10 @@ public class PlayerController  {
             }
         
         //GAME RESET
-        if (key == KeyEvent.VK_SPACE || key == KeyEvent.VK_ENTER) {
+        if (key == KeyCode.SPACE || key == KeyCode.ENTER) {
             board.restartGame();
         }
-        if (key == KeyEvent.VK_H) {
+        if (key == KeyCode.H) {
             board.submitHighscore();
         }
                     
@@ -200,9 +200,9 @@ public class PlayerController  {
             body2.get(i).setX(x2);
             body2.get(i).setY(y2);
         }
-
-        repaint();
-
+        
+        
+        //botti ja sen toiminta
         if (pelimoodi == "vs AI") {
             bot.BlueAIBot();
         }
