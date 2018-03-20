@@ -7,7 +7,7 @@ package Controller;
 
 import GUI.Matopeli;
 import Model.Board;
-import Model.Tail;
+
 import Model.Worm;
 import javafx.event.ActionEvent;
 import javafx.geometry.Point2D;
@@ -15,43 +15,25 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author gedst
  */
 public class PlayerController {
 
-    private List<Worm> worms = new ArrayList<>();
+    private Matopeli GUI;
     private Board board;
-    private Matopeli peli;
-    private String pelimoodi = "versus";
-    //private main.java.Model.Bot bot;
+    private ArrayList<Worm> worms = board.getWorms();
+    private String pelimoodi = board.getPelimoodi();
 
-}
-
-/*
     public PlayerController() {
-        initPlayerController();
-    }
 
-    private void initPlayerController() {
-
-    }
-
-    public void yksinPeli(String peliMoodi) {
-        this.pelimoodi = peliMoodi;
-    }
-
-    public void updateWorms() { // tätä täytyy kutsua joka pelin alussa!!!!
-        this.worms = board.getWorms(); // saadaan oikeat pelaajat.
     }
 
     public void keyPressed(KeyEvent e) {
 
         KeyCode key = e.getCode();
 
-        // controlls for player 1      
         if (key == KeyCode.LEFT) {
             if (worms.get(0).getSuunta() != 2) {
                 if (worms.get(0).getSuunta() != 1 && (worms.get(0).getX() < 20 || worms.get(0).getX() > 740)) {
@@ -147,19 +129,16 @@ public class PlayerController {
             }
         }
 
-        //GAME RESET
+        //GAME RESET ----------------------------------------------------------------------------------------------------
         if (key == KeyCode.SPACE || key == KeyCode.ENTER) {
             board.restartGame();
         }
         if (key == KeyCode.H) {
             board.submitHighscore();
         }
-
-        // controlls for player 2 
-        // --- Here ---
     }
 
-    public void actionPerformed(ActionEvent e) {
+    /*public void actionPerformed(ActionEvent e) {
 
         Worm worm = board.getWorm();
         Worm worm2 = board.getWorm2();
@@ -224,6 +203,6 @@ public class PlayerController {
             bot.BlueAIBot();
         }
 
-    }
+    }*/
 }
-*/
+

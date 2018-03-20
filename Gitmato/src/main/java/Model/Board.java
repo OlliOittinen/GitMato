@@ -8,7 +8,6 @@ package Model;
 import GUI.Matopeli;
 import Spawnables.*;
 import java.util.ArrayList;
-import java.util.List;
 import Controller.PlayerController;
 import java.util.Optional;
 import java.util.TimerTask;
@@ -22,11 +21,11 @@ import javafx.scene.shape.Ellipse;
 
 /**
  *
- * @author maxki
+ * @author maxki, Olli, Eero, Ged
  */
-public final class Board {
+public class Board {
 
-    private static List<Worm> worms;
+    private static ArrayList<Worm> worms;
     private final int DELAY = 10;
     private Worm worm;
     private Worm worm2;
@@ -52,6 +51,12 @@ public final class Board {
     private double timeCounter = 0; // aikalaskuri (sec)
     private int frameCounter = 0;
     private double theRealFpsCounter = 0; // näyttää jatkuvasti oikean fps:n
+    //Lista Tail paloista
+    private ArrayList<Tail> tailList;
+    private ArrayList<Tail> tailList2;
+    private ArrayList<Spawnables> pickableList;
+    private ArrayList<Point2D> coordinates;
+    private ArrayList<Point2D> coordinates2;
     // Wormin locaatio muuttujat:
     //Point2D p;
     //Point2D p2;// coordinaatit
@@ -72,32 +77,33 @@ public final class Board {
     public Tail getTail2() {
         return tail2;
     }
-
-    public List<Tail> getTailList() {
+    public ArrayList<Tail> getTailList() {
         return tailList;
     }
-    public List<Tail> getTailList2() {
+    public ArrayList<Tail> getTailList2() {
         return tailList2;
     }
-    public List<Spawnables> getPickableList() {
+    public ArrayList<Spawnables> getPickableList() {
         return pickableList;
     }
-    public List<Point2D> getCoordinates() {
+    public ArrayList<Point2D> getCoordinates() {
         return coordinates;
     }
-    public List<Point2D> getCoordinates2() {
+    public ArrayList<Point2D> getCoordinates2() {
         return coordinates2;
     }
-    // --------------------------------------------------------------------------------------------
-    //Lista Tail paloista
-/*    private final List<Tail> tailList;
-    private final List<Tail> tailList2;
-    private final List<Spawnables> pickableList;
-    private final List<Point2D> coordinates;
-    private final List<Point2D> coordinates2;
-*/
-/*
-    -------------------------- nää saa ehkä jäädä ----------------------------
+    public static ArrayList getWorms() {
+        return worms;
+    }
+
+    public void restartGame() {
+        //TODO -- what happens when you restart game
+    }
+
+ // --------------------------------------------------------------------------------------------
+
+
+ //    -------------------------- nää saa ehkä jäädä ----------------------------
     public void powerUpCD() {
 
         faster.setX(-100);
@@ -203,8 +209,8 @@ public final class Board {
     private boolean ingame;
     //private Bot bot;
 
-    -------------------------------------------------------------------------------------
-*/
+    //-------------------------------------------------------------------------------------
+
 
 
 /*
@@ -229,12 +235,9 @@ public final class Board {
 
     }
 
-    public static List getWorms() {
-        return worms;
-    }
 
+//------------------------MITÄ VITTUA TÄN ON TARKOTUS TEHÄ----------------------------
     private void initBoard() {
-        //TODO: Tähän täytyy tehdä kaikki mahdolliset pelimuodot
 
         faster = new Faster();
         slower = new Slower();
@@ -277,44 +280,6 @@ public final class Board {
         }
     }
 
-    public void restartGame() {
-        if (!ingame) {
-            snack.init();
-            ingame = true;
-
-            worms.clear();
-
-            worms.add(worm = new Worm(1)); //lista worm olioista
-            if (pelimoodi != "sp") {
-
-                worms.add(worm2 = new Worm(2));
-                powerUpCD();
-                coordinates2.clear();
-                tailList2.clear();
-                tailNro2 = 0;
-            }
-
-            control.updateWorms();
-
-            coordinates.clear();
-
-            tailList.clear();
-
-            tailNro = 0;
-
-            Sound.Music.sound1.loop();
-            if (pelimoodi == "vs AI") {
-                bot.BotTurnDown();
-            }
-
-            if (pelimoodi == "sp") {
-                worm2.setX(-1000);
-                worm2.setY(-2000);
-                worm.setLife(1);
-            }
-        }
-
-    }
 
     private void inGame() {
         if (!ingame) {

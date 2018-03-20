@@ -1,11 +1,13 @@
 package GUI;
 
 import Controller.PlayerController;
+import javafx.animation.AnimationTimer;
 import Model.*;
 import Spawnables.*;
 import java.util.List;
 import javafx.application.*;
 import javafx.geometry.Pos;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -26,66 +28,61 @@ public class Matopeli extends Application {
     Scene mainMenuScene , vsAIScene, versusScene, spScene, gameoverScene;
     Image background  = new Image("images/BlueBG800x600.png");
 
-    //Image filter = new Image("src/main/resources/images/BlackFilter.png");
-    //ImageView filtteri = new ImageView(filter);
-    //private Board board = new Board(this, "Versus");
     private static PlayerController pc;
-    Snack snack;
-    Bombs bombs;
-    Confuse reverse;
-    Faster faster;
-    Laser laser;
-    Life HP;
-    Shield shield;
-    Slower slower;
-    private Worm worm;
-    private Worm worm2;
 
     public static void main(String[] args) {
         launch(args);
     }
 
-/*
+
     @Override
     public void start(Stage primaryStage) {
-        faster = (Faster) board.getPickableList().get(0);
-        slower = (Slower) board.getPickableList().get(1);
-        reverse = (Confuse) board.getPickableList().get(2);
-        HP = (Life) board.getPickableList().get(3);
-        shield = (Shield) board.getPickableList().get(4);
-        bombs = (Bombs) board.getPickableList().get(5);
-        laser = (Laser) board.getPickableList().get(6);
-        snack = (Snack) board.getPickableList().get(7);
-        worm = board.getWorm();
-        worm2 = board.getWorm2();
+
         window = primaryStage;
         window.setTitle("Gitmato");
         Sound.Music.sound1.loop();
 
+        Group root = new Group();
+        mainMenuScene = new Scene (root);
+        window.setScene(mainMenuScene);
+
+        Canvas canvas = new Canvas(800, 600);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        AnimationTimer timer = new AnimationTimer() {
+
+            @Override
+            public void handle(long now) {
+                gc.drawImage(background, 0, 0);
+                //updateBoard();
+            }
+        };
+
         //----GAME MODE SELECTOR SCENE-----------
-        //Button to Single player
+        //Button for Single player
         Button button1 = new Button("Player VS AI");
         button1.setOnAction(e
                 -> {
-            board = new Board(this, "vs AI");
             StackPane layout2 = new StackPane();
+            timer.start();
             vsAIScene = new Scene(layout2, 800, 590);
             window.setScene(vsAIScene);
         });
 
-        //Button to Versus
+        //Button for Versus
         Button button2 = new Button("Versus");
         button2.setOnAction(e
                 -> {
             StackPane layout3 = new StackPane();
+            timer.start();
             versusScene = new Scene(layout3, 800, 590);
             window.setScene(versusScene);
         });
         Button button3 = new Button("Single player");
         button3.setOnAction(e
                 -> {
-            board = new Board(this, "sp");
             StackPane layout4 = new StackPane();
+            timer.start();
             spScene = new Scene(layout4, 800, 590);
             window.setScene(spScene);
         });
@@ -94,36 +91,47 @@ public class Matopeli extends Application {
         VBox layout1 = new VBox(20);
         layout1.setAlignment(Pos.CENTER);
         layout1.getChildren().addAll(button2, button1, button3);
-        mainMenuScene = new Scene(layout1, 800, 506);
+        //mainMenuScene = new Scene(layout1, 800, 590);
         layout1.setId("pane");
-        mainMenuScene.getStylesheets().add("Styling/styling.css");
+       // mainMenuScene.getStylesheets().add("Styling/styling.css");
         //---------------------------------
 
         //------VERSUS SCENE---------------
         //Layout 3 - Singleplayer
         //-----------------------------------
+
+
+
+
         //------VERSUS SCENE---------------
         //Layout 2 - Versus
+
         //------GAME OVER SCENE---------------
+
+
+
+
         //Layout 3- Game over
         VBox layout5 = new VBox(20);
         layout5.setAlignment(Pos.CENTER);
         Label label3 = new Label("GAME OVER");
         Button restart = new Button("Restart");
+
+
+
         Button backToSS = new Button("Back to Main menu");
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
-        layout5.getChildren().addAll(label3, restart, backToSS); // Adding swing node
+        layout5.getChildren().addAll(label3, restart, backToSS);
         gameoverScene = new Scene(layout5, 800, 590);
         gameoverScene.getStylesheets().add("Styling/styling.css");
 
         //-----------------------------------
-        //Display scene 1 at first
-        window.setScene(mainMenuScene);
+        //Display main scene first
         window.setOnCloseRequest(e -> System.exit(0));
         window.setTitle("Gitmato");
         window.show();
     }
-
+/*
     public void paintComponent(GraphicsContext g) {
         if (board.isIngame()) {
             Paint p = Color.BLACK;
