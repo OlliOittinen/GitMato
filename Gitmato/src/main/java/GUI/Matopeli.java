@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.*;
 import javafx.scene.*;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -21,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.animation.AnimationTimer;
 
 public class Matopeli extends Application {
 
@@ -30,13 +32,12 @@ public class Matopeli extends Application {
     private static int width = 800;
     private static int height = 600;
 
+
     private static PlayerController pc;
 
     public static void main(String[] args) {
         launch(args);
     }
-
-
     @Override
     public void start(Stage primaryStage) {
 
@@ -52,17 +53,16 @@ public class Matopeli extends Application {
         //Button for Single player
         Button button1 = new Button("Player VS AI");
         button1.setOnAction(e
-                -> {
-            vsAIScene = new Scene(root);
-            window.setScene(vsAIScene);
-            new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    gc.drawImage(background, 0, 0);
-                    //updateBoard();
-                }
-            }.start();
-        });
+                -> {vsAIScene = new Scene(root);
+                    window.setScene(vsAIScene);
+                    new AnimationTimer() {
+                        @Override
+                        public void handle(long now) {
+                            gc.drawImage(background, 0, 0);
+                            //updateBoard();
+                        }
+                    }.start();
+                });
 
         //Button for Versus
         Button button2 = new Button("Versus");
@@ -245,8 +245,7 @@ public class Matopeli extends Application {
         white.setFont(Font.font(10));
         white.setTextAlignment(TextAlignment.CENTER);
     }
-*/
-
+     */
 //    private void drawGameOver(GraphicsContext g, Scene s) {
 //        Music.sound4.play();
 //        laser.hide();
