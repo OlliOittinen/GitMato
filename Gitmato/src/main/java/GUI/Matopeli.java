@@ -23,16 +23,15 @@ import javafx.scene.paint.Paint;
 
 public class Matopeli extends Application {
 
-    Stage mainMenu;
-    Scene mainMenuScene, vsAIScene, versusScene, spScene;
+    Stage window;
+    Scene mainMenuScene, vsAIScene, versusScene, spScene, gameoverScene;
 
-    ImageView backGround = new ImageView("src/main/resources/images/BlueBG800x600.png");
-    Image background = backGround.getImage();
+    Image background = new Image("images/BlueBG800x600.png");
 
-    Image filter = new Image("src/main/resources/images/BlackFilter.png");
-    ImageView filtteri = new ImageView(filter);
+    //Image filter = new Image("src/main/resources/images/BlackFilter.png");
+    //ImageView filtteri = new ImageView(filter);
 
-    private static Board board;
+    private Board board = new Board(this,"Versus");
     private static PlayerController pc;
     Snack snack;
     Bombs bombs;
@@ -62,8 +61,8 @@ public class Matopeli extends Application {
         snack = (Snack)board.getPickableList().get(7);
         worm = board.getWorm();
         worm2 = board.getWorm2();
-        mainMenu = primaryStage;
-        mainMenu.setTitle("Gitmato");
+        window = primaryStage;
+        window.setTitle("Gitmato");
         Sound.Music.sound1.loop();
 
         //----GAME MODE SELECTOR SCENE-----------
@@ -71,9 +70,10 @@ public class Matopeli extends Application {
         Button button1 = new Button("Player VS AI");
         button1.setOnAction(e
                 -> {
+            board = new Board(this, "vs AI");
             StackPane layout2 = new StackPane();
             vsAIScene = new Scene(layout2, 800, 590);
-            mainMenu.setScene(vsAIScene);
+            window.setScene(vsAIScene);
         });
 
         //Button to Versus
@@ -82,14 +82,15 @@ public class Matopeli extends Application {
                 -> {
             StackPane layout3 = new StackPane();
             versusScene = new Scene(layout3, 800, 590);
-            mainMenu.setScene(versusScene);
+            window.setScene(versusScene);
         });
         Button button3 = new Button("Single player");
         button3.setOnAction(e
                 -> {
+            board = new Board(this, "sp");
             StackPane layout4 = new StackPane();
             spScene = new Scene(layout4, 800, 590);
-            mainMenu.setScene(spScene);
+            window.setScene(spScene);
         });
 
         //Layout 1 - Game mode selector
@@ -108,44 +109,40 @@ public class Matopeli extends Application {
         //Layout 2 - Versus
         //------GAME OVER SCENE---------------
         //Layout 3- Game over
-
-        VBox layout3 = new VBox(20);
-        layout3.setAlignment(Pos.CENTER);
-
+        VBox layout5 = new VBox(20);
+        layout5.setAlignment(Pos.CENTER);
         Label label3 = new Label("GAME OVER");
         Button restart = new Button("Restart");
-
         Button backToSS = new Button("Back to Main menu");
-        backToSS.setOnAction(e -> setScene(mainMenuScene));
-
-        layout3.getChildren().addAll(label3, restart, backToSS); // Adding swing node
-        versusScene = new Scene(layout3, 800, 600);
-        versusScene.getStylesheets().add("Styling/styling.css");
+        backToSS.setOnAction(e -> window.setScene(mainMenuScene));
+        layout5.getChildren().addAll(label3, restart, backToSS); // Adding swing node
+        gameoverScene = new Scene(layout5, 800,590);
+        gameoverScene.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
 
         //Display scene 1 at first
-        mainMenu.setScene(mainMenuScene);
-        mainMenu.setOnCloseRequest(e -> System.exit(0));
-        mainMenu.setTitle("Gitmato");
-        mainMenu.show();
+        window.setScene(mainMenuScene);
+        window.setOnCloseRequest(e -> System.exit(0));
+        window.setTitle("Gitmato");
+        window.show();
     }
 
-    public void paintComponent(GraphicsContext g, Scene s) {
+    public void paintComponent(GraphicsContext g) {
         if (board.isIngame()) {
             Paint p = Color.BLACK;
             g.setFill(p);
-            g.fillRect(0, 0, mainMenu.getWidth(),mainMenu.getHeight());
+            g.fillRect(0, 0, window.getWidth(),window.getHeight());
             g.drawImage(background, 0, 0);
-            doDrawing(g, s);
+            doDrawing(g);
         } else {
             //drawGameOver(g);
             board.setIngame(false);
         }
     }
 
-    private void doDrawing(GraphicsContext g, Scene s) {
+    private void doDrawing(GraphicsContext g) {
 
-        drawPoints(s);
+        drawPoints(g);
         int tailsize = board.getTailList().size();
         int tailsize2 = board.getTailList2().size();
         List<Tail> body = board.getTailList();
@@ -190,7 +187,7 @@ public class Matopeli extends Application {
             g.drawImage(laser.getImageVert(), laser.getX2(), laser.getY2());
         }
         g.drawImage(worm.getImage(), worm.getX(), worm.getY());
-        if (s != spScene) {
+        if (window.getScene() != spScene) {
             g.drawImage(worm2.getImage(), worm2.getX(), worm2.getY());
         }
         if (worm.getShield(worm)) {
@@ -211,7 +208,7 @@ public class Matopeli extends Application {
 
     }
 
-    private void drawPoints(Scene s) {
+    private void drawPoints(GraphicsContext g) {
         Text red = new Text();
         Text blue = new Text();
         Text white = new Text();
@@ -225,7 +222,7 @@ public class Matopeli extends Application {
         red.setText(hp);
         red.setText(pt);
 
-        if (s != spScene) {
+        if (window.getScene() != spScene) {
             blue.setFill(Color.BLUE);
             String hp2 = "HP: " + board.getWorm2().getLife();
             String pt2 = "Pisteet: " + board.getWorm2().getPoints();
