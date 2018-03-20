@@ -2,7 +2,6 @@ package GUI;
 
 import Controller.PlayerController;
 import Model.*;
-import Sound.Music;
 import Spawnables.*;
 import java.util.List;
 import javafx.application.*;
@@ -23,7 +22,7 @@ import javafx.scene.paint.Paint;
 
 public class Matopeli extends Application {
 
-    Stage mainMenu;
+    Stage window;
     Scene mainMenuScene, vsAIScene, versusScene, spScene;
 
     ImageView backGround = new ImageView("src/main/resources/images/BlueBG800x600.png");
@@ -62,8 +61,8 @@ public class Matopeli extends Application {
         snack = (Snack)board.getPickableList().get(7);
         worm = board.getWorm();
         worm2 = board.getWorm2();
-        mainMenu = primaryStage;
-        mainMenu.setTitle("Gitmato");
+        window = primaryStage;
+        window.setTitle("Gitmato");
         Sound.Music.sound1.loop();
 
         //----GAME MODE SELECTOR SCENE-----------
@@ -73,7 +72,7 @@ public class Matopeli extends Application {
                 -> {
             StackPane layout2 = new StackPane();
             vsAIScene = new Scene(layout2, 800, 590);
-            mainMenu.setScene(vsAIScene);
+            window.setScene(vsAIScene);
         });
 
         //Button to Versus
@@ -82,14 +81,14 @@ public class Matopeli extends Application {
                 -> {
             StackPane layout3 = new StackPane();
             versusScene = new Scene(layout3, 800, 590);
-            mainMenu.setScene(versusScene);
+            window.setScene(versusScene);
         });
         Button button3 = new Button("Single player");
         button3.setOnAction(e
                 -> {
             StackPane layout4 = new StackPane();
             spScene = new Scene(layout4, 800, 590);
-            mainMenu.setScene(spScene);
+            window.setScene(spScene);
         });
 
         //Layout 1 - Game mode selector
@@ -116,7 +115,7 @@ public class Matopeli extends Application {
         Button restart = new Button("Restart");
 
         Button backToSS = new Button("Back to Main menu");
-        backToSS.setOnAction(e -> setScene(mainMenuScene));
+        backToSS.setOnAction(e -> window.setScene(mainMenuScene));
 
         layout3.getChildren().addAll(label3, restart, backToSS); // Adding swing node
         versusScene = new Scene(layout3, 800, 600);
@@ -124,17 +123,17 @@ public class Matopeli extends Application {
         //-----------------------------------
 
         //Display scene 1 at first
-        mainMenu.setScene(mainMenuScene);
-        mainMenu.setOnCloseRequest(e -> System.exit(0));
-        mainMenu.setTitle("Gitmato");
-        mainMenu.show();
+        window.setScene(mainMenuScene);
+        window.setOnCloseRequest(e -> System.exit(0));
+        window.setTitle("Gitmato");
+        window.show();
     }
 
     public void paintComponent(GraphicsContext g, Scene s) {
         if (board.isIngame()) {
             Paint p = Color.BLACK;
             g.setFill(p);
-            g.fillRect(0, 0, mainMenu.getWidth(),mainMenu.getHeight());
+            g.fillRect(0, 0, window.getWidth(), window.getHeight());
             g.drawImage(background, 0, 0);
             doDrawing(g, s);
         } else {

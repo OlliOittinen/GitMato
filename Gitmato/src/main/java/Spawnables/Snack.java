@@ -33,11 +33,5 @@ public class Snack extends AbstractSpawnables{
         setY(200);
     }
 
-@Override    
-    public Bounds getBounds() {
-        Rectangle snack = new Rectangle(xe, ye, 41, 55);
-        return snack.getLayoutBounds();
-    }
-
 }
 

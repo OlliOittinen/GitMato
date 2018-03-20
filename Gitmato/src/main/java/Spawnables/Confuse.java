@@ -57,12 +57,6 @@ public class Confuse extends AbstractSpawnables {
         setY(-100);
     }
 
-    @Override
-    public Bounds getBounds() {
-        Rectangle confuse = new Rectangle(xe+3, ye+3, 30, 30);
-        return confuse.getLayoutBounds();
-    }
-
     public Image getConfusionImage() {
         return confusion;
     }

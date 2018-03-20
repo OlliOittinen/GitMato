@@ -16,7 +16,7 @@ import javafx.scene.image.Image;
 public interface Spawnables {
    void loadImage(String imageName);
    void init();
-   Bounds getBounds();
+   Bounds getBoundsForIcon();
    int getX();
    int getY();
    void setX(int x);

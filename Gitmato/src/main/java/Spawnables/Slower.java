@@ -54,10 +54,4 @@ public class Slower extends AbstractSpawnables{
         setY(-100);
     }
 
-    @Override
-    public Bounds getBounds() {
-        Rectangle slower = new Rectangle(xe+3, ye+3, 30, 30);
-        return slower.getLayoutBounds();
-    }
-
 }

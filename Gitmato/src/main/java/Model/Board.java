@@ -232,17 +232,17 @@ public final class Board {
         Bounds Matokuutio = worm.getBounds();
         Bounds Matokuutio2 = worm2.getBounds();
 
-        Bounds s = snack.getBounds();
-        Bounds pf = faster.getBounds();
-        Bounds ps = slower.getBounds();
-        Bounds pr = reverse.getBounds();
-        Bounds pl = HP.getBounds();
-        Bounds psh = shield.getBounds();
-        Bounds pb = bombs.getBounds();
+        Bounds s = snack.getBoundsForIcon();
+        Bounds pf = faster.getBoundsForIcon();
+        Bounds ps = slower.getBoundsForIcon();
+        Bounds pr = reverse.getBoundsForIcon();
+        Bounds pl = HP.getBoundsForIcon();
+        Bounds psh = shield.getBoundsForIcon();
+        Bounds pb = bombs.getBoundsForIcon();
         Ellipse pb2 = bombs.getBoundsBombs(2);
         Ellipse pb3 = bombs.getBoundsBombs(4);
         Ellipse pb4 = bombs.getBoundsBombs(6);
-        Bounds pla = laser.getBounds();
+        Bounds pla = laser.getBoundsForIcon();
         Rectangle beam = laser.getBoundsB();
 
         for (int i = 0; i < tailList.size(); i++) {
