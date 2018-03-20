@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.*;
 import javafx.scene.*;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -19,12 +20,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.animation.AnimationTimer;
 
 public class Matopeli extends Application {
 
     Stage window;
-    Scene mainMenuScene , vsAIScene, versusScene, spScene, gameoverScene;
-    Image background  = new Image("images/BlueBG800x600.png");
+    Scene mainMenuScene, vsAIScene, versusScene, spScene, gameoverScene;
+    Image background = new Image("images/BlueBG800x600.png");
 
     //Image filter = new Image("src/main/resources/images/BlackFilter.png");
     //ImageView filtteri = new ImageView(filter);
@@ -45,19 +47,16 @@ public class Matopeli extends Application {
         launch(args);
     }
 
-/*
     @Override
     public void start(Stage primaryStage) {
-        faster = (Faster) board.getPickableList().get(0);
-        slower = (Slower) board.getPickableList().get(1);
-        reverse = (Confuse) board.getPickableList().get(2);
-        HP = (Life) board.getPickableList().get(3);
-        shield = (Shield) board.getPickableList().get(4);
-        bombs = (Bombs) board.getPickableList().get(5);
-        laser = (Laser) board.getPickableList().get(6);
-        snack = (Snack) board.getPickableList().get(7);
-        worm = board.getWorm();
-        worm2 = board.getWorm2();
+        final long startNanoTime = System.nanoTime();
+        /*
+        Group root = new Group();
+        Scene theScene = new Scene(root);
+        Canvas canvas = new Canvas(600, 800);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        root.getChildren().add(canvas);
+        */
         window = primaryStage;
         window.setTitle("Gitmato");
         Sound.Music.sound1.loop();
@@ -67,10 +66,25 @@ public class Matopeli extends Application {
         Button button1 = new Button("Player VS AI");
         button1.setOnAction(e
                 -> {
-            board = new Board(this, "vs AI");
+            /*
             StackPane layout2 = new StackPane();
             vsAIScene = new Scene(layout2, 800, 590);
             window.setScene(vsAIScene);
+            /*
+            
+             */
+            Group root = new Group();
+            Scene theScene = new Scene(root);
+            Canvas canvas = new Canvas(800, 600);
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+            root.getChildren().add(canvas);
+            window.setScene(theScene);
+            new AnimationTimer() {
+                public void handle(long currentNanoTime) {
+                    double t = (currentNanoTime - startNanoTime) / 1000000000.0;
+                    gc.drawImage(background,0,0);
+                }
+            }.start();
         });
 
         //Button to Versus
@@ -84,7 +98,6 @@ public class Matopeli extends Application {
         Button button3 = new Button("Single player");
         button3.setOnAction(e
                 -> {
-            board = new Board(this, "sp");
             StackPane layout4 = new StackPane();
             spScene = new Scene(layout4, 800, 590);
             window.setScene(spScene);
@@ -112,7 +125,7 @@ public class Matopeli extends Application {
         Button restart = new Button("Restart");
         Button backToSS = new Button("Back to Main menu");
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
-        layout5.getChildren().addAll(label3, restart, backToSS); // Adding swing node
+        layout5.getChildren().addAll(label3, restart, backToSS);
         gameoverScene = new Scene(layout5, 800, 590);
         gameoverScene.getStylesheets().add("Styling/styling.css");
 
@@ -123,6 +136,8 @@ public class Matopeli extends Application {
         window.setTitle("Gitmato");
         window.show();
     }
+
+    /*
 
     public void paintComponent(GraphicsContext g) {
         if (board.isIngame()) {
@@ -233,8 +248,7 @@ public class Matopeli extends Application {
         white.setFont(Font.font(10));
         white.setTextAlignment(TextAlignment.CENTER);
     }
-*/
-
+     */
 //    private void drawGameOver(GraphicsContext g, Scene s) {
 //        Music.sound4.play();
 //        laser.hide();
