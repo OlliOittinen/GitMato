@@ -23,18 +23,12 @@ import javafx.scene.paint.Paint;
 public class Matopeli extends Application {
 
     Stage window;
-<<<<<<< HEAD
-    Scene mainMenuScene, vsAIScene, versusScene, spScene, gameoverScene;
-=======
-    Scene mainMenuScene, vsAIScene, versusScene, spScene;
->>>>>>> dcd35ee414aaaf9a6bd37c3bc244bf3e64db460c
-
-    Image background = new Image("images/BlueBG800x600.png");
+    Scene mainMenuScene , vsAIScene, versusScene, spScene, gameoverScene;
+    Image background  = new Image("images/BlueBG800x600.png");
 
     //Image filter = new Image("src/main/resources/images/BlackFilter.png");
     //ImageView filtteri = new ImageView(filter);
-
-    private Board board = new Board(this,"Versus");
+    private Board board = new Board(this, "Versus");
     private static PlayerController pc;
     Snack snack;
     Bombs bombs;
@@ -46,7 +40,6 @@ public class Matopeli extends Application {
     Slower slower;
     private Worm worm;
     private Worm worm2;
-    
 
     public static void main(String[] args) {
         launch(args);
@@ -54,14 +47,14 @@ public class Matopeli extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        faster = (Faster)board.getPickableList().get(0);
-        slower = (Slower)board.getPickableList().get(1);
-        reverse = (Confuse)board.getPickableList().get(2);
-        HP = (Life)board.getPickableList().get(3);
-        shield = (Shield)board.getPickableList().get(4);
-        bombs = (Bombs)board.getPickableList().get(5);
-        laser = (Laser)board.getPickableList().get(6);
-        snack = (Snack)board.getPickableList().get(7);
+        faster = (Faster) board.getPickableList().get(0);
+        slower = (Slower) board.getPickableList().get(1);
+        reverse = (Confuse) board.getPickableList().get(2);
+        HP = (Life) board.getPickableList().get(3);
+        shield = (Shield) board.getPickableList().get(4);
+        bombs = (Bombs) board.getPickableList().get(5);
+        laser = (Laser) board.getPickableList().get(6);
+        snack = (Snack) board.getPickableList().get(7);
         worm = board.getWorm();
         worm2 = board.getWorm2();
         window = primaryStage;
@@ -118,18 +111,11 @@ public class Matopeli extends Application {
         Button restart = new Button("Restart");
         Button backToSS = new Button("Back to Main menu");
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
-<<<<<<< HEAD
         layout5.getChildren().addAll(label3, restart, backToSS); // Adding swing node
-        gameoverScene = new Scene(layout5, 800,590);
+        gameoverScene = new Scene(layout5, 800, 590);
         gameoverScene.getStylesheets().add("Styling/styling.css");
-=======
 
-        layout3.getChildren().addAll(label3, restart, backToSS); // Adding swing node
-        versusScene = new Scene(layout3, 800, 600);
-        versusScene.getStylesheets().add("Styling/styling.css");
->>>>>>> dcd35ee414aaaf9a6bd37c3bc244bf3e64db460c
         //-----------------------------------
-
         //Display scene 1 at first
         window.setScene(mainMenuScene);
         window.setOnCloseRequest(e -> System.exit(0));
@@ -141,12 +127,7 @@ public class Matopeli extends Application {
         if (board.isIngame()) {
             Paint p = Color.BLACK;
             g.setFill(p);
-<<<<<<< HEAD
-            g.fillRect(0, 0, window.getWidth(),window.getHeight());
-=======
             g.fillRect(0, 0, window.getWidth(), window.getHeight());
->>>>>>> dcd35ee414aaaf9a6bd37c3bc244bf3e64db460c
-            g.drawImage(background, 0, 0);
             doDrawing(g);
         } else {
             //drawGameOver(g);
@@ -252,7 +233,6 @@ public class Matopeli extends Application {
         white.setTextAlignment(TextAlignment.CENTER);
     }
 
-
 //    private void drawGameOver(GraphicsContext g, Scene s) {
 //        Music.sound4.play();
 //        laser.hide();
@@ -294,5 +274,4 @@ public class Matopeli extends Application {
 //        g3.drawString(msg2, (806 - fm2.stringWidth(msg2)) / 2, 600 / 2);
 //        g3.drawString(msg3, (806 - fm2.stringWidth(msg3)) / 2, 320);
 //    }
-
 }
