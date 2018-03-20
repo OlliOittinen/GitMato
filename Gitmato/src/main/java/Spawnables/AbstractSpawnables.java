@@ -3,6 +3,7 @@ package Spawnables;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
 public abstract class AbstractSpawnables implements Spawnables {
 
@@ -18,7 +19,10 @@ public abstract class AbstractSpawnables implements Spawnables {
 
     public abstract void init();
 
-    public abstract Bounds getBounds();
+    public Bounds getBoundsForIcon(){
+        Rectangle icon = new Rectangle(x + 3, y + 3, 30, 30);
+        return icon.getLayoutBounds();
+    };
 
     @Override
     public int getX() {

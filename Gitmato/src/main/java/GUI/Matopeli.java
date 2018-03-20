@@ -2,7 +2,6 @@ package GUI;
 
 import Controller.PlayerController;
 import Model.*;
-import Sound.Music;
 import Spawnables.*;
 import java.util.List;
 import javafx.application.*;
@@ -24,7 +23,11 @@ import javafx.scene.paint.Paint;
 public class Matopeli extends Application {
 
     Stage window;
+<<<<<<< HEAD
     Scene mainMenuScene, vsAIScene, versusScene, spScene, gameoverScene;
+=======
+    Scene mainMenuScene, vsAIScene, versusScene, spScene;
+>>>>>>> dcd35ee414aaaf9a6bd37c3bc244bf3e64db460c
 
     Image background = new Image("images/BlueBG800x600.png");
 
@@ -115,9 +118,16 @@ public class Matopeli extends Application {
         Button restart = new Button("Restart");
         Button backToSS = new Button("Back to Main menu");
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
+<<<<<<< HEAD
         layout5.getChildren().addAll(label3, restart, backToSS); // Adding swing node
         gameoverScene = new Scene(layout5, 800,590);
         gameoverScene.getStylesheets().add("Styling/styling.css");
+=======
+
+        layout3.getChildren().addAll(label3, restart, backToSS); // Adding swing node
+        versusScene = new Scene(layout3, 800, 600);
+        versusScene.getStylesheets().add("Styling/styling.css");
+>>>>>>> dcd35ee414aaaf9a6bd37c3bc244bf3e64db460c
         //-----------------------------------
 
         //Display scene 1 at first
@@ -131,7 +141,11 @@ public class Matopeli extends Application {
         if (board.isIngame()) {
             Paint p = Color.BLACK;
             g.setFill(p);
+<<<<<<< HEAD
             g.fillRect(0, 0, window.getWidth(),window.getHeight());
+=======
+            g.fillRect(0, 0, window.getWidth(), window.getHeight());
+>>>>>>> dcd35ee414aaaf9a6bd37c3bc244bf3e64db460c
             g.drawImage(background, 0, 0);
             doDrawing(g);
         } else {

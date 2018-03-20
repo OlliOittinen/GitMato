@@ -55,12 +55,6 @@ public class Shield extends AbstractSpawnables{
        return img;
     }
 
-@Override    
-    public Bounds getBounds() {
-        Rectangle shield = new Rectangle(xe, ye, 41, 55);
-        return shield.getLayoutBounds();
-    }
-
     public boolean isActive(Worm worm) {
         return worm.getShield(worm);
     }

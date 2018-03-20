@@ -62,10 +62,4 @@ public class Life extends AbstractSpawnables{
         setY(-100);
     }
 
-    @Override
-    public Bounds getBounds() {
-        Rectangle life = new Rectangle(xe+3, ye+3, 30, 30);
-        return life.getLayoutBounds();
-    }
-
 }

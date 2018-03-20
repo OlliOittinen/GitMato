@@ -22,15 +22,15 @@ import javafx.scene.shape.*;
  */
 public class Bombs extends AbstractSpawnables{
 
-    private int xe, ye, xe2, ye2, xe3, ye3, xe4, ye4, xe5, ye5, xe6, ye6, xe7, ye7;
+    private int x, y, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6, x7, y7;
 
     private Image image, image2, image3;
 
     private Board board;
     private boolean lethal = false;
 
-    private int xlist[] = new int[]{xe, xe2, xe3, xe4, xe5, xe6, xe7};
-    private int ylist[] = new int[]{ye, ye2, ye3, ye4, ye5, ye6, ye7};
+    private int xlist[] = new int[]{x, x2, x3, x4, x5, x6, x7};
+    private int ylist[] = new int[]{y, y2, y3, y4, y5, y6, y7};
 
     public void bombs(Worm worm) {
         worm.setPoints(worm.getPoints() + 100);
@@ -101,12 +101,6 @@ public class Bombs extends AbstractSpawnables{
                 }, 5000);
             }
         }, 2500); //aika (ms), joka odotetaan
-    }
-
-    @Override
-    public Bounds getBounds() {
-        Rectangle bombs = new Rectangle(xe + 3, ye + 3, 30, 30);
-        return bombs.getLayoutBounds();
     }
 
     public Ellipse getBoundsBombs(int n) {

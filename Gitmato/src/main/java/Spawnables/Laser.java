@@ -121,13 +121,6 @@ public class Laser extends AbstractSpawnables {
 
     }
 
-    //ikoni powerupille
-    @Override
-    public Bounds getBounds() {
-        Rectangle laser = new Rectangle(xe + 3, ye + 3, 30, 30);
-        return laser.getLayoutBounds();
-    }
-
     public Rectangle getBoundsB() {
         return beam;
     }

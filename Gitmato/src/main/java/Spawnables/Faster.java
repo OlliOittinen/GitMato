@@ -55,10 +55,4 @@ public class Faster extends AbstractSpawnables {
         setY(-100);
     }
 
-    @Override
-    public Bounds getBounds() {
-        Rectangle faster = new Rectangle(xe+3, ye+3, 30, 30);
-        return faster.getLayoutBounds();
-    }
-
 }
