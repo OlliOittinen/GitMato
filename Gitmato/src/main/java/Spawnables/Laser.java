@@ -18,7 +18,7 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Olli
  */
-public class Laser implements Spawnables {
+public class Laser extends AbstractSpawnables {
 
     private int xe;
     private int ye;
@@ -38,12 +38,6 @@ public class Laser implements Spawnables {
 
     public Laser() {
         init();
-    }
-
-    @Override
-    public void loadImage(String imageName) {
-        ImageView ii = new ImageView(imageName);
-        image = ii.getImage();
     }
 
     public void damage(Worm worm) {
@@ -142,16 +136,6 @@ public class Laser implements Spawnables {
         return horizontal;
     }
 
-    @Override
-    public int getX() {
-        return xe;
-    }
-
-    @Override
-    public int getY() {
-        return ye;
-    }
-
     public int getX2() {
         return xe2;
     }
@@ -168,22 +152,12 @@ public class Laser implements Spawnables {
         return ye3;
     }
 
-    @Override
-    public void setX(int x) {
-        this.xe = x;
-    }
-
     public void setX2(int x) {
         this.xe2 = x;
     }
 
     public void setX3(int x) {
         this.xe3 = x;
-    }
-
-    @Override
-    public void setY(int y) {
-        this.ye = y;
     }
 
     public void setY2(int y) {
@@ -193,16 +167,12 @@ public class Laser implements Spawnables {
     public void setY3(int y) {
         this.ye3 = y;
     }
+
     public void setBoundsB(int x, int y, int w, int h){
         beam.setX(x);
         beam.setY(y);
         beam.setWidth(w);
         beam.setHeight(h);
-    }
-
-    @Override
-    public Image getImage() {
-        return image;
     }
 
     public Image getImageHori() {
@@ -223,12 +193,6 @@ public class Laser implements Spawnables {
 
     public boolean getLethal() {
         return lethal;
-    }
-
-    @Override
-    public void randomizePowerUpLocation() {
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
     }
 
     public void hide() {

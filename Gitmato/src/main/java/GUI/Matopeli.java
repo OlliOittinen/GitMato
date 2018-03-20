@@ -131,7 +131,7 @@ public class Matopeli extends Application {
     }
 
     public void paintComponent(GraphicsContext g, Scene s) {
-        if (true) {
+        if (board.isIngame()) {
             Paint p = Color.BLACK;
             g.setFill(p);
             g.fillRect(0, 0, mainMenu.getWidth(),mainMenu.getHeight());

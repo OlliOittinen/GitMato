@@ -19,7 +19,7 @@ import javafx.scene.shape.Rectangle;
  *
  * @author maxki
  */
-public class Life implements Spawnables {
+public class Life extends AbstractSpawnables{
     
     private int xe;
     private int ye;
@@ -52,12 +52,6 @@ public class Life implements Spawnables {
                 }
             }, 1000);
     }
-     
-    @Override
-    public void loadImage(String imageName) {
-        ImageView ii = new ImageView(imageName);
-        image = ii.getImage();
-    }
 
     @Override
     public void init() {
@@ -74,33 +68,4 @@ public class Life implements Spawnables {
         return life.getLayoutBounds();
     }
 
-    @Override
-    public int getX() {
-        return xe;    
-    }
-
-    @Override
-    public int getY() {
-        return ye;
-    }
-
-    @Override
-    public void setX(int x) {
-        this.xe = x;
-    }
-
-    @Override
-    public void setY(int y) {
-        this.ye = y;
-    }
-
-    @Override
-    public Image getImage() {
-        return image;
-    }
-    @Override
-    public void randomizePowerUpLocation() {
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
-    }
 }

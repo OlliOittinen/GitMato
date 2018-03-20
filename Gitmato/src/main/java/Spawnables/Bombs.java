@@ -18,9 +18,9 @@ import javafx.scene.shape.*;
 
 /**
  *
- * @author maxki
+ * @author maxki, Olli, Eero
  */
-public class Bombs implements Spawnables {
+public class Bombs extends AbstractSpawnables{
 
     private int xe, ye, xe2, ye2, xe3, ye3, xe4, ye4, xe5, ye5, xe6, ye6, xe7, ye7;
 
@@ -51,11 +51,6 @@ public class Bombs implements Spawnables {
         init();
     }
 
-    @Override
-    public void loadImage(String imageName) {
-        ImageView ii = new ImageView(imageName);
-        image = ii.getImage();
-    }
 
     @Override
     public void init() {
@@ -118,26 +113,6 @@ public class Bombs implements Spawnables {
         return new Ellipse(xlist[n] + 3, ylist[n] + 3, 200, 200);
     }
 
-    @Override
-    public int getX() {
-        return xe;
-    }
-
-    @Override
-    public int getY() {
-        return ye;
-    }
-
-    @Override
-    public void setX(int x) {
-        xe = x;
-    }
-
-    @Override
-    public void setY(int y) {
-        ye = y;
-    }
-
     public int getXBombs(int n) {
         return xlist[n];
     }
@@ -154,10 +129,6 @@ public class Bombs implements Spawnables {
         ylist[n] = value;
     }
 
-    @Override
-    public Image getImage() {
-        return image;
-    }
 
     public Image getImage(int n) {
         Image img = null;
@@ -173,12 +144,6 @@ public class Bombs implements Spawnables {
                 break;
         }
         return img;
-    }
-
-    @Override
-    public void randomizePowerUpLocation() {
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
     }
 
     public void randomizeXYBombs() {

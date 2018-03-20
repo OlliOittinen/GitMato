@@ -21,7 +21,7 @@ import java.util.TimerTask;
  *
  * @author Olli
  */
-public class Slower implements Spawnables{
+public class Slower extends AbstractSpawnables{
     private int xe;
     private int ye;
     private Image image;
@@ -44,11 +44,6 @@ public class Slower implements Spawnables{
     public Slower() {
         init();
     }
-    
-    @Override
-    public void loadImage(String imageName) {
-        ImageView ii = new ImageView(imageName);
-        image = ii.getImage();    }
 
     @Override
     public void init() {
@@ -65,33 +60,4 @@ public class Slower implements Spawnables{
         return slower.getLayoutBounds();
     }
 
-    @Override
-    public int getX() {
-        return xe;    
-    }
-
-    @Override
-    public int getY() {
-        return ye;
-    }
-
-    @Override
-    public void setX(int x) {
-        this.xe = x;
-    }
-
-    @Override
-    public void setY(int y) {
-        this.ye = y;
-    }
-
-    @Override
-    public Image getImage() {
-        return image;
-    }
-    @Override
-    public void randomizePowerUpLocation() {
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
-    }
 }

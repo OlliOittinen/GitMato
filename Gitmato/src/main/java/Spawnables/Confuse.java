@@ -19,7 +19,7 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Olli
  */
-public class Confuse implements Spawnables {
+public class Confuse extends AbstractSpawnables {
     private int xe;
     private int ye;
     private Image image;
@@ -44,11 +44,6 @@ public class Confuse implements Spawnables {
     public Confuse() {
         init();
     }
-    
-    @Override
-    public void loadImage(String imageName) {
-        ImageView ii = new ImageView(imageName);
-        image = ii.getImage();    }
 
     @Override
     public void init() {
@@ -68,36 +63,8 @@ public class Confuse implements Spawnables {
         return confuse.getLayoutBounds();
     }
 
-    @Override
-    public int getX() {
-        return xe;    
-    }
-
-    @Override
-    public int getY() {
-        return ye;
-    }
-
-    @Override
-    public void setX(int x) {
-        this.xe = x;
-    }
-
-    @Override
-    public void setY(int y) {
-        this.ye = y;
-    }
-
-    @Override
-    public Image getImage() {
-        return image;
-    }
     public Image getConfusionImage() {
         return confusion;
     }
-    @Override
-    public void randomizePowerUpLocation() {
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
-    }
+
 }

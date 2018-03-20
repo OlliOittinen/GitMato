@@ -19,7 +19,7 @@ import javafx.scene.shape.Rectangle;
  *
  * @author maxki
  */
-public class Shield  implements Spawnables{
+public class Shield extends AbstractSpawnables{
     private int xe;
     private int ye;
     private Image image;
@@ -49,45 +49,16 @@ public class Shield  implements Spawnables{
         xe = -100;
         ye = -100;
     }
-@Override    
-    public void loadImage(String imageName) {
-        ImageView ii = new ImageView(imageName);
-        image = ii.getImage();
-    }
-@Override
-    public Image getImage() {
-        return image;
-    }
+
  public Image getShieldImage() {
        Image img = shieldeffect.getImage();
        return img;
-    }
-@Override
-    public int getX() {
-        return xe;
-    }
-@Override
-    public int getY() {
-        return ye;
-    }
-@Override    
-    public void setX(int x){
-        this.xe = x;
-    }
-@Override    
-    public void setY(int y){
-        this.ye = y;
     }
 
 @Override    
     public Bounds getBounds() {
         Rectangle shield = new Rectangle(xe, ye, 41, 55);
         return shield.getLayoutBounds();
-    }
-@Override
-    public void randomizePowerUpLocation() {
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
     }
 
     public boolean isActive(Worm worm) {

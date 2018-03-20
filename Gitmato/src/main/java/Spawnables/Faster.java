@@ -20,7 +20,7 @@ import javafx.scene.shape.Rectangle;
  * @author Olli
  */
 
-public class Faster implements Spawnables {
+public class Faster extends AbstractSpawnables {
     
     private int xe;
     private int ye;
@@ -45,11 +45,6 @@ public class Faster implements Spawnables {
     public Faster() {
         init();
     }
-    
-    @Override
-    public void loadImage(String imageName) {
-        ImageView ii = new ImageView(imageName);
-        image = ii.getImage();    }
 
     @Override
     public void init() {
@@ -66,33 +61,4 @@ public class Faster implements Spawnables {
         return faster.getLayoutBounds();
     }
 
-    @Override
-    public int getX() {
-        return xe;    
-    }
-
-    @Override
-    public int getY() {
-        return ye;
-    }
-
-    @Override
-    public void setX(int x) {
-        this.xe = x;
-    }
-
-    @Override
-    public void setY(int y) {
-        this.ye = y;
-    }
-
-    @Override
-    public Image getImage() {
-        return image;
-    }
-    @Override
-    public void randomizePowerUpLocation() {
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
-    }
 }
