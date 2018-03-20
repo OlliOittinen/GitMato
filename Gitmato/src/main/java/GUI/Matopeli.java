@@ -28,7 +28,7 @@ public class Matopeli extends Application {
 
     //Image filter = new Image("src/main/resources/images/BlackFilter.png");
     //ImageView filtteri = new ImageView(filter);
-    private Board board = new Board(this, "Versus");
+    //private Board board = new Board(this, "Versus");
     private static PlayerController pc;
     Snack snack;
     Bombs bombs;
@@ -45,6 +45,7 @@ public class Matopeli extends Application {
         launch(args);
     }
 
+/*
     @Override
     public void start(Stage primaryStage) {
         faster = (Faster) board.getPickableList().get(0);
@@ -232,6 +233,7 @@ public class Matopeli extends Application {
         white.setFont(Font.font(10));
         white.setTextAlignment(TextAlignment.CENTER);
     }
+*/
 
 //    private void drawGameOver(GraphicsContext g, Scene s) {
 //        Music.sound4.play();

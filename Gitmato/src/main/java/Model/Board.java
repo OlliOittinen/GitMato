@@ -28,23 +28,11 @@ public final class Board {
 
     private static List<Worm> worms;
     private final int DELAY = 10;
-
-    //Lista Tail paloista
-    private final List<Tail> tailList;
-    private final List<Tail> tailList2;
-    private final List<Spawnables> pickableList;
-    private final List<Point2D> coordinates;
-    private final List<Point2D> coordinates2;
-    // Wormin locaatio muuttujat:
-    Point2D p;
-    Point2D p2;// coordinaatit
-
     private Worm worm;
     private Worm worm2;
     private PlayerController control;
     private Tail tail;
     private Tail tail2;
-
     private Timeline timer;
     private Snack snack;
     private Faster faster;
@@ -54,28 +42,6 @@ public final class Board {
     private Shield shield;
     private Bombs bombs;
     private Laser laser;
-
-    public boolean isIngame() {
-        return ingame;
-    }
-
-    public void setIngame(boolean ingame) {
-        this.ingame = ingame;
-    }
-
-    private boolean ingame;
-    private main.java.Model.Bot bot;
-
-    //pidetään lukua kuinka monta Tail objektia on.
-    private int tailNro = 0;
-    private int tailNro2 = 0;
-    private int x, y;
-    private int x2, y2;
-
-    public String getPelimoodi() {
-        return pelimoodi;
-    }
-
     private String pelimoodi = "versus";
     private Matopeli engine;
     private Highscore hscore = new Highscore();
@@ -86,34 +52,162 @@ public final class Board {
     private double timeCounter = 0; // aikalaskuri (sec)
     private int frameCounter = 0;
     private double theRealFpsCounter = 0; // näyttää jatkuvasti oikean fps:n
+    // Wormin locaatio muuttujat:
+    //Point2D p;
+    //Point2D p2;// coordinaatit
 
-    public List<Spawnables> getPickableList() {
-        return pickableList;
+// ------------------------------------------en tiiä näistä ------------------------------------
+    public String getPelimoodi() {
+        return pelimoodi;
     }
-
-    public List<Point2D> getCoordinates() {
-        return coordinates;
-    }
-
-    public List<Point2D> getCoordinates2() {
-        return coordinates2;
-    }
-
     public Worm getWorm() {
         return worm;
     }
-
     public Worm getWorm2() {
         return worm2;
     }
-
     public Tail getTail() {
         return tail;
     }
-
     public Tail getTail2() {
         return tail2;
     }
+
+    public List<Tail> getTailList() {
+        return tailList;
+    }
+    public List<Tail> getTailList2() {
+        return tailList2;
+    }
+    public List<Spawnables> getPickableList() {
+        return pickableList;
+    }
+    public List<Point2D> getCoordinates() {
+        return coordinates;
+    }
+    public List<Point2D> getCoordinates2() {
+        return coordinates2;
+    }
+    // --------------------------------------------------------------------------------------------
+    //Lista Tail paloista
+/*    private final List<Tail> tailList;
+    private final List<Tail> tailList2;
+    private final List<Spawnables> pickableList;
+    private final List<Point2D> coordinates;
+    private final List<Point2D> coordinates2;
+*/
+/*
+    -------------------------- nää saa ehkä jäädä ----------------------------
+    public void powerUpCD() {
+
+        faster.setX(-100);
+        faster.setY(-100);
+        slower.setX(-100);
+        slower.setY(-100);
+        reverse.setX(-100);
+        reverse.setY(-100);
+        HP.setX(-100);
+        HP.setY(-100);
+        shield.setX(-100);
+        shield.setY(-100);
+        bombs.setY(-100);
+        bombs.setX(-100);
+        for (int i = 1; i < 7; i++) {
+            bombs.setXBombs(i, -1000);
+            bombs.setYBombs(i, -1000);
+        }
+        laser.setY(-100);
+        laser.setX(-100);
+
+        java.util.Timer timer2 = new java.util.Timer();
+        timer2.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+
+                int n = (int) (Math.random() * 7);
+
+                switch (n) {
+                    case 0:
+                        shield.randomizePowerUpLocation();
+                        break;
+                    case 1:
+                        faster.randomizePowerUpLocation();
+                        break;
+                    case 2:
+                        slower.randomizePowerUpLocation();
+                        break;
+                    case 3:
+                        reverse.randomizePowerUpLocation();
+                        break;
+                    case 4:
+                        HP.randomizePowerUpLocation();
+                        break;
+                    case 5:
+                        bombs.randomizePowerUpLocation();
+                        break;
+                    case 6:
+                        laser.randomizePowerUpLocation();
+                        break;
+                }
+
+            }
+        }, 5000); //aika (ms), joka odotetaan
+    }
+    public void submitHighscore() {
+        if (!ingame) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    TextInputDialog dialog = new TextInputDialog("Type your name here!");
+                    dialog.setTitle("Highscore");
+                    dialog.setHeaderText("Submit your highscore!\n " + score);
+                    dialog.setContentText("Please enter your name:");
+
+                    Optional<String> result = dialog.showAndWait();
+                    if (result.isPresent()) {
+                        hscore.setHighscore(score);
+                        hscore.setName(result.get());
+                        connection.submitScore(hscore.getHighscore(), hscore.getName(), pelimoodi);
+                        connection.showHighscore(pelimoodi);
+
+                    }
+                }
+            });
+        }
+
+    }
+    public double FPS() {
+        currentTime = System.currentTimeMillis();
+        double deltaTime = (double) (currentTime - previousTime) / 1_000;
+        // 1/deltaTime); <- kertoo nykyisen fps joka frame.
+        double interval = 0.5;
+
+        if (timeCounter > interval) {
+            theRealFpsCounter = frameCounter;
+            frameCounter = 0;
+            timeCounter = 0;
+        } else {
+            timeCounter += deltaTime;
+            frameCounter = frameCounter + (int) (1 / interval);
+        }
+        previousTime = currentTime;
+        return theRealFpsCounter;
+    }
+    public boolean isIngame() {
+        return ingame;
+    }
+    public void setIngame(boolean ingame) {
+        this.ingame = ingame;
+    }
+    private boolean ingame;
+    //private Bot bot;
+
+    -------------------------------------------------------------------------------------
+*/
+
+
+/*
 
     public Board(Matopeli e, String pelimoodi) {
         this.engine = e;
@@ -423,115 +517,8 @@ public final class Board {
         }
     }
 
-    public void powerUpCD() {
-
-        faster.setX(-100);
-        faster.setY(-100);
-        slower.setX(-100);
-        slower.setY(-100);
-        reverse.setX(-100);
-        reverse.setY(-100);
-        HP.setX(-100);
-        HP.setY(-100);
-        shield.setX(-100);
-        shield.setY(-100);
-        bombs.setY(-100);
-        bombs.setX(-100);
-        for (int i = 1; i < 7; i++) {
-            bombs.setXBombs(i, -1000);
-            bombs.setYBombs(i, -1000);
-        }
-        laser.setY(-100);
-        laser.setX(-100);
-
-        java.util.Timer timer2 = new java.util.Timer();
-        timer2.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-
-                int n = (int) (Math.random() * 7);
-
-                switch (n) {
-                    case 0:
-                        shield.randomizePowerUpLocation();
-                        break;
-                    case 1:
-                        faster.randomizePowerUpLocation();
-                        break;
-                    case 2:
-                        slower.randomizePowerUpLocation();
-                        break;
-                    case 3:
-                        reverse.randomizePowerUpLocation();
-                        break;
-                    case 4:
-                        HP.randomizePowerUpLocation();
-                        break;
-                    case 5:
-                        bombs.randomizePowerUpLocation();
-                        break;
-                    case 6:
-                        laser.randomizePowerUpLocation();
-                        break;
-                }
-
-            }
-        }, 5000); //aika (ms), joka odotetaan
-    }
-
     public void yksinpeliTrue() {
         this.pelimoodi = "sp";
     }
-
-    public void submitHighscore() {
-        if (!ingame) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    TextInputDialog dialog = new TextInputDialog("Type your name here!");
-                    dialog.setTitle("Highscore");
-                    dialog.setHeaderText("Submit your highscore!\n " + score);
-                    dialog.setContentText("Please enter your name:");
-
-                    Optional<String> result = dialog.showAndWait();
-                    if (result.isPresent()) {
-                        hscore.setHighscore(score);
-                        hscore.setName(result.get());
-                        connection.submitScore(hscore.getHighscore(), hscore.getName(), pelimoodi);
-                        connection.showHighscore(pelimoodi);
-
-                    }
-                }
-            });
-        }
-
-    }
-
-
-    public double FPS() {
-        currentTime = System.currentTimeMillis();
-        double deltaTime = (double) (currentTime - previousTime) / 1_000;
-        // 1/deltaTime); <- kertoo nykyisen fps joka frame.
-        double interval = 0.5;
-
-        if (timeCounter > interval) {
-            theRealFpsCounter = frameCounter;
-            frameCounter = 0;
-            timeCounter = 0;
-        } else {
-            timeCounter += deltaTime;
-            frameCounter = frameCounter + (int) (1 / interval);
-        }
-        previousTime = currentTime;
-        return theRealFpsCounter;
-    }
-
-    public List<Tail> getTailList() {
-        return tailList;
-    }
-
-    public List<Tail> getTailList2() {
-        return tailList2;
-    }
+*/
 }
