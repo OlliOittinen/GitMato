@@ -27,6 +27,8 @@ public class Matopeli extends Application {
     Stage window;
     Scene mainMenuScene , vsAIScene, versusScene, spScene, gameoverScene;
     Image background  = new Image("images/BlueBG800x600.png");
+    private static int width = 800;
+    private static int height = 600;
 
     private static PlayerController pc;
 
@@ -43,60 +45,65 @@ public class Matopeli extends Application {
         Sound.Music.sound1.loop();
 
         Group root = new Group();
-        mainMenuScene = new Scene (root);
-        window.setScene(mainMenuScene);
-
-        Canvas canvas = new Canvas(800, 600);
+        Canvas canvas = new Canvas(width, height);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        AnimationTimer timer = new AnimationTimer() {
-
-            @Override
-            public void handle(long now) {
-                gc.drawImage(background, 0, 0);
-                //updateBoard();
-            }
-        };
-
+        root.getChildren().add(canvas);
         //----GAME MODE SELECTOR SCENE-----------
         //Button for Single player
         Button button1 = new Button("Player VS AI");
         button1.setOnAction(e
                 -> {
-            StackPane layout2 = new StackPane();
-            timer.start();
-            vsAIScene = new Scene(layout2, 800, 590);
+            vsAIScene = new Scene(root);
             window.setScene(vsAIScene);
+            new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    gc.drawImage(background, 0, 0);
+                    //updateBoard();
+                }
+            }.start();
         });
 
         //Button for Versus
         Button button2 = new Button("Versus");
         button2.setOnAction(e
                 -> {
-            StackPane layout3 = new StackPane();
-            timer.start();
-            versusScene = new Scene(layout3, 800, 590);
+            versusScene = new Scene(root);
             window.setScene(versusScene);
+            new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    gc.drawImage(background, 0, 0);
+                    //updateBoard();
+                }
+            }.start();
         });
         Button button3 = new Button("Single player");
         button3.setOnAction(e
                 -> {
-            StackPane layout4 = new StackPane();
-            timer.start();
-            spScene = new Scene(layout4, 800, 590);
+            spScene = new Scene(root);
             window.setScene(spScene);
+            new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    gc.drawImage(background, 0, 0);
+                    //updateBoard();
+                }
+            }.start();
+
         });
 
         //Layout 1 - Game mode selector
         VBox layout1 = new VBox(20);
         layout1.setAlignment(Pos.CENTER);
         layout1.getChildren().addAll(button2, button1, button3);
-        //mainMenuScene = new Scene(layout1, 800, 590);
+        mainMenuScene = new Scene(layout1, 800, 590);
         layout1.setId("pane");
-       // mainMenuScene.getStylesheets().add("Styling/styling.css");
+        mainMenuScene.getStylesheets().add("Styling/styling.css");
+
         //---------------------------------
 
-        //------VERSUS SCENE---------------
+        //------SINGLEPLAYER SCENE---------------
         //Layout 3 - Singleplayer
         //-----------------------------------
 
@@ -108,25 +115,22 @@ public class Matopeli extends Application {
 
         //------GAME OVER SCENE---------------
 
-
-
-
         //Layout 3- Game over
+/*
         VBox layout5 = new VBox(20);
         layout5.setAlignment(Pos.CENTER);
         Label label3 = new Label("GAME OVER");
         Button restart = new Button("Restart");
-
-
-
         Button backToSS = new Button("Back to Main menu");
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
         layout5.getChildren().addAll(label3, restart, backToSS);
         gameoverScene = new Scene(layout5, 800, 590);
         gameoverScene.getStylesheets().add("Styling/styling.css");
+*/
 
         //-----------------------------------
         //Display main scene first
+        window.setScene(mainMenuScene);
         window.setOnCloseRequest(e -> System.exit(0));
         window.setTitle("Gitmato");
         window.show();
