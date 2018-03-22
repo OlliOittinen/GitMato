@@ -30,14 +30,13 @@ public class PlayerController {
     public PlayerController(Board board, String pelimoodi) {
         this.board = board;
         this.pelimoodi = pelimoodi;
+        worms = board.getWorms();
     }
-    
- 
 
     public void keyPressed(KeyEvent e) {
 
+
         KeyCode key = e.getCode();
-        System.out.println("key is pressed lel");
         if (key == KeyCode.LEFT) {
             if (worms.get(0).getSuunta() != 2) {
                 if (worms.get(0).getSuunta() != 1 && (worms.get(0).getX() < 20 || worms.get(0).getX() > 740)) {

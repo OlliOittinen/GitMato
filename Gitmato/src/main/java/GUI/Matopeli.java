@@ -92,8 +92,8 @@ public class Matopeli extends Application {
         laser = new Laser();
         snack = new Snack();
         ArrayList<Worm> worms = new ArrayList();
-        worms.add(worm = new Worm(1)); //lista worm olioista
-        worms.add(worm2 = new Worm(2));
+        worms.add(worm = board.getWorm()); //lista worm olioista
+        worms.add(worm2 = board.getWorm2());
         window = primaryStage;
         window.setTitle("Gitmato");
         Sound.Music.sound1.loop();
@@ -112,7 +112,7 @@ public class Matopeli extends Application {
             new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    board.updateBoard(e);
+                    board.updateBoard();
                     paint(gc);
                 }
             }.start();
@@ -127,7 +127,7 @@ public class Matopeli extends Application {
             new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    board.updateBoard(e);
+                    board.updateBoard();
                     paint(gc);
                 }
             }.start();
@@ -142,9 +142,8 @@ public class Matopeli extends Application {
                 public void handle(long now) {
                     spScene.setOnKeyPressed((KeyEvent event) -> {
                         pc.keyPressed(event);
-                        System.out.println(event.toString());
                     });
-                    board.updateBoard(e);
+                    board.updateBoard();
                     paint(gc);
                 }
             }.start();

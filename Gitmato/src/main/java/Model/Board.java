@@ -26,7 +26,7 @@ import javafx.scene.shape.Ellipse;
  */
 public class Board {
 
-    private static ArrayList<Worm> worms;
+    private ArrayList<Worm> worms;
     private final int DELAY = 10;
     private Worm worm;
     private Worm worm2;
@@ -95,7 +95,7 @@ public class Board {
     public ArrayList<Point2D> getCoordinates2() {
         return coordinates2;
     }
-    public static ArrayList getWorms() {
+    public ArrayList getWorms() {
         return worms;
     }
 
@@ -224,7 +224,7 @@ public class Board {
 
         //alustetaan listat
         pickableList = new ArrayList<>();
-        Board.worms = new ArrayList<>();
+        worms = new ArrayList<>();
 
         this.coordinates = new ArrayList<>();
         this.tailList = new ArrayList<>();
@@ -471,7 +471,7 @@ public class Board {
             worm2.setPoints(worm2.getPoints() - 100);
         }
     }
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed() {
             
         checkCollisions();
         worm.move();
@@ -525,9 +525,8 @@ public class Board {
         }
 
     }
-    public void updateBoard(ActionEvent e){
-        System.out.println("juu");
-        actionPerformed(e);
+    public void updateBoard(){
+        actionPerformed();
     }
 
     private void spawnTail(int n) {
