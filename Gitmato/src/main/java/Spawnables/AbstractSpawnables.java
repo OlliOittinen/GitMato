@@ -19,6 +19,7 @@ public abstract class AbstractSpawnables implements Spawnables {
 
     public abstract void init();
 
+    @Override
     public Bounds getBoundsForIcon(){
         Rectangle icon = new Rectangle(x + 3, y + 3, 30, 30);
         return icon.getLayoutBounds();
