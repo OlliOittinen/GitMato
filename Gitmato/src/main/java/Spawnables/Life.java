@@ -55,8 +55,7 @@ public class Life extends AbstractSpawnables{
 
     @Override
     public void init() {
-        ImageView kuva = new ImageView("src/main/resources/images/Life_1.png");
-        image = kuva.getImage();
+        image = new Image("images/Life_1.png");
             
         setX(-100);
         setY(-100);

@@ -47,10 +47,8 @@ public class Confuse extends AbstractSpawnables {
 
     @Override
     public void init() {
-        ImageView kuva = new ImageView("src/main/resources/images/Reverse.png");
-        image = kuva.getImage();
-        ImageView kuva2 = new ImageView("src/main/resources/images/confusion.png");
-        confusion = kuva2.getImage();
+        image = new Image("images/Reverse.png");
+        confusion = new Image("images/confusion.png");
         
             
         setX(-100);

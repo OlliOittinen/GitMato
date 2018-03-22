@@ -48,9 +48,8 @@ public class Faster extends AbstractSpawnables {
 
     @Override
     public void init() {
-        ImageView kuva = new ImageView("src/main/resources/images/SpeedUp.png");
-        image = kuva.getImage();
-            
+        image = new Image("images/SpeedUp.png");
+        
         setX(-100);
         setY(-100);
     }

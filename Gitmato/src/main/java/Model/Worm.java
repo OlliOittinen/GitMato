@@ -30,10 +30,10 @@ public class Worm {
 
 
     private Image image;    
-    private ImageView wormup;
-    private ImageView wormdown;
-    private ImageView wormleft;
-    private ImageView wormright;
+    private Image wormup;
+    private Image wormdown;
+    private Image wormleft;
+    private Image wormright;
 
     
     double nopeus = 2;
@@ -54,18 +54,18 @@ public class Worm {
     private void initWorm(int p) {
         this.playerNro = p;
         if(playerNro==1){
-             wormup = new ImageView("src/main/resources/images/RedWormUp(800x600).png");
-             wormdown = new ImageView("src/main/resources/images/RedWormDown(800x600).png");
-             wormleft = new ImageView("src/main/resources/images/RedWormLeft(800x600).png");
-             wormright = new ImageView("src/main/resources/images/RedWormRight(800x600).png");
+             wormup = new Image("images/RedWormUp(800x600).png");
+             wormdown = new Image("images/RedWormDown(800x600).png");
+             wormleft = new Image("images/RedWormLeft(800x600).png");
+             wormright = new Image("images/RedWormRight(800x600).png");
             x = 200;
             y = 279; //oma puoli kentästä-kuvan korkeus
         }
         if(playerNro==2){
-             wormup = new ImageView("src/main/resources/images/BlueWormUp(800x600).png");
-             wormdown = new ImageView("src/main/resources/images/BlueWormDown(800x600).png");
-             wormleft = new ImageView("src/main/resources/images/BlueWormLeft(800x600).png");
-             wormright = new ImageView("src/main/resources/images/BlueWormRight(800x600).png");
+             wormup = new Image("images/BlueWormUp(800x600).png");
+             wormdown = new Image("images/BlueWormDown(800x600).png");
+             wormleft = new Image("images/BlueWormLeft(800x600).png");
+             wormright = new Image("images/BlueWormRight(800x600).png");
             x = 565; //kentän puoliväli-kuvan leveys
             y = 279; //oma puoli kentästä-kuvan korkeus
         }
@@ -159,23 +159,23 @@ public class Worm {
     public void moveCont(){
         //if shield is NOT active on worm
         if(suunta == 1){
-            setImage (wormleft.getImage());
+            setImage (wormleft);
             dx = -1 * nopeus;
         }
         
         if(suunta == 2){
-            setImage (wormright.getImage());
+            setImage (wormright);
             dx = 1 * nopeus;
         }
         
         if(suunta == 3){
-            setImage (wormup.getImage());
+            setImage (wormup);
             dy = -1 * nopeus;
             
         }
         
         if(suunta == 4){
-            setImage (wormdown.getImage());
+            setImage (wormdown);
             dy = 1 * nopeus;
             
         }

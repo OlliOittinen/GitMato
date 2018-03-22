@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.TimerTask;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.control.TextInputDialog;
@@ -54,12 +55,14 @@ public class Board {
     //Lista Tail paloista
     private ArrayList<Tail> tailList;
     private ArrayList<Tail> tailList2;
+    private int tailNro = 0;
+    private int tailNro2 = 0;
     private ArrayList<Spawnables> pickableList;
     private ArrayList<Point2D> coordinates;
     private ArrayList<Point2D> coordinates2;
     // Wormin locaatio muuttujat:
-    //Point2D p;
-    //Point2D p2;// coordinaatit
+    Point2D p;
+    Point2D p2;// coordinaatit
 
 // ------------------------------------------en tiiä näistä ------------------------------------
     public String getPelimoodi() {
@@ -213,7 +216,7 @@ public class Board {
 
 
 
-/*
+
 
     public Board(Matopeli e, String pelimoodi) {
         this.engine = e;
@@ -262,12 +265,12 @@ public class Board {
 
         ingame = true;
 
-        control = new PlayerController(); //
-        control.updateWorms(); // Worms-lista liitetään playercontrolleriin
-        control.yksinPeli(pelimoodi);
+        //control = new PlayerController(); //
+        //control.updateWorms(); // Worms-lista liitetään playercontrolleriin
+        //control.yksinPeli(pelimoodi);
 
         if (pelimoodi == "vs AI") {
-            bot.BotTurnDown();
+            //bot.BotTurnDown();
         }
         if (pelimoodi == "sp") {
             worm2.setX(-1000);
@@ -280,12 +283,12 @@ public class Board {
         }
     }
 
-
+/*
     private void inGame() {
         if (!ingame) {
-            timer.stop();
         }
     }
+*/
 
     public void checkCollisions() {
         Bounds Matokuutio = worm.getBounds();
@@ -311,7 +314,7 @@ public class Board {
                     shield.shield(worm2, 50);
                     worm2.randomizeXY();
                     if (pelimoodi == "vs AI") {
-                        bot.BotTurnDown();
+                        //bot.BotTurnDown();
                     }
 
                 }
@@ -457,7 +460,7 @@ public class Board {
             if (worm2.getLife() > 1) {
                 worm2.randomizeXY();
                 if (pelimoodi == "vs AI") {
-                    bot.BotTurnDown();
+                    //bot.BotTurnDown();
                 } else {
                     worm2.setSuuntaAdv(0);
                     worm2.setSuunta(0);
@@ -467,6 +470,64 @@ public class Board {
             Life.loseLife(worm2);
             worm2.setPoints(worm2.getPoints() - 100);
         }
+    }
+        public void actionPerformed(ActionEvent e) {
+            
+        checkCollisions();
+        worm.move();
+        worm.moveCont();
+        worm2.move();
+        worm2.moveCont();
+        //tallennnetaan wormin coordinaatit yhteen 2D muuttujaan
+        int x = worm.getX();
+        int y = worm.getY();
+        int x2 = worm2.getX();
+        int y2 = worm2.getY();
+        Point2D p = new Point2D(x, y);
+        Point2D p2 = new Point2D(x2, y2);
+        //Lisätään coortinaatit listan cordinates alkuun (0).
+        //siirtää automaattisesti taulukon arvot yhden eteenpäin, 0->1
+
+        coordinates.add(0, p);
+        coordinates2.add(0, p2);
+
+        //jos lista liian suuri poistetaan viimeinen
+        if (coordinates.size() >= 10000) {
+            coordinates.remove(coordinates.size() - 1);
+        }
+
+        if (coordinates2.size() >= 10000) {
+            coordinates2.remove(coordinates2.size() - 1);
+        }
+
+        for (int i = 0; i < tailList.size(); i++) {
+            int f = tailList.get(i).getCoordinateInt();
+            p = (Point2D) coordinates.get(f);
+            x = (int) p.getX();
+            y = (int) p.getY();
+            tailList.get(i).setX(x);
+            tailList.get(i).setY(y);
+        }
+
+        for (int i = 0; i < tailList2.size(); i++) {
+            int f = tailList2.get(i).getCoordinateInt();
+            p2 = (Point2D) coordinates2.get(f);
+            x2 = (int) p2.getX();
+            y2 = (int) p2.getY();
+            tailList2.get(i).setX(x2);
+            tailList2.get(i).setY(y2);
+        }
+
+
+        //botti ja sen toiminta
+        if (pelimoodi == "vs AI") {
+            //bot.BlueAIBot();
+        }
+
+    }
+    public void updateBoard(ActionEvent e){
+        System.out.println("juu");
+        actionPerformed(e);
     }
 
     private void spawnTail(int n) {
@@ -485,5 +546,5 @@ public class Board {
     public void yksinpeliTrue() {
         this.pelimoodi = "sp";
     }
-*/
+
 }
