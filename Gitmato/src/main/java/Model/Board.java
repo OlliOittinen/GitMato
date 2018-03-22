@@ -270,7 +270,7 @@ public class Board {
         }
         if (pelimoodi == "sp") {
             worm2.setX(-1000);
-            worm2.setY(-2000); //läpäl
+            worm2.setY(-1000);
             worm.setLife(1);
         }
 
