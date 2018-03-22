@@ -49,6 +49,44 @@ public class Matopeli extends Application {
     Image shieldicon = new Image("images/Shield.png");
     Image shieldeffect = new Image("images/ShieldEffect.png");
     Image slowericon = new Image("images/SlowDown.png");
+
+    public void setWormImage() {
+        //punanen mato
+        if(worm.getSuunta() == 1){
+            wormImage =  new Image("images/RedWormLeft(800x600).png");
+        }
+
+        if(worm.getSuunta() == 2){
+            wormImage =new Image("images/RedWormRight(800x600).png");
+        }
+
+        if(worm.getSuunta() == 3){
+            wormImage =new Image("images/RedWormUp(800x600).png");
+        }
+
+        if(worm.getSuunta() == 4){
+            wormImage =new Image("images/RedWormDown(800x600).png");
+        }
+
+        //sininen mato
+        if(worm2.getSuunta() == 1){
+            worm2Image =  new Image("images/BlueWormLeft(800x600).png");
+        }
+
+        if(worm2.getSuunta() == 2){
+            worm2Image =new Image("images/BlueWormRight(800x600).png");
+        }
+
+        if(worm2.getSuunta() == 3){
+            worm2Image =new Image("images/BlueWormUp(800x600).png");
+        }
+
+        if(worm2.getSuunta() == 4){
+            worm2Image =new Image("images/BlueWormDown(800x600).png");
+        }
+    }
+
+
     Image wormImage = new Image("images/RedWormUp(800x600).png");
     Image worm2Image = new Image("images/BlueWormUp(800x600).png");
     Image wormtail = new Image("images/RedWormTail(800x600).png");
@@ -71,9 +109,9 @@ public class Matopeli extends Application {
     private Board board;
     private ArrayList<Tail> body;
     private ArrayList<Tail> body2;
-    private String pelimoodi="sp";
-
+    private String pelimoodi="versus";
     private PlayerController pc;
+    private AnimationTimer timer;
 
     public static void main(String[] args) {
         launch(args);
@@ -108,10 +146,14 @@ public class Matopeli extends Application {
         button1.setOnAction(e
                 -> {
             vsAIScene = new Scene(root);
+            board.setPelimoodi("vsAI");
             window.setScene(vsAIScene);
             new AnimationTimer() {
                 @Override
                 public void handle(long now) {
+                    vsAIScene.setOnKeyPressed((KeyEvent event) -> {
+                        pc.keyPressed(event);
+                    });
                     board.updateBoard();
                     paint(gc);
                 }
@@ -123,10 +165,14 @@ public class Matopeli extends Application {
         button2.setOnAction(e
                 -> {
             versusScene = new Scene(root);
+            board.setPelimoodi("versus");
             window.setScene(versusScene);
             new AnimationTimer() {
                 @Override
                 public void handle(long now) {
+                    versusScene.setOnKeyPressed((KeyEvent event) -> {
+                        pc.keyPressed(event);
+                    });
                     board.updateBoard();
                     paint(gc);
                 }
@@ -137,7 +183,7 @@ public class Matopeli extends Application {
                 -> {
             spScene = new Scene(root);
             window.setScene(spScene);
-            new AnimationTimer() {
+           timer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
                     spScene.setOnKeyPressed((KeyEvent event) -> {
@@ -146,7 +192,8 @@ public class Matopeli extends Application {
                     board.updateBoard();
                     paint(gc);
                 }
-            }.start();
+            };
+            timer.start();
 
         });
 
@@ -165,18 +212,16 @@ public class Matopeli extends Application {
         //------VERSUS SCENE---------------
         //Layout 2 - Versus
         //------GAME OVER SCENE---------------
-        //Layout 3- Game over
-/*
         VBox layout5 = new VBox(20);
         layout5.setAlignment(Pos.CENTER);
         Label label3 = new Label("GAME OVER");
         Button restart = new Button("Restart");
-        Button backToSS = new Button("Back to Main menu");
+        Button backToSS = new Button("Main menu");
+        restart.setOnAction(e -> window.setScene(window.getScene()));
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
         layout5.getChildren().addAll(label3, restart, backToSS);
         gameoverScene = new Scene(layout5, 800, 590);
-        gameoverScene.getStylesheets().add("Styling/styling.css");
-         */
+        //gameoverScene.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
         //Display main scene first
         window.setScene(mainMenuScene);
@@ -186,14 +231,17 @@ public class Matopeli extends Application {
     }
 
     public void paint(GraphicsContext g) {
-        if (true) {
+        if (board.isIngame()) {
             Paint p = Color.BLACK;
             g.setFill(p);
             g.fillRect(0, 0, window.getWidth(), window.getHeight());
             draw(g);
         } else {
-            //drawGameOver(g);
-            //board.setIngame(false);
+            window.setScene(gameoverScene);
+            board.setIngame(false);
+            timer.stop();
+
+
         }
     }
 

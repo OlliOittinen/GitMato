@@ -68,6 +68,7 @@ public class Board {
     public String getPelimoodi() {
         return pelimoodi;
     }
+    public void setPelimoodi(String pelimoodi) {this.pelimoodi = pelimoodi;}
     public Worm getWorm() {
         return worm;
     }
@@ -214,10 +215,6 @@ public class Board {
 
     //-------------------------------------------------------------------------------------
 
-
-
-
-
     public Board(Matopeli e, String pelimoodi) {
         this.engine = e;
         this.pelimoodi = pelimoodi;
@@ -237,7 +234,6 @@ public class Board {
         initBoard();
 
     }
-
 
 //------------------------MITÄ VITTUA TÄN ON TARKOTUS TEHÄ----------------------------
     private void initBoard() {
@@ -282,13 +278,6 @@ public class Board {
             powerUpCD(); //piilottaa powerupit alussa
         }
     }
-
-/*
-    private void inGame() {
-        if (!ingame) {
-        }
-    }
-*/
 
     public void checkCollisions() {
         Bounds Matokuutio = worm.getBounds();
@@ -471,7 +460,7 @@ public class Board {
             worm2.setPoints(worm2.getPoints() - 100);
         }
     }
-        public void actionPerformed() {
+    public void actionPerformed() {
             
         checkCollisions();
         worm.move();
@@ -518,6 +507,11 @@ public class Board {
             tailList2.get(i).setY(y2);
         }
 
+        if (worm.getLife()<=0 || worm2.getLife()<=0) {
+            setIngame(false);
+        }
+
+        engine.setWormImage();
 
         //botti ja sen toiminta
         if (pelimoodi == "vs AI") {

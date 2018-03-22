@@ -35,6 +35,7 @@ public class PlayerController {
 
     public void keyPressed(KeyEvent e) {
 
+        pelimoodi = board.getPelimoodi();
 
         KeyCode key = e.getCode();
         if (key == KeyCode.LEFT) {
