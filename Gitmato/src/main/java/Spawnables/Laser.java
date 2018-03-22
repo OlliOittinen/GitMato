@@ -53,16 +53,11 @@ public class Laser extends AbstractSpawnables {
 
     @Override
     public void init() {
-        ImageView kuva = new ImageView("src/main/resources/images/Lasercannon.png");
-        image = kuva.getImage();
-        ImageView kuva2 = new ImageView("src/main/resources/images/LazerH.png");
-        image2 = kuva2.getImage();
-        ImageView kuva3 = new ImageView("src/main/resources/images/lazerV.png");
-        image3 = kuva3.getImage();
-        ImageView kuva4 = new ImageView("src/main/resources/images/lasersightV.png");
-        image4 = kuva4.getImage();
-        ImageView kuva5 = new ImageView("src/main/resources/images/lasersightH.png");
-        image5 = kuva5.getImage();
+        image = new Image("images/Lasercannon.png");
+        image2 = new Image("images/LazerH.png");
+        image3 = new Image("images/lazerV.png");
+        image4 = new Image("images/lasersightV.png");
+        image5 = new Image("images/lasersightH.png");
 
         setX(-100);
         setY(-100);

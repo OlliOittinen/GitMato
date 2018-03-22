@@ -23,7 +23,7 @@ public class Shield extends AbstractSpawnables{
     private int xe;
     private int ye;
     private Image image;
-    private ImageView shieldeffect = new ImageView("src/main/resources/images/ShieldEffect.png");
+    private Image shieldeffect = new Image("images/ShieldEffect.png");
 
     public Shield() {
         init();
@@ -44,14 +44,13 @@ public class Shield extends AbstractSpawnables{
     
 @Override
     public void init() {
-        ImageView kuva = new ImageView("src/main/resources/images/Shield.png");
-        image = kuva.getImage();
+        image = new Image("images/Shield.png");
         xe = -100;
         ye = -100;
     }
 
  public Image getShieldImage() {
-       Image img = shieldeffect.getImage();
+       Image img = shieldeffect;
        return img;
     }
 

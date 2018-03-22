@@ -27,8 +27,7 @@ public class Snack extends AbstractSpawnables{
     
     @Override
     public void init() {
-        ImageView kuva = new ImageView("src/main/resources/images/Apple(800x600).png");
-        image = kuva.getImage();
+        image = new Image("images/Apple(800x600).png");
         setX( 600-(int)(Math.random()*400));
         setY(200);
     }

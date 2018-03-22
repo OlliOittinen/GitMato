@@ -54,12 +54,9 @@ public class Bombs extends AbstractSpawnables{
 
     @Override
     public void init() {
-        ImageView kuva = new ImageView("src/main/resources/images/Bombs(800-600).png");
-        image = kuva.getImage();
-        ImageView kuva2 = new ImageView("src/main/resources/images/Target2.png");
-        image2 = kuva2.getImage();
-        ImageView kuva3 = new ImageView("src/main/resources/images/firestorm2.png");
-        image3 = kuva3.getImage();
+        image = new Image("images/Bombs(800-600).png");
+        image2 = new Image("images/Target2.png");
+        image3 = new Image("images/firestorm2.png");
 
         setX(-100);
         setY(-100);

@@ -30,12 +30,10 @@ public class Tail{
     }
     private void initTail(){
         if(playerNro==1){
-            ImageView kuvamato = new ImageView("src/main/resources/images/RedWormTail(800x600).png");
-            image = kuvamato.getImage();   
+            image = new Image("images/RedWormTail(800x600).png");
         }
          if(playerNro==2){
-            ImageView kuvamato = new ImageView("src/main/resources/images/BlueWormTail(800x600).png");
-            image = kuvamato.getImage();   
+            image = new Image("images/BlueWormTail(800x600).png");
         }
     }
     

@@ -47,8 +47,7 @@ public class Slower extends AbstractSpawnables{
 
     @Override
     public void init() {
-        ImageView kuva = new ImageView("src/main/resources/images/SlowDown.png");
-        image = kuva.getImage();
+        image = new Image("images/SlowDown.png");
             
         setX(-100);
         setY(-100);
