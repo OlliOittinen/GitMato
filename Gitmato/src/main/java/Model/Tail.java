@@ -23,7 +23,7 @@ public class Tail{
     // luku jonka mukaan hakee cordinaateista itselleen arvon.
     private int coordinateInt;
     
-     public Tail(int ci, int playerNro) {
+    Tail(int ci, int playerNro) {
         this.coordinateInt = ci;
         this.playerNro = playerNro;
         initTail();

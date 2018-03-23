@@ -7,17 +7,17 @@ public class Music {
 
     private Clip clip;
 
-    public static Music sound1 = new Music("Off Limits.wav");
-    public static Music sound2 = new Music("faster.wav");
-    public static Music sound3 = new Music("lasershot.wav");
-    public static Music sound4 = new Music("Death.wav");
-    public static Music sound5 = new Music("getlife.wav");
-    public static Music sound6 = new Music("shields.wav");
-    public static Music sound7 = new Music("bombs.wav");
-    public static Music sound8 = new Music("slower.wav");
-    public static Music sound9 = new Music("confusion.wav");
-    public static Music sound10 = new Music("snack.wav");
-    public static Music sound11 = new Music("lostlife.wav");  
+    public static Music backgroundMusic = new Music("Off Limits.wav");
+    public static Music fasterPowerup = new Music("faster.wav");
+    public static Music laserShot = new Music("lasershot.wav");
+    public static Music death = new Music("Death.wav");
+    public static Music addLife = new Music("getlife.wav");
+    public static Music shield = new Music("shields.wav");
+    public static Music bombs = new Music("bombs.wav");
+    public static Music slowerPowerup = new Music("slower.wav");
+    public static Music reverse = new Music("confusion.wav");
+    public static Music snack = new Music("snack.wav");
+    public static Music loseLife = new Music("lostlife.wav");
     
 
     public Music(String fileName) {

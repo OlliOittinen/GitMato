@@ -11,9 +11,7 @@ import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.shape.*;
 
 /**
@@ -22,7 +20,7 @@ import javafx.scene.shape.*;
  */
 public class Bombs extends AbstractSpawnables{
 
-    private int x, y, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6, x7, y7;
+    private int x2, y2, x3, y3, x4, y4, x5, y5, x6, y6, x7, y7;
 
     private Image image, image2, image3;
 
@@ -77,7 +75,7 @@ public class Bombs extends AbstractSpawnables{
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Music.sound7.play();
+                Music.bombs.play();
                 for (int i = 2; i < xlist.length; i = i + 2) {
                     setXBombs(i, xlist[i - 1]);
                     setYBombs(i, ylist[i - 1]);
