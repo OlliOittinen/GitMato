@@ -24,7 +24,7 @@ import javafx.scene.paint.Color;
 public class Matopeli extends Application {
 
     private Stage window;
-    private Scene mainMenuScene, vsAIScene, versusScene, spScene, gameoverScene;
+    private Scene mainMenuScene, gameScene, gameoverScene;
 
     Image background = new Image("images/BlueBG800x600.png");
     Image snackicon = new Image("images/Apple(800x600).png");
@@ -112,6 +112,7 @@ public class Matopeli extends Application {
         Canvas canvas = new Canvas(width, height);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
+        gameScene = new Scene(root);
         //----GAME MODE SELECTOR SCENE-----------
         //Button for Single player
         Button button1 = new Button("Player VS AI");
@@ -119,17 +120,11 @@ public class Matopeli extends Application {
                 -> {
             board.setPelimoodi("vsAI");
             pelimoodi = "vs AI";
-            if (vsAIDone) {
-                reset();
-                window.setScene(vsAIScene);
-            } else {
-                vsAIScene = new Scene(root);
-                window.setScene(vsAIScene);
-            }
+            window.setScene(gameScene);
             timer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    vsAIScene.setOnKeyPressed((KeyEvent event) -> {
+                    gameScene.setOnKeyPressed((KeyEvent event) -> {
                         pc.keyPressed(event);
                     });
                     board.updateBoard();
@@ -137,7 +132,6 @@ public class Matopeli extends Application {
                 }
             };
             timer.start();
-            vsAIDone = true;
         });
 
         //Button for Versus
@@ -146,17 +140,11 @@ public class Matopeli extends Application {
                 -> {
             board.setPelimoodi("versus");
             pelimoodi = "versus";
-            if (versusDone) {
-                reset();
-                window.setScene(versusScene);
-            } else {
-                versusScene = new Scene(root);
-                window.setScene(versusScene);
-            }
+            window.setScene(gameScene);
             timer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    versusScene.setOnKeyPressed((KeyEvent event) -> {
+                    gameScene.setOnKeyPressed((KeyEvent event) -> {
                         pc.keyPressed(event);
                     });
                     board.updateBoard();
@@ -164,24 +152,17 @@ public class Matopeli extends Application {
                 }
             };
             timer.start();
-            versusDone = true;
         });
         Button button3 = new Button("Single player");
         button3.setOnAction(e
                 -> {
             board.setPelimoodi("sp");
             pelimoodi = "sp";
-            if (spDone) {
-                reset();
-                window.setScene(spScene);
-            } else {
-                spScene = new Scene(root);
-                window.setScene(spScene);
-            }
+            window.setScene(gameScene);
             timer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    spScene.setOnKeyPressed((KeyEvent event) -> {
+                    gameScene.setOnKeyPressed((KeyEvent event) -> {
                         pc.keyPressed(event);
                     });
                     board.updateBoard();
@@ -189,7 +170,6 @@ public class Matopeli extends Application {
                 }
             };
             timer.start();
-            spDone = true;
         });
 
         //Layout 1 - Game mode selector
@@ -214,13 +194,8 @@ public class Matopeli extends Application {
         Button backToSS = new Button("Main menu");
         restart.setOnAction(e -> {
             reset();
-            if (pelimoodi.equals("versus")) {
-                window.setScene(versusScene);
-            } else if (pelimoodi.equals("vs AI")) {
-                window.setScene(vsAIScene);
-            } else {
-                window.setScene(spScene);
-            }
+
+            window.setScene(gameScene);
             timer.start();
         });
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
@@ -283,6 +258,7 @@ public class Matopeli extends Application {
             window.setScene(gameoverScene);
             board.setIngame(false);
             timer.stop();
+            reset();
 
         }
     }
@@ -293,7 +269,7 @@ public class Matopeli extends Application {
         body2 = board.getTailList2();
         tailsize = body.size();
         tailsize2 = body2.size();
-
+        g.drawImage(background, 0, 0);
         if (tailsize > 0) {
             for (int i = 0; i < tailsize; i++) {
                 // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
@@ -309,7 +285,6 @@ public class Matopeli extends Application {
         }
 
         // piirretään power-upit matojen päälle, jotta ne ovat helpommit nähtävissä
-        g.drawImage(background, 0, 0);
         g.drawImage(snackicon, snack.getX(), snack.getY());
         g.drawImage(fastericon, faster.getX(), faster.getY());
         g.drawImage(slowericon, slower.getX(), slower.getY());
@@ -336,7 +311,7 @@ public class Matopeli extends Application {
 
         g.drawImage(wormImage, worm.getX(), worm.getY());
 
-        if (window.getScene() != spScene) {
+        if (pelimoodi != "sp") {
             g.drawImage(worm2Image, worm2.getX(), worm2.getY());
         }
         if (worm.getShield(worm)) {
@@ -369,7 +344,7 @@ public class Matopeli extends Application {
         g.fillText(hp, 50, 30);
         g.fillText(pt, 50, 60);
 
-        if (window.getScene() != spScene) {
+        if (pelimoodi != "sp") {
             g.setFill(Color.BLUE);
             String hp2 = "HP: " + worm2.getLife();
             String pt2 = "Pisteet: " + worm2.getPoints();
@@ -389,6 +364,7 @@ public class Matopeli extends Application {
     }
 
     private void reset() {
+        board.setIngame(true);
         worms.clear();
         body.clear();
         body2.clear();
