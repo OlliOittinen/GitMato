@@ -10,10 +10,7 @@ import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -21,16 +18,11 @@ import javafx.scene.shape.Rectangle;
  */
 
 public class Faster extends AbstractSpawnables {
-    
-    private int xe;
-    private int ye;
-    private Image image;
-    
-    
+
     public void faster(Worm worm) {
         worm.setPoints(worm.getPoints()+100);
         worm.setNopeus(3);
-        Music.sound2.play();
+        Music.fasterPowerup.play();
         
         //säätää nopeuden väliaikseks
         Timer timer = new Timer();
