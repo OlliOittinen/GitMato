@@ -105,6 +105,7 @@ public class Matopeli extends Application {
         worms.add(worm2 = board.getWorm2());
         window = primaryStage;
         window.setTitle("Gitmato");
+        window.setResizable(false);
         Sound.Music.backgroundMusic.loop();
 
         Group root = new Group();
