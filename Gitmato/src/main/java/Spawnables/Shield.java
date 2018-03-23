@@ -10,22 +10,27 @@ import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
  * @author maxki
  */
 public class Shield extends AbstractSpawnables{
-
+    private int xe;
+    private int ye;
+    private Image image;
     private Image shieldeffect = new Image("images/ShieldEffect.png");
 
     public Shield() {
         init();
     }
     
-    public void shield(Worm worm, int time) {
-        Music.shield.play();
+    public void shield(Worm worm, int luku) {
+        Music.sound6.play();
         worm.setPoints(worm.getPoints()+100);
         worm.setShield(true);
         Timer timer = new Timer();
@@ -34,14 +39,14 @@ public class Shield extends AbstractSpawnables{
             public void run() {
                 worm.setShield(false);
             }
-        }, time); //aika (ms), joka odotetaan
+        }, luku); //aika (ms), joka odotetaan
     }
     
 @Override
     public void init() {
         image = new Image("images/Shield.png");
-        x = -100;
-        y = -100;
+        xe = -100;
+        ye = -100;
     }
 
  public Image getShieldImage() {

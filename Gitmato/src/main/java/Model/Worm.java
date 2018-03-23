@@ -36,7 +36,7 @@ public class Worm {
     private Image wormright;
 
     
-    private double nopeus = 2;
+    double nopeus = 2;
     private int life=3;
 
     public int getLife() {
@@ -117,7 +117,6 @@ public class Worm {
     public void setSuunta(int s){
         this.suunta = s;
     }
-
     public void setSuuntaAdv(int a){
         this.suuntaAdv = a;
     }
@@ -152,7 +151,6 @@ public class Worm {
     public void setPoints(int points) {
         this.points = points;
     }
-
     public void randomizeXY() {
         setX((int) (Math.random() * 740) + 10);
         setY((int) (Math.random() * 540) + 10);

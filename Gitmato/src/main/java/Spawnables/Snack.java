@@ -17,6 +17,9 @@ import javafx.scene.shape.Rectangle;
  * @author maxki
  */
 public class Snack extends AbstractSpawnables{
+    private int xe;
+    private int ye;
+    private Image image;
 
     public Snack() {
         init();
