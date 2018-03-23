@@ -7,10 +7,7 @@ package Spawnables;
 
 import Model.Worm;
 import Sound.Music;
-import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,12 +19,9 @@ import java.util.TimerTask;
  * @author Olli
  */
 public class Slower extends AbstractSpawnables{
-    private int xe;
-    private int ye;
-    private Image image;
-            
+
     public void slower(Worm worm, Worm worm2) {
-        Music.sound8.play();
+        Music.slowerPowerup.play();
         worm.setPoints(worm.getPoints()+100);
         worm2.setNopeus(1);
         

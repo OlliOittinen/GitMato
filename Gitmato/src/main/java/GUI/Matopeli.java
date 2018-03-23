@@ -1,37 +1,31 @@
 package GUI;
 
 import Controller.PlayerController;
+import Sound.Music;
 import javafx.animation.AnimationTimer;
 import Model.*;
 import Spawnables.*;
 import java.util.ArrayList;
-import java.util.List;
+
 import javafx.application.*;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.*;
 import javafx.scene.*;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
 
 public class Matopeli extends Application {
 
-    Stage window;
-    Scene mainMenuScene, vsAIScene, versusScene, spScene, gameoverScene;
+    private Stage window;
+    private Scene mainMenuScene, vsAIScene, versusScene, spScene, gameoverScene;
+
     Image background = new Image("images/BlueBG800x600.png");
     Image snackicon = new Image("images/Apple(800x600).png");
     Image bombicon = new Image("images/Bombs(800-600).png");
@@ -58,42 +52,6 @@ public class Matopeli extends Application {
     Image bluewormup = new Image("images/BlueWormUp(800x600).png");
     Image bluewormdown = new Image("images/BlueWormDown(800x600).png");
 
-    public void setWormImage() {
-        //punanen mato
-        if (worm.getSuunta() == 1) {
-            wormImage = redwormleft;
-        }
-
-        if (worm.getSuunta() == 2) {
-            wormImage = redwormright;
-        }
-
-        if (worm.getSuunta() == 3) {
-            wormImage = redwormup;
-        }
-
-        if (worm.getSuunta() == 4) {
-            wormImage = redwormdown;
-        }
-
-        //sininen mato
-        if (worm2.getSuunta() == 1) {
-            worm2Image = bluewormleft;
-        }
-
-        if (worm2.getSuunta() == 2) {
-            worm2Image = bluewormright;
-        }
-
-        if (worm2.getSuunta() == 3) {
-            worm2Image = bluewormup;
-        }
-
-        if (worm2.getSuunta() == 4) {
-            worm2Image = bluewormdown;
-        }
-    }
-
     Image wormImage = new Image("images/RedWormUp(800x600).png");
     Image worm2Image = new Image("images/BlueWormUp(800x600).png");
     Image wormtail = new Image("images/RedWormTail(800x600).png");
@@ -119,7 +77,7 @@ public class Matopeli extends Application {
     private Laser laser;
     private Snack snack;
     private ArrayList<Worm> worms;
-    ArrayList<Spawnables> powerups;
+    private ArrayList<Spawnables> powerups;
     private boolean vsAIDone;
     private boolean versusDone;
     private boolean spDone;
@@ -132,7 +90,7 @@ public class Matopeli extends Application {
     public void start(Stage primaryStage) {
         board = new Board(this, pelimoodi);
         pc = new PlayerController(board, pelimoodi);
-        worms = new ArrayList();
+        worms = new ArrayList<>();
         powerups = board.getPickableList();
         faster = (Faster) powerups.get(0);
         slower = (Slower) powerups.get(1);
@@ -147,7 +105,7 @@ public class Matopeli extends Application {
         worms.add(worm2 = board.getWorm2());
         window = primaryStage;
         window.setTitle("Gitmato");
-        Sound.Music.sound1.loop();
+        Sound.Music.backgroundMusic.loop();
 
         Group root = new Group();
         Canvas canvas = new Canvas(width, height);
@@ -255,9 +213,9 @@ public class Matopeli extends Application {
         Button backToSS = new Button("Main menu");
         restart.setOnAction(e -> {
             reset();
-            if (pelimoodi == "versus") {
+            if (pelimoodi.equals("versus")) {
                 window.setScene(versusScene);
-            } else if (pelimoodi == "vs AI") {
+            } else if (pelimoodi.equals("vs AI")) {
                 window.setScene(vsAIScene);
             } else {
                 window.setScene(spScene);
@@ -266,7 +224,7 @@ public class Matopeli extends Application {
         });
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
         layout5.getChildren().addAll(label3, restart, backToSS);
-        gameoverScene = new Scene(layout5, 800, 590);
+        gameoverScene = new Scene(layout5, width, height);
         gameoverScene.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
         //Display main scene first
@@ -276,13 +234,51 @@ public class Matopeli extends Application {
         window.show();
     }
 
-    public void paint(GraphicsContext g) {
+    public void setWormImage() {
+        //punanen mato
+        if (worm.getSuunta() == 1) {
+            wormImage = redwormleft;
+        }
+
+        if (worm.getSuunta() == 2) {
+            wormImage = redwormright;
+        }
+
+        if (worm.getSuunta() == 3) {
+            wormImage = redwormup;
+        }
+
+        if (worm.getSuunta() == 4) {
+            wormImage = redwormdown;
+        }
+
+        //sininen mato
+        if (worm2.getSuunta() == 1) {
+            worm2Image = bluewormleft;
+        }
+
+        if (worm2.getSuunta() == 2) {
+            worm2Image = bluewormright;
+        }
+
+        if (worm2.getSuunta() == 3) {
+            worm2Image = bluewormup;
+        }
+
+        if (worm2.getSuunta() == 4) {
+            worm2Image = bluewormdown;
+        }
+    }
+
+    private void paint(GraphicsContext g) {
+
         if (board.isIngame()) {
             g.setFill(Color.BLACK);
             g.fillRect(0, 0, window.getWidth(), window.getHeight());
             draw(g);
 
         } else {
+            Music.death.play();
             window.setScene(gameoverScene);
             board.setIngame(false);
             timer.stop();
@@ -290,7 +286,7 @@ public class Matopeli extends Application {
         }
     }
 
-    public void draw(GraphicsContext g) {
+    private void draw(GraphicsContext g) {
 
         body = board.getTailList();
         body2 = board.getTailList2();
@@ -327,6 +323,7 @@ public class Matopeli extends Application {
         g.drawImage(bombtarget, bombs.getXBombs(5), bombs.getYBombs(5));
         g.drawImage(bombfire, bombs.getXBombs(6), bombs.getYBombs(6));
         g.drawImage(lasericon, laser.getX(), laser.getY());
+
         if (!laser.getLethal()) {
             g.drawImage(lasersightH, laser.getX3(), laser.getY3());
             g.drawImage(lasersightV, laser.getX2(), laser.getY2());
@@ -335,7 +332,9 @@ public class Matopeli extends Application {
             g.drawImage(laserH, laser.getX3(), laser.getY3());
             g.drawImage(laserV, laser.getX2(), laser.getY2());
         }
+
         g.drawImage(wormImage, worm.getX(), worm.getY());
+
         if (window.getScene() != spScene) {
             g.drawImage(worm2Image, worm2.getX(), worm2.getY());
         }
@@ -388,7 +387,7 @@ public class Matopeli extends Application {
         return pelimoodi;
     }
 
-    public void reset() {
+    private void reset() {
         worms.clear();
         body.clear();
         body2.clear();
@@ -397,7 +396,7 @@ public class Matopeli extends Application {
         powerups.clear();
         board = new Board(this, pelimoodi);
         pc = new PlayerController(board, pelimoodi);
-        worms = new ArrayList();
+        worms = new ArrayList<>();
         powerups = board.getPickableList();
         faster = (Faster) powerups.get(0);
         slower = (Slower) powerups.get(1);
@@ -523,7 +522,7 @@ public class Matopeli extends Application {
     }
      */
 //    private void drawGameOver(GraphicsContext g, Scene s) {
-//        Music.sound4.play();
+//        Music.death.play();
 //        laser.hide();
 //        filter = filtteri.getImage();
 //        String msg = null;
@@ -538,7 +537,7 @@ public class Matopeli extends Application {
 //        FontMetrics fm = getFontMetrics(big);
 //        g3.setFont(big);
 //
-//        Music.sound1.stop();
+//        Music.backgroundMusic.stop();
 //        ingame = false;
 //        if (worm.getLife() <= 0) {
 //            if (s != spScene) {
