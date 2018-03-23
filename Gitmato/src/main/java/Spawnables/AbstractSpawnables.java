@@ -7,9 +7,9 @@ import javafx.scene.shape.Rectangle;
 
 public abstract class AbstractSpawnables implements Spawnables {
 
-    int x;
-    int y;
-    Image image;
+    private int x;
+    private int y;
+    private Image image;
 
     @Override
     public void loadImage(String imageName) {

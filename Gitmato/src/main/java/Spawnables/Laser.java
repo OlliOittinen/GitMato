@@ -9,7 +9,9 @@ import Model.Worm;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -18,6 +20,9 @@ import javafx.scene.shape.Rectangle;
  */
 public class Laser extends AbstractSpawnables {
 
+    private int xe;
+    private int ye;
+    private Image image;
     private int xe2;
     private int ye2;
     private Image image2;
@@ -69,7 +74,7 @@ public class Laser extends AbstractSpawnables {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                //hae vastustajan nykysijainti, tallenna muuttujiin
+                //hae kohteen nykysijainti, tallenna muuttujiin
                 int wormLocX = worm2.getX();
                 int wormLocY = worm2.getY();
                 //horisontaalinen vai vertikaalinen säde, random arvo 0...1
@@ -94,7 +99,7 @@ public class Laser extends AbstractSpawnables {
             @Override
             public void run() {
                 lethal = true;
-                Sound.Music.laserShot.play();
+                Sound.Music.sound3.play();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
