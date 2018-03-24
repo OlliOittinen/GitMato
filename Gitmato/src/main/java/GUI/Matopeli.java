@@ -189,17 +189,18 @@ public class Matopeli extends Application {
         //------GAME OVER SCENE---------------
         VBox layout5 = new VBox(20);
         layout5.setAlignment(Pos.CENTER);
-        Label label3 = new Label("GAME OVER");
+        Label gameOver = new Label("GAME OVER");
         Button restart = new Button("Restart");
         Button backToSS = new Button("Main menu");
+        Button highscore = new Button("Submit highscore");
         restart.setOnAction(e -> {
             reset();
-
             window.setScene(gameScene);
             timer.start();
         });
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
-        layout5.getChildren().addAll(label3, restart, backToSS);
+        highscore.setOnAction(e -> board.submitHighscore());
+        layout5.getChildren().addAll(gameOver, restart, backToSS, highscore);
         gameoverScene = new Scene(layout5, width, height);
         gameoverScene.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
@@ -249,17 +250,13 @@ public class Matopeli extends Application {
     private void paint(GraphicsContext g) {
 
         if (board.isIngame()) {
-            g.setFill(Color.BLACK);
-            g.fillRect(0, 0, window.getWidth(), window.getHeight());
             draw(g);
-
         } else {
             Music.death.play();
             window.setScene(gameoverScene);
             board.setIngame(false);
             timer.stop();
             reset();
-
         }
     }
 

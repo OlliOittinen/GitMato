@@ -169,26 +169,21 @@ public class Board {
         }, 5000); //aika (ms), joka odotetaan
     }
     public void submitHighscore() {
-        if (!ingame) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    TextInputDialog dialog = new TextInputDialog("Type your name here!");
-                    dialog.setTitle("Highscore");
-                    dialog.setHeaderText("Submit your highscore!\n " + score);
-                    dialog.setContentText("Please enter your name:");
+            Platform.runLater(() -> {
+                TextInputDialog dialog = new TextInputDialog("Type your name here!");
+                dialog.setTitle("Highscore");
+                score = worm.getPoints();
+                dialog.setHeaderText("Submit your highscore!\n " + score);
+                dialog.setContentText("Please enter your name:");
 
-                    Optional<String> result = dialog.showAndWait();
-                    if (result.isPresent()) {
-                        hscore.setHighscore(score);
-                        hscore.setName(result.get());
-                        connection.submitScore(hscore.getHighscore(), hscore.getName(), pelimoodi);
-                        connection.showHighscore(pelimoodi);
-
-                    }
-                }
-            });
-        }
+                Optional<String> result = dialog.showAndWait();
+                if (result.isPresent()) {
+                    hscore.setHighscore(score);
+                    hscore.setName(result.get());
+                    connection.submitScore(hscore.getHighscore(), hscore.getName(), pelimoodi);
+                    connection.showHighscore(pelimoodi);
+            }
+        });
 
     }
     public double FPS() {
@@ -457,13 +452,12 @@ public class Board {
                     worm2.setSuuntaAdv(0);
                     worm2.setSuunta(0);
                 }
-
             }
             Life.loseLife(worm2);
             worm2.setPoints(worm2.getPoints() - 100);
         }
     }
-    private void actionPerformed() {
+    public void updateBoard() {
             
         checkCollisions();
         worm.move();
@@ -522,9 +516,6 @@ public class Board {
         }
 
     }
-    public void updateBoard(){
-        actionPerformed();
-    }
 
     private void spawnTail(int n) {
         //tulee yksi Tail pala lisää
@@ -537,10 +528,6 @@ public class Board {
                 tailNro2++;
                 tailList2.add(tail = new Tail(tailNro2 * 15, 2));
         }
-    }
-
-    public void yksinpeliTrue() {
-        this.pelimoodi = "sp";
     }
 
 }

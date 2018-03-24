@@ -60,28 +60,22 @@ public class Bot {
             if (worms.get(1).getX() < (pickableList.get(i).getX() + 10) && worms.get(1).getX() > (pickableList.get(i).getX() - 10) && !worms.get(1).getReverse(worms.get(1))) {
                 if (worms.get(1).getY() < pickableList.get(i).getY()) {
                     BotTurnDown();
-
                     //alas
                 } else {
                     BotTurnUp();
-
                     //ylös
                 }
-
             }
 
             if (worms.get(1).getY() < (pickableList.get(i).getY() + 10) && worms.get(1).getY() > (pickableList.get(i).getY() - 10) && !worms.get(1).getReverse(worms.get(1))) {
 
                 if (worms.get(1).getX() < pickableList.get(i).getX()) {
                     BotTurnRight();
-
                     //oikea
                 } else {
                     BotTurnLeft();
-
                     //vasen
                 }
-
             }
         }
 
@@ -269,7 +263,7 @@ public class Bot {
         worms.get(1).setSuuntaAdv(2);
     }
 
-    public void BotTurnUp() {
+    private void BotTurnUp() {
         worms.get(1).setSuunta(3);
         worms.get(1).setSuuntaAdv(1);
     }
