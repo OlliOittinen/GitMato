@@ -24,7 +24,6 @@ public class Bombs extends AbstractSpawnables{
 
     private Image image, image2, image3;
 
-    private Board board;
     private boolean lethal = false;
 
     private int xlist[] = new int[]{x, x2, x3, x4, x5, x6, x7};

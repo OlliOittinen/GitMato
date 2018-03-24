@@ -44,6 +44,7 @@ public class Board {
     private Laser laser;
     private String pelimoodi;
     private Matopeli engine;
+    private Bot bot;
     private Highscore hscore = new Highscore();
     private int score;
     private DBConnection connection = new DBConnection();
@@ -80,6 +81,9 @@ public class Board {
     }
     public Tail getTail2() {
         return tail2;
+    }
+    public int getTailNro2() {
+        return tailNro2;
     }
     public ArrayList<Tail> getTailList() {
         return tailList;
@@ -211,11 +215,11 @@ public class Board {
         this.ingame = ingame;
     }
     private boolean ingame;
-    //private Bot bot;
 
     //-------------------------------------------------------------------------------------
 
     public Board(Matopeli e, String pelimoodi) {
+
         this.engine = e;
         this.pelimoodi = pelimoodi;
 
@@ -257,11 +261,12 @@ public class Board {
         pickableList.add(snack);
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
+        bot = new Bot(this);
 
         ingame = true;
 
         if (pelimoodi.equals("vs AI")) {
-            //bot.BotTurnDown();
+            bot.BotTurnDown();
         }
         if (pelimoodi.equals("sp")) {
             worm2.setX(-1000);
@@ -300,7 +305,7 @@ public class Board {
                     shield.shield(worm2, 50);
                     worm2.randomizeXY();
                     if (pelimoodi.equals("vs AI")) {
-                        //bot.BotTurnDown();
+                        bot.BotTurnDown();
                     }
                 }
                 Life.loseLife(worm2);
@@ -447,7 +452,7 @@ public class Board {
             if (worm2.getLife() > 1) {
                 worm2.randomizeXY();
                 if (pelimoodi.equals("vs AI")) {
-                    //bot.BotTurnDown();
+                    bot.BotTurnDown();
                 } else {
                     worm2.setSuuntaAdv(0);
                     worm2.setSuunta(0);
@@ -513,7 +518,7 @@ public class Board {
 
         //botti ja sen toiminta
         if (pelimoodi.equals("vs AI")) {
-            //bot.BlueAIBot();
+            bot.BlueAIBot();
         }
 
     }
