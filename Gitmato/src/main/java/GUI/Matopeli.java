@@ -324,6 +324,7 @@ public class Matopeli extends Application {
 
     }
 
+    //also handles FPS-counter
     private void drawPoints(GraphicsContext g) {
 
         g.setFont(Font.font("Helvetica", FontWeight.BOLD, 22));

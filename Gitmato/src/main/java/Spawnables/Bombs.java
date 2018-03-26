@@ -68,25 +68,32 @@ public class Bombs extends AbstractSpawnables{
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                //arpoo kentältä 3 sijaintia, johon pommit laitetaan
                 randomizeXYBombs();
             }
         }, 1000); //aika (ms), joka odotetaan ENNEN targetteja
+        //uusi ajastin pommeille ja targeteille
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 Music.bombs.play();
+                //laitetaan targetit kohdalleen
                 for (int i = 2; i < xlist.length; i = i + 2) {
                     setXBombs(i, xlist[i - 1]);
                     setYBombs(i, ylist[i - 1]);
                 }
+                //piilotetaan targetit kentältä
                 for (int i = 1; i <= 5; i = i + 2) {
                     setXBombs(i, -1000);
                     setYBombs(i, -1000);
                 }
+                //laitetaan targettien/pommien paikat kuolettaviksi
                 lethal = true;
+                //uusi ajastin
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
+                        //piilota pommit kentältä
                         for (int i = 2; i <=6; i = i + 2) {
                             setXBombs(i, -1000);
                             setYBombs(i, -1000);
@@ -98,7 +105,7 @@ public class Bombs extends AbstractSpawnables{
     }
 
     public Ellipse getBoundsBombs(int n) {
-        return new Ellipse(xlist[n] + 3, ylist[n] + 3, 200, 200);
+        return new Ellipse(xlist[n]+100, ylist[n]+100, 100, 100);
     }
 
     public int getXBombs(int n) {
