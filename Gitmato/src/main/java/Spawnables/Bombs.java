@@ -71,7 +71,7 @@ public class Bombs extends AbstractSpawnables{
             public void run() {
                 randomizeXYBombs();
             }
-        }, 1000); //aika (ms), joka odotetaan
+        }, 1000); //aika (ms), joka odotetaan ENNEN targetteja
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -93,9 +93,9 @@ public class Bombs extends AbstractSpawnables{
                             setYBombs(i, -1000);
                         }
                     }
-                }, 5000);
+                }, 5000); //tulialueet
             }
-        }, 2500); //aika (ms), joka odotetaan
+        }, 2500); //targetit
     }
 
     public Bounds getBoundsBombs(int n) {

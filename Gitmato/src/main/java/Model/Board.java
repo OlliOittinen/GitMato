@@ -48,11 +48,7 @@ public class Board {
     private Highscore hscore = new Highscore();
     private int score;
     private DBConnection connection = new DBConnection();
-    private long currentTime = 0; // nykyinen aika (ms)
-    private long previousTime = 0; // viime framen aika (ms)
-    private double timeCounter = 0; // aikalaskuri (sec)
-    private int frameCounter = 0;
-    private double theRealFpsCounter = 0; // näyttää jatkuvasti oikean fps:n
+
     //Lista Tail paloista
     private ArrayList<Tail> tailList;
     private ArrayList<Tail> tailList2;
@@ -186,23 +182,7 @@ public class Board {
         });
 
     }
-    public double FPS() {
-        currentTime = System.currentTimeMillis();
-        double deltaTime = (double) (currentTime - previousTime) / 1_000;
-        // 1/deltaTime); <- kertoo nykyisen fps joka frame.
-        double interval = 0.5;
 
-        if (timeCounter > interval) {
-            theRealFpsCounter = frameCounter;
-            frameCounter = 0;
-            timeCounter = 0;
-        } else {
-            timeCounter += deltaTime;
-            frameCounter = frameCounter + (int) (1 / interval);
-        }
-        previousTime = currentTime;
-        return theRealFpsCounter;
-    }
     public boolean isIngame() {
         return ingame;
     }

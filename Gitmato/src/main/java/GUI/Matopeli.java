@@ -79,9 +79,11 @@ public class Matopeli extends Application {
     private Snack snack;
     private ArrayList<Worm> worms;
     private ArrayList<Spawnables> powerups;
-    private boolean vsAIDone;
-    private boolean versusDone;
-    private boolean spDone;
+    private long currentTime = 0; // nykyinen aika (ms)
+    private long previousTime = 0; // viime framen aika (ms)
+    private double timeCounter = 0; // aikalaskuri (sec)
+    private int frameCounter = 0;
+    private double theRealFpsCounter = 0; // näyttää jatkuvasti oikean fps:n
 
     public static void main(String[] args) {
         launch(args);
@@ -122,17 +124,7 @@ public class Matopeli extends Application {
             board.setPelimoodi("vsAI");
             pelimoodi = "vs AI";
             window.setScene(gameScene);
-            timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    gameScene.setOnKeyPressed((KeyEvent event) -> {
-                        pc.keyPressed(event);
-                    });
-                    board.updateBoard();
-                    paint(gc);
-                }
-            };
-            timer.start();
+            animate(gc);
         });
 
         //Button for Versus
@@ -143,17 +135,7 @@ public class Matopeli extends Application {
             board.setPelimoodi("versus");
             pelimoodi = "versus";
             window.setScene(gameScene);
-            timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    gameScene.setOnKeyPressed((KeyEvent event) -> {
-                        pc.keyPressed(event);
-                    });
-                    board.updateBoard();
-                    paint(gc);
-                }
-            };
-            timer.start();
+            animate(gc);
         });
         Button button3 = new Button("Single player");
         button3.setOnAction(e
@@ -161,17 +143,7 @@ public class Matopeli extends Application {
             board.setPelimoodi("sp");
             pelimoodi = "sp";
             window.setScene(gameScene);
-            timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    gameScene.setOnKeyPressed((KeyEvent event) -> {
-                        pc.keyPressed(event);
-                    });
-                    board.updateBoard();
-                    paint(gc);
-                }
-            };
-            timer.start();
+            animate(gc);
         });
 
         //Layout 1 - Game mode selector
@@ -213,6 +185,26 @@ public class Matopeli extends Application {
         window.setOnCloseRequest(e -> System.exit(0));
         window.setTitle("Gitmato");
         window.show();
+    }
+
+    private void animate(GraphicsContext gc) {
+        timer = new AnimationTimer() {
+            //fps-throttle
+            private long lastUpdate = 0;
+
+            @Override
+            public void handle(long now) {
+                if (now - lastUpdate >= 10_000_000) {
+
+                    gameScene.setOnKeyPressed((KeyEvent event) -> {
+                        pc.keyPressed(event);
+                    });
+                    board.updateBoard();
+                    paint(gc);
+                }
+            }
+        };
+        timer.start();
     }
 
     public void setWormImage() {
@@ -351,10 +343,24 @@ public class Matopeli extends Application {
             String pt2 = "Pisteet: " + worm2.getPoints();
             g.fillText(hp2, 650, 30);
             g.fillText(pt2, 650, 60);
-
         }
 
-        String FPS = "FPS: " + board.FPS();
+        currentTime = System.currentTimeMillis();
+        double deltaTime = (double) (currentTime - previousTime) / 1_000;
+        // 1/deltaTime); <- kertoo nykyisen fps joka frame.
+        double interval = 0.5;
+
+        if (timeCounter > interval) {
+            theRealFpsCounter = frameCounter;
+            frameCounter = 0;
+            timeCounter = 0;
+        } else {
+            timeCounter += deltaTime;
+            frameCounter = frameCounter + (int) (1 / interval);
+        }
+        previousTime = currentTime;
+
+        String FPS = "FPS: " + theRealFpsCounter;
         g.setFill(Color.WHITE);
         g.setFont(Font.font(15));
         g.fillText(FPS, 400, 30);
