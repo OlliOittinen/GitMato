@@ -1,4 +1,8 @@
 package Spawnables;
+/**
+ *
+ *@author Olli
+*/
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;

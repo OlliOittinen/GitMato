@@ -12,7 +12,7 @@ import javafx.scene.control.Alert.AlertType;
 
 /**
  *
- * @author Eero
+ * @author Eero, Olli
  */
 public class DBConnection {
 

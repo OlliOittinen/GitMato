@@ -5,13 +5,6 @@
  */
 package Spawnables;
 
-import Sound.Music;
-import javafx.geometry.Bounds;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
-
-
 /**
  *
  * @author maxki

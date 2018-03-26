@@ -10,16 +10,12 @@ import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javafx.scene.image.Image;
-
 /**
  *
  * @author Olli
  */
 public class Confuse extends AbstractSpawnables {
 
-    private Image confusion;
-            
     public void confuse(Worm worm, Worm worm2) {
         Music.reverse.play();
         worm.setPoints(worm.getPoints()+100);
@@ -38,10 +34,6 @@ public class Confuse extends AbstractSpawnables {
     
     public Confuse() {
         init();
-    }
-
-    public Image getConfusionImage() {
-        return confusion;
     }
 
 }

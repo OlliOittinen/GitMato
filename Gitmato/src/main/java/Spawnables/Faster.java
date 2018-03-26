@@ -10,8 +10,6 @@ import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javafx.scene.image.Image;
-
 /**
  *
  * @author Olli

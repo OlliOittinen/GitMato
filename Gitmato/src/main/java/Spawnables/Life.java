@@ -6,16 +6,13 @@
 package Spawnables;
 
 import Model.Worm;
-
 import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javafx.scene.image.Image;
-
 /**
  *
- * @author maxki
+ * @author maxki, Olli
  */
 public class Life extends AbstractSpawnables{
     
