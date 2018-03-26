@@ -122,17 +122,7 @@ public class Matopeli extends Application {
             board.setPelimoodi("vsAI");
             pelimoodi = "vs AI";
             window.setScene(gameScene);
-            timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    gameScene.setOnKeyPressed((KeyEvent event) -> {
-                        pc.keyPressed(event);
-                    });
-                    board.updateBoard();
-                    paint(gc);
-                }
-            };
-            timer.start();
+            animate(gc);
         });
 
         //Button for Versus
@@ -143,17 +133,7 @@ public class Matopeli extends Application {
             board.setPelimoodi("versus");
             pelimoodi = "versus";
             window.setScene(gameScene);
-            timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    gameScene.setOnKeyPressed((KeyEvent event) -> {
-                        pc.keyPressed(event);
-                    });
-                    board.updateBoard();
-                    paint(gc);
-                }
-            };
-            timer.start();
+            animate(gc);
         });
         Button button3 = new Button("Single player");
         button3.setOnAction(e
@@ -161,17 +141,7 @@ public class Matopeli extends Application {
             board.setPelimoodi("sp");
             pelimoodi = "sp";
             window.setScene(gameScene);
-            timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    gameScene.setOnKeyPressed((KeyEvent event) -> {
-                        pc.keyPressed(event);
-                    });
-                    board.updateBoard();
-                    paint(gc);
-                }
-            };
-            timer.start();
+            animate(gc);
         });
 
         //Layout 1 - Game mode selector
@@ -211,6 +181,26 @@ public class Matopeli extends Application {
         window.setOnCloseRequest(e -> System.exit(0));
         window.setTitle("Gitmato");
         window.show();
+    }
+
+    private void animate(GraphicsContext gc) {
+        timer = new AnimationTimer() {
+            //fps-throttle
+            private long lastUpdate = 0;
+
+            @Override
+            public void handle(long now) {
+                if (now - lastUpdate >= 10_000_000) {
+
+                    gameScene.setOnKeyPressed((KeyEvent event) -> {
+                        pc.keyPressed(event);
+                    });
+                    board.updateBoard();
+                    paint(gc);
+                }
+            }
+        };
+        timer.start();
     }
 
     public void setWormImage() {
