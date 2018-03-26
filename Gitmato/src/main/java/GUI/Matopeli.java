@@ -22,12 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-@FXML
 public class Matopeli extends Application {
-
-    public static Stage getWindow() {
-        return window;
-    }
 
     private static Stage window;
     private Scene mainMenuScene, gameScene, gameoverScene;
