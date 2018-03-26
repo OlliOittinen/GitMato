@@ -11,6 +11,7 @@ import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.shape.*;
 
@@ -97,8 +98,9 @@ public class Bombs extends AbstractSpawnables{
         }, 2500); //aika (ms), joka odotetaan
     }
 
-    public Ellipse getBoundsBombs(int n) {
-        return new Ellipse(xlist[n] + 3, ylist[n] + 3, 200, 200);
+    public Bounds getBoundsBombs(int n) {
+        Ellipse b = new Ellipse(xlist[n] + 3, ylist[n] + 3, 200, 200);
+        return b.getLayoutBounds();
     }
 
     public int getXBombs(int n) {

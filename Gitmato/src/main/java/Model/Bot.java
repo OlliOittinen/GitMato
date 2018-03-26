@@ -42,12 +42,12 @@ public class Bot {
 
     public void BlueAIBot() {
 
-        Ellipse pb1 = bombs.getBoundsBombs(1);
-        Ellipse pb2 = bombs.getBoundsBombs(2);
-        Ellipse pb3 = bombs.getBoundsBombs(3);
-        Ellipse pb4 = bombs.getBoundsBombs(4);
-        Ellipse pb5 = bombs.getBoundsBombs(5);
-        Ellipse pb6 = bombs.getBoundsBombs(6);
+        Bounds pb1 = bombs.getBoundsBombs(1);
+        Bounds pb2 = bombs.getBoundsBombs(2);
+        Bounds pb3 = bombs.getBoundsBombs(3);
+        Bounds pb4 = bombs.getBoundsBombs(4);
+        Bounds pb5 = bombs.getBoundsBombs(5);
+        Bounds pb6 = bombs.getBoundsBombs(6);
 
         if (tailNro2 > 3) {
             if (worm2.getBounds().intersects(body2.get(body2.size() - 1).getBounds()) && body2.size() > 3) {
