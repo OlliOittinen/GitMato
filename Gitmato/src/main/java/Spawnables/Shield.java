@@ -18,8 +18,6 @@ import javafx.scene.image.Image;
  */
 public class Shield extends AbstractSpawnables{
 
-    private Image shieldeffect = new Image("images/ShieldEffect.png");
-
     public Shield() {
         init();
     }
@@ -35,18 +33,6 @@ public class Shield extends AbstractSpawnables{
                 worm.setShield(false);
             }
         }, time); //aika (ms), joka odotetaan
-    }
-    
-@Override
-    public void init() {
-        image = new Image("images/Shield.png");
-        x = -100;
-        y = -100;
-    }
-
- public Image getShieldImage() {
-       Image img = shieldeffect;
-       return img;
     }
 
     public boolean isActive(Worm worm) {

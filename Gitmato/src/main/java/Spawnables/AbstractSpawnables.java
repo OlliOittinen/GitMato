@@ -17,8 +17,6 @@ public abstract class AbstractSpawnables implements Spawnables {
         image = ii.getImage();
     }
 
-    public abstract void init();
-
     @Override
     public Bounds getBoundsForIcon(){
         Rectangle icon = new Rectangle(x + 3, y + 3, 30, 30);
@@ -54,5 +52,11 @@ public abstract class AbstractSpawnables implements Spawnables {
     public void randomizePowerUpLocation() {
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));
+    }
+
+    @Override
+    public void init(){
+        setX(-100);
+        setY(-100);
     }
 }

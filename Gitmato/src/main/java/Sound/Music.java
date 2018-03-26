@@ -18,7 +18,7 @@ public class Music {
     public static Music reverse = new Music("confusion.wav");
     public static Music snack = new Music("snack.wav");
     public static Music loseLife = new Music("lostlife.wav");
-    
+
 
     public Music(String fileName) {
         try {

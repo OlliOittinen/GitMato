@@ -47,12 +47,4 @@ public class Life extends AbstractSpawnables{
             }, 1000);
     }
 
-    @Override
-    public void init() {
-        image = new Image("images/Life_1.png");
-            
-        setX(-100);
-        setY(-100);
-    }
-
 }

@@ -40,15 +40,6 @@ public class Confuse extends AbstractSpawnables {
         init();
     }
 
-    @Override
-    public void init() {
-        image = new Image("images/Reverse.png");
-        confusion = new Image("images/confusion.png");
-            
-        setX(-100);
-        setY(-100);
-    }
-
     public Image getConfusionImage() {
         return confusion;
     }

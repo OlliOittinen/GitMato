@@ -38,12 +38,4 @@ public class Faster extends AbstractSpawnables {
         init();
     }
 
-    @Override
-    public void init() {
-        image = new Image("images/SpeedUp.png");
-        
-        setX(-100);
-        setY(-100);
-    }
-
 }

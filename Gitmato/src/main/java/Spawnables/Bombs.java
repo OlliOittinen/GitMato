@@ -52,10 +52,6 @@ public class Bombs extends AbstractSpawnables{
 
     @Override
     public void init() {
-        image = new Image("images/Bombs(800-600).png");
-        image2 = new Image("images/Target2.png");
-        image3 = new Image("images/firestorm2.png");
-
         setX(-100);
         setY(-100);
         for (int i = 0; i < xlist.length; i++) {

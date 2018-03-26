@@ -48,12 +48,6 @@ public class Laser extends AbstractSpawnables {
 
     @Override
     public void init() {
-        image = new Image("images/Lasercannon.png");
-        image2 = new Image("images/LazerH.png");
-        image3 = new Image("images/lazerV.png");
-        image4 = new Image("images/lasersightV.png");
-        image5 = new Image("images/lasersightH.png");
-
         setX(-100);
         setY(-100);
         setX2(-1000);

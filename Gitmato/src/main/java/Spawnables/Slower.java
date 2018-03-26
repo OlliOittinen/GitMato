@@ -39,12 +39,4 @@ public class Slower extends AbstractSpawnables{
         init();
     }
 
-    @Override
-    public void init() {
-        image = new Image("images/SlowDown.png");
-            
-        setX(-100);
-        setY(-100);
-    }
-
 }
