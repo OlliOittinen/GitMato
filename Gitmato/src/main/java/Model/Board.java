@@ -266,9 +266,9 @@ public class Board {
         Bounds pl = HP.getBoundsForIcon();
         Bounds psh = shield.getBoundsForIcon();
         Bounds pb = bombs.getBoundsForIcon();
-        Bounds pb2 = bombs.getBoundsBombs(2);
-        Bounds pb3 = bombs.getBoundsBombs(4);
-        Bounds pb4 = bombs.getBoundsBombs(6);
+        Ellipse pb2 = bombs.getBoundsBombs(2);
+        Ellipse pb3 = bombs.getBoundsBombs(4);
+        Ellipse pb4 = bombs.getBoundsBombs(6);
         Bounds pla = laser.getBoundsForIcon();
         Rectangle beam = laser.getBoundsB();
 
