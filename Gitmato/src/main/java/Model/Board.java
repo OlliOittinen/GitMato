@@ -211,7 +211,6 @@ public class Board {
         this.p2 = new Point2D(0, 0);
 
         initBoard();
-
     }
 
     private void initBoard() {
@@ -223,7 +222,6 @@ public class Board {
         shield = new Shield();
         bombs = new Bombs();
         laser = new Laser();
-
         snack = new Snack();
 
         pickableList.add(faster);
@@ -239,7 +237,6 @@ public class Board {
         bot = new Bot(this);
 
         ingame = true;
-
         if (pelimoodi.equals("vs AI")) {
             bot.BotTurnDown();
         }

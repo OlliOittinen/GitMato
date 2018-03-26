@@ -199,7 +199,7 @@ public class Matopeli extends Application {
                         pc.keyPressed(event);
                     });
                     board.updateBoard();
-                    paint(gc);
+                    draw(gc);
                 }
             }
         };
@@ -242,10 +242,74 @@ public class Matopeli extends Application {
         }
     }
 
-    private void paint(GraphicsContext g) {
-
+    private void draw(GraphicsContext g) {
         if (board.isIngame()) {
-            draw(g);
+
+            body = board.getTailList();
+            body2 = board.getTailList2();
+            tailsize = body.size();
+            tailsize2 = body2.size();
+            g.drawImage(background, 0, 0);
+            if (tailsize > 0) {
+                for (int i = 0; i < tailsize; i++) {
+                    // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
+                    g.drawImage(wormtail, body.get(i).getX(), body.get(i).getY());
+                }
+            }
+
+            if (tailsize2 > 0) {
+                for (int i = 0; i < tailsize2; i++) {
+                    // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
+                    g.drawImage(wormtail2, body2.get(i).getX(), body2.get(i).getY());
+                }
+            }
+
+            // piirretään power-upit matojen päälle, jotta ne ovat helpommit nähtävissä
+            g.drawImage(snackicon, snack.getX(), snack.getY());
+            g.drawImage(fastericon, faster.getX(), faster.getY());
+            g.drawImage(slowericon, slower.getX(), slower.getY());
+            g.drawImage(confuseicon, confuse.getX(), confuse.getY());
+            g.drawImage(lifeicon, life.getX(), life.getY());
+            g.drawImage(shieldicon, shield.getX(), shield.getY());
+            g.drawImage(bombicon, bombs.getX(), bombs.getY());
+            g.drawImage(bombtarget, bombs.getXBombs(1), bombs.getYBombs(1));
+            g.drawImage(bombfire, bombs.getXBombs(2), bombs.getYBombs(2));
+            g.drawImage(bombtarget, bombs.getXBombs(3), bombs.getYBombs(3));
+            g.drawImage(bombfire, bombs.getXBombs(4), bombs.getYBombs(4));
+            g.drawImage(bombtarget, bombs.getXBombs(5), bombs.getYBombs(5));
+            g.drawImage(bombfire, bombs.getXBombs(6), bombs.getYBombs(6));
+            g.drawImage(lasericon, laser.getX(), laser.getY());
+
+            if (!laser.getLethal()) {
+                g.drawImage(lasersightH, laser.getX3(), laser.getY3());
+                g.drawImage(lasersightV, laser.getX2(), laser.getY2());
+
+            } else {
+                g.drawImage(laserH, laser.getX3(), laser.getY3());
+                g.drawImage(laserV, laser.getX2(), laser.getY2());
+            }
+
+            g.drawImage(wormImage, worm.getX(), worm.getY());
+
+            if (pelimoodi != "sp") {
+                g.drawImage(worm2Image, worm2.getX(), worm2.getY());
+            }
+            if (worm.getShield(worm)) {
+                g.drawImage(shieldeffect, worm.getX() - 5, worm.getY() - 4);
+            }
+            if (worm2.getShield(worm2)) {
+                g.drawImage(shieldeffect, worm2.getX() - 5, worm2.getY() - 4);
+            }
+            if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
+                //drawGameOver(g);
+            }
+            if (worm.getReverse(worm)) {
+                g.drawImage(confuseEffect, worm.getX() - 5, worm.getY() - 4);
+            }
+            if (worm2.getReverse(worm2)) {
+                g.drawImage(confuseEffect, worm2.getX() - 5, worm2.getY() - 4);
+            }
+            drawPoints(g);
         } else {
             Music.death.play();
             window.setScene(gameoverScene);
@@ -253,76 +317,6 @@ public class Matopeli extends Application {
             timer.stop();
             reset();
         }
-    }
-
-    private void draw(GraphicsContext g) {
-
-        body = board.getTailList();
-        body2 = board.getTailList2();
-        tailsize = body.size();
-        tailsize2 = body2.size();
-        g.drawImage(background, 0, 0);
-        if (tailsize > 0) {
-            for (int i = 0; i < tailsize; i++) {
-                // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
-                g.drawImage(wormtail, body.get(i).getX(), body.get(i).getY());
-            }
-        }
-
-        if (tailsize2 > 0) {
-            for (int i = 0; i < tailsize2; i++) {
-                // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
-                g.drawImage(wormtail2, body2.get(i).getX(), body2.get(i).getY());
-            }
-        }
-
-        // piirretään power-upit matojen päälle, jotta ne ovat helpommit nähtävissä
-        g.drawImage(snackicon, snack.getX(), snack.getY());
-        g.drawImage(fastericon, faster.getX(), faster.getY());
-        g.drawImage(slowericon, slower.getX(), slower.getY());
-        g.drawImage(confuseicon, confuse.getX(), confuse.getY());
-        g.drawImage(lifeicon, life.getX(), life.getY());
-        g.drawImage(shieldicon, shield.getX(), shield.getY());
-        g.drawImage(bombicon, bombs.getX(), bombs.getY());
-        g.drawImage(bombtarget, bombs.getXBombs(1), bombs.getYBombs(1));
-        g.drawImage(bombfire, bombs.getXBombs(2), bombs.getYBombs(2));
-        g.drawImage(bombtarget, bombs.getXBombs(3), bombs.getYBombs(3));
-        g.drawImage(bombfire, bombs.getXBombs(4), bombs.getYBombs(4));
-        g.drawImage(bombtarget, bombs.getXBombs(5), bombs.getYBombs(5));
-        g.drawImage(bombfire, bombs.getXBombs(6), bombs.getYBombs(6));
-        g.drawImage(lasericon, laser.getX(), laser.getY());
-
-        if (!laser.getLethal()) {
-            g.drawImage(lasersightH, laser.getX3(), laser.getY3());
-            g.drawImage(lasersightV, laser.getX2(), laser.getY2());
-
-        } else {
-            g.drawImage(laserH, laser.getX3(), laser.getY3());
-            g.drawImage(laserV, laser.getX2(), laser.getY2());
-        }
-
-        g.drawImage(wormImage, worm.getX(), worm.getY());
-
-        if (pelimoodi != "sp") {
-            g.drawImage(worm2Image, worm2.getX(), worm2.getY());
-        }
-        if (worm.getShield(worm)) {
-            g.drawImage(shieldeffect, worm.getX() - 5, worm.getY() - 4);
-        }
-        if (worm2.getShield(worm2)) {
-            g.drawImage(shieldeffect, worm2.getX() - 5, worm2.getY() - 4);
-        }
-        if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
-            //drawGameOver(g);
-        }
-        if (worm.getReverse(worm)) {
-            g.drawImage(confuseEffect, worm.getX() - 5, worm.getY() - 4);
-        }
-        if (worm2.getReverse(worm2)) {
-            g.drawImage(confuseEffect, worm2.getX() - 5, worm2.getY() - 4);
-        }
-        drawPoints(g);
-
     }
 
     //also handles FPS-counter
