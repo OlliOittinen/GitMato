@@ -162,11 +162,13 @@ public class Matopeli extends Application {
         //Layout 2 - Versus
         //------GAME OVER SCENE---------------
         VBox layout5 = new VBox(20);
+        layout5.setId("pane2");
         layout5.setAlignment(Pos.CENTER);
         Label gameOver = new Label("GAME OVER");
+        gameOver.setId("gameover");
         Button restart = new Button("Restart");
         Button backToSS = new Button("Main menu");
-        Button highscore = new Button("Submit highscore");
+        Button highscore = new Button("Submit\nhighscore");
         restart.setOnAction(e -> {
             reset();
             window.setScene(gameScene);
