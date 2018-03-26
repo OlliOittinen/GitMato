@@ -8,6 +8,7 @@ import Spawnables.*;
 import java.util.ArrayList;
 
 import javafx.application.*;
+import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
@@ -21,9 +22,14 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
+@FXML
 public class Matopeli extends Application {
 
-    private Stage window;
+    public static Stage getWindow() {
+        return window;
+    }
+
+    private static Stage window;
     private Scene mainMenuScene, gameScene, gameoverScene;
 
     Image background = new Image("images/BlueBG800x600.png");
@@ -136,6 +142,7 @@ public class Matopeli extends Application {
 
         //Button for Versus
         Button button2 = new Button("Versus");
+        button2.setId("Versus");
         button2.setOnAction(e
                 -> {
             board.setPelimoodi("versus");
