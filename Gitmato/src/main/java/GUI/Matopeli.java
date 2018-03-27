@@ -85,6 +85,7 @@ public class Matopeli extends Application {
     private int frameCounter = 0;
     private double theRealFpsCounter = 0; // constantly shows the FPS
     private int score = 0;
+    private Label winner_label = new Label();
 
     public static void main(String[] args) {
         launch(args);
@@ -222,6 +223,7 @@ public class Matopeli extends Application {
 
         //create a label for game over, handled in css
         Label gameOverLabel = new Label("GAME OVER");
+        Label winner_label = new Label("TESTING");
         gameOverLabel.setId("gameOverLabel");
 
         //buttons
@@ -244,7 +246,7 @@ public class Matopeli extends Application {
         });
 
         //add buttons to the layout
-        gameOverLayout.getChildren().addAll(gameOverLabel, restart, backToSS, highscore);
+        gameOverLayout.getChildren().addAll(gameOverLabel, winner_label, restart, backToSS, highscore);
 
         //create game over scene based on this layout
         gameOverScene = new Scene(gameOverLayout, width, height);
@@ -411,8 +413,12 @@ public class Matopeli extends Application {
             //stop the background music, play death music
             if(worm.getLife() < worm2.getLife()) {
                 score = worm2.getPoints();
+                winner_label.setText("RED WON");
+                winner_label.setTextFill(Color.RED);
             } else {
                 score = worm.getPoints();
+                winner_label.setText("BLUE WON");
+                winner_label.setTextFill(Color.BLUE);
             }
             Music.backgroundMusic.stop();
             Music.death.play();
