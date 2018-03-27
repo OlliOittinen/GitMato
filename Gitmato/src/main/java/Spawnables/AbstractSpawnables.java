@@ -13,13 +13,6 @@ public abstract class AbstractSpawnables implements Spawnables {
 
     int x;
     int y;
-    Image image;
-
-    @Override
-    public void loadImage(String imageName) {
-        ImageView ii = new ImageView(imageName);
-        image = ii.getImage();
-    }
 
     @Override
     public Bounds getBoundsForIcon(){
@@ -45,11 +38,6 @@ public abstract class AbstractSpawnables implements Spawnables {
     @Override
     public void setY(int y) {
         this.y = y;
-    }
-
-    @Override
-    public Image getImage() {
-        return image;
     }
 
     @Override

@@ -14,15 +14,15 @@ import javafx.scene.image.Image;
  * @author Olli
  */
 public interface Spawnables {
-   void loadImage(String imageName);
+
    void init();
    Bounds getBoundsForIcon();
    int getX();
    int getY();
    void setX(int x);
    void setY(int y);
-   Image getImage();
    void randomizePowerUpLocation();
+
 }
 
     
