@@ -29,12 +29,8 @@ public class Board {
     private ArrayList<Worm> worms;
     private Worm worm;
     private Worm worm2;
-/*
-    private PlayerController control;
-*/
     private Tail tail;
-   private Tail tail2;
-/*    private Timeline timer;*/
+    private Tail tail2;
     private Snack snack;
     private Faster faster;
     private Slower slower;
@@ -46,8 +42,6 @@ public class Board {
     private String gameMode;
     private Matopeli engine;
     private Bot bot;
-    public Highscore hscore = new Highscore();
-    private int score;
     private DBConnection connection = new DBConnection();
 
     //Lista Tail paloista
@@ -72,12 +66,6 @@ public class Board {
     }
     public Worm getWorm2() {
         return worm2;
-    }
-    public Tail getTail() {
-        return tail;
-    }
-    public Tail getTail2() {
-        return tail2;
     }
     public int getTailNro2() {
         return tailNro2;

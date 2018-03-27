@@ -269,7 +269,7 @@ public class Matopeli extends Application {
     }
 
     private void draw(GraphicsContext g) {
-        //as long as board tells GUI to be active
+        //as long as board tells GUI to be active; the game hasn't ended
         if (board.isIngame()) {
 
             //update worm bodies and sizes of the tail, get these from the board
@@ -472,7 +472,7 @@ public class Matopeli extends Application {
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
     }
-    public void createGameOverScene(){
+    private void createGameOverScene(){
         //create a new vertical box, center it, and add buttons to it, set id for css
         VBox gameOverLayout = new VBox(20);
         gameOverLayout.setId("gameOver");
@@ -509,7 +509,7 @@ public class Matopeli extends Application {
         //add css to this scene
         gameOverScene.getStylesheets().add("Styling/styling.css");
     }
-    public void createHighscoreScene() {
+    private void createHighscoreScene() {
         //create a gridpane
         GridPane grid = new GridPane();
 
@@ -595,9 +595,5 @@ public class Matopeli extends Application {
         grid.getChildren().add(vbox);
 
         highscoreTableScene = new Scene(grid,width,height);
-
     }
-
-
-
 }
