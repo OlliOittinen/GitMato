@@ -565,8 +565,10 @@ public class Matopeli extends Application {
         highscoreScene.getStylesheets().add("Styling/styling.css");
     }
     public void createHighscoreTableScene(ArrayList<String> scorelist) {
+        //search the index of of the score from the sorted list from database
         int indexOf = scorelist.indexOf(username + " " + score) + 1;
         String highscore = "";
+        //go through the results list and attach top 10 index, score and name values to new string "highscore"
         int i = 0;
         for (String s : scorelist) {
             i++;
@@ -584,16 +586,23 @@ public class Matopeli extends Application {
         grid.setHgap(10);
 
         //set vertical gap
-        grid.setVgap(100);
+        grid.setVgap(10);
 
-        VBox vbox = new VBox();
+        VBox vbox = new VBox(40);
         vbox.setAlignment(Pos.CENTER);
-        Text headline = new Text("Top 10\n You placed: #" + indexOf + " with " + score + " points!");
-        headline.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+        Text headline = new Text("Top 10\nYou placed: #" + indexOf + " with " + score + " points!");
+        headline.setFill(Color.WHITE);
+        headline.setId("highscoretable_headline");
         Label highscores = new Label(highscore);
-        vbox.getChildren().addAll(headline, highscores);
+        highscores.setId("top_10_highscores");
+        Button okbutton = new Button("OK");
+        //handeler for ok button
+        okbutton.setOnAction(e -> window.setScene(gameOverScene));
+        vbox.getChildren().addAll(headline, highscores, okbutton);
         grid.getChildren().add(vbox);
+        grid.setId("highscoretable_scene");
 
         highscoreTableScene = new Scene(grid,width,height);
+        highscoreTableScene.getStylesheets().add("Styling/styling.css");
     }
 }
