@@ -28,15 +28,13 @@ public class Worm {
     private boolean reverse = false; //Reverse debuff up
     private int points;
 
-
     private Image image;    
     private Image wormup;
     private Image wormdown;
     private Image wormleft;
     private Image wormright;
 
-    
-    private double nopeus = 2;
+    private double nopeus = 4;
     private int life = 3;
 
     public int getLife() {

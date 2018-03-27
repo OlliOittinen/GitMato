@@ -139,11 +139,11 @@ public class Matopeli extends Application {
         //when clicked
         button1.setOnAction(e
                 -> {
-            //set the game mode as such, set the current scene as game scene, start drawing in animate(gc)
+            //set the game mode as such, set the current scene as game scene, start drawing in animationLoop(gc)
             board.setPelimoodi("vs AI");
             pelimoodi = "vs AI";
             window.setScene(gameScene);
-            animate(gc);
+            animationLoop(gc);
         });
 
         //identical to the vs AI, but with changes to versus
@@ -155,7 +155,7 @@ public class Matopeli extends Application {
             board.setPelimoodi("versus");
             pelimoodi = "versus";
             window.setScene(gameScene);
-            animate(gc);
+            animationLoop(gc);
         });
 
         //see above
@@ -166,7 +166,7 @@ public class Matopeli extends Application {
             board.setPelimoodi("sp");
             pelimoodi = "sp";
             window.setScene(gameScene);
-            animate(gc);
+            animationLoop(gc);
         });
 
         //------------Main Menu Scene - Game mode selector --------------
@@ -230,7 +230,7 @@ public class Matopeli extends Application {
         window.show();
     }
 
-    private void animate(GraphicsContext gc) {
+    private void animationLoop(GraphicsContext gc) {
         //timer handles all the drawing in a loop
         timer = new AnimationTimer() {
             //fps-throttle

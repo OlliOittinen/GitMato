@@ -499,11 +499,11 @@ public class Board {
         switch (n) {
             case 1:
                 tailNro++;
-                tailList.add(tail = new Tail(tailNro * 15, 1));
+                tailList.add(tail = new Tail(tailNro * 8, 1));
                 break;
             case 2:
                 tailNro2++;
-                tailList2.add(tail = new Tail(tailNro2 * 15, 2));
+                tailList2.add(tail = new Tail(tailNro2 * 8, 2));
         }
     }
 
