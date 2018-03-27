@@ -256,36 +256,36 @@ public class Matopeli extends Application {
 
     public void setWormImage() {
         //red (left) worm
-        if (worm.getSuunta() == 1) {
+        if (worm.getDirection() == 1) {
             wormImage = redwormleft;
         }
 
-        if (worm.getSuunta() == 2) {
+        if (worm.getDirection() == 2) {
             wormImage = redwormright;
         }
 
-        if (worm.getSuunta() == 3) {
+        if (worm.getDirection() == 3) {
             wormImage = redwormup;
         }
 
-        if (worm.getSuunta() == 4) {
+        if (worm.getDirection() == 4) {
             wormImage = redwormdown;
         }
 
         //blue (right) worm
-        if (worm2.getSuunta() == 1) {
+        if (worm2.getDirection() == 1) {
             worm2Image = bluewormleft;
         }
 
-        if (worm2.getSuunta() == 2) {
+        if (worm2.getDirection() == 2) {
             worm2Image = bluewormright;
         }
 
-        if (worm2.getSuunta() == 3) {
+        if (worm2.getDirection() == 3) {
             worm2Image = bluewormup;
         }
 
-        if (worm2.getSuunta() == 4) {
+        if (worm2.getDirection() == 4) {
             worm2Image = bluewormdown;
         }
     }

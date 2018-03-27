@@ -17,19 +17,25 @@ import java.util.TimerTask;
  */
 public class Slower extends AbstractSpawnables{
 
+    //requires both worms for correct application
     public void slower(Worm worm, Worm worm2) {
+        //play the corresponding music
         Music.slowerPowerup.play();
+        //add points to the one who picked up
         worm.setPoints(worm.getPoints()+100);
-        worm2.setNopeus(1);
+
+        //slow down the opposing worm temporarily
+        worm2.setSpeed(worm2.getSpeed()-2);
         
         //säätää nopeuden väliaikseks
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                worm2.setNopeus(2);
+                //normalize the speed again
+                worm2.setSpeed(worm2.getSpeed()+2);
             }
-        }, 5000); //aika (ms), joka odotetaan
+        }, 5000); //how long the powerup is in effect
     }
     
     public Slower() {

@@ -39,8 +39,8 @@ public class Laser extends AbstractSpawnables {
         if (lethal) {
             if (worm.getLife() > 1) {
                 worm.randomizeXY();
-                worm.setSuuntaAdv(0);
-                worm.setSuunta(0);
+                worm.setDirectionAdv(0);
+                worm.setDirection(0);
             }
             Life.loseLife(worm);
         }

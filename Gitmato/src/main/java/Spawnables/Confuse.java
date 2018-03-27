@@ -16,22 +16,33 @@ import java.util.TimerTask;
  */
 public class Confuse extends AbstractSpawnables {
 
+    //requires both worms to set effects correctly
     public void confuse(Worm worm, Worm worm2) {
+        //play the corresponding music
         Music.reverse.play();
+        //add points to the one who picked up the icon
         worm.setPoints(worm.getPoints()+100);
-        worm2.setNopeus(worm2.getNopeus()*-1);
+
+        //set the speed of the opposing worm to be the opposite
+        worm2.setSpeed(worm2.getSpeed()*-1);
+
+        //set the boolean for drawing the effect on top of the worm to be true
         worm2.setReverse(true);
-        //säätää nopeuden väliaikseks
+
+        //sets this powerup to be temporary
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                worm2.setNopeus(worm2.getNopeus()*-1);
+                //after the delay, set the speed to be opposing of opposing (normal) again
+                worm2.setSpeed(worm2.getSpeed()*-1);
+                //set the boolean false again, so don't draw the effect anymore
                 worm2.setReverse(false);
             }
-        }, 5000); //aika (ms), joka odotetaan
+        }, 5000); //this marks the delay ie. the time after all the stuff under timer.schedule is done
     }
-    
+
+    //constructor calls the init() from superclass
     public Confuse() {
         init();
     }

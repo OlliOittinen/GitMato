@@ -79,8 +79,8 @@ public class Bot {
             }
         }
 
-        if (worms.get(1).getX() < 20 && worms.get(1).getSuunta() != 4) {
-            if (worms.get(1).getSuunta() != 2) {
+        if (worms.get(1).getX() < 20 && worms.get(1).getDirection() != 4) {
+            if (worms.get(1).getDirection() != 2) {
                 BotTurnUp();
                 worms.get(1).setX(25);
             }
@@ -92,8 +92,8 @@ public class Bot {
 
         }
 
-        if (worms.get(1).getX() > 715 && worms.get(1).getSuunta() != 3) {
-            if (worms.get(1).getSuunta() != 1) {
+        if (worms.get(1).getX() > 715 && worms.get(1).getDirection() != 3) {
+            if (worms.get(1).getDirection() != 1) {
                 BotTurnDown();
                 worms.get(1).setX(710);
             }
@@ -105,8 +105,8 @@ public class Bot {
 
         }
 
-        if (worms.get(1).getY() > 540 && worms.get(1).getSuunta() != 2) {
-            if (worms.get(1).getSuunta() != 3) {
+        if (worms.get(1).getY() > 540 && worms.get(1).getDirection() != 2) {
+            if (worms.get(1).getDirection() != 3) {
                 BotTurnLeft();
                 worms.get(1).setY(535);
             }
@@ -118,8 +118,8 @@ public class Bot {
 
         }
 
-        if ((worms.get(1).getY() < 20 && worms.get(1).getSuunta() != 1)) {
-            if (worms.get(1).getSuunta() != 4) {
+        if ((worms.get(1).getY() < 20 && worms.get(1).getDirection() != 1)) {
+            if (worms.get(1).getDirection() != 4) {
                 BotTurnRight();
                 worms.get(1).setY(25);
             }
@@ -136,7 +136,7 @@ public class Bot {
             Bounds MatotailForAI = body.get(i).getBounds();
 
             Rectangle l2 = laser.getBoundsB();
-            if ((AIleft.intersects(MatotailForAI) || pb1.intersects(AIleft) || pb2.intersects(AIleft) || pb3.intersects(AIleft) || pb4.intersects(AIleft) || pb5.intersects(AIleft) || pb6.intersects(AIleft) || (l2.intersects(AIleft) && laser.getHorizontal()) || (l2.intersects(AIleft) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getSuunta() == 1 || worms.get(1).getReverse(worms.get(1)))) {
+            if ((AIleft.intersects(MatotailForAI) || pb1.intersects(AIleft) || pb2.intersects(AIleft) || pb3.intersects(AIleft) || pb4.intersects(AIleft) || pb5.intersects(AIleft) || pb6.intersects(AIleft) || (l2.intersects(AIleft) && laser.getHorizontal()) || (l2.intersects(AIleft) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 1 || worms.get(1).getReverse(worms.get(1)))) {
                 int n = (int) (Math.random() * 1);
 
                 switch (n) {
@@ -161,7 +161,7 @@ public class Bot {
             Bounds MatotailForAI = body.get(i).getBounds();
 
             Rectangle l2 = laser.getBoundsB();
-            if ((AIright.intersects(MatotailForAI) || pb1.intersects(AIright) || pb2.intersects(AIright) || pb3.intersects(AIright) || pb4.intersects(AIright) || pb5.intersects(AIright) || pb6.intersects(AIright) || (l2.intersects(AIright) && laser.getHorizontal()) || (l2.intersects(AIright) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getSuunta() == 2 || worms.get(1).getReverse(worms.get(1)))) {
+            if ((AIright.intersects(MatotailForAI) || pb1.intersects(AIright) || pb2.intersects(AIright) || pb3.intersects(AIright) || pb4.intersects(AIright) || pb5.intersects(AIright) || pb6.intersects(AIright) || (l2.intersects(AIright) && laser.getHorizontal()) || (l2.intersects(AIright) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 2 || worms.get(1).getReverse(worms.get(1)))) {
                 int n = (int) (Math.random() * 2);
 
                 switch (n) {
@@ -186,7 +186,7 @@ public class Bot {
             Bounds MatotailForAI = body.get(i).getBounds();
 
             Rectangle l2 = laser.getBoundsB();
-            if ((AIup.intersects(MatotailForAI) || pb1.intersects(AIup) || pb2.intersects(AIup) || pb3.intersects(AIup) || pb4.intersects(AIup) || pb5.intersects(AIup) || pb6.intersects(AIup) || (l2.intersects(AIup) && !laser.getHorizontal()) || (l2.intersects(AIup) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getSuunta() == 3 || worms.get(1).getReverse(worms.get(1)))) {
+            if ((AIup.intersects(MatotailForAI) || pb1.intersects(AIup) || pb2.intersects(AIup) || pb3.intersects(AIup) || pb4.intersects(AIup) || pb5.intersects(AIup) || pb6.intersects(AIup) || (l2.intersects(AIup) && !laser.getHorizontal()) || (l2.intersects(AIup) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 3 || worms.get(1).getReverse(worms.get(1)))) {
                 int n = (int) (Math.random() * 2);
 
                 switch (n) {
@@ -211,7 +211,7 @@ public class Bot {
             Bounds MatotailForAI = body.get(i).getBounds();
 
             Rectangle l2 = laser.getBoundsB();
-            if ((AIdown.intersects(MatotailForAI) || pb1.intersects(AIdown) || pb2.intersects(AIdown) || pb3.intersects(AIdown) || pb4.intersects(AIdown) || pb5.intersects(AIdown) || pb6.intersects(AIdown) || (l2.intersects(AIdown) && !laser.getHorizontal()) || (l2.intersects(AIdown) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getSuunta() == 4 || worms.get(1).getReverse(worms.get(1)))) {
+            if ((AIdown.intersects(MatotailForAI) || pb1.intersects(AIdown) || pb2.intersects(AIdown) || pb3.intersects(AIdown) || pb4.intersects(AIdown) || pb5.intersects(AIdown) || pb6.intersects(AIdown) || (l2.intersects(AIdown) && !laser.getHorizontal()) || (l2.intersects(AIdown) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 4 || worms.get(1).getReverse(worms.get(1)))) {
                 int n = (int) (Math.random() * 2);
 
                 switch (n) {
@@ -254,22 +254,22 @@ public class Bot {
     }
 
     public void BotTurnLeft() {
-        worms.get(1).setSuunta(1);
-        worms.get(1).setSuuntaAdv(2);
+        worms.get(1).setDirection(1);
+        worms.get(1).setDirectionAdv(2);
     }
 
     public void BotTurnRight() {
-        worms.get(1).setSuunta(2);
-        worms.get(1).setSuuntaAdv(2);
+        worms.get(1).setDirection(2);
+        worms.get(1).setDirectionAdv(2);
     }
 
     private void BotTurnUp() {
-        worms.get(1).setSuunta(3);
-        worms.get(1).setSuuntaAdv(1);
+        worms.get(1).setDirection(3);
+        worms.get(1).setDirectionAdv(1);
     }
 
     public void BotTurnDown() {
-        worms.get(1).setSuunta(4);
-        worms.get(1).setSuuntaAdv(1);
+        worms.get(1).setDirection(4);
+        worms.get(1).setDirectionAdv(1);
     }
 }

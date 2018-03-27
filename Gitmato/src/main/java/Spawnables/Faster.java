@@ -18,18 +18,23 @@ import java.util.TimerTask;
 public class Faster extends AbstractSpawnables {
 
     public void faster(Worm worm) {
+        //add points to the worm who picked up
         worm.setPoints(worm.getPoints()+100);
-        worm.setNopeus(3);
+
+        //add speed for this worm
+        worm.setSpeed(worm.getSpeed()+2);
+        //play the corresponding music
         Music.fasterPowerup.play();
         
-        //säätää nopeuden väliaikseks
+        //adjusts speed to be temporary
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                worm.setNopeus(2);
+                //after delay, reset the worm speed to be normal
+                worm.setSpeed(worm.getSpeed()-2);
             }
-        }, 5000); //aika (ms), joka odotetaan
+        }, 5000); //delay in ms
     }
     
     public Faster() {

@@ -14,7 +14,6 @@ import java.util.Optional;
 import java.util.TimerTask;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.control.TextInputDialog;
@@ -290,8 +289,8 @@ public class Board {
                 if (worm.getLife() > 1) {
                     shield.shield(worm, 50);
                     worm.randomizeXY();
-                    worm.setSuuntaAdv(0);
-                    worm.setSuunta(0);
+                    worm.setDirectionAdv(0);
+                    worm.setDirection(0);
                 }
                 Life.loseLife(worm);
             }
@@ -303,8 +302,8 @@ public class Board {
                     if (worm.getLife() > 1) {
                         shield.shield(worm, 50);
                         worm.randomizeXY();
-                        worm.setSuuntaAdv(0);
-                        worm.setSuunta(0);
+                        worm.setDirectionAdv(0);
+                        worm.setDirection(0);
                     }
                     Life.loseLife(worm);
                 }
@@ -335,7 +334,7 @@ public class Board {
         }
 
         if (pl.intersects(Matokuutio)) {
-            HP.Life(worm);
+            HP.addLife(worm);
             powerUpCD();
         }
 
@@ -364,8 +363,8 @@ public class Board {
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5 || worm.getY() > 550) {
             if (worm.getLife() > 1) {
                 worm.randomizeXY();
-                worm.setSuuntaAdv(0);
-                worm.setSuunta(0);
+                worm.setDirectionAdv(0);
+                worm.setDirection(0);
             }
             Life.loseLife(worm);
             worm.setPoints(worm.getPoints() - 100);
@@ -395,7 +394,7 @@ public class Board {
         }
 
         if (pl.intersects(Matokuutio2)) {
-            HP.Life(worm2);
+            HP.addLife(worm2);
             powerUpCD();
         }
 
@@ -426,8 +425,8 @@ public class Board {
                 if (pelimoodi.equals("vs AI")) {
                     bot.BotTurnDown();
                 } else {
-                    worm2.setSuuntaAdv(0);
-                    worm2.setSuunta(0);
+                    worm2.setDirectionAdv(0);
+                    worm2.setDirection(0);
                 }
             }
             Life.loseLife(worm2);
