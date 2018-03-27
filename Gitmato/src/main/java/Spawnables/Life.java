@@ -16,25 +16,29 @@ import java.util.TimerTask;
  */
 public class Life extends AbstractSpawnables{
     
-    public void Life(Worm worm) {
-        worm.setPoints(worm.getPoints()+100);
-        addLife(worm);
-    }
-    
     public Life() {
         init();
     }
-    
+
     public static void addLife (Worm worm) {
+        //add points to this worm
+        worm.setPoints(worm.getPoints()+100);
+        //play the corresponding music
         Music.addLife.play();
+        //add points to the one who picked up
         worm.setLife(worm.getLife()+1);
     }
     
     public static void loseLife(Worm worm) {
+
+        //play the corresponding music
         Music.loseLife.play();
+
+        //remove a life from this worm's life pool
         worm.setLife(worm.getLife()-1);
+
+        //give this worm a shield for a second to prevent instant loss of all lives
         worm.setShield(true);
-        
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

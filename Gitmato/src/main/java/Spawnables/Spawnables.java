@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
  */
 public interface Spawnables {
 
+    //all the methods that are required from all the spawnables
    void init();
    Bounds getBoundsForIcon();
    int getX();

@@ -7,7 +7,7 @@ package Model;
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 
 
@@ -21,11 +21,11 @@ public class Worm {
     private double dy;
     private int x;
     private int y;
-    private int suunta = 1;
-    private int suuntaAdv = 0;
+    private int direction = 1;
+    private int directionAdv = 0;
     private int playerNro;
     private boolean shield = false; //shield power-up
-    private boolean reverse = false; //Reverse debuff up
+    private boolean reverse = false; //Reverse debuff
     private int points;
 
     private Image image;    
@@ -34,7 +34,7 @@ public class Worm {
     private Image wormleft;
     private Image wormright;
 
-    private double nopeus = 4;
+    private double speed = 3;
     private int life = 3;
 
     public int getLife() {
@@ -71,13 +71,13 @@ public class Worm {
     
     public void move() {
         if (x > 0 && dx < 0 || x < 960 && dx > 0) {
-            if(suuntaAdv == 2){
+            if(directionAdv == 2){
                 x += dx;
             }
             
         }
         if (y > 0 && dy < 0 || y < 950 && dy > 0) {
-            if(suuntaAdv == 1){
+            if(directionAdv == 1){
                 y += dy;
             }
             
@@ -100,32 +100,28 @@ public class Worm {
         this.y = luku;
     }
 
-    public Image getImage() {
-        return image;
-    }
-    
     public void setImage(Image img) {
         this.image = img;
     }
     
-    public int getSuunta(){
-        return suunta;
+    public int getDirection(){
+        return direction;
     }
 
-    public void setSuunta(int s){
-        this.suunta = s;
+    public void setDirection(int s){
+        this.direction = s;
     }
 
-    public void setSuuntaAdv(int a){
-        this.suuntaAdv = a;
+    public void setDirectionAdv(int a){
+        this.directionAdv = a;
     }
     
-     public double getNopeus() {
-        return nopeus;
+     public double getSpeed() {
+        return speed;
     }
 
-    public void setNopeus(double nopeus) {
-        this.nopeus = nopeus;
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
     
     public boolean getShield(Worm worm) {
@@ -139,6 +135,7 @@ public class Worm {
     public void setReverse(boolean active) {
         this.reverse = active;
     }
+
     public boolean getReverse(Worm worm) {
         return this.reverse;
     }
@@ -158,31 +155,31 @@ public class Worm {
     
     public void moveCont(){
         //if shield is NOT active on worm
-        if(suunta == 1){
+        if(direction == 1){
             setImage (wormleft);
-            dx = -1 * nopeus;
+            dx = -1 * speed;
         }
         
-        if(suunta == 2){
+        if(direction == 2){
             setImage (wormright);
-            dx = 1 * nopeus;
+            dx = 1 * speed;
         }
         
-        if(suunta == 3){
+        if(direction == 3){
             setImage (wormup);
-            dy = -1 * nopeus;
+            dy = -1 * speed;
             
         }
         
-        if(suunta == 4){
+        if(direction == 4){
             setImage (wormdown);
-            dy = 1 * nopeus;
+            dy = 1 * speed;
             
         }
     }
     
     public Bounds getBounds() {
-       Rectangle mato = new Rectangle(x, y, 35, 42);
+       Ellipse mato = new Ellipse(x, y, 18, 18);
        return mato.getLayoutBounds();
     }
     

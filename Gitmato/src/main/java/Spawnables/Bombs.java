@@ -6,12 +6,10 @@
 package Spawnables;
 
 import Model.Worm;
-import Model.Board;
 import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.shape.*;
 
@@ -38,8 +36,8 @@ public class Bombs extends AbstractSpawnables{
         if (lethal) {
             if (worm.getLife() > 1) {
                 worm.randomizeXY();
-                worm.setSuuntaAdv(0);
-                worm.setSuunta(0);
+                worm.setDirectionAdv(0);
+                worm.setDirection(0);
             }
             Life.loseLife(worm);
         }

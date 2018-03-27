@@ -14,7 +14,8 @@ public class Snack extends AbstractSpawnables{
     public Snack() {
         init();
     }
-    
+
+    //on init, set the starting snack to be at a random x-location between 600 & 200
     @Override
     public void init() {
         setX( 600-(int)(Math.random()*400));
