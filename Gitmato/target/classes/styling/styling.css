@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-#main_menu {
+#main_menu, #highscore_scene {
     -fx-background-image: url("MainMenuBG.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 900 606;
@@ -19,6 +19,11 @@
     -fx-text-fill: white;
     -fx-stroke: black;
     -fx-stroke-width: 1;
+}
+#highscore_title{
+    -fx-font-family:'Press Start 2P';
+    -fx-font-size: 30px;
+    -fx-text-fill: white;
 }
 
 Button {

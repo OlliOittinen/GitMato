@@ -8,11 +8,13 @@ import Spawnables.*;
 import java.util.ArrayList;
 
 import javafx.application.*;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.canvas.GraphicsContext;
@@ -24,7 +26,7 @@ import javafx.scene.paint.Color;
 public class Matopeli extends Application {
 
     private static Stage window;
-    private Scene mainMenuScene, gameScene, gameOverScene;
+    private Scene mainMenuScene, gameScene, gameOverScene, highscoreScene;
 
     private Image background = new Image("images/BlueBG800x600.png");
     private Image snackicon = new Image("images/Apple(800x600).png");
@@ -82,6 +84,7 @@ public class Matopeli extends Application {
     private double timeCounter = 0; // counts time (sec)
     private int frameCounter = 0;
     private double theRealFpsCounter = 0; // constantly shows the FPS
+    private int score = 0;
 
     public static void main(String[] args) {
         launch(args);
@@ -168,6 +171,32 @@ public class Matopeli extends Application {
             window.setScene(gameScene);
             animationLoop(gc);
         });
+        //------HIGHSCORE SCENE---------------
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+        Text scenetitle = new Text();
+        scenetitle.setId("highscore_title");
+        grid.add(scenetitle, 0, 0, 2, 1);
+        Label userName = new Label("Username: ");
+        grid.add(userName, 0, 1);
+
+        TextField userTextField = new TextField();
+        grid.add(userTextField, 1, 1);
+        Button submit = new Button("Submit");
+        Button cancel = new Button("Cancel");
+        cancel.setOnAction(e -> window.setScene(gameOverScene));
+        HBox hbBtn = new HBox(10);
+        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.getChildren().addAll(submit, cancel);
+        grid.add(hbBtn, 1, 4);
+
+        highscoreScene = new Scene(grid, width, height);
+        grid.setId("highscore_scene");
+        highscoreScene.getStylesheets().add("Styling/styling.css");
+        //-----------------------------------
 
         //------------Main Menu Scene - Game mode selector --------------
 
@@ -207,7 +236,12 @@ public class Matopeli extends Application {
 
         //handle button clicks
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
-        highscore.setOnAction(e -> board.submitHighscore());
+        highscore.setOnAction(e ->{
+             window.setScene(highscoreScene);
+             scenetitle.setText("You got " + score +" points ");
+
+
+        });
 
         //add buttons to the layout
         gameOverLayout.getChildren().addAll(gameOverLabel, restart, backToSS, highscore);
@@ -217,6 +251,7 @@ public class Matopeli extends Application {
         //add css to this scene
         gameOverScene.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
+
 
 
         //Display main scene first
@@ -374,6 +409,11 @@ public class Matopeli extends Application {
             //if board is inactive
         } else {
             //stop the background music, play death music
+            if(worm.getLife() < worm2.getLife()) {
+                score = worm2.getPoints();
+            } else {
+                score = worm.getPoints();
+            }
             Music.backgroundMusic.stop();
             Music.death.play();
             //set scene to be game over

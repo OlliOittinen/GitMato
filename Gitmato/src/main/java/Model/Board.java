@@ -45,7 +45,7 @@ public class Board {
     private String pelimoodi;
     private Matopeli engine;
     private Bot bot;
-    private Highscore hscore = new Highscore();
+    public Highscore hscore = new Highscore();
     private int score;
     private DBConnection connection = new DBConnection();
 
