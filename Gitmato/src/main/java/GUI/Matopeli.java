@@ -145,11 +145,11 @@ public class Matopeli extends Application {
         });
 
         //Layout 1 - Game mode selector
-        VBox layout1 = new VBox(20);
-        layout1.setAlignment(Pos.CENTER);
-        layout1.getChildren().addAll(button2, button1, button3);
-        mainMenuScene = new Scene(layout1, 800, 590);
-        layout1.setId("pane");
+        VBox menuLayout = new VBox(20);
+        menuLayout.setAlignment(Pos.CENTER);
+        menuLayout.getChildren().addAll(button2, button1, button3);
+        mainMenuScene = new Scene(menuLayout, 800, 590);
+        menuLayout.setId("main_menu");
         mainMenuScene.getStylesheets().add("Styling/styling.css");
 
         //---------------------------------
@@ -159,11 +159,11 @@ public class Matopeli extends Application {
         //------VERSUS SCENE---------------
         //Layout 2 - Versus
         //------GAME OVER SCENE---------------
-        VBox layout5 = new VBox(20);
-        layout5.setId("pane2");
-        layout5.setAlignment(Pos.CENTER);
-        Label gameOver = new Label("GAME OVER");
-        gameOver.setId("gameover");
+        VBox gameOverLayout = new VBox(20);
+        gameOverLayout.setId("gameOver");
+        gameOverLayout.setAlignment(Pos.CENTER);
+        Label gameOverLabel = new Label("GAME OVER");
+        gameOverLabel.setId("gameOverLabel");
         Button restart = new Button("Restart");
         Button backToSS = new Button("Main menu");
         Button highscore = new Button("Submit\nhighscore");
@@ -174,8 +174,8 @@ public class Matopeli extends Application {
         });
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
         highscore.setOnAction(e -> board.submitHighscore());
-        layout5.getChildren().addAll(gameOver, restart, backToSS, highscore);
-        gameoverScene = new Scene(layout5, width, height);
+        gameOverLayout.getChildren().addAll(gameOverLabel, restart, backToSS, highscore);
+        gameoverScene = new Scene(gameOverLayout, width, height);
         gameoverScene.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
         //Display main scene first

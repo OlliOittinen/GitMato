@@ -1,19 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-#pane {
+#main_menu {
     -fx-background-image: url("MainMenuBG.png");
-    -fx-background-repeat: stretch;   
+    -fx-background-repeat: stretch;
     -fx-background-size: 900 606;
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
 }
-#pane2 {
+
+#gameOver {
     -fx-background-image: url("BlueBG800x6002.png");
-    -fx-background-repeat: stretch;
-    -fx-background-size: 900 606;
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
 }
-#gameover {
+
+#gameOverLabel {
     -fx-font-family:'Press Start 2P';
     -fx-font-size: 50px;
     -fx-text-fill: white;
