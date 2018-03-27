@@ -29,10 +29,12 @@ public class Board {
     private ArrayList<Worm> worms;
     private Worm worm;
     private Worm worm2;
+/*
     private PlayerController control;
+*/
     private Tail tail;
-    private Tail tail2;
-    private Timeline timer;
+   private Tail tail2;
+/*    private Timeline timer;*/
     private Snack snack;
     private Faster faster;
     private Slower slower;
@@ -41,7 +43,7 @@ public class Board {
     private Shield shield;
     private Bombs bombs;
     private Laser laser;
-    private String pelimoodi;
+    private String gameMode;
     private Matopeli engine;
     private Bot bot;
     public Highscore hscore = new Highscore();
@@ -61,10 +63,10 @@ public class Board {
     private Point2D p2;// coordinaatit
 
 // ------------------------------------------en tiiä näistä ------------------------------------
-    public String getPelimoodi() {
-        return pelimoodi;
+    public String getGameMode() {
+        return gameMode;
     }
-    public void setPelimoodi(String pelimoodi) {this.pelimoodi = pelimoodi;}
+    public void setGameMode(String gameMode) {this.gameMode = gameMode;}
     public Worm getWorm() {
         return worm;
     }
@@ -175,8 +177,8 @@ public class Board {
                 if (result.isPresent()) {
                     hscore.setHighscore(score);
                     hscore.setName(result.get());
-                    connection.submitScore(hscore.getHighscore(), hscore.getName(), pelimoodi);
-                    connection.showHighscore(pelimoodi);
+                    connection.submitScore(hscore.getHighscore(), hscore.getName(), gameMode);
+                    connection.showHighscore(gameMode);
             }
         });
 
@@ -192,10 +194,10 @@ public class Board {
 
     //-------------------------------------------------------------------------------------
 
-    public Board(Matopeli e, String pelimoodi) {
+    public Board(Matopeli e, String gameMode) {
 
         this.engine = e;
-        this.pelimoodi = pelimoodi;
+        this.gameMode = gameMode;
 
         //alustetaan listat
         pickableList = new ArrayList<>();
@@ -236,16 +238,16 @@ public class Board {
         bot = new Bot(this);
 
         ingame = true;
-        if (pelimoodi.equals("vs AI")) {
+        if (gameMode.equals("vs AI")) {
             bot.BotTurnDown();
         }
-        if (pelimoodi.equals("sp")) {
+        if (gameMode.equals("sp")) {
             worm2.setX(-1000);
             worm2.setY(-1000);
             worm.setLife(1);
         }
 
-        if (!pelimoodi.equals("sp")) {
+        if (!gameMode.equals("sp")) {
             powerUpCD(); //piilottaa powerupit alussa
         }
     }
@@ -271,11 +273,11 @@ public class Board {
         //Jos eri kuin yksinpeli; worm2 osuu wormin häntään; worm2 ei ole kilpeä
         for (Tail aTailList : tailList) {
             Bounds Matotail = aTailList.getBounds();
-            if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2) && !pelimoodi.equals("sp")) {
+            if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2) && !gameMode.equals("sp")) {
                 if (worm2.getLife() > 1) {
                     shield.shield(worm2, 50);
                     worm2.randomizeXY();
-                    if (pelimoodi.equals("vs AI")) {
+                    if (gameMode.equals("vs AI")) {
                         bot.BotTurnDown();
                     }
                 }
@@ -295,7 +297,7 @@ public class Board {
                 Life.loseLife(worm);
             }
         }
-        if (pelimoodi.equals("sp")) {
+        if (gameMode.equals("sp")) {
             for (int i = 3; i < tailList.size(); i++) {
                 Bounds Matotail2 = tailList.get(i).getBounds();
                 if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
@@ -419,10 +421,10 @@ public class Board {
         if (beam.intersects(Matokuutio2) && !shield.isActive(worm2)) {
             laser.damage(worm2);
         }
-        if ((worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) && pelimoodi != "sp") {
+        if ((worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) && gameMode != "sp") {
             if (worm2.getLife() > 1) {
                 worm2.randomizeXY();
-                if (pelimoodi.equals("vs AI")) {
+                if (gameMode.equals("vs AI")) {
                     bot.BotTurnDown();
                 } else {
                     worm2.setDirectionAdv(0);
@@ -487,7 +489,7 @@ public class Board {
         engine.setWormImage();
 
         //botti ja sen toiminta
-        if (pelimoodi.equals("vs AI")) {
+        if (gameMode.equals("vs AI")) {
             bot.BlueAIBot();
         }
 

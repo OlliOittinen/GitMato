@@ -66,7 +66,7 @@ public class Matopeli extends Application {
     private Board board;
     private ArrayList<Tail> body;
     private ArrayList<Tail> body2;
-    private String pelimoodi = "versus";
+    private String gameMode = "versus";
     private PlayerController pc;
     private AnimationTimer timer;
     private Faster faster;
@@ -94,8 +94,8 @@ public class Matopeli extends Application {
     public void start(Stage primaryStage) {
 
         //initialize all the variables needed
-        board = new Board(this, pelimoodi);
-        pc = new PlayerController(board, pelimoodi);
+        board = new Board(this, gameMode);
+        pc = new PlayerController(board, gameMode);
         worms = new ArrayList<>();
         powerups = board.getPickableList();
         faster = (Faster) powerups.get(0);
@@ -143,8 +143,8 @@ public class Matopeli extends Application {
         button1.setOnAction(e
                 -> {
             //set the game mode as such, set the current scene as game scene, start drawing in animationLoop(gc)
-            board.setPelimoodi("vs AI");
-            pelimoodi = "vs AI";
+            board.setGameMode("vs AI");
+            gameMode = "vs AI";
             window.setScene(gameScene);
             animationLoop(gc);
         });
@@ -155,8 +155,8 @@ public class Matopeli extends Application {
         button2.setId("Versus");
         button2.setOnAction(e
                 -> {
-            board.setPelimoodi("versus");
-            pelimoodi = "versus";
+            board.setGameMode("versus");
+            gameMode = "versus";
             window.setScene(gameScene);
             animationLoop(gc);
         });
@@ -166,8 +166,8 @@ public class Matopeli extends Application {
         Button button3 = new Button("Single player");
         button3.setOnAction(e
                 -> {
-            board.setPelimoodi("sp");
-            pelimoodi = "sp";
+            board.setGameMode("sp");
+            gameMode = "sp";
             window.setScene(gameScene);
             animationLoop(gc);
         });
@@ -384,7 +384,7 @@ public class Matopeli extends Application {
 
             //if the game mode is not single player, draw the second worm too
             //could this just be passed once and not be constantly checked?
-            if (!pelimoodi.equals("sp")) {
+            if (!gameMode.equals("sp")) {
                 g.drawImage(worm2Image, worm2.getX(), worm2.getY());
             }
             //draw shield effects on top of worm if shield boolean is true
@@ -441,7 +441,7 @@ public class Matopeli extends Application {
         g.fillText(pt, 50, 60);
 
         //if game mode is not single player, draw the points for the second worm
-        if (!pelimoodi.equals("sp")) {
+        if (!gameMode.equals("sp")) {
             g.setFill(Color.BLUE);
             String hp2 = "HP: " + worm2.getLife();
             String pt2 = "Pisteet: " + worm2.getPoints();
@@ -500,10 +500,10 @@ public class Matopeli extends Application {
         tailsize = 0;
 
         //create a new Board based on the game mode
-        board = new Board(this, pelimoodi);
+        board = new Board(this, gameMode);
 
         //create a new controller using the new board and game mode
-        pc = new PlayerController(board, pelimoodi);
+        pc = new PlayerController(board, gameMode);
 
         //get powerups from the board
         powerups = board.getPickableList();
