@@ -32,7 +32,7 @@ public class DBConnection {
         }
     }
 
-    public void showHighscore(String pelimoodi) {
+    public ArrayList<String> showHighscore(String pelimoodi) {
         try {
             PreparedStatement query = null;
             try {
@@ -42,6 +42,8 @@ public class DBConnection {
                     while (result.next()) {
                         scores.add(result.getString("nimi") + " " + result.getInt("pisteet"));
                     }
+                    return scores;
+                    /*
                     int i = 0;
                     for (String s : scores) {
                         i++;
@@ -56,8 +58,10 @@ public class DBConnection {
                     alert.setHeaderText("Top 10\n You placed: #" + indexOf + " with " + score + " points!");
                     alert.setContentText(highscore);
                     alert.showAndWait();
+
                     scores.clear();
                     highscore = "";
+                    */
                 } catch (SQLException e) {
                     do {
                         System.err.println("Viesti: " + e.getMessage());
@@ -82,6 +86,7 @@ public class DBConnection {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public void submitScore(int score, String name, String pelimoodi) {

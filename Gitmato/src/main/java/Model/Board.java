@@ -165,22 +165,12 @@ public class Board {
             }
         }, 5000); //aika (ms), joka odotetaan
     }
-    public void submitHighscore() {
-            Platform.runLater(() -> {
-                TextInputDialog dialog = new TextInputDialog("Type your name here!");
-                dialog.setTitle("Highscore");
-                score = worm.getPoints();
-                dialog.setHeaderText("Submit your highscore!\n " + score);
-                dialog.setContentText("Please enter your name:");
-
-                Optional<String> result = dialog.showAndWait();
-                if (result.isPresent()) {
-                    hscore.setHighscore(score);
-                    hscore.setName(result.get());
-                    connection.submitScore(hscore.getHighscore(), hscore.getName(), gameMode);
-                    connection.showHighscore(gameMode);
+    public void submitHighscore(int score, String name) {
+                if (name != null) {
+                    connection.submitScore(score, name, gameMode);
+                    ArrayList<String> scores = connection.showHighscore(gameMode);
+                    engine.createHighscoreTableScene(scores);
             }
-        });
 
     }
 

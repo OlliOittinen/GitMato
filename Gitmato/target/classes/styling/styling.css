@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-#main_menu, #highscore_scene {
+#main_menu {
     -fx-background-image: url("MainMenuBG.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 900 606;
@@ -7,7 +7,7 @@
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
 }
 
-#gameOver {
+#gameOver, #highscore_scene {
     -fx-background-image: url("BlueBG800x6002.png");
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
@@ -23,9 +23,15 @@
 #highscore_title{
     -fx-font-family:'Press Start 2P';
     -fx-font-size: 30px;
-    -fx-text-fill: white;
 }
-
+#winner_label {
+    -fx-font-family:'Press Start 2P';
+    -fx-font-size: 30px;
+}
+#username {
+    -fx-font-family:'Press Start 2P';
+    -fx-font-size: 15px;
+}
 Button {
     -fx-font-family:'Press Start 2P', cursive;
     -fx-min-height: 44px;

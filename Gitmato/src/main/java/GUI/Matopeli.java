@@ -5,6 +5,8 @@ import Sound.Music;
 import javafx.animation.AnimationTimer;
 import Model.*;
 import Spawnables.*;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javafx.application.*;
@@ -26,7 +28,7 @@ import javafx.scene.paint.Color;
 public class Matopeli extends Application {
 
     private static Stage window;
-    private Scene mainMenuScene, gameScene, gameOverScene, highscoreScene;
+    private Scene mainMenuScene, gameScene, gameOverScene, highscoreScene, highscoreTableScene;
 
     private Image background = new Image("images/BlueBG800x600.png");
     private Image snackicon = new Image("images/Apple(800x600).png");
@@ -86,6 +88,8 @@ public class Matopeli extends Application {
     private double theRealFpsCounter = 0; // constantly shows the FPS
     private int score = 0;
     private Label winner_label = new Label();
+    private Text scenetitle = new Text();
+    private String username;
 
     public static void main(String[] args) {
         launch(args);
@@ -172,32 +176,6 @@ public class Matopeli extends Application {
             window.setScene(gameScene);
             animationLoop(gc);
         });
-        //------HIGHSCORE SCENE---------------
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
-        Text scenetitle = new Text();
-        scenetitle.setId("highscore_title");
-        grid.add(scenetitle, 0, 0, 2, 1);
-        Label userName = new Label("Username: ");
-        grid.add(userName, 0, 1);
-
-        TextField userTextField = new TextField();
-        grid.add(userTextField, 1, 1);
-        Button submit = new Button("Submit");
-        Button cancel = new Button("Cancel");
-        cancel.setOnAction(e -> window.setScene(gameOverScene));
-        HBox hbBtn = new HBox(10);
-        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().addAll(submit, cancel);
-        grid.add(hbBtn, 1, 4);
-
-        highscoreScene = new Scene(grid, width, height);
-        grid.setId("highscore_scene");
-        highscoreScene.getStylesheets().add("Styling/styling.css");
-        //-----------------------------------
 
         //------------Main Menu Scene - Game mode selector --------------
 
@@ -214,44 +192,7 @@ public class Matopeli extends Application {
         mainMenuScene.getStylesheets().add("Styling/styling.css");
 
 
-        //------GAME OVER SCENE---------------
 
-        //create a new vertical box, center it, and add buttons to it, set id for css
-        VBox gameOverLayout = new VBox(20);
-        gameOverLayout.setId("gameOver");
-        gameOverLayout.setAlignment(Pos.CENTER);
-
-        //create a label for game over, handled in css
-        Label gameOverLabel = new Label("GAME OVER");
-        Label winner_label = new Label("TESTING");
-        gameOverLabel.setId("gameOverLabel");
-
-        //buttons
-        Button restart = new Button("Restart");
-        Button backToSS = new Button("Main menu");
-        Button highscore = new Button("Submit\nhighscore");
-        restart.setOnAction(e -> {
-            reset();
-            window.setScene(gameScene);
-            timer.start();
-        });
-
-        //handle button clicks
-        backToSS.setOnAction(e -> window.setScene(mainMenuScene));
-        highscore.setOnAction(e ->{
-             window.setScene(highscoreScene);
-             scenetitle.setText("You got " + score +" points ");
-
-
-        });
-
-        //add buttons to the layout
-        gameOverLayout.getChildren().addAll(gameOverLabel, winner_label, restart, backToSS, highscore);
-
-        //create game over scene based on this layout
-        gameOverScene = new Scene(gameOverLayout, width, height);
-        //add css to this scene
-        gameOverScene.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
 
 
@@ -411,17 +352,22 @@ public class Matopeli extends Application {
             //if board is inactive
         } else {
             //stop the background music, play death music
-            if(worm.getLife() < worm2.getLife()) {
+            if(worm.getLife() < worm2.getLife() && !gameMode.equals("sp")) {
                 score = worm2.getPoints();
+                winner_label.setText("BLUE WON");
+                winner_label.setTextFill(Color.BLUE);
+            } else if (worm.getLife() > worm2.getLife() && !gameMode.equals("sp")) {
+                score = worm.getPoints();
                 winner_label.setText("RED WON");
                 winner_label.setTextFill(Color.RED);
             } else {
                 score = worm.getPoints();
-                winner_label.setText("BLUE WON");
-                winner_label.setTextFill(Color.BLUE);
             }
+            winner_label.setId("winner_label");
             Music.backgroundMusic.stop();
             Music.death.play();
+            createGameOverScene();
+            createHighscoreScene();
             //set scene to be game over
             window.setScene(gameOverScene);
             //stop the timer that handles drawing
@@ -526,4 +472,132 @@ public class Matopeli extends Application {
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
     }
+    public void createGameOverScene(){
+        //create a new vertical box, center it, and add buttons to it, set id for css
+        VBox gameOverLayout = new VBox(20);
+        gameOverLayout.setId("gameOver");
+        gameOverLayout.setAlignment(Pos.CENTER);
+
+        //create a label for game over, handled in css
+        Label gameOverLabel = new Label("GAME OVER");
+        gameOverLabel.setId("gameOverLabel");
+
+        //buttons
+        Button restart = new Button("Restart");
+        Button backToSS = new Button("Main menu");
+        Button highscore = new Button("Submit\nhighscore");
+        restart.setOnAction(e -> {
+            reset();
+            window.setScene(gameScene);
+            timer.start();
+        });
+
+        //handle button clicks
+        backToSS.setOnAction(e -> window.setScene(mainMenuScene));
+        highscore.setOnAction(e ->{
+            window.setScene(highscoreScene);
+            scenetitle.setText("You got " + score +" points ");
+
+
+        });
+
+        //add buttons to the layout
+        gameOverLayout.getChildren().addAll(gameOverLabel, winner_label, restart, backToSS, highscore);
+
+        //create game over scene based on this layout
+        gameOverScene = new Scene(gameOverLayout, width, height);
+        //add css to this scene
+        gameOverScene.getStylesheets().add("Styling/styling.css");
+    }
+    public void createHighscoreScene() {
+        //create a gridpane
+        GridPane grid = new GridPane();
+
+        //align it center
+        grid.setAlignment(Pos.CENTER);
+
+        //set horizontal gap
+        grid.setHgap(10);
+
+        //set vertical gap
+        grid.setVgap(10);
+
+        //set padding around grid
+        grid.setPadding(new Insets(25, 25, 25, 25));
+        scenetitle.setId("highscore_title");
+        scenetitle.setFill(Color.WHITE);
+        grid.add(scenetitle, 0, 0, 2, 1);
+        // create label for username
+        Label userName = new Label("Username: ");
+
+        userName.setTextFill(Color.WHITE);
+        userName.setId("username");
+        grid.add(userName, 0, 10);
+        //create textfield for usernames
+        TextField userTextField = new TextField();
+        grid.add(userTextField, 1, 10);
+
+        //create buttons
+        Button submit = new Button("Submit");
+        Button cancel = new Button("Cancel");
+
+        // handlers for buttons
+        cancel.setOnAction(e -> window.setScene(gameOverScene));
+        submit.setOnAction(e -> {
+            if ((userTextField.getText() != null && !userTextField.getText().isEmpty())) {
+                userName.setText("Thanks");
+                username = userTextField.getText();
+                board.submitHighscore(score,username);
+                window.setScene(highscoreTableScene);
+            } else {
+                userName.setText("Please enter\nyour username");
+            }
+        });
+        //create Horizontal Box for buttons
+        HBox hbBtn = new HBox(10);
+        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.getChildren().addAll(submit, cancel);
+        grid.add(hbBtn, 1, 20);
+
+        highscoreScene = new Scene(grid, width, height);
+        grid.setId("highscore_scene");
+        //get stylesheets for highscore scene
+        highscoreScene.getStylesheets().add("Styling/styling.css");
+    }
+    public void createHighscoreTableScene(ArrayList<String> scorelist) {
+        int indexOf = scorelist.indexOf(username + " " + score) + 1;
+        String highscore = "";
+        int i = 0;
+        for (String s : scorelist) {
+            i++;
+            if (i <= 10) {
+                highscore += +(i) + ". " + s + '\n';
+            }
+        }
+        //create a gridpane
+        GridPane grid = new GridPane();
+
+        //align it center
+        grid.setAlignment(Pos.CENTER);
+
+        //set horizontal gap
+        grid.setHgap(10);
+
+        //set vertical gap
+        grid.setVgap(100);
+
+        VBox vbox = new VBox();
+        vbox.setAlignment(Pos.CENTER);
+        Text headline = new Text("Top 10\n You placed: #" + indexOf + " with " + score + " points!");
+        headline.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+        Label highscores = new Label(highscore);
+        vbox.getChildren().addAll(headline, highscores);
+        grid.getChildren().add(vbox);
+
+        highscoreTableScene = new Scene(grid,width,height);
+
+    }
+
+
+
 }

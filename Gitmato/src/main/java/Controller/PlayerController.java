@@ -134,7 +134,7 @@ public class PlayerController {
             board.restartGame();
         }
         if (key == KeyCode.H) {
-            board.submitHighscore();
+            //board.submitHighscore();s
         }
     }
 
