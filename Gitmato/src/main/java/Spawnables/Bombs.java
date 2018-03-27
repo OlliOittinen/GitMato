@@ -121,23 +121,6 @@ public class Bombs extends AbstractSpawnables{
         ylist[n] = value;
     }
 
-
-    public Image getImage(int n) {
-        Image img = null;
-        switch (n) {
-            case 1:
-                img = image;
-                break;
-            case 2:
-                img = image2;
-                break;
-            case 3:
-                img = image3;
-                break;
-        }
-        return img;
-    }
-
     public void randomizeXYBombs() {
         for (int i = 1; i < xlist.length; i = i + 2) {
             setXBombs(i, (int) (Math.random() * 600));

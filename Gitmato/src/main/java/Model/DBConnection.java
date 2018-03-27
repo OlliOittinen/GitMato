@@ -110,6 +110,7 @@ public class DBConnection {
                 }
             } catch (Exception e) {
                 System.out.println("Epäonnistui. ");
+                e.printStackTrace();
             } finally {
                 try {
                     query.close();

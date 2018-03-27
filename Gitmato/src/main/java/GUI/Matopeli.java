@@ -24,7 +24,7 @@ import javafx.scene.paint.Color;
 public class Matopeli extends Application {
 
     private static Stage window;
-    private Scene mainMenuScene, gameScene, gameoverScene;
+    private Scene mainMenuScene, gameScene, gameOverScene;
 
     private Image background = new Image("images/BlueBG800x600.png");
     private Image snackicon = new Image("images/Apple(800x600).png");
@@ -77,11 +77,11 @@ public class Matopeli extends Application {
     private Snack snack;
     private ArrayList<Worm> worms;
     private ArrayList<Spawnables> powerups;
-    private long currentTime = 0; // nykyinen aika (ms)
-    private long previousTime = 0; // viime framen aika (ms)
-    private double timeCounter = 0; // aikalaskuri (sec)
+    private long currentTime = 0; // current time (ms)
+    private long previousTime = 0; // time since last frame (ms)
+    private double timeCounter = 0; // counts time (sec)
     private int frameCounter = 0;
-    private double theRealFpsCounter = 0; // näyttää jatkuvasti oikean fps:n
+    private double theRealFpsCounter = 0; // constantly shows the FPS
 
     public static void main(String[] args) {
         launch(args);
@@ -89,6 +89,8 @@ public class Matopeli extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
+        //initialize all the variables needed
         board = new Board(this, pelimoodi);
         pc = new PlayerController(board, pelimoodi);
         worms = new ArrayList<>();
@@ -101,30 +103,50 @@ public class Matopeli extends Application {
         bombs = (Bombs) powerups.get(5);
         laser = (Laser) powerups.get(6);
         snack = (Snack) powerups.get(7);
-
-        worms.add(worm = board.getWorm()); //lista worm olioista
+        worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
+
+        //set window as primary stage
         window = primaryStage;
         window.setTitle("Gitmato");
+
+        //don't allow the user to resize the screen
         window.setResizable(false);
+
+        //loop the background music
         Sound.Music.backgroundMusic.loop();
 
+        //create a new group that binds canvas and scenes together
         Group root = new Group();
+
+        //create a canvas based on width and height parameters
         Canvas canvas = new Canvas(width, height);
+
+        //get the graphics context for this canvas
         GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        //add everything related to this canvas to the group
         root.getChildren().add(canvas);
+
+        //create a scene based on the group, but don't show it yet
         gameScene = new Scene(root);
-        //----GAME MODE SELECTOR SCENE-----------
-        //Button for Single player
+
+
+        //----GAME MODE SELECTOR SCENE AKA MAIN MENU-----------
+
+        //Button for playing against AI
         Button button1 = new Button("Player VS AI");
+        //when clicked
         button1.setOnAction(e
                 -> {
-            board.setPelimoodi("vsAI");
+            //set the game mode as such, set the current scene as game scene, start drawing in animate(gc)
+            board.setPelimoodi("vs AI");
             pelimoodi = "vs AI";
             window.setScene(gameScene);
             animate(gc);
         });
 
+        //identical to the vs AI, but with changes to versus
         //Button for Versus
         Button button2 = new Button("Versus");
         button2.setId("Versus");
@@ -135,6 +157,9 @@ public class Matopeli extends Application {
             window.setScene(gameScene);
             animate(gc);
         });
+
+        //see above
+        //button for single player
         Button button3 = new Button("Single player");
         button3.setOnAction(e
                 -> {
@@ -144,26 +169,33 @@ public class Matopeli extends Application {
             animate(gc);
         });
 
-        //Layout 1 - Game mode selector
+        //------------Main Menu Scene - Game mode selector --------------
+
+        //create a new vertical box, center it, and add buttons to it
         VBox menuLayout = new VBox(20);
         menuLayout.setAlignment(Pos.CENTER);
         menuLayout.getChildren().addAll(button2, button1, button3);
-        mainMenuScene = new Scene(menuLayout, 800, 590);
+
+        //main menu scene is a new scene based on above layout
+        mainMenuScene = new Scene(menuLayout, width, height);
+
+        //set id for css, get the styling from the correct file
         menuLayout.setId("main_menu");
         mainMenuScene.getStylesheets().add("Styling/styling.css");
 
-        //---------------------------------
-        //------SINGLEPLAYER SCENE---------------
-        //Layout 3 - Singleplayer
-        //-----------------------------------
-        //------VERSUS SCENE---------------
-        //Layout 2 - Versus
+
         //------GAME OVER SCENE---------------
+
+        //create a new vertical box, center it, and add buttons to it, set id for css
         VBox gameOverLayout = new VBox(20);
         gameOverLayout.setId("gameOver");
         gameOverLayout.setAlignment(Pos.CENTER);
+
+        //create a label for game over, handled in css
         Label gameOverLabel = new Label("GAME OVER");
         gameOverLabel.setId("gameOverLabel");
+
+        //buttons
         Button restart = new Button("Restart");
         Button backToSS = new Button("Main menu");
         Button highscore = new Button("Submit\nhighscore");
@@ -172,32 +204,49 @@ public class Matopeli extends Application {
             window.setScene(gameScene);
             timer.start();
         });
+
+        //handle button clicks
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
         highscore.setOnAction(e -> board.submitHighscore());
+
+        //add buttons to the layout
         gameOverLayout.getChildren().addAll(gameOverLabel, restart, backToSS, highscore);
-        gameoverScene = new Scene(gameOverLayout, width, height);
-        gameoverScene.getStylesheets().add("Styling/styling.css");
+
+        //create game over scene based on this layout
+        gameOverScene = new Scene(gameOverLayout, width, height);
+        //add css to this scene
+        gameOverScene.getStylesheets().add("Styling/styling.css");
         //-----------------------------------
+
+
         //Display main scene first
         window.setScene(mainMenuScene);
+
+        //if user clicks the x for the window, exit
         window.setOnCloseRequest(e -> System.exit(0));
         window.setTitle("Gitmato");
+
+        //shows this window to user
         window.show();
     }
 
     private void animate(GraphicsContext gc) {
+        //timer handles all the drawing in a loop
         timer = new AnimationTimer() {
             //fps-throttle
             private long lastUpdate = 0;
 
             @Override
             public void handle(long now) {
+                //if time between now and last update is more than 10M nanoseconds (=1 millisecond)
                 if (now - lastUpdate >= 10_000_000) {
-
+                    //let the controller handle inputs
                     gameScene.setOnKeyPressed((KeyEvent event) -> {
                         pc.keyPressed(event);
                     });
+                    //update board based on controller input
                     board.updateBoard();
+                    //draw the GUI based on board's parameters
                     draw(gc);
                 }
             }
@@ -206,7 +255,7 @@ public class Matopeli extends Application {
     }
 
     public void setWormImage() {
-        //punanen mato
+        //red (left) worm
         if (worm.getSuunta() == 1) {
             wormImage = redwormleft;
         }
@@ -223,7 +272,7 @@ public class Matopeli extends Application {
             wormImage = redwormdown;
         }
 
-        //sininen mato
+        //blue (right) worm
         if (worm2.getSuunta() == 1) {
             worm2Image = bluewormleft;
         }
@@ -242,28 +291,33 @@ public class Matopeli extends Application {
     }
 
     private void draw(GraphicsContext g) {
+        //as long as board tells GUI to be active
         if (board.isIngame()) {
 
+            //update worm bodies and sizes of the tail, get these from the board
             body = board.getTailList();
             body2 = board.getTailList2();
             tailsize = body.size();
             tailsize2 = body2.size();
+
+            //keep drawing the background
             g.drawImage(background, 0, 0);
+
+            //if worm #1's tail is bigger than 1 (exists)
             if (tailsize > 0) {
+                //in a loop, draw these tail pieces
                 for (int i = 0; i < tailsize; i++) {
-                    // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
                     g.drawImage(wormtail, body.get(i).getX(), body.get(i).getY());
                 }
             }
-
+            //identical to above, but for worm #2
             if (tailsize2 > 0) {
                 for (int i = 0; i < tailsize2; i++) {
-                    // pidetään huoli että jokainen "tail" tulee piirrettyä per frame
                     g.drawImage(wormtail2, body2.get(i).getX(), body2.get(i).getY());
                 }
             }
 
-            // piirretään power-upit matojen päälle, jotta ne ovat helpommit nähtävissä
+            //draw powerups last so they're on top and easily visible to the viewer
             g.drawImage(snackicon, snack.getX(), snack.getY());
             g.drawImage(fastericon, faster.getX(), faster.getY());
             g.drawImage(slowericon, slower.getX(), slower.getY());
@@ -279,58 +333,75 @@ public class Matopeli extends Application {
             g.drawImage(bombfire, bombs.getXBombs(6), bombs.getYBombs(6));
             g.drawImage(lasericon, laser.getX(), laser.getY());
 
+            //if laser's private boolean 'lethal' is not true, draw the laser sight for it
             if (!laser.getLethal()) {
                 g.drawImage(lasersightH, laser.getX3(), laser.getY3());
                 g.drawImage(lasersightV, laser.getX2(), laser.getY2());
 
+            //if lethal is true, draw the laser itself
             } else {
                 g.drawImage(laserH, laser.getX3(), laser.getY3());
                 g.drawImage(laserV, laser.getX2(), laser.getY2());
             }
 
+            //keep drawing worm #1
             g.drawImage(wormImage, worm.getX(), worm.getY());
 
-            if (pelimoodi != "sp") {
+            //if the game mode is not single player, draw the second worm too
+            //could this just be passed once and not be constantly checked?
+            if (!pelimoodi.equals("sp")) {
                 g.drawImage(worm2Image, worm2.getX(), worm2.getY());
             }
+            //draw shield effects on top of worm if shield boolean is true
             if (worm.getShield(worm)) {
                 g.drawImage(shieldeffect, worm.getX() - 5, worm.getY() - 4);
             }
+            //identical, but for worm #2
             if (worm2.getShield(worm2)) {
                 g.drawImage(shieldeffect, worm2.getX() - 5, worm2.getY() - 4);
             }
-            if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
-                //drawGameOver(g);
-            }
+            //draw confusion effects on top of worm if confuse boolean is true
             if (worm.getReverse(worm)) {
                 g.drawImage(confuseEffect, worm.getX() - 5, worm.getY() - 4);
             }
+            //identical for worm #2
             if (worm2.getReverse(worm2)) {
                 g.drawImage(confuseEffect, worm2.getX() - 5, worm2.getY() - 4);
             }
+            //always draw points
             drawPoints(g);
+
+            //if board is inactive
         } else {
+            //stop the background music, play death music
+            Music.backgroundMusic.stop();
             Music.death.play();
-            window.setScene(gameoverScene);
-            board.setIngame(false);
+            //set scene to be game over
+            window.setScene(gameOverScene);
+            //stop the timer that handles drawing
             timer.stop();
+            //reset the board
             reset();
         }
     }
 
-    //also handles FPS-counter
     private void drawPoints(GraphicsContext g) {
 
+        //set fonts and colors to be used for drawing the points
         g.setFont(Font.font("Helvetica", FontWeight.BOLD, 22));
         g.setFill(Color.RED);
         g.setStroke(Color.BLACK);
 
+        //initialise string to be drawn
         String hp = "HP: " + worm.getLife();
         String pt = "Pisteet: " + worm.getPoints();
+
+        //draw the text on the GUI based on these values
         g.fillText(hp, 50, 30);
         g.fillText(pt, 50, 60);
 
-        if (pelimoodi != "sp") {
+        //if game mode is not single player, draw the points for the second worm
+        if (!pelimoodi.equals("sp")) {
             g.setFill(Color.BLUE);
             String hp2 = "HP: " + worm2.getLife();
             String pt2 = "Pisteet: " + worm2.getPoints();
@@ -338,42 +409,63 @@ public class Matopeli extends Application {
             g.fillText(pt2, 650, 60);
         }
 
+        //------------------FPS counter-------------------
+        //get the current time from the system
         currentTime = System.currentTimeMillis();
+        //delta time is difference between current and previous time divided by 1k
         double deltaTime = (double) (currentTime - previousTime) / 1_000;
-        // 1/deltaTime); <- kertoo nykyisen fps joka frame.
+        // 1/deltaTime; <- tells the current fps
+
+        //interval tells how often fps should be drawn; currently at 0.5 seconds
         double interval = 0.5;
 
+        //if current time is greater  than the interval
         if (timeCounter > interval) {
+            //reset the counters, save current frame counts on the one that's shown to the user
             theRealFpsCounter = frameCounter;
             frameCounter = 0;
             timeCounter = 0;
         } else {
+            //if current time is less than interval, add difference between times to the time counter
             timeCounter += deltaTime;
-            frameCounter = frameCounter + (int) (1 / interval);
+            //add  1/interval to the current frame counter
+            //why?
+            frameCounter +=  (int) (1 / interval);
         }
+        //save previous time as current time so when this is called again, it can use the new values
         previousTime = currentTime;
 
+        //draw the fps on board on top of everything else (drawn last)
         String FPS = "FPS: " + theRealFpsCounter;
         g.setFill(Color.WHITE);
         g.setFont(Font.font(15));
         g.fillText(FPS, 400, 30);
     }
 
-    public String getPelimoodi() {
-        return pelimoodi;
-    }
-
     private void reset() {
+        //start the background music
+        Music.backgroundMusic.loop();
+
+        //tell the board it's ingame again
         board.setIngame(true);
+
+        //clear the internal arraylists for reinitialization
         worms.clear();
         body.clear();
         body2.clear();
-        tailsize = 0;
-        tailsize = 0;
         powerups.clear();
+
+        //reset the tailsizes to be 0 for no conflicts
+        tailsize = 0;
+        tailsize = 0;
+
+        //create a new Board based on the game mode
         board = new Board(this, pelimoodi);
+
+        //create a new controller using the new board and game mode
         pc = new PlayerController(board, pelimoodi);
-        worms = new ArrayList<>();
+
+        //get powerups from the board
         powerups = board.getPickableList();
         faster = (Faster) powerups.get(0);
         slower = (Slower) powerups.get(1);
@@ -384,7 +476,8 @@ public class Matopeli extends Application {
         laser = (Laser) powerups.get(6);
         snack = (Snack) powerups.get(7);
 
-        worms.add(worm = board.getWorm()); //lista worm olioista
+        //add worms from the board to local worms list
+        worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
     }
 }
