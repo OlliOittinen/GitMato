@@ -5,7 +5,6 @@
  */
 package Controller;
 
-import GUI.Matopeli;
 import Model.Board;
 
 import Model.Worm;
@@ -19,21 +18,20 @@ import java.util.ArrayList;
  */
 public class PlayerController {
 
-    //private Matopeli GUI;
     private Board board;
     private ArrayList<Worm> worms;
-    private String pelimoodi;
+    private String gameMode;
 
 
-    public PlayerController(Board board, String pelimoodi) {
+    public PlayerController(Board board, String gameMode) {
         this.board = board;
-        this.pelimoodi = pelimoodi;
+        this.gameMode = gameMode;
         worms = board.getWorms();
     }
 
     public void keyPressed(KeyEvent e) {
 
-        pelimoodi = board.getPelimoodi();
+        gameMode = board.getGameMode();
 
         KeyCode key = e.getCode();
         if (key == KeyCode.LEFT) {
@@ -83,7 +81,7 @@ public class PlayerController {
 
 
         // controlls for player 2 
-        if (pelimoodi == "versus") {
+        if (gameMode == "versus") {
             if (key == KeyCode.A) {
 
 

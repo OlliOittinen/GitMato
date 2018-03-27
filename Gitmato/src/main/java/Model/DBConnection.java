@@ -28,6 +28,7 @@ public class DBConnection {
             con = DriverManager.getConnection("jdbc:mariadb://localhost:4444/score", "Olli", "laiskajaakko");
         } catch (SQLException e) {
             System.out.println(e);
+           // e.printStackTrace();
         }
     }
 
