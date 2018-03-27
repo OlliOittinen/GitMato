@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class PlayerController {
 
-    private Matopeli GUI;
+    //private Matopeli GUI;
     private Board board;
     private ArrayList<Worm> worms;
     private String pelimoodi;

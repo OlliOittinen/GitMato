@@ -7,6 +7,7 @@ package Model;
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 
 
@@ -24,7 +25,7 @@ public class Worm {
     private int directionAdv = 0;
     private int playerNro;
     private boolean shield = false; //shield power-up
-    private boolean reverse = false; //Reverse debuff up
+    private boolean reverse = false; //Reverse debuff
     private int points;
 
     private Image image;    
@@ -178,7 +179,7 @@ public class Worm {
     }
     
     public Bounds getBounds() {
-       Rectangle mato = new Rectangle(x, y, 35, 42);
+       Ellipse mato = new Ellipse(x, y, 18, 18);
        return mato.getLayoutBounds();
     }
     

@@ -296,7 +296,7 @@ public class Board {
             }
         }
         if (pelimoodi.equals("sp")) {
-            for (int i = 2; i < tailList.size(); i++) {
+            for (int i = 3; i < tailList.size(); i++) {
                 Bounds Matotail2 = tailList.get(i).getBounds();
                 if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                     if (worm.getLife() > 1) {
