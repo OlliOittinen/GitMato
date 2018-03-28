@@ -7,4 +7,8 @@
 /Gitmato/dist/
 /Gitmato.iml
 /.idea/
+<<<<<<< HEAD
 /Gitmato/Gitmato.iml
+=======
+/Gitmato/.idea/
+>>>>>>> parent of 6f28eb3... removing IDE based crap from git
