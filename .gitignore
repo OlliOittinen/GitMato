@@ -1,14 +1,9 @@
-/Matopeli/nbproject/private/
-/Matopeli1/nbproject/private/
-/Matopeli1/build/
-/Gitmato/nbproject/private/
-/Gitmato/build/
-/Matopeli/build/
-/Gitmato/dist/
-/Gitmato.iml
 /.idea/
-<<<<<<< HEAD
-/Gitmato/Gitmato.iml
-=======
 /Gitmato/.idea/
->>>>>>> parent of 6f28eb3... removing IDE based crap from git
+*.class
+/out/
+.idea/
+*.iml
+Gitmato.iml
+Gitmato/build.xml
+Gitmato/manifest.mf
