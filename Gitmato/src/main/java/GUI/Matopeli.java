@@ -269,7 +269,7 @@ public class Matopeli extends Application {
     }
 
     private void draw(GraphicsContext g) {
-        //as long as board tells GUI to be active; the game hasn't ended
+        //as long as board tells GUI to be active
         if (board.isIngame()) {
 
             //update worm bodies and sizes of the tail, get these from the board
@@ -474,8 +474,12 @@ public class Matopeli extends Application {
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
     }
+<<<<<<< HEAD
 
     private void createGameOverScene() {
+=======
+    public void createGameOverScene(){
+>>>>>>> parent of 249170e... added commenting, removed unnecessary methods and imports
         //create a new vertical box, center it, and add buttons to it, set id for css
         VBox gameOverLayout = new VBox(20);
         gameOverLayout.setId("gameOver");
@@ -518,8 +522,12 @@ public class Matopeli extends Application {
         //add css to this scene
         gameOverScene.getStylesheets().add("Styling/styling.css");
     }
+<<<<<<< HEAD
 
     private void createHighscoreScene() {
+=======
+    public void createHighscoreScene() {
+>>>>>>> parent of 249170e... added commenting, removed unnecessary methods and imports
         //create a gridpane
         GridPane grid = new GridPane();
 
@@ -625,6 +633,13 @@ public class Matopeli extends Application {
         highscoreTableScene.getStylesheets().add("Styling/styling.css");
 =======
         highscoreTableScene = new Scene(grid,width,height);
+<<<<<<< HEAD
 >>>>>>> parent of ffb0511... highscore scene looks nicer, added comments
+=======
+
+>>>>>>> parent of 249170e... added commenting, removed unnecessary methods and imports
     }
+
+
+
 }
