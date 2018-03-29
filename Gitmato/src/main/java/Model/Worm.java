@@ -5,10 +5,13 @@
  */
 package Model;
 
+import Model.WormStates.WormFast;
+import Model.WormStates.WormSlow;
+import Model.WormStates.WormState;
+import Model.WormStates.WormStateNormal;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
 
 
 /**
@@ -16,6 +19,8 @@ import javafx.scene.shape.Rectangle;
  * @author maxki
  */
 public class Worm {
+
+    private WormState state = WormStateNormal.getInstance();
 
     private double dx;
     private double dy;
@@ -182,6 +187,24 @@ public class Worm {
        Ellipse mato = new Ellipse(x, y, 18, 18);
        return mato.getLayoutBounds();
     }
-    
-    
+
+    public void changeState(WormState ws) {
+        state = ws;
+    }
+
+    public void fasterSpeed(Worm this) {
+        changeState(WormFast.getInstance());
+        state.fasterSpeed(this);
+    }
+
+    public void slowerSpeed() {
+        changeState(WormSlow.getInstance());
+        state.slowerSpeed(this);
+    }
+
+    public void normalSpeed() {
+        changeState(WormStateNormal.getInstance());
+        state.normalSpeed(this);
+    }
+
 }
