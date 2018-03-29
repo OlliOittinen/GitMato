@@ -576,10 +576,8 @@ public class Matopeli extends Application {
     }
 
     public void createHighscoreTableScene(ArrayList<String> scorelist) {
-        //search the index of of the score from the sorted list from database
         int indexOf = scorelist.indexOf(username + " " + score) + 1;
         String highscore = "";
-        //go through the results list and attach top 10 index, score and name values to new string "highscore"
         int i = 0;
         for (String s : scorelist) {
             i++;
@@ -597,10 +595,11 @@ public class Matopeli extends Application {
         grid.setHgap(10);
 
         //set vertical gap
-        grid.setVgap(10);
+        grid.setVgap(100);
 
-        VBox vbox = new VBox(40);
+        VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
+<<<<<<< HEAD
         Text headline = new Text("You placed: #" + indexOf + " with " + score + " points!\n\n\n\n\nTop 10");
         headline.setFill(Color.WHITE);
         headline.setId("highscoretable_headline");
@@ -613,10 +612,19 @@ public class Matopeli extends Application {
             highscore_button.setText("Show\nhighscore");
         });
         vbox.getChildren().addAll(headline, highscores, okbutton);
+=======
+        Text headline = new Text("Top 10\n You placed: #" + indexOf + " with " + score + " points!");
+        headline.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+        Label highscores = new Label(highscore);
+        vbox.getChildren().addAll(headline, highscores);
+>>>>>>> parent of ffb0511... highscore scene looks nicer, added comments
         grid.getChildren().add(vbox);
-        grid.setId("highscoretable_scene");
 
+<<<<<<< HEAD
         highscoreTableScene = new Scene(grid, width, height);
         highscoreTableScene.getStylesheets().add("Styling/styling.css");
+=======
+        highscoreTableScene = new Scene(grid,width,height);
+>>>>>>> parent of ffb0511... highscore scene looks nicer, added comments
     }
 }
