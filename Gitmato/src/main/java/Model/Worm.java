@@ -27,8 +27,8 @@ public class Worm {
     private boolean reverse = false; //Reverse debuff
     private int points;
     
-    private double speed = 1;
-    private int life = 30000;
+    private double speed = 3;
+    private int life = 3;
 
     public int getLife() {
         return life;

@@ -474,12 +474,9 @@ public class Matopeli extends Application {
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
     }
-<<<<<<< HEAD
 
-    private void createGameOverScene() {
-=======
     public void createGameOverScene(){
->>>>>>> parent of 249170e... added commenting, removed unnecessary methods and imports
+
         //create a new vertical box, center it, and add buttons to it, set id for css
         VBox gameOverLayout = new VBox(20);
         gameOverLayout.setId("gameOver");
@@ -522,12 +519,8 @@ public class Matopeli extends Application {
         //add css to this scene
         gameOverScene.getStylesheets().add("Styling/styling.css");
     }
-<<<<<<< HEAD
 
-    private void createHighscoreScene() {
-=======
     public void createHighscoreScene() {
->>>>>>> parent of 249170e... added commenting, removed unnecessary methods and imports
         //create a gridpane
         GridPane grid = new GridPane();
 
@@ -595,6 +588,7 @@ public class Matopeli extends Application {
         }
         //create a gridpane
         GridPane grid = new GridPane();
+        grid.setId("highscoretable_scene");
 
         //align it center
         grid.setAlignment(Pos.CENTER);
@@ -603,15 +597,16 @@ public class Matopeli extends Application {
         grid.setHgap(10);
 
         //set vertical gap
-        grid.setVgap(100);
+        grid.setVgap(10);
 
-        VBox vbox = new VBox();
+        VBox vbox = new VBox(40);
         vbox.setAlignment(Pos.CENTER);
-<<<<<<< HEAD
-        Text headline = new Text("You placed: #" + indexOf + " with " + score + " points!\n\n\n\n\nTop 10");
+
+        Text headline = new Text("You placed: #" + indexOf + " with " + score + " points!\n\n\nTop 10");
         headline.setFill(Color.WHITE);
         headline.setId("highscoretable_headline");
         Label highscores = new Label(highscore);
+        highscores.setTextFill(Color.WHITE);
         highscores.setId("top_10_highscores");
         Button okbutton = new Button("OK");
         //handeler for ok button
@@ -620,24 +615,12 @@ public class Matopeli extends Application {
             highscore_button.setText("Show\nhighscore");
         });
         vbox.getChildren().addAll(headline, highscores, okbutton);
-=======
-        Text headline = new Text("Top 10\n You placed: #" + indexOf + " with " + score + " points!");
-        headline.setFont(Font.font("Arial", FontWeight.BOLD, 30));
-        Label highscores = new Label(highscore);
-        vbox.getChildren().addAll(headline, highscores);
->>>>>>> parent of ffb0511... highscore scene looks nicer, added comments
-        grid.getChildren().add(vbox);
+        grid.getChildren().addAll(vbox);
 
-<<<<<<< HEAD
         highscoreTableScene = new Scene(grid, width, height);
         highscoreTableScene.getStylesheets().add("Styling/styling.css");
-=======
-        highscoreTableScene = new Scene(grid,width,height);
-<<<<<<< HEAD
->>>>>>> parent of ffb0511... highscore scene looks nicer, added comments
-=======
 
->>>>>>> parent of 249170e... added commenting, removed unnecessary methods and imports
+
     }
 
 
