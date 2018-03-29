@@ -5,10 +5,7 @@
  */
 package Model;
 
-import Model.WormStates.WormFast;
-import Model.WormStates.WormSlow;
-import Model.WormStates.WormState;
-import Model.WormStates.WormStateNormal;
+import Model.WormStates.*;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Ellipse;
@@ -183,6 +180,16 @@ public class Worm {
     public void normalSpeed() {
         changeState(WormStateNormal.getInstance());
         state.normalSpeed(this);
+    }
+
+    public void shield() {
+        changeState(WormShield.getInstance());
+        state.shield(this);
+    }
+
+    public void confuse() {
+        changeState(WormConfuse.getInstance());
+        state.confuse(this);
     }
 
 }

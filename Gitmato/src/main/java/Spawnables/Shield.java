@@ -25,17 +25,7 @@ public class Shield extends AbstractSpawnables{
         Music.shield.play();
         //add points to the one who picked up the powerup
         worm.setPoints(worm.getPoints()+100);
-        //set private boolean to be true
-        worm.setShield(true);
-
-        //after this timer, set the boolean as false again
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                worm.setShield(false);
-            }
-        }, time); //aika (ms), joka odotetaan
+        worm.shield();
     }
 
     public boolean isActive(Worm worm) {
