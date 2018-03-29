@@ -94,7 +94,7 @@ public class Bombs extends AbstractSpawnables{
                             setYBombs(i, -1000);
                         }
                     }
-                }, 5000); //tulialueet
+                }, 1000000000); //tulialueet
             }
         }, 2500); //targetit
     }

@@ -90,6 +90,8 @@ public class Matopeli extends Application {
     private Label winner_label = new Label();
     private Text scenetitle = new Text();
     private String username;
+    private boolean hs_submitted;
+    private Button highscore_button;
 
     public static void main(String[] args) {
         launch(args);
@@ -192,9 +194,7 @@ public class Matopeli extends Application {
         mainMenuScene.getStylesheets().add("Styling/styling.css");
 
 
-
         //-----------------------------------
-
 
 
         //Display main scene first
@@ -316,7 +316,7 @@ public class Matopeli extends Application {
                 g.drawImage(lasersightH, laser.getX3(), laser.getY3());
                 g.drawImage(lasersightV, laser.getX2(), laser.getY2());
 
-            //if lethal is true, draw the laser itself
+                //if lethal is true, draw the laser itself
             } else {
                 g.drawImage(laserH, laser.getX3(), laser.getY3());
                 g.drawImage(laserV, laser.getX2(), laser.getY2());
@@ -352,7 +352,7 @@ public class Matopeli extends Application {
             //if board is inactive
         } else {
             //stop the background music, play death music
-            if(worm.getLife() < worm2.getLife() && !gameMode.equals("sp")) {
+            if (worm.getLife() < worm2.getLife() && !gameMode.equals("sp")) {
                 score = worm2.getPoints();
                 winner_label.setText("BLUE WON");
                 winner_label.setTextFill(Color.BLUE);
@@ -422,7 +422,7 @@ public class Matopeli extends Application {
             timeCounter += deltaTime;
             //add  1/interval to the current frame counter
             //why?
-            frameCounter +=  (int) (1 / interval);
+            frameCounter += (int) (1 / interval);
         }
         //save previous time as current time so when this is called again, it can use the new values
         previousTime = currentTime;
@@ -440,6 +440,8 @@ public class Matopeli extends Application {
 
         //tell the board it's ingame again
         board.setIngame(true);
+
+        hs_submitted = false;
 
         //clear the internal arraylists for reinitialization
         worms.clear();
@@ -472,7 +474,8 @@ public class Matopeli extends Application {
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
     }
-    private void createGameOverScene(){
+
+    private void createGameOverScene() {
         //create a new vertical box, center it, and add buttons to it, set id for css
         VBox gameOverLayout = new VBox(20);
         gameOverLayout.setId("gameOver");
@@ -482,10 +485,11 @@ public class Matopeli extends Application {
         Label gameOverLabel = new Label("GAME OVER");
         gameOverLabel.setId("gameOverLabel");
 
+
         //buttons
         Button restart = new Button("Restart");
         Button backToSS = new Button("Main menu");
-        Button highscore = new Button("Submit\nhighscore");
+        highscore_button = new Button("Submit\nhighscore");
         restart.setOnAction(e -> {
             reset();
             window.setScene(gameScene);
@@ -494,21 +498,27 @@ public class Matopeli extends Application {
 
         //handle button clicks
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
-        highscore.setOnAction(e ->{
-            window.setScene(highscoreScene);
-            scenetitle.setText("You got " + score +" points ");
+        highscore_button.setOnAction(e -> {
+            if (!hs_submitted) {
+                window.setScene(highscoreScene);
+                scenetitle.setText("You got " + score + " points ");
+            } else {
+                window.setScene(highscoreTableScene);
+
+            }
 
 
         });
 
         //add buttons to the layout
-        gameOverLayout.getChildren().addAll(gameOverLabel, winner_label, restart, backToSS, highscore);
+        gameOverLayout.getChildren().addAll(gameOverLabel, winner_label, restart, backToSS, highscore_button);
 
         //create game over scene based on this layout
         gameOverScene = new Scene(gameOverLayout, width, height);
         //add css to this scene
         gameOverScene.getStylesheets().add("Styling/styling.css");
     }
+
     private void createHighscoreScene() {
         //create a gridpane
         GridPane grid = new GridPane();
@@ -545,9 +555,9 @@ public class Matopeli extends Application {
         cancel.setOnAction(e -> window.setScene(gameOverScene));
         submit.setOnAction(e -> {
             if ((userTextField.getText() != null && !userTextField.getText().isEmpty())) {
-                userName.setText("Thanks");
+                hs_submitted = true;
                 username = userTextField.getText();
-                board.submitHighscore(score,username);
+                board.submitHighscore(score, username);
                 window.setScene(highscoreTableScene);
             } else {
                 userName.setText("Please enter\nyour username");
@@ -564,6 +574,7 @@ public class Matopeli extends Application {
         //get stylesheets for highscore scene
         highscoreScene.getStylesheets().add("Styling/styling.css");
     }
+
     public void createHighscoreTableScene(ArrayList<String> scorelist) {
         //search the index of of the score from the sorted list from database
         int indexOf = scorelist.indexOf(username + " " + score) + 1;
@@ -590,19 +601,22 @@ public class Matopeli extends Application {
 
         VBox vbox = new VBox(40);
         vbox.setAlignment(Pos.CENTER);
-        Text headline = new Text("Top 10\nYou placed: #" + indexOf + " with " + score + " points!");
+        Text headline = new Text("You placed: #" + indexOf + " with " + score + " points!\n\n\n\n\nTop 10");
         headline.setFill(Color.WHITE);
         headline.setId("highscoretable_headline");
         Label highscores = new Label(highscore);
         highscores.setId("top_10_highscores");
         Button okbutton = new Button("OK");
         //handeler for ok button
-        okbutton.setOnAction(e -> window.setScene(gameOverScene));
+        okbutton.setOnAction(e ->{
+            window.setScene(gameOverScene);
+            highscore_button.setText("Show\nhighscore");
+        });
         vbox.getChildren().addAll(headline, highscores, okbutton);
         grid.getChildren().add(vbox);
         grid.setId("highscoretable_scene");
 
-        highscoreTableScene = new Scene(grid,width,height);
+        highscoreTableScene = new Scene(grid, width, height);
         highscoreTableScene.getStylesheets().add("Styling/styling.css");
     }
 }
