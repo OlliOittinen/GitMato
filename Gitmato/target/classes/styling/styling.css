@@ -7,7 +7,7 @@
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
 }
 
-#gameOver, #highscore_scene {
+#gameOver, #highscore_scene, #highscoretable_scene {
     -fx-background-image: url("BlueBG800x6002.png");
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
@@ -27,6 +27,15 @@
 #winner_label {
     -fx-font-family:'Press Start 2P';
     -fx-font-size: 30px;
+}
+#highscoretable_headline{
+    -fx-font-family:'Press Start 2P';
+    -fx-font-size: 20px;
+    -fx-text-alignment: center;
+}
+#highscoretable_highscores{
+    -fx-font-family:'Press Start 2P';
+    -fx-font-size: 15px;
 }
 #username {
     -fx-font-family:'Press Start 2P';
