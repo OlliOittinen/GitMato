@@ -90,6 +90,8 @@ public class Matopeli extends Application {
     private Label winner_label = new Label();
     private Text scenetitle = new Text();
     private String username;
+    private Button highscore_button;
+    private boolean hs_submitted;
 
     public static void main(String[] args) {
         launch(args);
@@ -441,6 +443,9 @@ public class Matopeli extends Application {
         //tell the board it's ingame again
         board.setIngame(true);
 
+        //set highscore submitted back to false
+        hs_submitted = false;
+
         //clear the internal arraylists for reinitialization
         worms.clear();
         body.clear();
@@ -485,7 +490,7 @@ public class Matopeli extends Application {
         //buttons
         Button restart = new Button("Restart");
         Button backToSS = new Button("Main menu");
-        Button highscore = new Button("Submit\nhighscore");
+        highscore_button = new Button("Submit\nhighscore");
         restart.setOnAction(e -> {
             reset();
             window.setScene(gameScene);
@@ -494,15 +499,17 @@ public class Matopeli extends Application {
 
         //handle button clicks
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
-        highscore.setOnAction(e ->{
-            window.setScene(highscoreScene);
-            scenetitle.setText("You got " + score +" points ");
-
-
+        highscore_button.setOnAction(e ->{
+            if(!hs_submitted) {
+                window.setScene(highscoreScene);
+                scenetitle.setText("You got " + score + " points ");
+            } else {
+                window.setScene(highscoreTableScene);
+            }
         });
 
         //add buttons to the layout
-        gameOverLayout.getChildren().addAll(gameOverLabel, winner_label, restart, backToSS, highscore);
+        gameOverLayout.getChildren().addAll(gameOverLabel, winner_label, restart, backToSS, highscore_button);
 
         //create game over scene based on this layout
         gameOverScene = new Scene(gameOverLayout, width, height);
@@ -545,7 +552,8 @@ public class Matopeli extends Application {
         cancel.setOnAction(e -> window.setScene(gameOverScene));
         submit.setOnAction(e -> {
             if ((userTextField.getText() != null && !userTextField.getText().isEmpty())) {
-                userName.setText("Thanks");
+                highscore_button.setText("Show\nhighscores");
+                hs_submitted = true;
                 username = userTextField.getText();
                 board.submitHighscore(score,username);
                 window.setScene(highscoreTableScene);
@@ -576,6 +584,7 @@ public class Matopeli extends Application {
         }
         //create a gridpane
         GridPane grid = new GridPane();
+        grid.setId("highscoretable_scene");
 
         //align it center
         grid.setAlignment(Pos.CENTER);
@@ -586,14 +595,21 @@ public class Matopeli extends Application {
         //set vertical gap
         grid.setVgap(100);
 
-        VBox vbox = new VBox();
+        VBox vbox = new VBox( 40);
         vbox.setAlignment(Pos.CENTER);
-        Text headline = new Text("Top 10\n You placed: #" + indexOf + " with " + score + " points!");
-        headline.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+        Text headline = new Text("You placed: #" + indexOf + " with " + score + " points!\n\n\nTop 10");
+        headline.setFill(Color.WHITE);
+        headline.setId("highscoretable_headline");
         Label highscores = new Label(highscore);
-        vbox.getChildren().addAll(headline, highscores);
+        highscores.setTextFill(Color.WHITE);
+        highscores.setId("highscoretable_highscores");
+        Button okbutton = new Button("OK");
+        //handler for okbutton
+        okbutton.setOnAction(e -> window.setScene(gameOverScene));
+        vbox.getChildren().addAll(headline, highscores, okbutton);
         grid.getChildren().add(vbox);
 
         highscoreTableScene = new Scene(grid,width,height);
+        highscoreTableScene.getStylesheets().add("Styling/styling.css");
     }
 }
