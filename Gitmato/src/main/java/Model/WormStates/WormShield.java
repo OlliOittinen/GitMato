@@ -19,7 +19,7 @@ public class WormShield extends WormState{
     }
 
     @Override
-    public void shield(Worm worm) {
+    public void action(Worm worm) {
         worm.setShield(true);
 
         Timer timer = new Timer();

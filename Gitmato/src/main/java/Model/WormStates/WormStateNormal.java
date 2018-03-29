@@ -16,7 +16,7 @@ public class WormStateNormal extends WormState {
     }
 
     @Override
-    public void normalSpeed(Worm worm) {
+    public void action(Worm worm) {
         worm.setSpeed(3);
     }
 

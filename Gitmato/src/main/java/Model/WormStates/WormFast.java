@@ -19,7 +19,7 @@ public class WormFast extends WormState {
     }
 
     @Override
-    public void fasterSpeed(Worm worm) {
+    public void action(Worm worm) {
         worm.setSpeed(worm.getSpeed()+2);
 
         Timer timer = new Timer();
@@ -27,7 +27,7 @@ public class WormFast extends WormState {
             @Override
             public void run() {
                 //normalize the speed again
-                worm.normalSpeed();
+                worm.changeState(WormStateNormal.getInstance());
             }
         }, 5000);
     }

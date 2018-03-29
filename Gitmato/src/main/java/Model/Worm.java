@@ -165,31 +165,23 @@ public class Worm {
 
     public void changeState(WormState ws) {
         state = ws;
+        state.action(this);
     }
 
     public void fasterSpeed(Worm this) {
         changeState(WormFast.getInstance());
-        state.fasterSpeed(this);
     }
 
     public void slowerSpeed() {
         changeState(WormSlow.getInstance());
-        state.slowerSpeed(this);
-    }
-
-    public void normalSpeed() {
-        changeState(WormStateNormal.getInstance());
-        state.normalSpeed(this);
     }
 
     public void shield() {
         changeState(WormShield.getInstance());
-        state.shield(this);
     }
 
     public void confuse() {
         changeState(WormConfuse.getInstance());
-        state.confuse(this);
     }
 
 }
