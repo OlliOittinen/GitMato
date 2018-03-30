@@ -7,7 +7,6 @@ package Model;
 
 import Model.WormStates.*;
 import javafx.geometry.Bounds;
-import javafx.scene.image.Image;
 import javafx.scene.shape.Ellipse;
 
 

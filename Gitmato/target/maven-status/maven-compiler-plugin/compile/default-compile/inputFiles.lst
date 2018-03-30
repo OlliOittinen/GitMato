@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\NetBeansProjects\Matopeli\matopeli\Gitmato\src\main\java\Spawnables\Laser.java
 C:\NetBeansProjects\Matopeli\matopeli\Gitmato\src\main\java\Model\Tail.java
 C:\NetBeansProjects\Matopeli\matopeli\Gitmato\src\main\java\Model\WormStates\WormSlow.java
@@ -23,3 +24,30 @@ C:\NetBeansProjects\Matopeli\matopeli\Gitmato\src\main\java\Spawnables\Faster.ja
 C:\NetBeansProjects\Matopeli\matopeli\Gitmato\src\main\java\GUI\Matopeli.java
 C:\NetBeansProjects\Matopeli\matopeli\Gitmato\src\main\java\Spawnables\Snack.java
 C:\NetBeansProjects\Matopeli\matopeli\Gitmato\src\main\java\Model\WormStates\WormShield.java
+=======
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Model\Highscore.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Spawnables\Spawnables.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Controller\PlayerController.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Model\WormStates\WormShield.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\GUI\Matopeli.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Model\WormStates\WormStateNormal.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Spawnables\Bombs.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Spawnables\Laser.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Model\WormStates\WormConfuse.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Model\WormStates\WormFast.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Spawnables\Snack.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Spawnables\Shield.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Model\Bot.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Spawnables\Slower.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Spawnables\AbstractSpawnables.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Spawnables\Life.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Model\WormStates\WormSlow.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Model\DBConnection.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Spawnables\Faster.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Model\Worm.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Model\Board.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Model\WormStates\WormState.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Spawnables\Confuse.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Model\Tail.java
+D:\Coding\Projects\matopeli\Gitmato\src\main\java\Sound\Music.java
+>>>>>>> a186d77aeb64c3591e5273f649cfa26b2e7c6b10

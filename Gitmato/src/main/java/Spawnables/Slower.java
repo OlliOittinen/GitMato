@@ -15,9 +15,16 @@ import Sound.Music;
  */
 public class Slower extends AbstractSpawnables{
 
+    /**
+     * Awards worm object with points, slows down the other worm.
+     * Plays the corresponding music.
+     * Uses States to achieve slow effect.
+     * @param worm the worm to be awarded with points
+     * @param worm2 the worm to be slowed down; the worm that has a slower speed temporarily
+     * @see Model.WormStates.WormSlow
+     */
     //requires both worms for correct application
     public void slower(Worm worm, Worm worm2) {
-
         //play the corresponding music
         Music.slowerPowerup.play();
         //add points to the one who picked up
@@ -25,7 +32,10 @@ public class Slower extends AbstractSpawnables{
         //change state of the opposing worm
         worm2.slowerSpeed();
     }
-    
+
+    /**
+     * Class constructor
+     */
     public Slower() {
         init();
     }

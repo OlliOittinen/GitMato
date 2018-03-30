@@ -11,10 +11,16 @@ package Spawnables;
  */
 public class Snack extends AbstractSpawnables{
 
+    /**
+     * Class constructor
+     */
     public Snack() {
         init();
     }
 
+    /**
+     * Randomizes the location of the snack icon at start.
+     */
     //on init, set the starting snack to be at a random x-location between 600 & 200
     @Override
     public void init() {
