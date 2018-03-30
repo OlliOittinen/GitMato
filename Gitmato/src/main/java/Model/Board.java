@@ -9,14 +9,9 @@ import GUI.Matopeli;
 import Sound.Music;
 import Spawnables.*;
 import java.util.ArrayList;
-import Controller.PlayerController;
-import java.util.Optional;
 import java.util.TimerTask;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Ellipse;
 
@@ -253,7 +248,7 @@ public class Board {
             Bounds Matotail = aTailList.getBounds();
             if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2) && !gameMode.equals("sp")) {
                 if (worm2.getLife() > 1) {
-                    shield.shield(worm2, 50);
+                    shield.shield(worm2);
                     worm2.randomizeXY();
                     if (gameMode.equals("vs AI")) {
                         bot.BotTurnDown();
@@ -267,7 +262,7 @@ public class Board {
             Bounds Matotail2 = aTailList2.getBounds();
             if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                 if (worm.getLife() > 1) {
-                    shield.shield(worm, 50);
+                    shield.shield(worm);
                     worm.randomizeXY();
                     worm.setDirectionAdv(0);
                     worm.setDirection(0);
@@ -280,7 +275,7 @@ public class Board {
                 Bounds Matotail2 = tailList.get(i).getBounds();
                 if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                     if (worm.getLife() > 1) {
-                        shield.shield(worm, 50);
+                        shield.shield(worm);
                         worm.randomizeXY();
                         worm.setDirectionAdv(0);
                         worm.setDirection(0);
@@ -319,7 +314,7 @@ public class Board {
         }
 
         if (psh.intersects(Matokuutio)) {
-            shield.shield(worm, 10000);
+            shield.shield(worm);
             powerUpCD();
         }
         if (pb.intersects(Matokuutio)) {
@@ -379,7 +374,7 @@ public class Board {
         }
 
         if (psh.intersects(Matokuutio2)) {
-            shield.shield(worm2, 10000);
+            shield.shield(worm2);
             powerUpCD();
         }
         if (pb.intersects(Matokuutio2)) {

@@ -16,6 +16,14 @@ import java.util.TimerTask;
  */
 public class Confuse extends AbstractSpawnables {
 
+
+    /**
+     * Sets the enemy worm to move in the opposite direction.
+     * Uses Worm States to achieve this.
+     * @param worm the object (worm) that picked up (collided with) the icon for this powerup
+     * @param worm2 the object (worm) that is to move in the opposite direction
+     * @see Model.WormStates.WormConfuse
+     */
     //requires both worms to set effects correctly
     public void confuse(Worm worm, Worm worm2) {
         //play the corresponding music
@@ -26,6 +34,9 @@ public class Confuse extends AbstractSpawnables {
         worm2.confuse();
     }
 
+    /**
+     * Class constructor
+     */
     //constructor calls the init() from superclass
     public Confuse() {
         init();

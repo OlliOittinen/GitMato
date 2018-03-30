@@ -9,9 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
-/*
-
-    abstract class that handles all the spawnables, ie. everything under Spawnables directory
+/**
+    @version 1
+    abstract class that handles all the spawnables; every extending class
 
 */
 
@@ -21,14 +21,12 @@ public abstract class AbstractSpawnables implements Spawnables {
     int x;
     int y;
 
-    //get the bounds for the rectangle, which is based on the size of the icon
     @Override
     public Bounds getBoundsForIcon(){
         Rectangle icon = new Rectangle(x, y, 30, 30);
         return icon.getLayoutBounds();
     }
 
-    //classic getters & setters
     @Override
     public int getX() {
         return x;
@@ -49,7 +47,6 @@ public abstract class AbstractSpawnables implements Spawnables {
         this.y = y;
     }
 
-    //method that randomizes the location for the ICON of the powerup
     @Override
     public void randomizePowerUpLocation() {
         //multiplied by size of the board -50 px to keep them visible
