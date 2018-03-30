@@ -597,17 +597,6 @@ public class Matopeli extends Application {
         //set vertical gap
         grid.setVgap(10);
 
-<<<<<<< HEAD
-        VBox vbox = new VBox(40);
-        vbox.setAlignment(Pos.CENTER);
-        Text headline = new Text("Top 10\nYou placed: #" + indexOf + " with " + score + " points!");
-        headline.setFill(Color.WHITE);
-        headline.setId("highscoretable_headline");
-        Label highscores = new Label(highscore);
-        highscores.setId("top_10_highscores");
-        Button okbutton = new Button("OK");
-        //handeler for ok button
-=======
         VBox vbox = new VBox( 40);
         vbox.setAlignment(Pos.CENTER);
         Text headline = new Text("You placed: #" + indexOf + " with " + score + " points!\n\n\nTop 10");
@@ -618,7 +607,7 @@ public class Matopeli extends Application {
         highscores.setId("highscoretable_highscores");
         Button okbutton = new Button("OK");
         //handler for okbutton
->>>>>>> 2ce2893bdf006cf3ca3ffba2bcc0eee0a7d7b51e
+
         okbutton.setOnAction(e -> window.setScene(gameOverScene));
         vbox.getChildren().addAll(headline, highscores, okbutton);
         grid.getChildren().add(vbox);
