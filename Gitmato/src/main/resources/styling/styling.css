@@ -32,6 +32,15 @@
     -fx-font-family:'Press Start 2P';
     -fx-font-size: 30px;
 }
+#highscoretable_headline{
+    -fx-font-family:'Press Start 2P';
+    -fx-font-size: 20px;
+    -fx-text-alignment: center;
+}
+#highscoretable_highscores{
+    -fx-font-family:'Press Start 2P';
+    -fx-font-size: 15px;
+}
 #username {
     -fx-font-family:'Press Start 2P';
     -fx-font-size: 15px;

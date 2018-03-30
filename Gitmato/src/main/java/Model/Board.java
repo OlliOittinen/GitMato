@@ -124,7 +124,7 @@ public class Board {
             @Override
             public void run() {
 
-                int n = 5;//(int) (Math.random() * 7);
+                int n = (int) (Math.random() * 7);
 
                 switch (n) {
                     case 0:

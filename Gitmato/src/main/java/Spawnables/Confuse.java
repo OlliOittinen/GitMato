@@ -22,24 +22,8 @@ public class Confuse extends AbstractSpawnables {
         Music.reverse.play();
         //add points to the one who picked up the icon
         worm.setPoints(worm.getPoints()+100);
-
         //set the speed of the opposing worm to be the opposite
-        worm2.setSpeed(worm2.getSpeed()*-1);
-
-        //set the boolean for drawing the effect on top of the worm to be true
-        worm2.setReverse(true);
-
-        //sets this powerup to be temporary
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                //after the delay, set the speed to be opposing of opposing (normal) again
-                worm2.setSpeed(worm2.getSpeed()*-1);
-                //set the boolean false again, so don't draw the effect anymore
-                worm2.setReverse(false);
-            }
-        }, 5000); //this marks the delay ie. the time after all the stuff under timer.schedule is done
+        worm2.confuse();
     }
 
     //constructor calls the init() from superclass
