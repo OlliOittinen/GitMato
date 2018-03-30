@@ -74,18 +74,8 @@ public class Board {
     public ArrayList<Spawnables> getPickableList() {
         return pickableList;
     }
-    public ArrayList<Point2D> getCoordinates() {
-        return coordinates;
-    }
-    public ArrayList<Point2D> getCoordinates2() {
-        return coordinates2;
-    }
     public ArrayList getWorms() {
         return worms;
-    }
-
-    public void restartGame() {
-        //TODO -- what happens when you restart game
     }
 
  // --------------------------------------------------------------------------------------------
@@ -148,6 +138,7 @@ public class Board {
             }
         }, 5000); //aika (ms), joka odotetaan
     }
+
     public void submitHighscore(int score, String name) {
                 if (name != null) {
                     connection.submitScore(score, name, gameMode);
@@ -160,9 +151,11 @@ public class Board {
     public boolean isIngame() {
         return ingame;
     }
+
     public void setIngame(boolean ingame) {
         this.ingame = ingame;
     }
+
     private boolean ingame;
 
     //-------------------------------------------------------------------------------------
@@ -408,6 +401,7 @@ public class Board {
             worm2.setPoints(worm2.getPoints() - 100);
         }
     }
+
     public void updateBoard() {
             
         checkCollisions();

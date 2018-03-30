@@ -28,6 +28,7 @@ public class Tail{
         this.playerNro = playerNro;
         initTail();
     }
+
     private void initTail(){
         if(playerNro==1){
             image = new Image("images/RedWormTail(800x600).png");
@@ -36,16 +37,12 @@ public class Tail{
             image = new Image("images/BlueWormTail(800x600).png");
         }
     }
-    
-    public Image getImage() {
-        return image;
-    }
 
     public int getCoordinateInt(){
         return coordinateInt;
     }
     
-     public void setX(int luku) {
+    public void setX(int luku) {
         this.x = luku;
     }
 

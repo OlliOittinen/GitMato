@@ -477,6 +477,7 @@ public class Matopeli extends Application {
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
     }
+
     private void createGameOverScene(){
         //create a new vertical box, center it, and add buttons to it, set id for css
         VBox gameOverLayout = new VBox(20);
@@ -516,6 +517,7 @@ public class Matopeli extends Application {
         //add css to this scene
         gameOverScene.getStylesheets().add("Styling/styling.css");
     }
+
     private void createHighscoreScene() {
         //create a gridpane
         GridPane grid = new GridPane();
@@ -572,6 +574,7 @@ public class Matopeli extends Application {
         //get stylesheets for highscore scene
         highscoreScene.getStylesheets().add("Styling/styling.css");
     }
+
     public void createHighscoreTableScene(ArrayList<String> scorelist) {
         //search the index of of the score from the sorted list from database
         int indexOf = scorelist.indexOf(username + " " + score) + 1;
