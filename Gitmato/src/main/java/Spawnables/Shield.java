@@ -17,7 +17,8 @@ import java.util.TimerTask;
 public class Shield extends AbstractSpawnables{
 
     /**
-     * Class constructor
+     * Class constructor, calls on init();
+     *@see AbstractSpawnables
      */
     public Shield() {
         init();

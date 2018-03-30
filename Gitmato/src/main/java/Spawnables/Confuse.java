@@ -35,7 +35,8 @@ public class Confuse extends AbstractSpawnables {
     }
 
     /**
-     * Class constructor
+     * Class constructor, calls on init();
+     * @see AbstractSpawnables
      */
     //constructor calls the init() from superclass
     public Confuse() {

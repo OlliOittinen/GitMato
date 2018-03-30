@@ -48,7 +48,7 @@ public abstract class AbstractSpawnables implements Spawnables {
     }
 
     @Override
-    public void randomizePowerUpLocation() {
+    public void randomizeIconLocation() {
         //multiplied by size of the board -50 px to keep them visible
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));

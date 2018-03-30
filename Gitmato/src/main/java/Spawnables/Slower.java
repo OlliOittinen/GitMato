@@ -34,7 +34,8 @@ public class Slower extends AbstractSpawnables{
     }
 
     /**
-     * Class constructor
+     * Class constructor, calls on init();
+     * @see AbstractSpawnables
      */
     public Slower() {
         init();

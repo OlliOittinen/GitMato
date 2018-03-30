@@ -19,8 +19,6 @@ import javafx.scene.shape.*;
  */
 public class Bombs extends AbstractSpawnables{
 
-
-
     private int x2, y2, x3, y3, x4, y4, x5, y5, x6, y6, x7, y7;
 
     private Image image, image2, image3;
@@ -32,8 +30,7 @@ public class Bombs extends AbstractSpawnables{
 
     /**
      * Awards the object with 100 points.
-     * This method awards the Object (in this case, the worm) that collided with this icon
-     * with 100 points.
+     *
      * @param worm the object that is awarded points
      */
     public void bombs(Worm worm) {
@@ -42,10 +39,9 @@ public class Bombs extends AbstractSpawnables{
 
     /**
      * Checks if this object should lose a life.
-     * This method first checks whether or not the private boolean used for this class is set to true.
-     * If boolean is set to true, it randomizes the worm's location on the map and sets it's current direction (facing of) to 0.
+     * Randomizes the worm's location on the map and sets it's current direction (facing of) to 0.
      * In other words, randomizes this Object's location and completely halts its movement forcibly.
-     * @param worm the object that is being checked
+     * @param worm the Worm object that is being checked
      */
     public void damage(Worm worm) {
         if (lethal) {
@@ -59,14 +55,14 @@ public class Bombs extends AbstractSpawnables{
     }
 
     /**
-     * Class constructor
+     * Class constructor, calls on init();
      */
     public Bombs() {
         init();
     }
 
     /**
-     * Hides the icon and targeting ellipses, along with the actual damaging zones, used by this class, away from the user's vision.
+     * Hides the icon and targeting ellipses - along with the actual damaging zones - away from the user's vision.
      * This method is only called once, during the initialization process.
      */
     @Override
@@ -85,8 +81,6 @@ public class Bombs extends AbstractSpawnables{
      * Secondly, it randomizes locations for three targets using this class's private integer lists, and displays them.
      * Thirdly, places the actual damaging areas on top of the previously randomized locations,
      * removes the targets from the map, and displays the damaging areas.
-     * @see Timer
-     * @see TimerTask
      */
     public void bombZone() {
         Timer timer = new Timer();

@@ -4,10 +4,7 @@ Model\Tail.class
 Spawnables\Slower.class
 GUI\Matopeli$1.class
 Spawnables\Bombs.class
-<<<<<<< HEAD
-=======
 Sound\Music$2.class
->>>>>>> a186d77aeb64c3591e5273f649cfa26b2e7c6b10
 Spawnables\Bombs$1.class
 Spawnables\Laser.class
 Spawnables\Laser$2$1.class
@@ -22,27 +19,18 @@ Model\Bot.class
 Model\WormStates\WormFast$1.class
 Spawnables\Faster.class
 Model\WormStates\WormSlow.class
-<<<<<<< HEAD
-=======
 Sound\Music.class
->>>>>>> a186d77aeb64c3591e5273f649cfa26b2e7c6b10
 Model\WormStates\WormState.class
 Model\WormStates\WormSlow$1.class
 Model\Board$1.class
 Spawnables\Bombs$2$1.class
 Model\WormStates\WormConfuse$1.class
 Model\WormStates\WormShield$1.class
-<<<<<<< HEAD
-Spawnables\Confuse.class
-Spawnables\Laser$1.class
-Controller\PlayerController.class
-=======
 Model\DBConnection.class
 Spawnables\Confuse.class
 Spawnables\Laser$1.class
 Controller\PlayerController.class
 Sound\Music$1.class
->>>>>>> a186d77aeb64c3591e5273f649cfa26b2e7c6b10
 Model\Highscore.class
 Spawnables\Bombs$2.class
 Model\WormStates\WormFast.class

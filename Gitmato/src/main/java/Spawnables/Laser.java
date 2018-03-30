@@ -27,7 +27,7 @@ public class Laser extends AbstractSpawnables {
     private Rectangle beam = new Rectangle(-1000, -1000, 1, 1);
 
     /**
-     * Class constructor
+     * Class constructor, calls on init();
      */
     public Laser() {
         init();
@@ -35,10 +35,9 @@ public class Laser extends AbstractSpawnables {
 
     /**
      * Checks if this object should lose a life.
-     * This method first checks whether or not the private boolean used for this class is set to true.
-     * If boolean is set to true, it randomizes the worm's location on the map and sets it's current direction (facing of) to 0.
+     * Randomizes the worm's location on the map and sets it's current direction (facing of) to 0.
      * In other words, randomizes this Object's location and completely halts its movement forcibly.
-     * @param worm the object to be checked
+     * @param worm the Worm object that is being checked
      */
     public void damage(Worm worm) {
         if (lethal) {

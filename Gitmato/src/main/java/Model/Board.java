@@ -123,25 +123,25 @@ public class Board {
 
                 switch (n) {
                     case 0:
-                        shield.randomizePowerUpLocation();
+                        shield.randomizeIconLocation();
                         break;
                     case 1:
-                        faster.randomizePowerUpLocation();
+                        faster.randomizeIconLocation();
                         break;
                     case 2:
-                        slower.randomizePowerUpLocation();
+                        slower.randomizeIconLocation();
                         break;
                     case 3:
-                        reverse.randomizePowerUpLocation();
+                        reverse.randomizeIconLocation();
                         break;
                     case 4:
-                        HP.randomizePowerUpLocation();
+                        HP.randomizeIconLocation();
                         break;
                     case 5:
-                        bombs.randomizePowerUpLocation();
+                        bombs.randomizeIconLocation();
                         break;
                     case 6:
-                        laser.randomizePowerUpLocation();
+                        laser.randomizeIconLocation();
                         break;
                 }
 
@@ -288,7 +288,7 @@ public class Board {
         //mato 1 collisions
         if (s.intersects(Matokuutio)) {
             Music.snack.play();
-            snack.randomizePowerUpLocation();
+            snack.randomizeIconLocation();
             worm.setPoints(worm.getPoints() + 100);
             spawnTail(1);
         }
@@ -348,7 +348,7 @@ public class Board {
         //mato 2 collisions
         if (s.intersects(Matokuutio2)) {
             Music.snack.play();
-            snack.randomizePowerUpLocation();
+            snack.randomizeIconLocation();
             worm2.setPoints(worm2.getPoints() + 100);
             spawnTail(2);
         }

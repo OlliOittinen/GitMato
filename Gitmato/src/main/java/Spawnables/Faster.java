@@ -30,7 +30,11 @@ public class Faster extends AbstractSpawnables {
         //set the state of this worm to be faster
         worm.fasterSpeed();
     }
-    
+
+    /**
+     * Class constructor, calls on init();
+     * @see AbstractSpawnables
+     */
     public Faster() {
         init();
     }

@@ -17,7 +17,8 @@ import java.util.TimerTask;
 public class Life extends AbstractSpawnables{
 
     /**
-     * Class constructor
+     * Class constructor, calls on init();
+     * @see AbstractSpawnables
      */
     public Life() {
         init();

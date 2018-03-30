@@ -12,7 +12,7 @@ package Spawnables;
 public class Snack extends AbstractSpawnables{
 
     /**
-     * Class constructor
+     * Class constructor, calls on init();
      */
     public Snack() {
         init();
