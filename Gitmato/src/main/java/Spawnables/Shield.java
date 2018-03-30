@@ -25,6 +25,7 @@ public class Shield extends AbstractSpawnables{
         Music.shield.play();
         //add points to the one who picked up the powerup
         worm.setPoints(worm.getPoints()+100);
+        //call on state change for the worm
         worm.shield();
     }
 

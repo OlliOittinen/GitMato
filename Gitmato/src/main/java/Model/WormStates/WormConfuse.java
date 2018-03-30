@@ -6,6 +6,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class WormConfuse extends WormState {
+
+    //create a singleton instance of this class
     private static WormConfuse instance;
 
     private WormConfuse() {}

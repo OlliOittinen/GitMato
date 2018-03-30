@@ -7,6 +7,7 @@ import java.util.TimerTask;
 
 public class WormShield extends WormState{
 
+    //create a singleton instance of this class
     private static WormShield instance;
 
     private WormShield() {}
@@ -20,14 +21,17 @@ public class WormShield extends WormState{
 
     @Override
     public void action(Worm worm) {
+        //set the shield for this worm to be true
         worm.setShield(true);
 
+        //create timer
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                //set shield to be false again so no permanent shielding
                 worm.setShield(false);
             }
-        }, 5000);
+        }, 5000); //after this delay (in ms)
     }
 }
