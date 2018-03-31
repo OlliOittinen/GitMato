@@ -16,28 +16,35 @@ import java.util.TimerTask;
  */
 public class Shield extends AbstractSpawnables{
 
+    /**
+     * Class constructor, calls on init();
+     *@see AbstractSpawnables
+     */
     public Shield() {
         init();
     }
-    
-    public void shield(Worm worm, int time) {
+
+    /**
+     * Awards the worm object with points.
+     * Plays the corresponding music and awards the worm with points.
+     * Uses Worm State to apply shield effect.
+     * @param worm the worm to be awarded
+     * @see Model.WormStates.WormShield
+     */
+    public void shield(Worm worm) {
         //play the corresponding music
         Music.shield.play();
         //add points to the one who picked up the powerup
         worm.setPoints(worm.getPoints()+100);
-        //set private boolean to be true
-        worm.setShield(true);
-
-        //after this timer, set the boolean as false again
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                worm.setShield(false);
-            }
-        }, time); //aika (ms), joka odotetaan
+        //call on state change for the worm
+        worm.shield();
     }
 
+    /**
+     * Checks the boolean for this worm's shield effect.
+     * @param worm the worm object to be checked
+     * @return boolean value of this worm's shield
+     */
     public boolean isActive(Worm worm) {
         return worm.getShield(worm);
     }

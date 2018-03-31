@@ -128,16 +128,6 @@ public class PlayerController {
                 }
             }
         }
-
-        //GAME RESET ----------------------------------------------------------------------------------------------------
-        if (key == KeyCode.SPACE || key == KeyCode.ENTER) {
-            board.restartGame();
-        }
-        if (key == KeyCode.H) {
-            //board.submitHighscore();s
-        }
     }
-
-
 }
 

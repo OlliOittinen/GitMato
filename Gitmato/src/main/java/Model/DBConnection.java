@@ -16,10 +16,8 @@ import javafx.scene.control.Alert.AlertType;
  */
 public class DBConnection {
 
-    String name;
-    int score;
-    Connection con = null;
-    ArrayList<String> scores = new ArrayList();
+    private Connection con = null;
+    private ArrayList<String> scores = new ArrayList<>();
     String highscore = "";
     int indexOf;
 
@@ -90,8 +88,8 @@ public class DBConnection {
     }
 
     public void submitScore(int score, String name, String pelimoodi) {
-        this.score = score;
-        this.name = name;
+        int score1 = score;
+        String name1 = name;
         try {
             PreparedStatement query = null;
             try {

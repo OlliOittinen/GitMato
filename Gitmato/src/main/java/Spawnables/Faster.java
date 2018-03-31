@@ -7,8 +7,6 @@ package Spawnables;
 
 import Model.Worm;
 import Sound.Music;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  *
@@ -17,26 +15,26 @@ import java.util.TimerTask;
 
 public class Faster extends AbstractSpawnables {
 
+    /**
+     * Makes this object (worm) move faster.
+     * Uses Worm States to achieve this.
+     * Also plays the corresponding music and awards the worm with points.
+     * @param worm the worm that picked up this icon
+     * @see Model.WormStates.WormFast
+     */
     public void faster(Worm worm) {
         //add points to the worm who picked up
         worm.setPoints(worm.getPoints()+100);
-
-        //add speed for this worm
-        worm.setSpeed(worm.getSpeed()+2);
         //play the corresponding music
         Music.fasterPowerup.play();
-        
-        //adjusts speed to be temporary
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                //after delay, reset the worm speed to be normal
-                worm.setSpeed(worm.getSpeed()-2);
-            }
-        }, 5000); //delay in ms
+        //set the state of this worm to be faster
+        worm.fasterSpeed();
     }
-    
+
+    /**
+     * Class constructor, calls on init();
+     * @see AbstractSpawnables
+     */
     public Faster() {
         init();
     }

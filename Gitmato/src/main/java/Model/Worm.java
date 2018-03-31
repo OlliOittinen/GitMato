@@ -5,16 +5,17 @@
  */
 package Model;
 
+import Model.WormStates.*;
 import javafx.geometry.Bounds;
-import javafx.scene.image.Image;
 import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
 
 
 /**
  * @author maxki
  */
 public class Worm {
+
+    private WormState state = WormStateNormal.getInstance();
 
     private double dx;
     private double dy;
@@ -26,7 +27,7 @@ public class Worm {
     private boolean shield = false; //shield power-up
     private boolean reverse = false; //Reverse debuff
     private int points;
-    
+
     private double speed = 3;
     private int life = 3;
 
@@ -160,5 +161,25 @@ public class Worm {
         return mato.getLayoutBounds();
     }
 
+    public void changeState(WormState ws) {
+        state = ws;
+        state.action(this);
+    }
+
+    public void fasterSpeed(Worm this) {
+        changeState(WormFast.getInstance());
+    }
+
+    public void slowerSpeed() {
+        changeState(WormSlow.getInstance());
+    }
+
+    public void shield() {
+        changeState(WormShield.getInstance());
+    }
+
+    public void confuse() {
+        changeState(WormConfuse.getInstance());
+    }
 
 }

@@ -12,13 +12,14 @@
 package Model;
 
 import Spawnables.*;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
-public class Bot {
+class Bot {
     private ArrayList<Worm> worms;
     private Worm worm2;
     private ArrayList<Tail> body2;
@@ -29,7 +30,7 @@ public class Bot {
     private ArrayList<Tail> body;
 
 
-    public Bot (Board board){
+    Bot(Board board){
      worms = board.getWorms();
      worm2 = board.getWorm2();
      body2 = board.getTailList2();
@@ -40,7 +41,7 @@ public class Bot {
      body = board.getTailList();
     }
 
-    public void BlueAIBot() {
+    void BlueAIBot() {
 
         Ellipse pb1 = bombs.getBoundsBombs(1);
         Ellipse pb2 = bombs.getBoundsBombs(2);
@@ -233,32 +234,32 @@ public class Bot {
 
     }
 
-    public Bounds getBoundsLeft() {
+    private Bounds getBoundsLeft() {
         Rectangle r = new Rectangle(worms.get(1).getX() - 50, worms.get(1).getY(), 35, 42);
         return  r.getLayoutBounds();
     }
 
-    public Bounds getBoundsRight() {
+    private Bounds getBoundsRight() {
         Rectangle r = new Rectangle(worms.get(1).getX(), worms.get(1).getY(), 85, 42);
         return r.getLayoutBounds();
     }
 
-    public Bounds getBoundsUp() {
+    private Bounds getBoundsUp() {
         Rectangle r = new Rectangle(worms.get(1).getX(), worms.get(1).getY() - 50, 35, 42);
         return r.getLayoutBounds();
     }
 
-    public Bounds getBoundsDown() {
+    private Bounds getBoundsDown() {
         Rectangle r =new Rectangle(worms.get(1).getX(), worms.get(1).getY(), 35, 92);
         return r.getLayoutBounds();
     }
 
-    public void BotTurnLeft() {
+    private void BotTurnLeft() {
         worms.get(1).setDirection(1);
         worms.get(1).setDirectionAdv(2);
     }
 
-    public void BotTurnRight() {
+    private void BotTurnRight() {
         worms.get(1).setDirection(2);
         worms.get(1).setDirectionAdv(2);
     }
@@ -268,7 +269,7 @@ public class Bot {
         worms.get(1).setDirectionAdv(1);
     }
 
-    public void BotTurnDown() {
+    void BotTurnDown() {
         worms.get(1).setDirection(4);
         worms.get(1).setDirectionAdv(1);
     }

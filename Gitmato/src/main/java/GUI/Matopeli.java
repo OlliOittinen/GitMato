@@ -441,6 +441,8 @@ public class Matopeli extends Application {
         //tell the board it's ingame again
         board.setIngame(true);
 
+        //set highscore submitted back to false
+
         hs_submitted = false;
 
         //clear the internal arraylists for reinitialization
@@ -475,8 +477,8 @@ public class Matopeli extends Application {
         worms.add(worm2 = board.getWorm2());
     }
 
-    public void createGameOverScene(){
 
+    private void createGameOverScene() {
         //create a new vertical box, center it, and add buttons to it, set id for css
         VBox gameOverLayout = new VBox(20);
         gameOverLayout.setId("gameOver");
@@ -499,16 +501,14 @@ public class Matopeli extends Application {
 
         //handle button clicks
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
+
         highscore_button.setOnAction(e -> {
             if (!hs_submitted) {
                 window.setScene(highscoreScene);
                 scenetitle.setText("You got " + score + " points ");
             } else {
                 window.setScene(highscoreTableScene);
-
             }
-
-
         });
 
         //add buttons to the layout
@@ -520,7 +520,9 @@ public class Matopeli extends Application {
         gameOverScene.getStylesheets().add("Styling/styling.css");
     }
 
-    public void createHighscoreScene() {
+
+    private void createHighscoreScene() {
+
         //create a gridpane
         GridPane grid = new GridPane();
 
@@ -556,6 +558,7 @@ public class Matopeli extends Application {
         cancel.setOnAction(e -> window.setScene(gameOverScene));
         submit.setOnAction(e -> {
             if ((userTextField.getText() != null && !userTextField.getText().isEmpty())) {
+                highscore_button.setText("Show\nhighscores");
                 hs_submitted = true;
                 username = userTextField.getText();
                 board.submitHighscore(score, username);
@@ -602,18 +605,24 @@ public class Matopeli extends Application {
         VBox vbox = new VBox(40);
         vbox.setAlignment(Pos.CENTER);
 
+
         Text headline = new Text("You placed: #" + indexOf + " with " + score + " points!\n\n\nTop 10");
         headline.setFill(Color.WHITE);
         headline.setId("highscoretable_headline");
         Label highscores = new Label(highscore);
         highscores.setTextFill(Color.WHITE);
+
         highscores.setId("top_10_highscores");
         Button okbutton = new Button("OK");
         //handeler for ok button
-        okbutton.setOnAction(e ->{
+        okbutton.setOnAction(e -> {
             window.setScene(gameOverScene);
             highscore_button.setText("Show\nhighscore");
         });
+
+        highscores.setId("highscoretable_highscores");
+        //handler for okbutton
+        okbutton.setOnAction(e -> window.setScene(gameOverScene));
         vbox.getChildren().addAll(headline, highscores, okbutton);
         grid.getChildren().addAll(vbox);
 
@@ -622,7 +631,6 @@ public class Matopeli extends Application {
 
 
     }
-
 
 
 }
