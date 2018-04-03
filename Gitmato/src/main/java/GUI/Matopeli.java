@@ -93,6 +93,10 @@ public class Matopeli extends Application {
     private boolean hs_submitted;
     private Button highscore_button;
 
+    /**
+     * Launches the application.
+     * @param args Command-line arguments are passed in args.
+     */
     public static void main(String[] args) {
         launch(args);
     }
