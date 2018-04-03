@@ -12,6 +12,11 @@ public class WormShield extends WormState{
 
     private WormShield() {}
 
+    /**
+     * Class 'constructor'. Retrieves this class's instance.
+     * This class is defined as a singleton, so it is only ever created once.
+     * @return the instance of this class
+     */
     public static WormShield getInstance() {
         if (instance == null) {
             instance = new WormShield();
@@ -19,6 +24,10 @@ public class WormShield extends WormState{
         return instance;
     }
 
+    /**
+     * Shields this worm object temporarily.
+     * @param worm the worm that is to be shielded
+     */
     @Override
     public void action(Worm worm) {
         //set the shield for this worm to be true

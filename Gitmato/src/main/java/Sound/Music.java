@@ -20,6 +20,10 @@ public class Music {
     public static Music loseLife = new Music("lostlife.wav");
 
 
+    /**
+     * Class constructor
+     * @param fileName the name of the file to be used for constructing this Music object. Usually *.wav or similar.
+     */
     public Music(String fileName) {
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(new File("src/main/resources/sounds/"+(fileName)).getAbsoluteFile());
@@ -32,6 +36,10 @@ public class Music {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Plays the file once.
+     */
     public void play() {
         try {
             if (clip != null) {
@@ -54,6 +62,9 @@ public class Music {
 
     }
 
+    /**
+     * Stops the file being played.
+     */
     public void stop() {
         if (clip == null) {
             return;
@@ -61,6 +72,9 @@ public class Music {
         clip.stop();
     }
 
+    /**
+     * Continuously plays the file, doesn't stop.
+     */
     public void loop() {
         try {
             if (clip != null) {
@@ -80,8 +94,11 @@ public class Music {
         }
     }
 
+    /**
+     * Checks if the file is being played.
+     * @return true if the file is being played, false if not.
+     */
     public boolean isActive() {
-
         return clip.isActive();
     }
 }

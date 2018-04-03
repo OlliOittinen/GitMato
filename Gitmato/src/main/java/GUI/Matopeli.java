@@ -477,7 +477,6 @@ public class Matopeli extends Application {
         worms.add(worm2 = board.getWorm2());
     }
 
-
     private void createGameOverScene() {
         //create a new vertical box, center it, and add buttons to it, set id for css
         VBox gameOverLayout = new VBox(20);
@@ -519,7 +518,6 @@ public class Matopeli extends Application {
         //add css to this scene
         gameOverScene.getStylesheets().add("Styling/styling.css");
     }
-
 
     private void createHighscoreScene() {
 
@@ -631,6 +629,5 @@ public class Matopeli extends Application {
 
 
     }
-
 
 }
