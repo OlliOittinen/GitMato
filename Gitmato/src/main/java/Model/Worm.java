@@ -32,8 +32,8 @@ public class Worm {
     private int life = 3;
 
     /**
-     * Getter for life.
-     * @return life of the Worm.
+     * Getter for life value.
+     * @return life value of the Worm.
      */
     public int getLife() {
         return life;
@@ -135,6 +135,7 @@ public class Worm {
     // --------------------------- MITÄH -------------------------------------
     /**
      * Setter for directionAdv.
+     * directionAdv shows if the Worm is moving horizontally or vertically.
      * @param a directionAdv of the Worm.
      */
     public void setDirectionAdv(int a) {
@@ -180,6 +181,7 @@ public class Worm {
     }
     /**
      * Getter for reverse.
+     * Reverse implies if the Worm is under the effects of Reverse
      * @return reverse of Worm object.
      */
     public boolean getReverse(Worm worm) {
@@ -252,14 +254,14 @@ public class Worm {
     }
 
     /**
-     * Changes the speed of the Worm to faster.
+     * Changes the state of the Worm to faster.
      */
 
     public void fasterSpeed(Worm this) {
         changeState(WormFast.getInstance());
     }
     /**
-     * Changes the speed of the Worm to slower.
+     * Changes the state of the Worm to slower.
      */
 
     public void slowerSpeed() {
@@ -273,7 +275,7 @@ public class Worm {
         changeState(WormShield.getInstance());
     }
     /**
-     * Changes the state of the confuse of the Worm.
+     * Changes the state of the Worm to confused.
      */
 
     public void confuse() {
