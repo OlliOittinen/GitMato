@@ -24,12 +24,8 @@ public class Board {
     private ArrayList<Worm> worms;
     private Worm worm;
     private Worm worm2;
-/*
-    private PlayerController control;
-*/
     private Tail tail;
-   private Tail tail2;
-/*    private Timeline timer;*/
+    private Tail tail2;
     private Snack snack;
     private Faster faster;
     private Slower slower;
@@ -42,6 +38,7 @@ public class Board {
     private Matopeli engine;
     private Bot bot;
     private DBConnection connection = new DBConnection();
+    private boolean ingame;
 
     //Lista Tail paloista
     private ArrayList<Tail> tailList;
@@ -55,43 +52,75 @@ public class Board {
     private Point2D p;
     private Point2D p2;// coordinaatit
 
-// ------------------------------------------en tiiä näistä ------------------------------------
+    /**
+     * Gets the game mode as a String
+     * @return the current game mode as a String
+     */
     public String getGameMode() {
         return gameMode;
     }
+
+    /**
+     * Sets the game mode to be used.
+     * @param gameMode the game mode to be played
+     */
     public void setGameMode(String gameMode) {this.gameMode = gameMode;}
+
+    /**
+     * Returns the first worm object; first player
+     * @return the worm object of the (first) player
+     */
     public Worm getWorm() {
         return worm;
     }
+
+    /**
+     * Returns the second worm object; second player or bot
+     * @return the worm object of the second player or bot
+     */
     public Worm getWorm2() {
         return worm2;
     }
-    public Tail getTail() {
-        return tail;
-    }
-    public Tail getTail2() {
-        return tail2;
-    }
+
+    /**
+     * Used by the bot class.
+     * @return the number of tail pieces for the second worm; how many snacks has the second worm gathered.
+     */
     public int getTailNro2() {
         return tailNro2;
     }
+
+    /**
+     * Gets the entire tail list linked the first worm.
+     * @return the first worm objects' tail as an ArrayList
+     */
     public ArrayList<Tail> getTailList() {
         return tailList;
     }
+     /**
+     * Gets the entire tail list linked to the second worm object.
+     * @return the second worm objects' tail as an ArrayList
+     */
     public ArrayList<Tail> getTailList2() {
         return tailList2;
     }
+
+    /**
+     * Retrieves all the power-ups.
+     * @return All the power-ups as an ArrayList. The power-ups are always in the same order.
+     */
     public ArrayList<Spawnables> getPickableList() {
         return pickableList;
     }
+
+    /**
+     * Retrieves all current worm objects as an ArrayList.
+     * @return All the worms used by the game mode.
+     */
     public ArrayList getWorms() {
         return worms;
     }
 
- // --------------------------------------------------------------------------------------------
-
-
- //    -------------------------- nää saa ehkä jäädä ----------------------------
     private void powerUpCD() {
 
         faster.setX(-100);
@@ -149,6 +178,13 @@ public class Board {
         }, 5000); //aika (ms), joka odotetaan
     }
 
+    /**
+     * Submits the score to the database, retrieves current scores from the database.
+     * Tells the engine to form a high score table based on the current scores.
+     * @param score the winning worm's score
+     * @param name name of the winning worm to be submitted to the database
+     * @see DBConnection
+     */
     public void submitHighscore(int score, String name) {
                 if (name != null) {
                     connection.submitScore(score, name, gameMode);
@@ -158,18 +194,27 @@ public class Board {
 
     }
 
+    /**
+     * Checks whether or not this game mode is active; is the game still being played.
+     * @return true if game is being played, false if not.
+     */
     public boolean isIngame() {
         return ingame;
     }
 
+    /**
+     * Tells the model to either keep drawing the game or stop.
+     * @param ingame true if game is still wanted to keep going, false if not
+     */
     public void setIngame(boolean ingame) {
         this.ingame = ingame;
     }
 
-    private boolean ingame;
-
-    //-------------------------------------------------------------------------------------
-
+    /**
+     * Class constructor
+     * @param e the engine/GUI that this model will send info to
+     * @param gameMode the current game mode to be used
+     */
     public Board(Matopeli e, String gameMode) {
 
         this.engine = e;
@@ -409,6 +454,9 @@ public class Board {
         }
     }
 
+    /**
+     * Constantly updates itself of the current situation.
+     */
     public void updateBoard() {
             
         checkCollisions();
