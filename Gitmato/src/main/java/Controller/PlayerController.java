@@ -22,13 +22,24 @@ public class PlayerController {
     private ArrayList<Worm> worms;
     private String gameMode;
 
-
+    /**
+     * Class constructor.
+     * @param board the object given to access Worm objects.
+     * @param gameMode game mode type.
+     */
     public PlayerController(Board board, String gameMode) {
         this.board = board;
         this.gameMode = gameMode;
         worms = board.getWorms();
     }
 
+    /**
+     * Handles the player's key presses.
+     * Checks what key is pressed and changes the worms direction accordingly.
+     * Is called every time a player presses a key.
+     * @param e An event which indicates that a keystroke occurred in a component.
+     *
+     */
     public void keyPressed(KeyEvent e) {
 
         gameMode = board.getGameMode();
@@ -80,7 +91,7 @@ public class PlayerController {
         }
 
 
-        // controlls for player 2 
+        // controls for player 2
         if (gameMode == "versus") {
             if (key == KeyCode.A) {
 
