@@ -16,32 +16,28 @@ import java.util.TimerTask;
  */
 public class Confuse extends AbstractSpawnables {
 
+
+    /**
+     * Sets the enemy worm to move in the opposite direction.
+     * Uses Worm States to achieve this.
+     * @param worm the object (worm) that picked up (collided with) the icon for this powerup
+     * @param worm2 the object (worm) that is to move in the opposite direction
+     * @see Model.WormStates.WormConfuse
+     */
     //requires both worms to set effects correctly
     public void confuse(Worm worm, Worm worm2) {
         //play the corresponding music
         Music.reverse.play();
         //add points to the one who picked up the icon
         worm.setPoints(worm.getPoints()+100);
-
         //set the speed of the opposing worm to be the opposite
-        worm2.setSpeed(worm2.getSpeed()*-1);
-
-        //set the boolean for drawing the effect on top of the worm to be true
-        worm2.setReverse(true);
-
-        //sets this powerup to be temporary
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                //after the delay, set the speed to be opposing of opposing (normal) again
-                worm2.setSpeed(worm2.getSpeed()*-1);
-                //set the boolean false again, so don't draw the effect anymore
-                worm2.setReverse(false);
-            }
-        }, 5000); //this marks the delay ie. the time after all the stuff under timer.schedule is done
+        worm2.confuse();
     }
 
+    /**
+     * Class constructor, calls on init();
+     * @see AbstractSpawnables
+     */
     //constructor calls the init() from superclass
     public Confuse() {
         init();

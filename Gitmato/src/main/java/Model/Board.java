@@ -9,14 +9,9 @@ import GUI.Matopeli;
 import Sound.Music;
 import Spawnables.*;
 import java.util.ArrayList;
-import Controller.PlayerController;
-import java.util.Optional;
 import java.util.TimerTask;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Ellipse;
 
@@ -29,8 +24,12 @@ public class Board {
     private ArrayList<Worm> worms;
     private Worm worm;
     private Worm worm2;
+/*
+    private PlayerController control;
+*/
     private Tail tail;
-    private Tail tail2;
+   private Tail tail2;
+/*    private Timeline timer;*/
     private Snack snack;
     private Faster faster;
     private Slower slower;
@@ -42,6 +41,8 @@ public class Board {
     private String gameMode;
     private Matopeli engine;
     private Bot bot;
+    public Highscore hscore = new Highscore();
+    private int score;
     private DBConnection connection = new DBConnection();
 
     //Lista Tail paloista
@@ -67,6 +68,12 @@ public class Board {
     public Worm getWorm2() {
         return worm2;
     }
+    public Tail getTail() {
+        return tail;
+    }
+    public Tail getTail2() {
+        return tail2;
+    }
     public int getTailNro2() {
         return tailNro2;
     }
@@ -79,18 +86,8 @@ public class Board {
     public ArrayList<Spawnables> getPickableList() {
         return pickableList;
     }
-    public ArrayList<Point2D> getCoordinates() {
-        return coordinates;
-    }
-    public ArrayList<Point2D> getCoordinates2() {
-        return coordinates2;
-    }
     public ArrayList getWorms() {
         return worms;
-    }
-
-    public void restartGame() {
-        //TODO -- what happens when you restart game
     }
 
  // --------------------------------------------------------------------------------------------
@@ -124,35 +121,36 @@ public class Board {
             @Override
             public void run() {
 
-                int n = 5;//(int) (Math.random() * 7);
+                int n = (int) (Math.random() * 7);
 
                 switch (n) {
                     case 0:
-                        shield.randomizePowerUpLocation();
+                        shield.randomizeIconLocation();
                         break;
                     case 1:
-                        faster.randomizePowerUpLocation();
+                        faster.randomizeIconLocation();
                         break;
                     case 2:
-                        slower.randomizePowerUpLocation();
+                        slower.randomizeIconLocation();
                         break;
                     case 3:
-                        reverse.randomizePowerUpLocation();
+                        reverse.randomizeIconLocation();
                         break;
                     case 4:
-                        HP.randomizePowerUpLocation();
+                        HP.randomizeIconLocation();
                         break;
                     case 5:
-                        bombs.randomizePowerUpLocation();
+                        bombs.randomizeIconLocation();
                         break;
                     case 6:
-                        laser.randomizePowerUpLocation();
+                        laser.randomizeIconLocation();
                         break;
                 }
 
             }
         }, 5000); //aika (ms), joka odotetaan
     }
+
     public void submitHighscore(int score, String name) {
                 if (name != null) {
                     connection.submitScore(score, name, gameMode);
@@ -165,9 +163,11 @@ public class Board {
     public boolean isIngame() {
         return ingame;
     }
+
     public void setIngame(boolean ingame) {
         this.ingame = ingame;
     }
+
     private boolean ingame;
 
     //-------------------------------------------------------------------------------------
@@ -253,7 +253,7 @@ public class Board {
             Bounds Matotail = aTailList.getBounds();
             if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2) && !gameMode.equals("sp")) {
                 if (worm2.getLife() > 1) {
-                    shield.shield(worm2, 50);
+                    shield.shield(worm2);
                     worm2.randomizeXY();
                     if (gameMode.equals("vs AI")) {
                         bot.BotTurnDown();
@@ -267,7 +267,7 @@ public class Board {
             Bounds Matotail2 = aTailList2.getBounds();
             if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                 if (worm.getLife() > 1) {
-                    shield.shield(worm, 50);
+                    shield.shield(worm);
                     worm.randomizeXY();
                     worm.setDirectionAdv(0);
                     worm.setDirection(0);
@@ -280,7 +280,7 @@ public class Board {
                 Bounds Matotail2 = tailList.get(i).getBounds();
                 if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                     if (worm.getLife() > 1) {
-                        shield.shield(worm, 50);
+                        shield.shield(worm);
                         worm.randomizeXY();
                         worm.setDirectionAdv(0);
                         worm.setDirection(0);
@@ -293,7 +293,7 @@ public class Board {
         //mato 1 collisions
         if (s.intersects(Matokuutio)) {
             Music.snack.play();
-            snack.randomizePowerUpLocation();
+            snack.randomizeIconLocation();
             worm.setPoints(worm.getPoints() + 100);
             spawnTail(1);
         }
@@ -319,7 +319,7 @@ public class Board {
         }
 
         if (psh.intersects(Matokuutio)) {
-            shield.shield(worm, 10000);
+            shield.shield(worm);
             powerUpCD();
         }
         if (pb.intersects(Matokuutio)) {
@@ -353,7 +353,7 @@ public class Board {
         //mato 2 collisions
         if (s.intersects(Matokuutio2)) {
             Music.snack.play();
-            snack.randomizePowerUpLocation();
+            snack.randomizeIconLocation();
             worm2.setPoints(worm2.getPoints() + 100);
             spawnTail(2);
         }
@@ -379,7 +379,7 @@ public class Board {
         }
 
         if (psh.intersects(Matokuutio2)) {
-            shield.shield(worm2, 10000);
+            shield.shield(worm2);
             powerUpCD();
         }
         if (pb.intersects(Matokuutio2)) {
@@ -413,6 +413,7 @@ public class Board {
             worm2.setPoints(worm2.getPoints() - 100);
         }
     }
+
     public void updateBoard() {
             
         checkCollisions();

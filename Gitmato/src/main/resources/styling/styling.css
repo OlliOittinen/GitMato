@@ -4,7 +4,7 @@
     -fx-background-repeat: stretch;
     -fx-background-size: 900 606;
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
 }
 
 #gameOver, #highscore_scene, #highscoretable_scene {
@@ -27,18 +27,28 @@
 #highscoretable_headline{
     -fx-font-family:'Press Start 2P';
     -fx-font-size: 20px;
+    -fx-text-alignment: center;
 }
+#top_10_highscores{
+    -fx-font-family:'Press Start 2P';
+    -fx-font-size: 15px;
+}
+
 #winner_label {
     -fx-font-family:'Press Start 2P';
     -fx-font-size: 30px;
 }
-#username {
+#highscoretable_headline{
+    -fx-font-family:'Press Start 2P';
+    -fx-font-size: 20px;
+    -fx-text-alignment: center;
+}
+#highscoretable_highscores{
     -fx-font-family:'Press Start 2P';
     -fx-font-size: 15px;
 }
-#top_10_highscores {
+#username {
     -fx-font-family:'Press Start 2P';
-    -fx-text-fill: white;
     -fx-font-size: 15px;
 }
 Button {
