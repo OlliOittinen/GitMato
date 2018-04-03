@@ -12,6 +12,11 @@ public class WormConfuse extends WormState {
 
     private WormConfuse() {}
 
+    /**
+     * Class 'constructor'. Retrieves this class's instance.
+     * This class is defined as a singleton, so it is only ever created once.
+     * @return the instance of this class
+     */
     public static WormConfuse getInstance() {
         if (instance == null) {
             instance = new WormConfuse();
@@ -19,6 +24,11 @@ public class WormConfuse extends WormState {
         return instance;
     }
 
+
+    /**
+     * Makes this worm object move in the opposing direction on every key press
+     * @param worm the worm that's supposed to have its' movement reversed
+     */
     @Override
     public void action(Worm worm) {
 

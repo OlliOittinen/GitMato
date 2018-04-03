@@ -12,6 +12,11 @@ public class WormFast extends WormState {
 
     private WormFast() {}
 
+    /**
+     * Class 'constructor'. Retrieves this class's instance.
+     * This class is defined as a singleton, so it is only ever created once.
+     * @return the instance of this class
+     */
     public static WormFast getInstance() {
         if (instance == null) {
             instance = new WormFast();
@@ -19,7 +24,10 @@ public class WormFast extends WormState {
         return instance;
     }
 
-    //override abstraction
+    /**
+     * Makes the worm object move quicker temporarily.
+     * @param worm the worm that's supposed to move quicker
+     */
     @Override
     public void action(Worm worm) {
         //set speed of this worm to be higher

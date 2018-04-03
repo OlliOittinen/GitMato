@@ -41,8 +41,6 @@ public class Board {
     private String gameMode;
     private Matopeli engine;
     private Bot bot;
-    public Highscore hscore = new Highscore();
-    private int score;
     private DBConnection connection = new DBConnection();
 
     //Lista Tail paloista
@@ -248,7 +246,6 @@ public class Board {
         Bounds pla = laser.getBoundsForIcon();
         Rectangle beam = laser.getBoundsB();
 
-        //Jos eri kuin yksinpeli; worm2 osuu wormin häntään; worm2 ei ole kilpeä
         for (Tail aTailList : tailList) {
             Bounds Matotail = aTailList.getBounds();
             if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2) && !gameMode.equals("sp")) {
@@ -314,7 +311,7 @@ public class Board {
         }
 
         if (pl.intersects(Matokuutio)) {
-            HP.addLife(worm);
+            Life.addLife(worm);
             powerUpCD();
         }
 
@@ -347,7 +344,6 @@ public class Board {
                 worm.setDirection(0);
             }
             Life.loseLife(worm);
-            worm.setPoints(worm.getPoints() - 100);
         }
 
         //mato 2 collisions
@@ -374,7 +370,7 @@ public class Board {
         }
 
         if (pl.intersects(Matokuutio2)) {
-            HP.addLife(worm2);
+            Life.addLife(worm2);
             powerUpCD();
         }
 
@@ -399,7 +395,7 @@ public class Board {
         if (beam.intersects(Matokuutio2) && !shield.isActive(worm2)) {
             laser.damage(worm2);
         }
-        if ((worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) && gameMode != "sp") {
+        if ((worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) && !gameMode.equals("sp")) {
             if (worm2.getLife() > 1) {
                 worm2.randomizeXY();
                 if (gameMode.equals("vs AI")) {
@@ -410,7 +406,6 @@ public class Board {
                 }
             }
             Life.loseLife(worm2);
-            worm2.setPoints(worm2.getPoints() - 100);
         }
     }
 

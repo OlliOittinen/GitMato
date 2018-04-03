@@ -2,7 +2,7 @@ package Spawnables;
 
 import Model.Worm;
 
-public class AbstractDamagingSpawnables extends AbstractSpawnables {
+public abstract class AbstractDamagingSpawnables extends AbstractSpawnables {
 
     boolean lethal = false;
 

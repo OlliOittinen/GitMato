@@ -21,6 +21,9 @@ public class DBConnection {
     String highscore = "";
     int indexOf;
 
+    /**
+     * Class constructor.
+     */
     public DBConnection() {
         try {
             con = DriverManager.getConnection("jdbc:mariadb://localhost:4444/score", "Olli", "laiskajaakko");
@@ -30,36 +33,22 @@ public class DBConnection {
         }
     }
 
-    public ArrayList<String> showHighscore(String pelimoodi) {
+    /**
+     * Returns the high scores from the database, sorted in descending order.
+     * @param gameMode the game mode that was played
+     * @return an ArrayList based on the gameMode played
+     */
+    public ArrayList<String> showHighscore(String gameMode) {
         try {
             PreparedStatement query = null;
             try {
-                query = con.prepareStatement("select * from highscore where pelimuoto='" + pelimoodi + "' order by pisteet desc");
+                query = con.prepareStatement("select * from highscore where pelimuoto='" + gameMode + "' order by pisteet desc");
                 ResultSet result = query.executeQuery();
                 try {
                     while (result.next()) {
                         scores.add(result.getString("nimi") + " " + result.getInt("pisteet"));
                     }
                     return scores;
-                    /*
-                    int i = 0;
-                    for (String s : scores) {
-                        i++;
-                        if (i <= 10) {
-                            highscore += +(i) + ". " + s + '\n';
-                        }
-                    }
-                    indexOf = scores.indexOf(name + " " + score) + 1;
-
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Highscore");
-                    alert.setHeaderText("Top 10\n You placed: #" + indexOf + " with " + score + " points!");
-                    alert.setContentText(highscore);
-                    alert.showAndWait();
-
-                    scores.clear();
-                    highscore = "";
-                    */
                 } catch (SQLException e) {
                     do {
                         System.err.println("Viesti: " + e.getMessage());
@@ -87,7 +76,13 @@ public class DBConnection {
         return null;
     }
 
-    public void submitScore(int score, String name, String pelimoodi) {
+    /**
+     * Submits the user's score to the database after the game
+     * @param score the user's score
+     * @param name name to be stored in the database
+     * @param gameMode game mode that was played
+     */
+    public void submitScore(int score, String name, String gameMode) {
         int score1 = score;
         String name1 = name;
         try {
@@ -96,7 +91,7 @@ public class DBConnection {
                 query = con.prepareStatement("INSERT INTO highscore VALUES(?, ?, ?)");
                 query.setString(1, name);
                 query.setInt(2, score);
-                query.setString(3, pelimoodi);
+                query.setString(3, gameMode);
                 //System.out.println(query);
                 ResultSet result = query.executeQuery();
                 try {
