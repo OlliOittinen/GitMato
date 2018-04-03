@@ -41,7 +41,13 @@ class Bot {
      body = board.getTailList();
     }
 
-    void BlueAIBot() {
+    /**
+     * Controls the movements of the AI controlled worm.
+     * Compares location of the worm to locations of the pickables.
+     * Evades player and walls using additional hitboxes and compared locations.
+     * Creates hitboxes for bombs for easy comparing.
+     */
+    void runBotRun() {
 
         Ellipse pb1 = bombs.getBoundsBombs(1);
         Ellipse pb2 = bombs.getBoundsBombs(2);
