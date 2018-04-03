@@ -579,6 +579,11 @@ public class Matopeli extends Application {
         highscoreScene.getStylesheets().add("Styling/styling.css");
     }
 
+    /**
+     * Creates the Top 10 highscores String from ArrayList: scorelist.
+     * Creates the highscore table scene using GridPane as base.
+     * @param scorelist ArrayList where highscore values and names are stored in String format.
+     */
     public void createHighscoreTableScene(ArrayList<String> scorelist) {
         int indexOf = scorelist.indexOf(username + " " + score) + 1;
         String highscore = "";
