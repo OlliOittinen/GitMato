@@ -97,6 +97,15 @@ public class Matopeli extends Application {
         launch(args);
     }
 
+    /**
+     * Initializes all of the necessary objects needed for the game to run.
+     * Creates mainMenuScene and gameScene.
+     * Adds functionality for the mainMenu buttons.
+     * When game mode is selected starts the game engine.
+     * @param primaryStage The JavaFX Stage class is the top level JavaFX container.
+     *                     The primary Stage is constructed by the platform.
+     *                     Additional Stage objects may be constructed by the application.
+     */
     @Override
     public void start(Stage primaryStage) {
 
@@ -232,6 +241,9 @@ public class Matopeli extends Application {
         timer.start();
     }
 
+    /**
+     * Sets the wormImages for the Worm objects to be drawn based on the direction they are going.
+     */
     public void setWormImage() {
         //red (left) worm
         if (worm.getDirection() == 1) {
@@ -583,8 +595,10 @@ public class Matopeli extends Application {
      * @param scorelist ArrayList where highscore values and names are stored in String format.
      */
     public void createHighscoreTableScene(ArrayList<String> scorelist) {
+        //searches for match from the arraylist where username=username_given and points = score_given and gets the index of where the match was found.
         int indexOf = scorelist.indexOf(username + " " + score) + 1;
         String highscore = "";
+        //adds top10 names and highscores to the "highscore" String in a loop
         int i = 0;
         for (String s : scorelist) {
             i++;
