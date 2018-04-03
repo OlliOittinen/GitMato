@@ -16,14 +16,13 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Olli
  */
-public class Laser extends AbstractSpawnables {
+public class Laser extends AbstractDamagingSpawnables {
 
     private int xe2;
     private int ye2;
     private int xe3;
     private int ye3;
     private boolean horizontal = false;
-    private boolean lethal = false;
     private Rectangle beam = new Rectangle(-1000, -1000, 1, 1);
 
     /**
@@ -33,22 +32,6 @@ public class Laser extends AbstractSpawnables {
         init();
     }
 
-    /**
-     * Checks if this object should lose a life.
-     * Randomizes the worm's location on the map and sets it's current direction (facing of) to 0.
-     * In other words, randomizes this Object's location and completely halts its movement forcibly.
-     * @param worm the Worm object that is being checked
-     */
-    public void damage(Worm worm) {
-        if (lethal) {
-            if (worm.getLife() > 1) {
-                worm.randomizeXY();
-                worm.setDirectionAdv(0);
-                worm.setDirection(0);
-            }
-            Life.loseLife(worm);
-        }
-    }
 
     /**
      * On constructing this Object, hides the icon and horizontal and vertical lasers.

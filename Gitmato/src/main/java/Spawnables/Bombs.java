@@ -17,13 +17,12 @@ import javafx.scene.shape.*;
  *
  * @author maxki, Olli, Eero
  */
-public class Bombs extends AbstractSpawnables{
+public class Bombs extends AbstractDamagingSpawnables{
 
     private int x2, y2, x3, y3, x4, y4, x5, y5, x6, y6, x7, y7;
 
     private Image image, image2, image3;
 
-    private boolean lethal = false;
 
     private int xlist[] = new int[]{x, x2, x3, x4, x5, x6, x7};
     private int ylist[] = new int[]{y, y2, y3, y4, y5, y6, y7};
@@ -37,22 +36,7 @@ public class Bombs extends AbstractSpawnables{
         worm.setPoints(worm.getPoints() + 100);
     }
 
-    /**
-     * Checks if this object should lose a life.
-     * Randomizes the worm's location on the map and sets it's current direction (facing of) to 0.
-     * In other words, randomizes this Object's location and completely halts its movement forcibly.
-     * @param worm the Worm object that is being checked
-     */
-    public void damage(Worm worm) {
-        if (lethal) {
-            if (worm.getLife() > 1) {
-                worm.randomizeXY();
-                worm.setDirectionAdv(0);
-                worm.setDirection(0);
-            }
-            Life.loseLife(worm);
-        }
-    }
+
 
     /**
      * Class constructor, calls on init();
