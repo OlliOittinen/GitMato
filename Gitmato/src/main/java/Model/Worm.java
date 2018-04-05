@@ -252,7 +252,7 @@ public class Worm {
      * @return the bounds of Worm object.
      */
     public Bounds getBounds() {
-        Ellipse mato = new Ellipse(x + 18, y + 18, 18, 18);
+        Ellipse mato = new Ellipse(x + 18, y + 21, 18, 21);
         return mato.getLayoutBounds();
     }
 
