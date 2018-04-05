@@ -52,6 +52,70 @@ public class Board {
     private Point2D p;
     private Point2D p2;// coordinaatit
 
+
+    /**
+     * Class constructor
+     * @param e the engine/GUI that this model will send info to
+     * @param gameMode the current game mode to be used
+     */
+    public Board(Matopeli e, String gameMode) {
+
+        this.engine = e;
+        this.gameMode = gameMode;
+
+        //alustetaan listat
+        pickableList = new ArrayList<>();
+        worms = new ArrayList<>();
+
+        this.coordinates = new ArrayList<>();
+        this.tailList = new ArrayList<>();
+        this.p = new Point2D(0, 0);
+
+        this.coordinates2 = new ArrayList<>();
+        this.tailList2 = new ArrayList<>();
+        this.p2 = new Point2D(0, 0);
+
+        initBoard();
+    }
+
+    private void initBoard() {
+
+        faster = new Faster();
+        slower = new Slower();
+        reverse = new Confuse();
+        HP = new Life();
+        shield = new Shield();
+        bombs = new Bombs();
+        laser = new Laser();
+        snack = new Snack();
+
+        pickableList.add(faster);
+        pickableList.add(slower);
+        pickableList.add(reverse);
+        pickableList.add(HP);
+        pickableList.add(shield);
+        pickableList.add(bombs);
+        pickableList.add(laser);
+        pickableList.add(snack);
+        worms.add(worm = new Worm(1)); //lista worm olioista
+        worms.add(worm2 = new Worm(2));
+        bot = new Bot(this);
+
+        ingame = true;
+        if (gameMode.equals("vs AI")) {
+            bot.BotTurnDown();
+        }
+        if (gameMode.equals("sp")) {
+            worm2.setX(-1000);
+            worm2.setY(-1000);
+            worm.setLife(1);
+        }
+
+        if (!gameMode.equals("sp")) {
+            powerUpCD(); //piilottaa powerupit alussa
+        }
+    }
+
     /**
      * Gets the game mode as a String
      * @return the current game mode as a String
@@ -119,6 +183,22 @@ public class Board {
      */
     public ArrayList getWorms() {
         return worms;
+    }
+
+    /**
+     * Checks whether or not this game mode is active; is the game still being played.
+     * @return true if game is being played, false if not.
+     */
+    public boolean isIngame() {
+        return ingame;
+    }
+
+    /**
+     * Tells the model to either keep drawing the game or stop.
+     * @param ingame true if game is still wanted to keep going, false if not
+     */
+    public void setIngame(boolean ingame) {
+        this.ingame = ingame;
     }
 
     private void powerUpCD() {
@@ -193,86 +273,7 @@ public class Board {
             }
 
     }
-
-    /**
-     * Checks whether or not this game mode is active; is the game still being played.
-     * @return true if game is being played, false if not.
-     */
-    public boolean isIngame() {
-        return ingame;
-    }
-
-    /**
-     * Tells the model to either keep drawing the game or stop.
-     * @param ingame true if game is still wanted to keep going, false if not
-     */
-    public void setIngame(boolean ingame) {
-        this.ingame = ingame;
-    }
-
-    /**
-     * Class constructor
-     * @param e the engine/GUI that this model will send info to
-     * @param gameMode the current game mode to be used
-     */
-    public Board(Matopeli e, String gameMode) {
-
-        this.engine = e;
-        this.gameMode = gameMode;
-
-        //alustetaan listat
-        pickableList = new ArrayList<>();
-        worms = new ArrayList<>();
-
-        this.coordinates = new ArrayList<>();
-        this.tailList = new ArrayList<>();
-        this.p = new Point2D(0, 0);
-
-        this.coordinates2 = new ArrayList<>();
-        this.tailList2 = new ArrayList<>();
-        this.p2 = new Point2D(0, 0);
-
-        initBoard();
-    }
-
-    private void initBoard() {
-
-        faster = new Faster();
-        slower = new Slower();
-        reverse = new Confuse();
-        HP = new Life();
-        shield = new Shield();
-        bombs = new Bombs();
-        laser = new Laser();
-        snack = new Snack();
-
-        pickableList.add(faster);
-        pickableList.add(slower);
-        pickableList.add(reverse);
-        pickableList.add(HP);
-        pickableList.add(shield);
-        pickableList.add(bombs);
-        pickableList.add(laser);
-        pickableList.add(snack);
-        worms.add(worm = new Worm(1)); //lista worm olioista
-        worms.add(worm2 = new Worm(2));
-        bot = new Bot(this);
-
-        ingame = true;
-        if (gameMode.equals("vs AI")) {
-            bot.BotTurnDown();
-        }
-        if (gameMode.equals("sp")) {
-            worm2.setX(-1000);
-            worm2.setY(-1000);
-            worm.setLife(1);
-        }
-
-        if (!gameMode.equals("sp")) {
-            powerUpCD(); //piilottaa powerupit alussa
-        }
-    }
-
+    
     private void checkCollisions() {
 
         Bounds Matokuutio = worm.getBounds();
@@ -296,7 +297,7 @@ public class Board {
             if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2) && !gameMode.equals("sp")) {
                 if (worm2.getLife() > 1) {
                     shield.shield(worm2);
-                    worm2.randomizeXY();
+                    worm2.turnAround();
                     if (gameMode.equals("vs AI")) {
                         bot.BotTurnDown();
                     }
@@ -310,9 +311,7 @@ public class Board {
             if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                 if (worm.getLife() > 1) {
                     shield.shield(worm);
-                    worm.randomizeXY();
-                    worm.setDirectionAdv(0);
-                    worm.setDirection(0);
+                    worm.turnAround();
                 }
                 Life.loseLife(worm);
             }
@@ -323,9 +322,7 @@ public class Board {
                 if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                     if (worm.getLife() > 1) {
                         shield.shield(worm);
-                        worm.randomizeXY();
-                        worm.setDirectionAdv(0);
-                        worm.setDirection(0);
+                        worm.turnAround();
                     }
                     Life.loseLife(worm);
                 }
@@ -384,9 +381,7 @@ public class Board {
 
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5 || worm.getY() > 550) {
             if (worm.getLife() > 1) {
-                worm.randomizeXY();
-                worm.setDirectionAdv(0);
-                worm.setDirection(0);
+                worm.turnAround();
             }
             Life.loseLife(worm);
         }
@@ -442,12 +437,9 @@ public class Board {
         }
         if ((worm2.getX() < 5 || worm2.getX() > 760 || worm2.getY() < 5 || worm2.getY() > 550) && !gameMode.equals("sp")) {
             if (worm2.getLife() > 1) {
-                worm2.randomizeXY();
+                worm2.turnAround();
                 if (gameMode.equals("vs AI")) {
                     bot.BotTurnDown();
-                } else {
-                    worm2.setDirectionAdv(0);
-                    worm2.setDirection(0);
                 }
             }
             Life.loseLife(worm2);

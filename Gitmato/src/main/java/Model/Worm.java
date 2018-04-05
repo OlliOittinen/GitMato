@@ -119,7 +119,7 @@ public class Worm {
     /**
      * Getter for direction this worm is facing.
      * (1) for left, (2) for right, (3) for up, (4) for down.
-     * @return direction of Worm object.
+     * @return integer of the direction of Worm object.
      */
     public int getDirection() {
         return direction;
@@ -207,9 +207,21 @@ public class Worm {
      * Randomizes x and y of the worm.
      */
 
-    public void randomizeXY() {
-        setX((int) (Math.random() * 740) + 10);
-        setY((int) (Math.random() * 540) + 10);
+    public void turnAround() {
+
+        int currentDirection = this.direction;
+
+        if (currentDirection==1) {
+            this.setDirection(2);
+        } else if (currentDirection==2) {
+            this.setDirection(1);
+        } else if (currentDirection==3) {
+            this.setDirection(4);
+        }else {
+            this.setDirection(3);
+        }
+
+        moveCont();
     }
 
     /**
