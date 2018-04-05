@@ -31,7 +31,6 @@ Spawnables\Confuse.class
 Spawnables\Laser$1.class
 Controller\PlayerController.class
 Sound\Music$1.class
-Model\Highscore.class
 Spawnables\Bombs$2.class
 Model\WormStates\WormFast.class
 Model\WormStates\WormStateNormal.class

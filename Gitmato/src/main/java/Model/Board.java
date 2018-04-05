@@ -273,7 +273,7 @@ public class Board {
             }
 
     }
-    
+
     private void checkCollisions() {
 
         Bounds Matokuutio = worm.getBounds();

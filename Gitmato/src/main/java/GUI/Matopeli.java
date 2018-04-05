@@ -349,11 +349,11 @@ public class Matopeli extends Application {
                 g.drawImage(worm2Image, worm2.getX(), worm2.getY());
             }
             //draw shield effects on top of worm if shield boolean is true
-            if (worm.getShield(worm)) {
+            if (worm.getShield()) {
                 g.drawImage(shieldeffect, worm.getX() - 5, worm.getY() - 4);
             }
             //identical, but for worm #2
-            if (worm2.getShield(worm2)) {
+            if (worm2.getShield()) {
                 g.drawImage(shieldeffect, worm2.getX() - 5, worm2.getY() - 4);
             }
             //draw confusion effects on top of worm if confuse boolean is true

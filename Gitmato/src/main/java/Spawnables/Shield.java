@@ -46,7 +46,7 @@ public class Shield extends AbstractSpawnables{
      * @return boolean value of this worm's shield
      */
     public boolean isActive(Worm worm) {
-        return worm.getShield(worm);
+        return worm.getShield();
     }
     
 }

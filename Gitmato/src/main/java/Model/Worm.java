@@ -162,7 +162,7 @@ public class Worm {
      * Getter for shield.
      * @return shield of Worm object.
      */
-    public boolean getShield(Worm worm) {
+    public boolean getShield() {
         return this.shield;
     }
     
@@ -204,9 +204,9 @@ public class Worm {
     }
 
     /**
-     * Randomizes x and y of the worm.
+     * Reverses the worm's current direction to be the opposite of the current.
+     * Eg. if the worm is traveling left, it will travel right after this method is called.
      */
-
     public void turnAround() {
 
         int currentDirection = this.direction;
