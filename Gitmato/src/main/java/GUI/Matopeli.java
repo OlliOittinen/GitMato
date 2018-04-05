@@ -240,6 +240,7 @@ public class Matopeli extends Application {
                     board.updateBoard();
                     //draw the GUI based on board's parameters
                     draw(gc);
+                    
                 }
             }
         };

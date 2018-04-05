@@ -118,6 +118,7 @@ public class Worm {
 
     /**
      * Getter for direction this worm is facing.
+     * (1) for left, (2) for right, (3) for up, (4) for down.
      * @return direction of Worm object.
      */
     public int getDirection() {
@@ -135,7 +136,7 @@ public class Worm {
     // --------------------------- MITÄH -------------------------------------
     /**
      * Setter for directionAdv.
-     * directionAdv shows if the Worm is moving horizontally or vertically.
+     * directionAdv shows if the Worm is moving horizontally (2) or vertically (1).
      * @param a directionAdv of the Worm.
      */
     public void setDirectionAdv(int a) {
