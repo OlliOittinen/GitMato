@@ -113,22 +113,6 @@ public class Matopeli extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        //initialize all the variables needed
-        board = new Board(this, gameMode);
-        pc = new PlayerController(board, gameMode);
-        worms = new ArrayList<>();
-        powerups = board.getPickableList();
-        faster = (Faster) powerups.get(0);
-        slower = (Slower) powerups.get(1);
-        confuse = (Confuse) powerups.get(2);
-        life = (Life) powerups.get(3);
-        shield = (Shield) powerups.get(4);
-        bombs = (Bombs) powerups.get(5);
-        laser = (Laser) powerups.get(6);
-        snack = (Snack) powerups.get(7);
-        worms.add(worm = board.getWorm());
-        worms.add(worm2 = board.getWorm2());
-
         //set window as primary stage
         window = primaryStage;
         window.setTitle("Gitmato");
@@ -163,8 +147,8 @@ public class Matopeli extends Application {
         button1.setOnAction(e
                 -> {
             //set the game mode as such, set the current scene as game scene, start drawing in animationLoop(gc)
-            board.setGameMode("vs AI");
             gameMode = "vs AI";
+            init(gameMode);
             window.setScene(gameScene);
             animationLoop(gc);
         });
@@ -175,8 +159,8 @@ public class Matopeli extends Application {
         button2.setId("Versus");
         button2.setOnAction(e
                 -> {
-            board.setGameMode("versus");
             gameMode = "versus";
+            init(gameMode);
             window.setScene(gameScene);
             animationLoop(gc);
         });
@@ -186,8 +170,8 @@ public class Matopeli extends Application {
         Button button3 = new Button("Single player");
         button3.setOnAction(e
                 -> {
-            board.setGameMode("sp");
             gameMode = "sp";
+            init(gameMode);
             window.setScene(gameScene);
             animationLoop(gc);
         });
@@ -219,6 +203,23 @@ public class Matopeli extends Application {
 
         //shows this window to user
         window.show();
+    }
+    private void init(String gameMode){
+        //initialize all the variables needed
+        board = new Board(this, gameMode);
+        pc = new PlayerController(board, gameMode);
+        worms = new ArrayList<>();
+        powerups = board.getPickableList();
+        faster = (Faster) powerups.get(0);
+        slower = (Slower) powerups.get(1);
+        confuse = (Confuse) powerups.get(2);
+        life = (Life) powerups.get(3);
+        shield = (Shield) powerups.get(4);
+        bombs = (Bombs) powerups.get(5);
+        laser = (Laser) powerups.get(6);
+        snack = (Snack) powerups.get(7);
+        worms.add(worm = board.getWorm());
+        worms.add(worm2 = board.getWorm2());
     }
 
     private void animationLoop(GraphicsContext gc) {
