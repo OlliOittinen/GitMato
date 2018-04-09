@@ -8,15 +8,16 @@ package Model;
 import GUI.Matopeli;
 import Sound.Music;
 import Spawnables.*;
+
 import java.util.ArrayList;
 import java.util.TimerTask;
+
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 /**
- *
  * @author maxki, Olli, Eero, Ged
  */
 public class Board {
@@ -55,7 +56,8 @@ public class Board {
 
     /**
      * Class constructor
-     * @param e the engine/GUI that this model will send info to
+     *
+     * @param e        the engine/GUI that this model will send info to
      * @param gameMode the current game mode to be used
      */
     public Board(Matopeli e, String gameMode) {
@@ -118,6 +120,7 @@ public class Board {
 
     /**
      * Gets the game mode as a String
+     *
      * @return the current game mode as a String
      */
     public String getGameMode() {
@@ -126,12 +129,16 @@ public class Board {
 
     /**
      * Sets the game mode to be used.
+     *
      * @param gameMode the game mode to be played
      */
-    public void setGameMode(String gameMode) {this.gameMode = gameMode;}
+    public void setGameMode(String gameMode) {
+        this.gameMode = gameMode;
+    }
 
     /**
      * Returns the first worm object; first player
+     *
      * @return the worm object of the (first) player
      */
     public Worm getWorm() {
@@ -140,6 +147,7 @@ public class Board {
 
     /**
      * Returns the second worm object; second player or bot
+     *
      * @return the worm object of the second player or bot
      */
     public Worm getWorm2() {
@@ -148,6 +156,7 @@ public class Board {
 
     /**
      * Used by the bot class.
+     *
      * @return the number of tail pieces for the second worm; how many snacks has the second worm gathered.
      */
     public int getTailNro2() {
@@ -156,13 +165,16 @@ public class Board {
 
     /**
      * Gets the entire tail list linked the first worm.
+     *
      * @return the first worm objects' tail as an ArrayList
      */
     public ArrayList<Tail> getTailList() {
         return tailList;
     }
-     /**
+
+    /**
      * Gets the entire tail list linked to the second worm object.
+     *
      * @return the second worm objects' tail as an ArrayList
      */
     public ArrayList<Tail> getTailList2() {
@@ -171,6 +183,7 @@ public class Board {
 
     /**
      * Retrieves all the power-ups.
+     *
      * @return All the power-ups as an ArrayList. The power-ups are always in the same order.
      */
     public ArrayList<Spawnables> getPickableList() {
@@ -179,6 +192,7 @@ public class Board {
 
     /**
      * Retrieves all current worm objects as an ArrayList.
+     *
      * @return All the worms used by the game mode.
      */
     public ArrayList getWorms() {
@@ -187,6 +201,7 @@ public class Board {
 
     /**
      * Checks whether or not this game mode is active; is the game still being played.
+     *
      * @return true if game is being played, false if not.
      */
     public boolean isIngame() {
@@ -195,6 +210,7 @@ public class Board {
 
     /**
      * Tells the model to either keep drawing the game or stop.
+     *
      * @param ingame true if game is still wanted to keep going, false if not
      */
     public void setIngame(boolean ingame) {
@@ -228,7 +244,7 @@ public class Board {
             @Override
             public void run() {
 
-                int n = (int) (Math.random() * 6);
+                int n = 5;//(int) (Math.random() * 6);
 
                 switch (n) {
                     case 0:
@@ -261,16 +277,17 @@ public class Board {
     /**
      * Submits the score to the database, retrieves current scores from the database.
      * Tells the engine to form a high score table based on the current scores.
+     *
      * @param score the winning worm's score
-     * @param name name of the winning worm to be submitted to the database
+     * @param name  name of the winning worm to be submitted to the database
      * @see DBConnection
      */
     public void submitHighscore(int score, String name) {
-                if (name != null) {
-                    connection.submitScore(score, name, gameMode);
-                    ArrayList<String> scores = connection.showHighscore(gameMode);
-                    engine.createHighscoreTableScene(scores);
-            }
+        if (name != null) {
+            connection.submitScore(score, name, gameMode);
+            ArrayList<String> scores = connection.showHighscore(gameMode);
+            engine.createHighscoreTableScene(scores);
+        }
 
     }
 
@@ -451,7 +468,7 @@ public class Board {
      * Constantly updates itself of the current situation.
      */
     public void updateBoard() {
-            
+
         checkCollisions();
         worm.move();
         worm.moveCont();
@@ -497,7 +514,7 @@ public class Board {
             aTailList2.setY(y2);
         }
 
-        if (worm.getLife()<=0 || worm2.getLife()<=0) {
+        if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
             setIngame(false);
         }
 

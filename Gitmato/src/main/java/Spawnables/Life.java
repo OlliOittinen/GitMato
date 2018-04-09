@@ -15,7 +15,6 @@ import java.util.TimerTask;
  * @author maxki, Olli
  */
 public class Life extends AbstractSpawnables {
-
     /**
      * Class constructor, calls on init();
      *
@@ -61,11 +60,13 @@ public class Life extends AbstractSpawnables {
             worm.setLife(worm.getLife() - 1);
             //give this worm a shield for a second to prevent instant loss of all lives
             worm.setShield(true);
+            worm.setTransparencyChange(true);
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     worm.setShield(false);
+                    worm.setTransparencyChange(false);
                 }
             }, 1000);
         }

@@ -102,7 +102,7 @@ public class Bombs extends AbstractDamagingSpawnables{
                             setYBombs(i, -1000);
                         }
                     }
-                }, 5000); //tulialueet
+                }, 500000); //tulialueet
             }
         }, 2500); //targetit
     }

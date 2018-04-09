@@ -55,10 +55,22 @@ public class Matopeli extends Application {
     private Image bluewormright = new Image("images/BlueWormRight(800x600).png");
     private Image bluewormup = new Image("images/BlueWormUp(800x600).png");
     private Image bluewormdown = new Image("images/BlueWormDown(800x600).png");
-    private Image wormImage = new Image("images/RedWormUp(800x600).png");
-    private Image worm2Image = new Image("images/BlueWormUp(800x600).png");
-    private Image wormtail = new Image("images/RedWormTail(800x600).png");
-    private Image wormtail2 = new Image("images/BlueWormTail(800x600).png");
+    private Image wormImage = redwormup;
+    private Image worm2Image = bluewormup;
+    private Image wormtailimage = new Image("images/RedWormTail(800x600).png");
+    private Image wormtail2image = new Image("images/BlueWormTail(800x600).png");
+    private Image wormtail = wormtailimage;
+    private Image wormtail2 = wormtail2image;
+    private Image redwormleftT = new Image("images/RedWormLeft(800x600)T.png");
+    private Image redwormrightT = new Image("images/RedWormRight(800x600)T.png");
+    private Image redwormupT = new Image("images/RedWormUp(800x600)T.png");
+    private Image redwormdownT = new Image("images/RedWormDown(800x600)T.png");
+    private Image bluewormleftT = new Image("images/BlueWormLeft(800x600)T.png");
+    private Image bluewormrightT = new Image("images/BlueWormRight(800x600)T.png");
+    private Image bluewormupT = new Image("images/BlueWormUp(800x600)T.png");
+    private Image bluewormdownT = new Image("images/BlueWormDown(800x600)T.png");
+    private Image wormtailT = new Image("images/RedWormTail(800x600)T.png");
+    private Image wormtail2T = new Image("images/BlueWormTail(800x600)T.png");
 
     private static int width = 800;
     private static int height = 600;
@@ -252,37 +264,63 @@ public class Matopeli extends Application {
      */
     public void setWormImage() {
         //red (left) worm
-        if (worm.getDirection() == 1) {
+        if (worm.isTransparencyChange()){
+            wormtail = wormtailT;
+        } else if (!worm.isTransparencyChange()){
+            wormtail = wormtailimage;
+        }
+        if (worm.getDirection() == 1 && !worm.isTransparencyChange()) {
             wormImage = redwormleft;
+        } else if (worm.getDirection() == 1 && worm.isTransparencyChange()){
+            wormImage = redwormleftT;
         }
 
-        if (worm.getDirection() == 2) {
+        if (worm.getDirection() == 2 && !worm.isTransparencyChange()) {
             wormImage = redwormright;
+        }  else if (worm.getDirection() == 2 && worm.isTransparencyChange()){
+            wormImage = redwormrightT;
         }
 
-        if (worm.getDirection() == 3) {
+        if (worm.getDirection() == 3 && !worm.isTransparencyChange()) {
             wormImage = redwormup;
+        } else if (worm.getDirection() == 3 && worm.isTransparencyChange()){
+            wormImage = redwormupT;
         }
 
-        if (worm.getDirection() == 4) {
+        if (worm.getDirection() == 4 && !worm.isTransparencyChange()) {
             wormImage = redwormdown;
+        } else if (worm.getDirection() == 4 && worm.isTransparencyChange()){
+            wormImage = redwormdownT;
         }
 
         //blue (right) worm
-        if (worm2.getDirection() == 1) {
+        if (worm2.isTransparencyChange()){
+            wormtail2 = wormtail2T;
+        } else if (!worm2.isTransparencyChange()){
+            wormtail2 = wormtail2image;
+        }
+        if (worm2.getDirection() == 1 && !worm2.isTransparencyChange()) {
             worm2Image = bluewormleft;
+        } else if (worm2.getDirection() == 1 && worm2.isTransparencyChange()){
+            worm2Image = bluewormleftT;
         }
 
-        if (worm2.getDirection() == 2) {
+        if (worm2.getDirection() == 2 && !worm2.isTransparencyChange()) {
             worm2Image = bluewormright;
+        } else if (worm2.getDirection() == 2 && worm2.isTransparencyChange()){
+            worm2Image = bluewormrightT;
         }
 
-        if (worm2.getDirection() == 3) {
+        if (worm2.getDirection() == 3 && !worm2.isTransparencyChange()) {
             worm2Image = bluewormup;
+        } else if (worm2.getDirection() == 3 && worm2.isTransparencyChange()){
+            worm2Image = bluewormupT;
         }
 
-        if (worm2.getDirection() == 4) {
+        if (worm2.getDirection() == 4 && !worm2.isTransparencyChange()) {
             worm2Image = bluewormdown;
+        } else if (worm2.getDirection() == 4 && worm2.isTransparencyChange()){
+            worm2Image = bluewormdownT;
         }
     }
 
