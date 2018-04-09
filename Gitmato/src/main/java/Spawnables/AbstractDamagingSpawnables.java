@@ -16,8 +16,6 @@ public abstract class AbstractDamagingSpawnables extends AbstractSpawnables {
      */
     public void damage(Worm worm) {
         if (lethal) {
-            if (worm.getLife() > 1) {
-            }
             Life.loseLife(worm);
         }
     }

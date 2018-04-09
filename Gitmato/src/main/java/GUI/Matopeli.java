@@ -188,18 +188,40 @@ public class Matopeli extends Application {
             animationLoop(gc);
         });
 
+        Button blueforwardskin = new Button();
+        blueforwardskin.setId("bluearrowbuttonright");
+        Button bluebackwardskin = new Button();
+        bluebackwardskin.setId("bluearrowbuttonleft");
+
+        Button redforwardskin = new Button();
+        redforwardskin.setId("redarrowbuttonright");
+        Button redbackwardskin = new Button();
+        redbackwardskin.setId("redarrowbuttonleft");
+
         //------------Main Menu Scene - Game mode selector --------------
+        HBox bluenextButtons = new HBox(50);
+        bluenextButtons.setAlignment(Pos.CENTER);
+        bluenextButtons.getChildren().addAll(blueforwardskin, bluebackwardskin);
+
+        HBox rednextButtons = new HBox(50);
+        rednextButtons.setAlignment(Pos.CENTER);
+        rednextButtons.getChildren().addAll(redforwardskin, redbackwardskin);
 
         //create a new vertical box, center it, and add buttons to it
         VBox menuLayout = new VBox(20);
         menuLayout.setAlignment(Pos.CENTER);
         menuLayout.getChildren().addAll(button2, button1, button3);
 
-        //main menu scene is a new scene based on above layout
-        mainMenuScene = new Scene(menuLayout, width, height);
+        BorderPane pane = new BorderPane();
+        pane.setMinSize(width,height);
+        pane.setCenter(menuLayout);
+        pane.setRight(rednextButtons);
+        pane.setLeft(bluenextButtons);
+        //main menu scene is a new scene based on above layouts
+        mainMenuScene = new Scene(pane, width, height);
 
         //set id for css, get the styling from the correct file
-        menuLayout.setId("main_menu");
+        pane.setId("main_menu");
         mainMenuScene.getStylesheets().add("Styling/styling.css");
 
 

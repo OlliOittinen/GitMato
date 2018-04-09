@@ -27,7 +27,7 @@ public class Worm {
     private boolean shield = false; //shield power-up
     private boolean reverse = false; //Reverse debuff
     private int points;
-    private boolean colorchange;
+    private boolean transparencychange;
 
     private double speed = 3;
     private int life = 3;
@@ -206,10 +206,10 @@ public class Worm {
 
     /**
      * Setter for transparecy change.
-     * @param colorchange the boolean value to be set if transparency is active or not.
+     * @param transparencychange the boolean value to be set if transparency is active or not.
      */
-    public void setTransparencyChange(boolean colorchange) {
-        this.colorchange = colorchange;
+    public void setTransparencyChange(boolean transparencychange) {
+        this.transparencychange = transparencychange;
     }
 
     /**
@@ -217,7 +217,7 @@ public class Worm {
      * @return boolean value if transparency is active or not.
      */
     public boolean isTransparencyChange() {
-        return colorchange;
+        return transparencychange;
     }
 
     /**

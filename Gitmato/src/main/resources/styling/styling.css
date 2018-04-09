@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
 #main_menu {
     -fx-background-image: url("MainMenuBG.png");
     -fx-background-repeat: stretch;
@@ -14,45 +15,52 @@
 }
 
 #gameOverLabel {
-    -fx-font-family:'Press Start 2P';
+    -fx-font-family: 'Press Start 2P';
     -fx-font-size: 50px;
     -fx-text-fill: white;
     -fx-stroke: black;
     -fx-stroke-width: 1;
 }
-#highscore_title{
-    -fx-font-family:'Press Start 2P';
+
+#highscore_title {
+    -fx-font-family: 'Press Start 2P';
     -fx-font-size: 30px;
 }
-#highscoretable_headline{
-    -fx-font-family:'Press Start 2P';
+
+#highscoretable_headline {
+    -fx-font-family: 'Press Start 2P';
     -fx-font-size: 20px;
     -fx-text-alignment: center;
 }
-#top_10_highscores{
-    -fx-font-family:'Press Start 2P';
+
+#top_10_highscores {
+    -fx-font-family: 'Press Start 2P';
     -fx-font-size: 15px;
 }
 
 #winner_label {
-    -fx-font-family:'Press Start 2P';
+    -fx-font-family: 'Press Start 2P';
     -fx-font-size: 30px;
 }
-#highscoretable_headline{
-    -fx-font-family:'Press Start 2P';
+
+#highscoretable_headline {
+    -fx-font-family: 'Press Start 2P';
     -fx-font-size: 20px;
     -fx-text-alignment: center;
 }
-#highscoretable_highscores{
-    -fx-font-family:'Press Start 2P';
+
+#highscoretable_highscores {
+    -fx-font-family: 'Press Start 2P';
     -fx-font-size: 15px;
 }
+
 #username {
-    -fx-font-family:'Press Start 2P';
+    -fx-font-family: 'Press Start 2P';
     -fx-font-size: 15px;
 }
+
 Button {
-    -fx-font-family:'Press Start 2P', cursive;
+    -fx-font-family: 'Press Start 2P', cursive;
     -fx-min-height: 44px;
     -fx-min-width: 150px;
     -fx-background-image: url("VersusButton.png");
@@ -62,4 +70,34 @@ Button {
     -fx-background-position: center;
     -fx-font-size: 10px;
     -fx-text-alignment: center;
+}
+
+#redarrowbuttonleft {
+    -fx-background-image: url("RedrrowButton.png");
+    -fx-background-size: 40px 40px;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-scale-x: -1;
+}
+
+#redarrowbuttonright {
+    -fx-background-image: url("RedrrowButton.png");
+    -fx-background-size: 40px 40px;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+}
+
+#bluearrowbuttonleft {
+    -fx-background-image: url("BlueArrowButton.png");
+    -fx-background-size: 40px 40px;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-scale-x: -1;
+}
+
+#bluearrowbuttonright {
+    -fx-background-image: url("BlueArrowButton.png");
+    -fx-background-size: 40px 40px;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
 }
