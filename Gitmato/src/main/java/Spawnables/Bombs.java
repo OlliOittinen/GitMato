@@ -102,19 +102,19 @@ public class Bombs extends AbstractDamagingSpawnables{
                             setYBombs(i, -1000);
                         }
                     }
-                }, 1000000000); //tulialueet
+                }, 5000); //tulialueet
             }
         }, 2500); //targetit
     }
 
     /**
-     * Returns the ellipse used by bomb zone.
+     * Returns the circle used by bomb zone.
      * @param n the index of the target or bomb
-     * @return a new Ellipse with predetermined draw size
-     * @see Ellipse
+     * @return a new Circle with predetermined draw size
+     * @see Circle
      */
-    public Ellipse getBoundsBombs(int n) {
-        return new Ellipse(xlist[n] + 100, ylist[n] + 100, 100, 100);
+    public Circle getBoundsBombs(int n) {
+        return new Circle(xlist[n] + 105, ylist[n] + 100, 85);
     }
 
     /**

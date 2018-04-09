@@ -29,7 +29,7 @@ public class Worm {
     private int points;
 
     private double speed = 3;
-    private int life = 3;
+    private int life = 300000;
 
     /**
      * Getter for life value.

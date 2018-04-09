@@ -2,7 +2,7 @@ package Spawnables;
 
 import Model.Worm;
 
-//technically this could be a non-abstract class, but left as such for contingency
+//technically this could be a non-abstract class, but left abstract so you can't instantiate one as-is
 public abstract class AbstractDamagingSpawnables extends AbstractSpawnables {
 
     boolean lethal = false;

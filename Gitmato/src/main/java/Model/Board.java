@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.TimerTask;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Ellipse;
 
 /**
  *
@@ -228,7 +228,7 @@ public class Board {
             @Override
             public void run() {
 
-                int n = (int) (Math.random() * 7);
+                int n = (int) (Math.random() * 6);
 
                 switch (n) {
                     case 0:
@@ -276,6 +276,7 @@ public class Board {
 
     private void checkCollisions() {
 
+        //Bounds returns a square object
         Bounds Matokuutio = worm.getBounds();
         Bounds Matokuutio2 = worm2.getBounds();
 
@@ -286,9 +287,9 @@ public class Board {
         Bounds pl = HP.getBoundsForIcon();
         Bounds psh = shield.getBoundsForIcon();
         Bounds pb = bombs.getBoundsForIcon();
-        Ellipse pb2 = bombs.getBoundsBombs(2);
-        Ellipse pb3 = bombs.getBoundsBombs(4);
-        Ellipse pb4 = bombs.getBoundsBombs(6);
+        Circle pb2 = bombs.getBoundsBombs(2);
+        Circle pb3 = bombs.getBoundsBombs(4);
+        Circle pb4 = bombs.getBoundsBombs(6);
         Bounds pla = laser.getBoundsForIcon();
         Rectangle beam = laser.getBoundsB();
 

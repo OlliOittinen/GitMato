@@ -14,6 +14,7 @@ package Model;
 import Spawnables.*;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.geometry.Bounds;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 
@@ -53,12 +54,12 @@ class Bot {
      */
     void runBotRun() {
 
-        Ellipse pb1 = bombs.getBoundsBombs(1);
-        Ellipse pb2 = bombs.getBoundsBombs(2);
-        Ellipse pb3 = bombs.getBoundsBombs(3);
-        Ellipse pb4 = bombs.getBoundsBombs(4);
-        Ellipse pb5 = bombs.getBoundsBombs(5);
-        Ellipse pb6 = bombs.getBoundsBombs(6);
+        Circle pb1 = bombs.getBoundsBombs(1);
+        Circle pb2 = bombs.getBoundsBombs(2);
+        Circle pb3 = bombs.getBoundsBombs(3);
+        Circle pb4 = bombs.getBoundsBombs(4);
+        Circle pb5 = bombs.getBoundsBombs(5);
+        Circle pb6 = bombs.getBoundsBombs(6);
 
         if (tailNro2 > 3) {
             if (worm2.getBounds().intersects(body2.get(body2.size() - 1).getBounds()) && body2.size() > 3) {
