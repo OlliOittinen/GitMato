@@ -30,7 +30,7 @@ public class Worm {
     private boolean colorchange;
 
     private double speed = 3;
-    private int life = 300000;
+    private int life = 3;
 
     /**
      * Getter for life value.
