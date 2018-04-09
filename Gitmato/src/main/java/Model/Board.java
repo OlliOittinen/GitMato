@@ -244,7 +244,7 @@ public class Board {
             @Override
             public void run() {
 
-                int n = 5;//(int) (Math.random() * 6);
+                int n = (int) (Math.random() * 7);
 
                 switch (n) {
                     case 0:
@@ -314,7 +314,6 @@ public class Board {
             Bounds Matotail = aTailList.getBounds();
             if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2) && !gameMode.equals("sp")) {
                 if (worm2.getLife() > 1) {
-                    shield.shield(worm2);
                     worm2.turnAround();
                     if (gameMode.equals("vs AI")) {
                         bot.BotTurnDown();
@@ -328,7 +327,6 @@ public class Board {
             Bounds Matotail2 = aTailList2.getBounds();
             if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                 if (worm.getLife() > 1) {
-                    shield.shield(worm);
                     worm.turnAround();
                 }
                 Life.loseLife(worm);
@@ -339,7 +337,6 @@ public class Board {
                 Bounds Matotail2 = tailList.get(i).getBounds();
                 if (Matokuutio.intersects(Matotail2) && !shield.isActive(worm)) {
                     if (worm.getLife() > 1) {
-                        shield.shield(worm);
                         worm.turnAround();
                     }
                     Life.loseLife(worm);
