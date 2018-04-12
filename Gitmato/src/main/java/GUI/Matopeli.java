@@ -125,48 +125,26 @@ public class Matopeli extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        //set window as primary stage
         window = primaryStage;
         window.setTitle("Gitmato");
 
-        //don't allow the user to resize the screen
         window.setResizable(false);
-
-        //loop the background music
-        Sound.Music.backgroundMusic.loop();
-
-        //create a new group that binds canvas and scenes together
         Group root = new Group();
-
-        //create a canvas based on width and height parameters
         Canvas canvas = new Canvas(width, height);
-
-        //get the graphics context for this canvas
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        //add everything related to this canvas to the group
         root.getChildren().add(canvas);
-
-        //create a scene based on the group, but don't show it yet
         gameScene = new Scene(root);
 
-
         //----GAME MODE SELECTOR SCENE AKA MAIN MENU-----------
-
-        //Button for playing against AI
         Button button1 = new Button("Player VS AI");
-        //when clicked
         button1.setOnAction(e
                 -> {
-            //set the game mode as such, set the current scene as game scene, start drawing in animationLoop(gc)
             gameMode = "vs AI";
             init(gameMode);
             window.setScene(gameScene);
             animationLoop(gc);
         });
 
-        //identical to the vs AI, but with changes to versus
-        //Button for Versus
         Button button2 = new Button("Versus");
         button2.setId("Versus");
         button2.setOnAction(e
@@ -177,8 +155,6 @@ public class Matopeli extends Application {
             animationLoop(gc);
         });
 
-        //see above
-        //button for single player
         Button button3 = new Button("Single player");
         button3.setOnAction(e
                 -> {
@@ -207,7 +183,6 @@ public class Matopeli extends Application {
         rednextButtons.setAlignment(Pos.CENTER);
         rednextButtons.getChildren().addAll(redforwardskin, redbackwardskin);
 
-        //create a new vertical box, center it, and add buttons to it
         VBox menuLayout = new VBox(20);
         menuLayout.setAlignment(Pos.CENTER);
         menuLayout.getChildren().addAll(button2, button1, button3);
@@ -217,26 +192,16 @@ public class Matopeli extends Application {
         pane.setCenter(menuLayout);
         pane.setRight(rednextButtons);
         pane.setLeft(bluenextButtons);
+
         //main menu scene is a new scene based on above layouts
         mainMenuScene = new Scene(pane, width, height);
-
-        //set id for css, get the styling from the correct file
         pane.setId("main_menu");
         mainMenuScene.getStylesheets().add("Styling/styling.css");
-
-
-        //-----------------------------------
-
-
-        //Display main scene first
         window.setScene(mainMenuScene);
-
-        //if user clicks the x for the window, exit
         window.setOnCloseRequest(e -> System.exit(0));
         window.setTitle("Gitmato");
-
-        //shows this window to user
         window.show();
+        Sound.Music.backgroundMusic.loop();
     }
     private void init(String gameMode){
         //initialize all the variables needed
@@ -264,15 +229,12 @@ public class Matopeli extends Application {
 
             @Override
             public void handle(long now) {
-                //if time between now and last update is more than 10M nanoseconds (=1 millisecond)
                 if (now - lastUpdate >= 10_000_000) {
                     //let the controller handle inputs
                     gameScene.setOnKeyPressed((KeyEvent event) -> {
                         pc.keyPressed(event);
                     });
-                    //update board based on controller input
                     board.updateBoard();
-                    //draw the GUI based on board's parameters
                     draw(gc);
                     
                 }
