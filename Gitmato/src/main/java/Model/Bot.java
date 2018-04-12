@@ -29,7 +29,7 @@ class Bot {
     private ArrayList<Spawnables> pickableList;
     private Laser laser;
     private ArrayList<Tail> body;
-    
+
 
     /**
      * Class Constructor.
@@ -102,9 +102,9 @@ class Bot {
 
             if (worms.get(1).getReverse(worms.get(1))) {
                 if(worm2.getY() > pickableList.get(7).getY()){
-                    BotTurnUp();
-                }else{
                     BotTurnDown();
+                }else{
+                    BotTurnUp();
                 }
                 worms.get(1).setX(25);
             }
@@ -123,9 +123,9 @@ class Bot {
 
             if (worms.get(1).getReverse(worms.get(1))) {
                 if(worm2.getY() > pickableList.get(7).getY()){
-                    BotTurnUp();
-                }else{
                     BotTurnDown();
+                }else{
+                    BotTurnUp();
                 }
                 worms.get(1).setX(710);
             }
@@ -144,9 +144,9 @@ class Bot {
 
             if (worms.get(1).getReverse(worms.get(1))) {
                 if(worm2.getX() > pickableList.get(7).getX()){
-                    BotTurnLeft();
-                }else{
                     BotTurnRight();
+                }else{
+                    BotTurnLeft();
                 }
                 worms.get(1).setY(535);
             }
@@ -165,9 +165,9 @@ class Bot {
 
             if (worms.get(1).getReverse(worms.get(1))) {
                 if(worm2.getX() > pickableList.get(7).getX()){
-                    BotTurnLeft();
-                }else{
                     BotTurnRight();
+                }else{
+                    BotTurnLeft();
                 }
                 worms.get(1).setY(25);
             }
@@ -181,7 +181,7 @@ class Bot {
             Rectangle l2 = laser.getBoundsB();
             if ((AIleft.intersects(MatotailForAI) || pb1.intersects(AIleft) || pb2.intersects(AIleft) || pb3.intersects(AIleft) || pb4.intersects(AIleft) || pb5.intersects(AIleft) || pb6.intersects(AIleft) || (l2.intersects(AIleft) && laser.getHorizontal()) || (l2.intersects(AIleft) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 1 || worms.get(1).getReverse(worms.get(1)))) {
 
-                if(worm2.getY() > pickableList.get(7).getY()){
+                if(worm2.getY() > 300){
                     BotTurnUp();
                 }else{
                     BotTurnDown();
@@ -197,7 +197,7 @@ class Bot {
 
             Rectangle l2 = laser.getBoundsB();
             if ((AIright.intersects(MatotailForAI) || pb1.intersects(AIright) || pb2.intersects(AIright) || pb3.intersects(AIright) || pb4.intersects(AIright) || pb5.intersects(AIright) || pb6.intersects(AIright) || (l2.intersects(AIright) && laser.getHorizontal()) || (l2.intersects(AIright) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 2 || worms.get(1).getReverse(worms.get(1)))) {
-                if(worm2.getY() > pickableList.get(7).getY()){
+                if(worm2.getY() > 300){
                     BotTurnUp();
                 }else{
                     BotTurnDown();
@@ -213,7 +213,7 @@ class Bot {
 
             Rectangle l2 = laser.getBoundsB();
             if ((AIup.intersects(MatotailForAI) || pb1.intersects(AIup) || pb2.intersects(AIup) || pb3.intersects(AIup) || pb4.intersects(AIup) || pb5.intersects(AIup) || pb6.intersects(AIup) || (l2.intersects(AIup) && !laser.getHorizontal()) || (l2.intersects(AIup) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 3 || worms.get(1).getReverse(worms.get(1)))) {
-                if(worm2.getX() > pickableList.get(7).getX()){
+                if(worm2.getX() > 400){
                     BotTurnLeft();
                 }else{
                     BotTurnRight();
@@ -229,7 +229,7 @@ class Bot {
 
             Rectangle l2 = laser.getBoundsB();
             if ((AIdown.intersects(MatotailForAI) || pb1.intersects(AIdown) || pb2.intersects(AIdown) || pb3.intersects(AIdown) || pb4.intersects(AIdown) || pb5.intersects(AIdown) || pb6.intersects(AIdown) || (l2.intersects(AIdown) && !laser.getHorizontal()) || (l2.intersects(AIdown) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 4 || worms.get(1).getReverse(worms.get(1)))) {
-                if(worm2.getX() > pickableList.get(7).getX()){
+                if(worm2.getX() > 400){
                     BotTurnLeft();
                 }else{
                     BotTurnRight();
