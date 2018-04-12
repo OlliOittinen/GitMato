@@ -186,7 +186,7 @@ public class Worm {
      * Reverse implies if the Worm is under the effects of Reverse
      * @return reverse of Worm object.
      */
-    public boolean getReverse(Worm worm) {
+    public boolean getReverse() {
         return this.reverse;
     }
     /**

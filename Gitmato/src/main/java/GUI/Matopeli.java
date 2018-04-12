@@ -379,11 +379,11 @@ public class Matopeli extends Application {
                 g.drawImage(shieldeffect, worm2.getX() - 5, worm2.getY() - 4);
             }
             //draw confusion effects on top of worm if confuse boolean is true
-            if (worm.getReverse(worm)) {
+            if (worm.getReverse()) {
                 g.drawImage(confuseEffect, worm.getX() - 5, worm.getY() - 4);
             }
             //identical for worm #2
-            if (worm2.getReverse(worm2)) {
+            if (worm2.getReverse()) {
                 g.drawImage(confuseEffect, worm2.getX() - 5, worm2.getY() - 4);
             }
             //always draw points
