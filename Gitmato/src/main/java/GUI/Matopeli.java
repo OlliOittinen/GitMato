@@ -115,6 +115,8 @@ public class Matopeli extends Application {
     private boolean worm2skinactive;
     private int skinindex = -1;
     private int skinindex2 = -1;
+    private Label wormskinlabel = new Label();
+    private Label worm2skinlabel = new Label();
 
     /**
      * Launches the application.
@@ -228,29 +230,35 @@ public class Matopeli extends Application {
         redbackwardskin.setId("redarrowbuttonleft");
 
         //------------Main Menu Scene - Game mode selector --------------
-        HBox bluenextButtons = new HBox(10);
-        bluenextButtons.setAlignment(Pos.CENTER);
+        HBox bluenextButtons = new HBox();
+        bluenextButtons.setAlignment(Pos.BOTTOM_CENTER);
         bluenextButtons.getChildren().addAll(bluebackwardskin, blueforwardskin);
 
-        HBox rednextButtons = new HBox(10);
-        rednextButtons.setAlignment(Pos.CENTER);
+        HBox rednextButtons = new HBox();
+        rednextButtons.setAlignment(Pos.BOTTOM_CENTER);
         rednextButtons.getChildren().addAll(redbackwardskin, redforwardskin);
+
 
         //create a new vertical box, center it, and add buttons to it
         VBox menuLayout = new VBox(20);
         menuLayout.setAlignment(Pos.CENTER);
         menuLayout.getChildren().addAll(button2, button1, button3);
 
-        BorderPane pane = new BorderPane();
-        pane.setMinSize(width, height);
-        pane.setCenter(menuLayout);
-        pane.setRight(rednextButtons);
-        pane.setLeft(bluenextButtons);
+        GridPane mainmenupane = new GridPane();
+        GridPane skinbuttonpane = new GridPane();
+        mainmenupane.setAlignment(Pos.CENTER);
+        mainmenupane.setMinSize(width, height);
+        skinbuttonpane.add(rednextButtons,1,0);
+        skinbuttonpane.add(bluenextButtons,0,0);
+        skinbuttonpane.setPadding(new Insets(110,0,60,0));
+        mainmenupane.add(menuLayout,0,0);
+        mainmenupane.add(skinbuttonpane,0,10);
+        mainmenupane.setAlignment(Pos.BOTTOM_CENTER);
         //main menu scene is a new scene based on above layouts
-        mainMenuScene = new Scene(pane, width, height);
+        mainMenuScene = new Scene(mainmenupane, width, height);
 
         //set id for css, get the styling from the correct file
-        pane.setId("main_menu");
+        mainmenupane.setId("main_menu");
         mainMenuScene.getStylesheets().add("Styling/styling.css");
 
 
