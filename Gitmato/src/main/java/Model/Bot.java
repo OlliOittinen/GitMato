@@ -42,7 +42,7 @@ class Bot {
      tailNro2 = board.getTailNro2();
      bombs = (Bombs) board.getPickableList().get(5);
      pickableList = board.getPickableList();
-    laser = (Laser) board.getPickableList().get(6);
+     laser = (Laser) board.getPickableList().get(6);
      body = board.getTailList();
     }
 
@@ -52,7 +52,7 @@ class Bot {
      * Evades player and walls using additional hitboxes and compared locations.
      * Creates hitboxes for bombs for easy comparing.
      */
-    void runBotRun() {
+    void start() {
 
         Circle pb1 = bombs.getBoundsBombs(1);
         Circle pb2 = bombs.getBoundsBombs(2);
