@@ -12,10 +12,11 @@ public class SpawnableTest {
     private ArrayList<Spawnables> all = new ArrayList<Spawnables>();
     private Worm worm = new Worm(1);
 
-
+    /**
+     * Creates every Spawnable except for Snack as it has a different init() method.
+     */
     @Before
     public void setUp() {
-
         Bombs b = new Bombs();
         Confuse c = new Confuse();
         Faster f = new Faster();
@@ -33,11 +34,11 @@ public class SpawnableTest {
         all.add(slo);
     }
 
+    /**
+     * Checks that every spawnable icon is set to (-100, -100)
+     */
     @Test
     public void testXYOnInit() {
-
-        setUp();
-
         for (Spawnables s : all) {
             assertEquals(-100, s.getX());
         }
@@ -48,9 +49,11 @@ public class SpawnableTest {
 
     }
 
+    /**
+     * Checks that every icon has correct x- and y-coordinates
+     */
     @Test
     public void testBoundsOnInit() {
-        setUp();
         for (Spawnables s: all) {
             assertEquals(-100, s.getBoundsForIcon().getMinX(), 0.1);
             assertEquals(-100, s.getBoundsForIcon().getMinY(), 0.1);
@@ -59,13 +62,14 @@ public class SpawnableTest {
         }
     }
 
+    /**
+     * Sets a snack and a worm to the same x- & y-coordinate and makes sure it has relocated to somewhere else on the board spectrum.
+     */
     @Test
     public void testCollisionWithSnack() {
         Snack snack = new Snack();
-
         snack.setX(100);
         snack.setY(100);
-
         worm.setX(100);
         worm.setY(100);
 

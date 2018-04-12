@@ -10,14 +10,20 @@ public class WormTest {
 
     private Worm worm;
 
+
+    /**
+     * Creates a new worm to be tested
+     */
     @Before
     public void setUp() {
         worm = new Worm(1);
     }
 
+    /**
+     * Tests whether or not worm gets confused and shielded based on state
+     */
     @Test
     public void testConfuseAndShield() {
-        setUp();
         worm.changeState(WormConfuse.getInstance());
         assertTrue(worm.getReverse());
         worm.changeState(WormShield.getInstance());
