@@ -90,6 +90,11 @@ public class PlayerController {
             }
         }
 
+        if (key == KeyCode.ESCAPE) {
+            board.setIngame(false);
+
+        }
+
 
         // controls for player 2
         if (gameMode == "versus") {
@@ -138,6 +143,10 @@ public class PlayerController {
                     worms.get(1).setDirectionAdv(1);
                 }
             }
+
+
+
+
         }
     }
 }
