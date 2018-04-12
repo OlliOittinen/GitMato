@@ -61,6 +61,7 @@ public class Worm {
         if (playerNro == 1) {
             x = 200;
             y = 279; //oma puoli kentästä-kuvan korkeus
+            this.setDirection(2);
         }
         if (playerNro == 2) {
             x = 565; //kentän puoliväli-kuvan leveys

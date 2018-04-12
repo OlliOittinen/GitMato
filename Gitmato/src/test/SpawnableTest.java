@@ -77,4 +77,18 @@ public class SpawnableTest {
         assertEquals(300, snack.getY(), 300);
     }
 
+    //INCOMPLETE, DOESN'T WORK AS SUPPOSED TO
+    @Test
+    public void testCollisionWithSpawnable() {
+        for (int i= 1; i< all.size(); i++) {
+            all.get(i).init();
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            assertEquals(-100, all.get(i).getX());
+            assertEquals(-100, all.get(i).getY());
+        }
+    }
 }
