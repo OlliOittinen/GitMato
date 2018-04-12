@@ -347,7 +347,7 @@ public class Board {
         //mato 1 collisions
         if (s.intersects(Matokuutio)) {
             Music.snack.play();
-            snack.randomizeIconLocation();
+            snack.randomizeIconLocation(this);
             worm.setPoints(worm.getPoints() + 100);
             spawnTail(1);
         }
@@ -404,7 +404,7 @@ public class Board {
         //mato 2 collisions
         if (s.intersects(Matokuutio2)) {
             Music.snack.play();
-            snack.randomizeIconLocation();
+            snack.randomizeIconLocation(this);
             worm2.setPoints(worm2.getPoints() + 100);
             spawnTail(2);
         }
