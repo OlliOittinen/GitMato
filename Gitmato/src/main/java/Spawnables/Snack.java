@@ -7,7 +7,6 @@ package Spawnables;
 
 import Model.Board;
 import Model.Tail;
-import Model.Worm;
 
 import java.util.ArrayList;
 
@@ -37,6 +36,11 @@ public class Snack extends AbstractSpawnables {
     public void randomizeIconLocation() {
     }
 
+    /**
+     * This method randomizes the location for the icon
+     * to be placed using Math.random (ie. pseudo-random)
+     * and uses the size of the map to do so
+     */
     public void randomizeIconLocation(Board board) {
         ArrayList<Tail> t1 = board.getTailList();
         ArrayList<Tail> t2 = board.getTailList();

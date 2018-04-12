@@ -140,48 +140,26 @@ public class Matopeli extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        //set window as primary stage
         window = primaryStage;
         window.setTitle("Gitmato");
 
-        //don't allow the user to resize the screen
         window.setResizable(false);
-
-        //loop the background music
-        Sound.Music.backgroundMusic.loop();
-
-        //create a new group that binds canvas and scenes together
         Group root = new Group();
-
-        //create a canvas based on width and height parameters
         Canvas canvas = new Canvas(width, height);
-
-        //get the graphics context for this canvas
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        //add everything related to this canvas to the group
         root.getChildren().add(canvas);
-
-        //create a scene based on the group, but don't show it yet
         gameScene = new Scene(root);
 
-
         //----GAME MODE SELECTOR SCENE AKA MAIN MENU-----------
-
-        //Button for playing against AI
         Button button1 = new Button("Player VS AI");
-        //when clicked
         button1.setOnAction(e
                 -> {
-            //set the game mode as such, set the current scene as game scene, start drawing in animationLoop(gc)
             gameMode = "vs AI";
             init(gameMode);
             window.setScene(gameScene);
             animationLoop(gc);
         });
 
-        //identical to the vs AI, but with changes to versus
-        //Button for Versus
         Button button2 = new Button("Versus");
         button2.setId("Versus");
         button2.setOnAction(e
@@ -192,8 +170,6 @@ public class Matopeli extends Application {
             animationLoop(gc);
         });
 
-        //see above
-        //button for single player
         Button button3 = new Button("Single player");
         button3.setOnAction(e
                 -> {
@@ -238,42 +214,33 @@ public class Matopeli extends Application {
         rednextButtons.setAlignment(Pos.BOTTOM_CENTER);
         rednextButtons.getChildren().addAll(redbackwardskin, redforwardskin);
 
-
-        //create a new vertical box, center it, and add buttons to it
         VBox menuLayout = new VBox(20);
         menuLayout.setAlignment(Pos.CENTER);
         menuLayout.getChildren().addAll(button2, button1, button3);
+
 
         GridPane mainmenupane = new GridPane();
         GridPane skinbuttonpane = new GridPane();
         mainmenupane.setAlignment(Pos.CENTER);
         mainmenupane.setMinSize(width, height);
-        skinbuttonpane.add(rednextButtons,1,0);
-        skinbuttonpane.add(bluenextButtons,0,0);
-        skinbuttonpane.setPadding(new Insets(110,0,60,0));
-        mainmenupane.add(menuLayout,0,0);
-        mainmenupane.add(skinbuttonpane,0,10);
+        skinbuttonpane.add(rednextButtons, 1, 0);
+        skinbuttonpane.add(bluenextButtons, 0, 0);
+        skinbuttonpane.setPadding(new Insets(110, 0, 60, 0));
+        mainmenupane.add(menuLayout, 0, 0);
+        mainmenupane.add(skinbuttonpane, 0, 10);
         mainmenupane.setAlignment(Pos.BOTTOM_CENTER);
         //main menu scene is a new scene based on above layouts
         mainMenuScene = new Scene(mainmenupane, width, height);
 
         //set id for css, get the styling from the correct file
         mainmenupane.setId("main_menu");
+
         mainMenuScene.getStylesheets().add("Styling/styling.css");
-
-
-        //-----------------------------------
-
-
-        //Display main scene first
         window.setScene(mainMenuScene);
-
-        //if user clicks the x for the window, exit
         window.setOnCloseRequest(e -> System.exit(0));
         window.setTitle("Gitmato");
-
-        //shows this window to user
         window.show();
+        Sound.Music.backgroundMusic.loop();
     }
 
     private void init(String gameMode) {
@@ -302,15 +269,12 @@ public class Matopeli extends Application {
 
             @Override
             public void handle(long now) {
-                //if time between now and last update is more than 10M nanoseconds (=1 millisecond)
                 if (now - lastUpdate >= 10_000_000) {
                     //let the controller handle inputs
                     gameScene.setOnKeyPressed((KeyEvent event) -> {
                         pc.keyPressed(event);
                     });
-                    //update board based on controller input
                     board.updateBoard();
-                    //draw the GUI based on board's parameters
                     draw(gc);
 
                 }
@@ -388,23 +352,23 @@ public class Matopeli extends Application {
         switch (index) {
             case 1:
                 if (sign.equals("+")) {
-                            skinindex++;
-                            if (skinindex < hatimages.size()) {
-                                wormskinactive = true;
-                                wormskin = hatimages.get(skinindex);
-                            } else {
-                                skinindex = -1;
-                                wormskinactive = false;
+                    skinindex++;
+                    if (skinindex < hatimages.size()) {
+                        wormskinactive = true;
+                        wormskin = hatimages.get(skinindex);
+                    } else {
+                        skinindex = -1;
+                        wormskinactive = false;
 
-                            }
-                        } else {
-                            skinindex--;
-                            if (skinindex < hatimages.size() && skinindex > -1) {
-                                wormskinactive = true;
-                                wormskin = hatimages.get(skinindex);
-                            } else {
-                                skinindex = -1;
-                                wormskinactive = false;
+                    }
+                } else {
+                    skinindex--;
+                    if (skinindex < hatimages.size() && skinindex > -1) {
+                        wormskinactive = true;
+                        wormskin = hatimages.get(skinindex);
+                    } else {
+                        skinindex = -1;
+                        wormskinactive = false;
 
                     }
                 }
@@ -507,11 +471,11 @@ public class Matopeli extends Application {
                 g.drawImage(shieldeffect, worm2.getX() - 5, worm2.getY() - 4);
             }
             //draw confusion effects on top of worm if confuse boolean is true
-            if (worm.getReverse(worm)) {
+            if (worm.getReverse()) {
                 g.drawImage(confuseEffect, worm.getX() - 5, worm.getY() - 4);
             }
             //identical for worm #2
-            if (worm2.getReverse(worm2)) {
+            if (worm2.getReverse()) {
                 g.drawImage(confuseEffect, worm2.getX() - 5, worm2.getY() - 4);
             }
             if (wormskinactive) {

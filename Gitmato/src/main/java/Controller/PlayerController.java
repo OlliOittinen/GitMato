@@ -90,6 +90,7 @@ public class PlayerController {
             }
         }
 
+        //ends the game
         if (key == KeyCode.ESCAPE) {
             board.setIngame(false);
 
