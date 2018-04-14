@@ -364,63 +364,39 @@ public class Matopeli extends Application {
     }
 
     private void checkWormSkin(int index, String sign) {
-        switch (index) {
-            case 1:
-                if (sign.equals("+")) {
-                    skinindex++;
-                    if (skinindex < hatimages.size()) {
-                        wormskinactive = true;
-                        wormskin = hatimages.get(skinindex);
-                        imv.setImage(bighatimages.get(skinindex));
-                    } else {
-                        skinindex = -1;
-                        wormskinactive = false;
-                        imv.setImage(null);
-
-                    }
-                } else {
-                    skinindex--;
-                    if (skinindex < hatimages.size() && skinindex > -1) {
-                        wormskinactive = true;
-                        wormskin = hatimages.get(skinindex);
-                        imv.setImage(bighatimages.get(skinindex));
-                    } else {
-                        skinindex = -1;
-                        wormskinactive = false;
-                        imv.setImage(null);
-
-                    }
-                }
-                break;
-            case 2:
-                if (sign.equals("+")) {
-                    skinindex2++;
-                    if (skinindex2 < hatimages.size()) {
-                        worm2skinactive = true;
-                        worm2skin = hatimages.get(skinindex2);
-                        imv2.setImage(bighatimages.get(skinindex2));
-                    } else {
-                        skinindex2 = -1;
-                        worm2skinactive = false;
-                        imv2.setImage(null);
-
-                    }
-                } else {
-                    skinindex2--;
-                    if (skinindex2 < hatimages.size() && skinindex2 > -1) {
-                        worm2skinactive = true;
-                        worm2skin = hatimages.get(skinindex2);
-                        imv2.setImage(bighatimages.get(skinindex2));
-                    } else {
-                        skinindex2 = -1;
-                        worm2skinactive = false;
-                        imv2.setImage(null);
-
-                    }
-                }
-                break;
-
+        if (sign.equals("+") && index == 1) {
+            skinindex++;
         }
+        if (sign.equals("-") && index == 1) {
+            skinindex--;
+        }
+        if (sign.equals("+") && index == 2) {
+            skinindex2++;
+        }
+        if (sign.equals("-") && index == 2) {
+            skinindex2--;
+        }
+        if (skinindex < hatimages.size() && skinindex > -1) {
+            wormskinactive = true;
+            wormskin = hatimages.get(skinindex);
+            imv.setImage(bighatimages.get(skinindex));
+        }
+        if (skinindex2 < hatimages.size() && skinindex2 > -1) {
+            worm2skinactive = true;
+            worm2skin = hatimages.get(skinindex2);
+            imv2.setImage(bighatimages.get(skinindex2));
+        }
+        if (skinindex >= hatimages.size() || skinindex <= -1) {
+            skinindex = -1;
+            wormskinactive = false;
+            imv.setImage(null);
+        }
+        if (skinindex2 >= hatimages.size() || skinindex2 <= -1) {
+            skinindex2 = -1;
+            worm2skinactive = false;
+            imv2.setImage(null);
+        }
+
     }
 
     private void draw(GraphicsContext g) {
