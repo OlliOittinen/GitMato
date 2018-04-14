@@ -75,9 +75,15 @@ public class Matopeli extends Application {
     private Image cowboyhat = new Image("images/Hat.png");
     private Image firehat = new Image("images/firehat.png");
     private Image bighat = new Image("images/BigHat.png");
+    private Image bigredhat = new Image("images/bigredhat.png");
+    private Image hornyhat = new Image("images/hornyhat.png");
+    private Image bighornyhat = new Image("images/bighornyhat.png");
     private Image wormskin;
     private Image worm2skin;
     private ArrayList<Image> hatimages = new ArrayList();
+    private ArrayList<Image> bighatimages = new ArrayList<>();
+    private ImageView imv = new ImageView();
+    private ImageView imv2 = new ImageView();
 
     private static int width = 800;
     private static int height = 600;
@@ -182,6 +188,13 @@ public class Matopeli extends Application {
         //add all skins to arraylist
         hatimages.add(cowboyhat);
         hatimages.add(firehat);
+        hatimages.add(hornyhat);
+        bighatimages.add(bighat);
+        bighatimages.add(bigredhat);
+        bighatimages.add(bighornyhat);
+
+        imv2.setTranslateX(-10);
+        imv.setTranslateX(400);
 
         Button blueforwardskin = new Button();
         blueforwardskin.setOnAction(e -> {
@@ -226,8 +239,10 @@ public class Matopeli extends Application {
         skinbuttonpane.add(rednextButtons, 1, 0);
         skinbuttonpane.add(bluenextButtons, 0, 0);
         skinbuttonpane.setPadding(new Insets(110, 0, 60, 0));
+        mainmenupane.add(imv, 0, 0);
+        mainmenupane.add(imv2, 0, 0);
         mainmenupane.add(menuLayout, 0, 0);
-        mainmenupane.add(skinbuttonpane, 0, 10);
+        mainmenupane.add(skinbuttonpane, 0, 2);
         mainmenupane.setAlignment(Pos.BOTTOM_CENTER);
         //main menu scene is a new scene based on above layouts
         mainMenuScene = new Scene(mainmenupane, width, height);
@@ -356,9 +371,11 @@ public class Matopeli extends Application {
                     if (skinindex < hatimages.size()) {
                         wormskinactive = true;
                         wormskin = hatimages.get(skinindex);
+                        imv.setImage(bighatimages.get(skinindex));
                     } else {
                         skinindex = -1;
                         wormskinactive = false;
+                        imv.setImage(null);
 
                     }
                 } else {
@@ -366,9 +383,11 @@ public class Matopeli extends Application {
                     if (skinindex < hatimages.size() && skinindex > -1) {
                         wormskinactive = true;
                         wormskin = hatimages.get(skinindex);
+                        imv.setImage(bighatimages.get(skinindex));
                     } else {
                         skinindex = -1;
                         wormskinactive = false;
+                        imv.setImage(null);
 
                     }
                 }
@@ -379,9 +398,11 @@ public class Matopeli extends Application {
                     if (skinindex2 < hatimages.size()) {
                         worm2skinactive = true;
                         worm2skin = hatimages.get(skinindex2);
+                        imv2.setImage(bighatimages.get(skinindex2));
                     } else {
                         skinindex2 = -1;
                         worm2skinactive = false;
+                        imv2.setImage(null);
 
                     }
                 } else {
@@ -389,9 +410,11 @@ public class Matopeli extends Application {
                     if (skinindex2 < hatimages.size() && skinindex2 > -1) {
                         worm2skinactive = true;
                         worm2skin = hatimages.get(skinindex2);
+                        imv2.setImage(bighatimages.get(skinindex2));
                     } else {
                         skinindex2 = -1;
                         worm2skinactive = false;
+                        imv2.setImage(null);
 
                     }
                 }
