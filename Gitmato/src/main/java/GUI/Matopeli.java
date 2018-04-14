@@ -121,8 +121,6 @@ public class Matopeli extends Application {
     private boolean worm2skinactive;
     private int skinindex = -1;
     private int skinindex2 = -1;
-    private Label wormskinlabel = new Label();
-    private Label worm2skinlabel = new Label();
 
     /**
      * Launches the application.
@@ -197,25 +195,17 @@ public class Matopeli extends Application {
         imv.setTranslateX(400);
 
         Button blueforwardskin = new Button();
-        blueforwardskin.setOnAction(e -> {
-            checkWormSkin(2, "+");
-        });
+        blueforwardskin.setOnAction(e -> checkWormSkin(2, "+"));
         blueforwardskin.setId("bluearrowbuttonright");
         Button bluebackwardskin = new Button();
-        bluebackwardskin.setOnAction(e -> {
-            checkWormSkin(2, "-");
-        });
+        bluebackwardskin.setOnAction(e -> checkWormSkin(2, "-"));
         bluebackwardskin.setId("bluearrowbuttonleft");
 
         Button redforwardskin = new Button();
-        redforwardskin.setOnAction(e -> {
-            checkWormSkin(1, "+");
-        });
+        redforwardskin.setOnAction(e -> checkWormSkin(1, "+"));
         redforwardskin.setId("redarrowbuttonright");
         Button redbackwardskin = new Button();
-        redbackwardskin.setOnAction(e -> {
-            checkWormSkin(1, "-");
-        });
+        redbackwardskin.setOnAction(e -> checkWormSkin(1, "-"));
         redbackwardskin.setId("redarrowbuttonleft");
 
         //------------Main Menu Scene - Game mode selector --------------
@@ -286,9 +276,7 @@ public class Matopeli extends Application {
             public void handle(long now) {
                 if (now - lastUpdate >= 10_000_000) {
                     //let the controller handle inputs
-                    gameScene.setOnKeyPressed((KeyEvent event) -> {
-                        pc.keyPressed(event);
-                    });
+                    gameScene.setOnKeyPressed((KeyEvent event) -> pc.keyPressed(event));
                     board.updateBoard();
                     draw(gc);
 
