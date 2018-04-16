@@ -521,7 +521,7 @@ public class Board {
 
         //botti ja sen toiminta
         if (gameMode.equals("vs AI")) {
-            bot.start();
+            bot.runBotRun();
         }
 
     }
