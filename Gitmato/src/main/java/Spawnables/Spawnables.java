@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 
 /**
- *
+ * All methods used by this interface are related to the icon (ie. Image displayed on screen) and not on what the spawnable actually does.
  * @author Olli
  * @version 1
  */

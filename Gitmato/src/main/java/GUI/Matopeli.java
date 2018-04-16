@@ -22,7 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.input.KeyCode;
+
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -86,6 +86,12 @@ public class Matopeli extends Application {
     private Image bluewormdownT = new Image("images/BlueWormDown(800x600)T.png");
     private Image wormtailT = new Image("images/RedWormTail(800x600)T.png");
     private Image wormtail2T = new Image("images/BlueWormTail(800x600)T.png");
+    private Image cowboyhat = new Image("images/Hat.png");
+    private Image firehat = new Image("images/firehat.png");
+    private Image bighat = new Image("images/BigHat.png");
+    private Image wormskin;
+    private Image worm2skin;
+    private ArrayList<Image> hatimages = new ArrayList();
 
     private static int width = 800;
     private static int height = 600;
@@ -95,7 +101,7 @@ public class Matopeli extends Application {
     private Board board;
     private ArrayList<Tail> body;
     private ArrayList<Tail> body2;
-    private String gameMode = "versus";
+    private String gameMode = null;
     private PlayerController pc;
     private AnimationTimer timer;
     private Faster faster;
@@ -120,9 +126,16 @@ public class Matopeli extends Application {
     private boolean hs_submitted;
 
     private Button highscore_button;
+    private boolean wormskinactive;
+    private boolean worm2skinactive;
+    private int skinindex = -1;
+    private int skinindex2 = -1;
+    private Label wormskinlabel = new Label();
+    private Label worm2skinlabel = new Label();
 
     /**
      * Launches the application.
+     *
      * @param args Command-line arguments are passed in args.
      */
     //Multiplayer elements
@@ -183,6 +196,7 @@ public class Matopeli extends Application {
      * Creates mainMenuScene and gameScene.
      * Adds functionality for the mainMenu buttons.
      * When game mode is selected starts the game engine.
+     *
      * @param primaryStage The JavaFX Stage class is the top level JavaFX container.
      *                     The primary Stage is constructed by the platform.
      *                     Additional Stage objects may be constructed by the application.
@@ -191,48 +205,26 @@ public class Matopeli extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        //set window as primary stage
         window = primaryStage;
         window.setTitle("Gitmato");
 
-        //don't allow the user to resize the screen
         window.setResizable(false);
-
-        //loop the background music
-        Sound.Music.backgroundMusic.loop();
-
-        //create a new group that binds canvas and scenes together
         Group root = new Group();
-
-        //create a canvas based on width and height parameters
         Canvas canvas = new Canvas(width, height);
-
-        //get the graphics context for this canvas
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        //add everything related to this canvas to the group
         root.getChildren().add(canvas);
-
-        //create a scene based on the group, but don't show it yet
         gameScene = new Scene(root);
 
-
         //----GAME MODE SELECTOR SCENE AKA MAIN MENU-----------
-
-        //Button for playing against AI
         Button button1 = new Button("Player VS AI");
-        //when clicked
         button1.setOnAction(e
                 -> {
-            //set the game mode as such, set the current scene as game scene, start drawing in animationLoop(gc)
             gameMode = "vs AI";
             init(gameMode);
             window.setScene(gameScene);
             animationLoop(gc);
         });
 
-        //identical to the vs AI, but with changes to versus
-        //Button for Versus
         Button button2 = new Button("Versus");
         button2.setId("Versus");
         button2.setOnAction(e
@@ -243,8 +235,6 @@ public class Matopeli extends Application {
             animationLoop(gc);
         });
 
-        //see above
-        //button for single player
         Button button3 = new Button("Single player");
         button3.setOnAction(e
                 -> {
@@ -317,37 +307,70 @@ public class Matopeli extends Application {
                 });
 
         //--------------------------------------------------------------
+        //add all skins to arraylist
+        hatimages.add(cowboyhat);
+        hatimages.add(firehat);
+
+        Button blueforwardskin = new Button();
+        blueforwardskin.setOnAction(e -> {
+            checkWormSkin(2, "+");
+        });
+        blueforwardskin.setId("bluearrowbuttonright");
+        Button bluebackwardskin = new Button();
+        bluebackwardskin.setOnAction(e -> {
+            checkWormSkin(2, "-");
+        });
+        bluebackwardskin.setId("bluearrowbuttonleft");
+
+        Button redforwardskin = new Button();
+        redforwardskin.setOnAction(e -> {
+            checkWormSkin(1, "+");
+        });
+        redforwardskin.setId("redarrowbuttonright");
+        Button redbackwardskin = new Button();
+        redbackwardskin.setOnAction(e -> {
+            checkWormSkin(1, "-");
+        });
+        redbackwardskin.setId("redarrowbuttonleft");
 
         //------------Main Menu Scene - Game mode selector --------------
+        HBox bluenextButtons = new HBox();
+        bluenextButtons.setAlignment(Pos.BOTTOM_CENTER);
+        bluenextButtons.getChildren().addAll(bluebackwardskin, blueforwardskin);
 
-        //create a new vertical box, center it, and add buttons to it
+        HBox rednextButtons = new HBox();
+        rednextButtons.setAlignment(Pos.BOTTOM_CENTER);
+        rednextButtons.getChildren().addAll(redbackwardskin, redforwardskin);
+
         VBox menuLayout = new VBox(20);
         menuLayout.setAlignment(Pos.CENTER);
         menuLayout.getChildren().addAll(button4, button2, button1, button3);
 
-        //main menu scene is a new scene based on above layout
-        mainMenuScene = new Scene(menuLayout, width, height);
+
+        GridPane mainmenupane = new GridPane();
+        GridPane skinbuttonpane = new GridPane();
+        mainmenupane.setAlignment(Pos.CENTER);
+        mainmenupane.setMinSize(width, height);
+        skinbuttonpane.add(rednextButtons, 1, 0);
+        skinbuttonpane.add(bluenextButtons, 0, 0);
+        skinbuttonpane.setPadding(new Insets(110, 0, 60, 0));
+        mainmenupane.add(menuLayout, 0, 0);
+        mainmenupane.add(skinbuttonpane, 0, 10);
+        mainmenupane.setAlignment(Pos.BOTTOM_CENTER);
+        //main menu scene is a new scene based on above layouts
+        mainMenuScene = new Scene(mainmenupane, width, height);
 
         //set id for css, get the styling from the correct file
-        menuLayout.setId("main_menu");
+        mainmenupane.setId("main_menu");
+
         mainMenuScene.getStylesheets().add("Styling/styling.css");
-
-
-        //-----------------------------------
-
-
-        //Display main scene first
         window.setScene(mainMenuScene);
-
-        //if user clicks the x for the window, exit
         window.setOnCloseRequest(e -> System.exit(0));
         window.setTitle("Gitmato");
-
-        //shows this window to user
         window.show();
-
     }
-    private void init(String gameMode){
+
+    private void init(String gameMode) {
         //initialize all the variables needed
         board = new Board(this, gameMode);
         pc = new PlayerController(board, gameMode);
@@ -373,17 +396,14 @@ public class Matopeli extends Application {
 
             @Override
             public void handle(long now) {
-                //if time between now and last update is more than 10M nanoseconds (=1 millisecond)
                 if (now - lastUpdate >= 10_000_000) {
                     //let the controller handle inputs
                     gameScene.setOnKeyPressed((KeyEvent event) -> {
                         pc.keyPressed(event);
                     });
-                    //update board based on controller input
                     board.updateBoard();
-                    //draw the GUI based on board's parameters
                     draw(gc);
-                    
+
                 }
             }
         };
@@ -395,63 +415,115 @@ public class Matopeli extends Application {
      */
     public void setWormImage() {
         //red (left) worm
-        if (worm.isTransparencyChange()){
+        if (worm.isTransparencyChange()) {
             wormtail = wormtailT;
-        } else if (!worm.isTransparencyChange()){
+        } else if (!worm.isTransparencyChange()) {
             wormtail = wormtailimage;
         }
         if (worm.getDirection() == 1 && !worm.isTransparencyChange()) {
             wormImage = redwormleft;
-        } else if (worm.getDirection() == 1 && worm.isTransparencyChange()){
+        } else if (worm.getDirection() == 1 && worm.isTransparencyChange()) {
             wormImage = redwormleftT;
         }
 
         if (worm.getDirection() == 2 && !worm.isTransparencyChange()) {
             wormImage = redwormright;
-        }  else if (worm.getDirection() == 2 && worm.isTransparencyChange()){
+        } else if (worm.getDirection() == 2 && worm.isTransparencyChange()) {
             wormImage = redwormrightT;
         }
 
         if (worm.getDirection() == 3 && !worm.isTransparencyChange()) {
             wormImage = redwormup;
-        } else if (worm.getDirection() == 3 && worm.isTransparencyChange()){
+        } else if (worm.getDirection() == 3 && worm.isTransparencyChange()) {
             wormImage = redwormupT;
         }
 
         if (worm.getDirection() == 4 && !worm.isTransparencyChange()) {
             wormImage = redwormdown;
-        } else if (worm.getDirection() == 4 && worm.isTransparencyChange()){
+        } else if (worm.getDirection() == 4 && worm.isTransparencyChange()) {
             wormImage = redwormdownT;
         }
 
         //blue (right) worm
-        if (worm2.isTransparencyChange()){
+        if (worm2.isTransparencyChange()) {
             wormtail2 = wormtail2T;
-        } else if (!worm2.isTransparencyChange()){
+        } else if (!worm2.isTransparencyChange()) {
             wormtail2 = wormtail2image;
         }
         if (worm2.getDirection() == 1 && !worm2.isTransparencyChange()) {
             worm2Image = bluewormleft;
-        } else if (worm2.getDirection() == 1 && worm2.isTransparencyChange()){
+        } else if (worm2.getDirection() == 1 && worm2.isTransparencyChange()) {
             worm2Image = bluewormleftT;
         }
 
         if (worm2.getDirection() == 2 && !worm2.isTransparencyChange()) {
             worm2Image = bluewormright;
-        } else if (worm2.getDirection() == 2 && worm2.isTransparencyChange()){
+        } else if (worm2.getDirection() == 2 && worm2.isTransparencyChange()) {
             worm2Image = bluewormrightT;
         }
 
         if (worm2.getDirection() == 3 && !worm2.isTransparencyChange()) {
             worm2Image = bluewormup;
-        } else if (worm2.getDirection() == 3 && worm2.isTransparencyChange()){
+        } else if (worm2.getDirection() == 3 && worm2.isTransparencyChange()) {
             worm2Image = bluewormupT;
         }
 
         if (worm2.getDirection() == 4 && !worm2.isTransparencyChange()) {
             worm2Image = bluewormdown;
-        } else if (worm2.getDirection() == 4 && worm2.isTransparencyChange()){
+        } else if (worm2.getDirection() == 4 && worm2.isTransparencyChange()) {
             worm2Image = bluewormdownT;
+        }
+    }
+
+    private void checkWormSkin(int index, String sign) {
+        switch (index) {
+            case 1:
+                if (sign.equals("+")) {
+                    skinindex++;
+                    if (skinindex < hatimages.size()) {
+                        wormskinactive = true;
+                        wormskin = hatimages.get(skinindex);
+                    } else {
+                        skinindex = -1;
+                        wormskinactive = false;
+
+                    }
+                } else {
+                    skinindex--;
+                    if (skinindex < hatimages.size() && skinindex > -1) {
+                        wormskinactive = true;
+                        wormskin = hatimages.get(skinindex);
+                    } else {
+                        skinindex = -1;
+                        wormskinactive = false;
+
+                    }
+                }
+                break;
+            case 2:
+                if (sign.equals("+")) {
+                    skinindex2++;
+                    if (skinindex2 < hatimages.size()) {
+                        worm2skinactive = true;
+                        worm2skin = hatimages.get(skinindex2);
+                    } else {
+                        skinindex2 = -1;
+                        worm2skinactive = false;
+
+                    }
+                } else {
+                    skinindex2--;
+                    if (skinindex2 < hatimages.size() && skinindex2 > -1) {
+                        worm2skinactive = true;
+                        worm2skin = hatimages.get(skinindex2);
+                    } else {
+                        skinindex2 = -1;
+                        worm2skinactive = false;
+
+                    }
+                }
+                break;
+
         }
     }
 
@@ -526,12 +598,18 @@ public class Matopeli extends Application {
                 g.drawImage(shieldeffect, worm2.getX() - 5, worm2.getY() - 4);
             }
             //draw confusion effects on top of worm if confuse boolean is true
-            if (worm.getReverse(worm)) {
+            if (worm.getReverse()) {
                 g.drawImage(confuseEffect, worm.getX() - 5, worm.getY() - 4);
             }
             //identical for worm #2
-            if (worm2.getReverse(worm2)) {
+            if (worm2.getReverse()) {
                 g.drawImage(confuseEffect, worm2.getX() - 5, worm2.getY() - 4);
+            }
+            if (wormskinactive) {
+                g.drawImage(wormskin, worm.getX() - 5, worm.getY() - 10);
+            }
+            if (worm2skinactive) {
+                g.drawImage(worm2skin, worm2.getX() - 5, worm2.getY() - 10);
             }
             //always draw points
             drawPoints(g);
@@ -767,6 +845,7 @@ public class Matopeli extends Application {
     /**
      * Creates the Top 10 highscores String from ArrayList: scorelist.
      * Creates the highscore table scene using GridPane as base.
+     *
      * @param scorelist ArrayList where highscore values and names are stored in String format.
      */
     public void createHighscoreTableScene(ArrayList<String> scorelist) {

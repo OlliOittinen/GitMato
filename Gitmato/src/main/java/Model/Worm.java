@@ -27,10 +27,10 @@ public class Worm {
     private boolean shield = false; //shield power-up
     private boolean reverse = false; //Reverse debuff
     private int points;
-    private boolean colorchange;
+    private boolean transparencychange;
 
     private double speed = 3;
-    private int life = 300000;
+    private int life = 3;
 
     /**
      * Getter for life value.
@@ -71,7 +71,7 @@ public class Worm {
     /**
      * Moves the Worm to the direction it is facing.
      */
-    public void move() {
+    void move() {
         if (x > 0 && dx < 0 || x < 960 && dx > 0) {
             if (directionAdv == 2) {
                 x += dx;
@@ -186,7 +186,7 @@ public class Worm {
      * Reverse implies if the Worm is under the effects of Reverse
      * @return reverse of Worm object.
      */
-    public boolean getReverse(Worm worm) {
+    public boolean getReverse() {
         return this.reverse;
     }
     /**
@@ -206,10 +206,10 @@ public class Worm {
 
     /**
      * Setter for transparecy change.
-     * @param colorchange the boolean value to be set if transparency is active or not.
+     * @param transparencychange the boolean value to be set if transparency is active or not.
      */
-    public void setTransparencyChange(boolean colorchange) {
-        this.colorchange = colorchange;
+    public void setTransparencyChange(boolean transparencychange) {
+        this.transparencychange = transparencychange;
     }
 
     /**
@@ -217,7 +217,7 @@ public class Worm {
      * @return boolean value if transparency is active or not.
      */
     public boolean isTransparencyChange() {
-        return colorchange;
+        return transparencychange;
     }
 
     /**
@@ -244,8 +244,7 @@ public class Worm {
     /**
      * Moves the Worm continuously to the same direction.
      */
-
-    public void moveCont() {
+    void moveCont() {
         if (direction == 1) {
             dx = -1 * speed;
         }
@@ -268,7 +267,7 @@ public class Worm {
      * Getter for bounds.
      * @return the bounds of Worm object.
      */
-    public Bounds getBounds() {
+    Bounds getBounds() {
         Ellipse mato = new Ellipse(x + 18, y + 21, 18, 21);
         return mato.getLayoutBounds();
     }
@@ -276,8 +275,8 @@ public class Worm {
     /**
      * Changes the state of the worm.
      * @param ws state of the Worm object.
+     * @see Model.WormStates.WormState
      */
-
     public void changeState(WormState ws) {
         state = ws;
         state.action(this);
@@ -285,29 +284,32 @@ public class Worm {
 
     /**
      * Changes the state of the Worm to faster.
+     * @see Model.WormStates.WormFast
      */
-
     public void fasterSpeed(Worm this) {
         changeState(WormFast.getInstance());
     }
+
     /**
      * Changes the state of the Worm to slower.
+     * @see Model.WormStates.WormSlow
      */
-
     public void slowerSpeed() {
         changeState(WormSlow.getInstance());
     }
+
     /**
      * Changes the state of the shield of the Worm.
+     * @see Model.WormStates.WormShield
      */
-
     public void shield() {
         changeState(WormShield.getInstance());
     }
+
     /**
      * Changes the state of the Worm to confused.
+     * @see Model.WormStates.WormConfuse
      */
-
     public void confuse() {
         changeState(WormConfuse.getInstance());
     }

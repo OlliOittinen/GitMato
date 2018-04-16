@@ -17,7 +17,6 @@ import javafx.scene.shape.Rectangle;
 
 public abstract class AbstractSpawnables implements Spawnables {
 
-    //coordinates for the ICON
     int x;
     int y;
 
@@ -49,7 +48,7 @@ public abstract class AbstractSpawnables implements Spawnables {
 
     @Override
     public void randomizeIconLocation() {
-        //multiplied by size of the board -50 px to keep them visible
+        //multiplied by size of the board, -50 px to keep them visible
         setX((int) (Math.random() * 750));
         setY((int) (Math.random() * 550));
     }
