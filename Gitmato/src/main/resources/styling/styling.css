@@ -78,6 +78,11 @@ Button {
     -fx-font-size: 10px;
     -fx-text-alignment: center;
 }
+Button:hover {
+    -fx-translate-y: -2;
+    -fx-text-fill: #909191;
+
+}
 
 #redarrowbuttonleft {
     -fx-background-image: url("RedrrowButton.png");
