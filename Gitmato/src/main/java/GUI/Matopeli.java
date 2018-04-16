@@ -75,9 +75,15 @@ public class Matopeli extends Application {
     private Image cowboyhat = new Image("images/Hat.png");
     private Image firehat = new Image("images/firehat.png");
     private Image bighat = new Image("images/BigHat.png");
+    private Image bigredhat = new Image("images/bigredhat.png");
+    private Image hornyhat = new Image("images/hornyhat.png");
+    private Image bighornyhat = new Image("images/bighornyhat.png");
     private Image wormskin;
     private Image worm2skin;
     private ArrayList<Image> hatimages = new ArrayList();
+    private ArrayList<Image> bighatimages = new ArrayList<>();
+    private ImageView imv = new ImageView();
+    private ImageView imv2 = new ImageView();
 
     private static int width = 800;
     private static int height = 600;
@@ -180,51 +186,60 @@ public class Matopeli extends Application {
         //add all skins to arraylist
         hatimages.add(cowboyhat);
         hatimages.add(firehat);
+        hatimages.add(hornyhat);
+        bighatimages.add(bighat);
+        bighatimages.add(bigredhat);
+        bighatimages.add(bighornyhat);
+
+        imv2.setTranslateX(-10);
+        imv.setTranslateX(400);
 
         Button blueforwardskin = new Button();
-        blueforwardskin.setOnAction(e -> {
-            checkWormSkin(2, "+");
-        });
+        blueforwardskin.setOnAction(e -> checkWormSkin(2, "+"));
         blueforwardskin.setId("bluearrowbuttonright");
         Button bluebackwardskin = new Button();
-        bluebackwardskin.setOnAction(e -> {
-            checkWormSkin(2, "-");
-        });
+        bluebackwardskin.setOnAction(e -> checkWormSkin(2, "-"));
         bluebackwardskin.setId("bluearrowbuttonleft");
 
         Button redforwardskin = new Button();
-        redforwardskin.setOnAction(e -> {
-            checkWormSkin(1, "+");
-        });
+        redforwardskin.setOnAction(e -> checkWormSkin(1, "+"));
         redforwardskin.setId("redarrowbuttonright");
         Button redbackwardskin = new Button();
-        redbackwardskin.setOnAction(e -> {
-            checkWormSkin(1, "-");
-        });
+        redbackwardskin.setOnAction(e -> checkWormSkin(1, "-"));
         redbackwardskin.setId("redarrowbuttonleft");
 
         //------------Main Menu Scene - Game mode selector --------------
-        HBox bluenextButtons = new HBox(10);
-        bluenextButtons.setAlignment(Pos.CENTER);
+        HBox bluenextButtons = new HBox();
+        bluenextButtons.setAlignment(Pos.BOTTOM_CENTER);
         bluenextButtons.getChildren().addAll(bluebackwardskin, blueforwardskin);
 
-        HBox rednextButtons = new HBox(10);
-        rednextButtons.setAlignment(Pos.CENTER);
+        HBox rednextButtons = new HBox();
+        rednextButtons.setAlignment(Pos.BOTTOM_CENTER);
         rednextButtons.getChildren().addAll(redbackwardskin, redforwardskin);
 
         VBox menuLayout = new VBox(20);
         menuLayout.setAlignment(Pos.CENTER);
         menuLayout.getChildren().addAll(button2, button1, button3);
 
-        BorderPane pane = new BorderPane();
-        pane.setMinSize(width, height);
-        pane.setCenter(menuLayout);
-        pane.setRight(rednextButtons);
-        pane.setLeft(bluenextButtons);
 
+        GridPane mainmenupane = new GridPane();
+        GridPane skinbuttonpane = new GridPane();
+        mainmenupane.setAlignment(Pos.CENTER);
+        mainmenupane.setMinSize(width, height);
+        skinbuttonpane.add(rednextButtons, 1, 0);
+        skinbuttonpane.add(bluenextButtons, 0, 0);
+        skinbuttonpane.setPadding(new Insets(110, 0, 60, 0));
+        mainmenupane.add(imv, 0, 0);
+        mainmenupane.add(imv2, 0, 0);
+        mainmenupane.add(menuLayout, 0, 0);
+        mainmenupane.add(skinbuttonpane, 0, 2);
+        mainmenupane.setAlignment(Pos.BOTTOM_CENTER);
         //main menu scene is a new scene based on above layouts
-        mainMenuScene = new Scene(pane, width, height);
-        pane.setId("main_menu");
+        mainMenuScene = new Scene(mainmenupane, width, height);
+
+        //set id for css, get the styling from the correct file
+        mainmenupane.setId("main_menu");
+
         mainMenuScene.getStylesheets().add("Styling/styling.css");
         window.setScene(mainMenuScene);
         window.setOnCloseRequest(e -> System.exit(0));
@@ -261,9 +276,7 @@ public class Matopeli extends Application {
             public void handle(long now) {
                 if (now - lastUpdate >= 10_000_000) {
                     //let the controller handle inputs
-                    gameScene.setOnKeyPressed((KeyEvent event) -> {
-                        pc.keyPressed(event);
-                    });
+                    gameScene.setOnKeyPressed((KeyEvent event) -> pc.keyPressed(event));
                     board.updateBoard();
                     draw(gc);
 
@@ -339,55 +352,39 @@ public class Matopeli extends Application {
     }
 
     private void checkWormSkin(int index, String sign) {
-        switch (index) {
-            case 1:
-                if (sign.equals("+")) {
-                            skinindex++;
-                            if (skinindex < hatimages.size()) {
-                                wormskinactive = true;
-                                wormskin = hatimages.get(skinindex);
-                            } else {
-                                skinindex = -1;
-                                wormskinactive = false;
-
-                            }
-                        } else {
-                            skinindex--;
-                            if (skinindex < hatimages.size() && skinindex > -1) {
-                                wormskinactive = true;
-                                wormskin = hatimages.get(skinindex);
-                            } else {
-                                skinindex = -1;
-                                wormskinactive = false;
-
-                    }
-                }
-                break;
-            case 2:
-                if (sign.equals("+")) {
-                    skinindex2++;
-                    if (skinindex2 < hatimages.size()) {
-                        worm2skinactive = true;
-                        worm2skin = hatimages.get(skinindex2);
-                    } else {
-                        skinindex2 = -1;
-                        worm2skinactive = false;
-
-                    }
-                } else {
-                    skinindex2--;
-                    if (skinindex2 < hatimages.size() && skinindex2 > -1) {
-                        worm2skinactive = true;
-                        worm2skin = hatimages.get(skinindex2);
-                    } else {
-                        skinindex2 = -1;
-                        worm2skinactive = false;
-
-                    }
-                }
-                break;
-
+        if (sign.equals("+") && index == 1) {
+            skinindex++;
         }
+        if (sign.equals("-") && index == 1) {
+            skinindex--;
+        }
+        if (sign.equals("+") && index == 2) {
+            skinindex2++;
+        }
+        if (sign.equals("-") && index == 2) {
+            skinindex2--;
+        }
+        if (skinindex < hatimages.size() && skinindex > -1) {
+            wormskinactive = true;
+            wormskin = hatimages.get(skinindex);
+            imv.setImage(bighatimages.get(skinindex));
+        }
+        if (skinindex2 < hatimages.size() && skinindex2 > -1) {
+            worm2skinactive = true;
+            worm2skin = hatimages.get(skinindex2);
+            imv2.setImage(bighatimages.get(skinindex2));
+        }
+        if (skinindex >= hatimages.size() || skinindex <= -1) {
+            skinindex = -1;
+            wormskinactive = false;
+            imv.setImage(null);
+        }
+        if (skinindex2 >= hatimages.size() || skinindex2 <= -1) {
+            skinindex2 = -1;
+            worm2skinactive = false;
+            imv2.setImage(null);
+        }
+
     }
 
     private void draw(GraphicsContext g) {
