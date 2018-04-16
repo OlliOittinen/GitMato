@@ -9,9 +9,14 @@ import GUI.Matopeli;
 import Sound.Music;
 import Spawnables.*;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.TimerTask;
 
+import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Circle;
@@ -21,6 +26,9 @@ import javafx.scene.shape.Rectangle;
  * @author maxki, Olli, Eero, Ged
  */
 public class Board {
+
+    DataOutputStream out;
+    DataInputStream in;
 
     private ArrayList<Worm> worms;
     private Worm worm;
@@ -116,6 +124,52 @@ public class Board {
         if (!gameMode.equals("sp")) {
             powerUpCD(); //piilottaa powerupit alussa
         }
+        if (gameMode.equals("mp")){
+            new Thread(new Runnable() {
+
+
+
+                public void run() {
+                    try {
+                        Socket socket;
+                        if (engine.getServer()) {
+                            ServerSocket serverSocket = new ServerSocket(8888);
+                            socket = serverSocket.accept();
+                            /*Platform.runLater(new Runnable() {
+
+                                public void run() {
+                                    container.getChildren().remove(container.getChildren().size() - 3, container.getChildren().size());
+                                    container.requestFocus();
+                                    time = System.currentTimeMillis();
+                                }
+                            });*/
+                        } else {
+                            socket = new Socket(engine.getAddress(), 8888);
+                            /*Platform.runLater(new Runnable() {
+
+                                public void run() {
+                                    container.requestFocus();
+                                    time = System.currentTimeMillis();
+
+                                }
+                            });*/
+                        }
+                        in = new DataInputStream(socket.getInputStream());
+                        out = new DataOutputStream(socket.getOutputStream());
+                        in = new DataInputStream(socket.getInputStream());
+                        while (true) {
+                            engine.setZ(in.readInt());
+                            engine.setX(in.readInt());
+                            engine.setY(in.readInt());
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Server error" + e.toString());
+                    }
+                }
+            }
+            ).start();
+        }
+
     }
 
     /**
@@ -467,10 +521,64 @@ public class Board {
     public void updateBoard() {
 
         checkCollisions();
-        worm.move();
-        worm.moveCont();
-        worm2.move();
-        worm2.moveCont();
+        if(gameMode != "mp"){
+            System.out.println("we should not be here"); //tests
+            worm.move();
+            worm.moveCont();
+            worm2.move();
+            worm2.moveCont();
+        }
+        else{
+            System.out.println("we in multiplayer loop, and gm is: " + gameMode); //tests
+            System.out.println("got " +  this.engine.getServer()); //tests
+            if ((this.engine.getServer() == true)) { // jos hostaat niin:
+                System.out.println("got " +  this.engine.getServer()); //tests
+                try {
+                    if (out != null) {
+                        out.writeInt(worm.getDirection());
+                        out.writeInt(worm.getX());
+                        out.writeInt(worm.getY());
+                    }
+                } catch (Exception ex) {
+
+                }
+                try {
+                    if (in != null) {
+                        worm2.setDirection(this.engine.getZ());
+                        worm2.setX(this.engine.getX());
+                        worm2.setY(this.engine.getY());
+                    }
+                } catch (Exception ex) {
+
+                }
+            }
+            else { // eli jos olen vierailulla toisen pelissä:
+                System.out.println("got " +  this.engine.getServer()); //tests
+                try {
+                    if (out != null) {
+                        out.writeInt(worm2.getDirection());
+                        out.writeInt(worm2.getX());
+                        out.writeInt(worm2.getY());
+                    }
+                } catch (Exception ex) {
+
+                }
+                try {
+                    if (in != null) {
+                        worm.setDirection(this.engine.getZ());
+                        worm.setX(this.engine.getX());
+                        worm.setY(this.engine.getY());
+                    }
+                } catch (Exception ex) {
+
+                }
+            }
+            worm.move();
+            worm.moveCont();
+            worm2.move();
+            worm2.moveCont();
+        }
+
         //tallennnetaan wormin coordinaatit yhteen 2D muuttujaan
         int x = worm.getX();
         int y = worm.getY();

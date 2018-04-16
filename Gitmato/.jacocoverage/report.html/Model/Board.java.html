@@ -1,0 +1,967 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Board.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Gitmato&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Model</a> &gt; <span class="el_source">Board.java</span></div><h1>Board.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Model;
+
+import Spawnables.*;
+import GUI.Matopeli;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import java.awt.Rectangle;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
+import Controller.PlayerController;
+import Sound.Music;
+import java.awt.Image;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Optional;
+import java.util.TimerTask;
+import javafx.application.Platform;
+import javafx.scene.control.TextInputDialog;
+import javax.swing.ImageIcon;
+
+/**
+ *
+ * @author maxki
+ */
+public final class Board extends JPanel implements ActionListener {
+
+    private static List&lt;Worm&gt; worms;
+<span class="fc" id="L44">    private final int DELAY = 10;</span>
+    //Lista Tail paloista
+    private final List&lt;Tail&gt; body;
+    private final List&lt;Tail&gt; body2;
+    private final List&lt;Spawnables&gt; pickableList;
+    private final List&lt;Point2D&gt; cordinates;
+    private final List&lt;Point2D&gt; cordinates2;
+    // Wormin locaatio muuttujat:
+    Point2D p;
+    Point2D p2;// coordinaatit
+<span class="fc" id="L54">    ImageIcon filtteri = new ImageIcon(&quot;src/Images/BlackFilter.png&quot;);</span>
+    private Worm worm;
+    private Worm worm2;
+    private PlayerController control;
+    private Tail tail;
+    private Tail tail2;
+    private Timer timer;
+    private Snack snack;
+    private Faster faster;
+    private Slower slower;
+    private Confuse reverse;
+    private Life HP;
+    private Shield shield;
+    private Bombs bombs;
+    private Laaser laser;
+    private boolean ingame;
+    private ImageIcon Ironpic;
+    //pidetään lukua kuinka monta Tail objektia on.
+<span class="fc" id="L72">    private int tailNro = 0;</span>
+<span class="fc" id="L73">    private int tailNro2 = 0;</span>
+    private int x, y;
+    private int x2, y2;
+    private Image halo;
+    private Image halo2;
+<span class="fc" id="L78">    private String pelimoodi = &quot;versus&quot;;</span>
+    private Matopeli engine;
+    private Image background;
+    private Image filter;
+<span class="fc" id="L82">    private Highscore hscore = new Highscore();</span>
+    private int score;
+<span class="fc" id="L84">    DBConnection connection = new DBConnection();</span>
+<span class="fc" id="L85">    private long currentTime = 0; // nykyinen aika (ms)</span>
+<span class="fc" id="L86">    private long previousTime = 0; // viime framen aika (ms)</span>
+<span class="fc" id="L87">    private double timeCounter = 0; // aikalaskuri (sec)</span>
+<span class="fc" id="L88">    private int frameCounter = 0;</span>
+<span class="fc" id="L89">    private double theRealFpsCounter = 0; // näyttää jatkuvasti oikean fps:n</span>
+
+<span class="fc" id="L91">    public Board(Matopeli e, String pelimoodi) {</span>
+<span class="fc" id="L92">        this.engine = e;</span>
+<span class="fc" id="L93">        this.pelimoodi = pelimoodi;</span>
+
+        //alustetaan listat
+<span class="fc" id="L96">        pickableList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L97">        Board.worms = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L99">        this.cordinates = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L100">        this.body = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L101">        this.p = new Point2D.Double(0, 0);</span>
+
+<span class="fc" id="L103">        this.cordinates2 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L104">        this.body2 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L105">        this.p2 = new Point2D.Double(0, 0);</span>
+
+<span class="fc" id="L107">        initBoard();</span>
+
+<span class="fc" id="L109">    }</span>
+
+    public static List getWorms() {
+<span class="fc" id="L112">        return worms;</span>
+    }
+
+    private void initBoard() {
+        //TODO: Tähän täytyy tehdä kaikki mahdolliset pelimuodot
+
+<span class="fc" id="L118">        addKeyListener(new TAdapter());</span>
+<span class="fc" id="L119">        setFocusable(true);</span>
+<span class="fc" id="L120">        setBackground(Color.BLACK);</span>
+
+<span class="fc" id="L122">        faster = new Faster();</span>
+<span class="fc" id="L123">        slower = new Slower();</span>
+<span class="fc" id="L124">        reverse = new Confuse();</span>
+<span class="fc" id="L125">        HP = new Life();</span>
+<span class="fc" id="L126">        shield = new Shield();</span>
+<span class="fc" id="L127">        bombs = new Bombs();</span>
+<span class="fc" id="L128">        laser = new Laaser();</span>
+
+<span class="fc" id="L130">        snack = new Snack();</span>
+
+<span class="fc" id="L132">        pickableList.add(faster);</span>
+<span class="fc" id="L133">        pickableList.add(slower);</span>
+<span class="fc" id="L134">        pickableList.add(reverse);</span>
+<span class="fc" id="L135">        pickableList.add(HP);</span>
+<span class="fc" id="L136">        pickableList.add(shield);</span>
+<span class="fc" id="L137">        pickableList.add(bombs);</span>
+<span class="fc" id="L138">        pickableList.add(laser);</span>
+<span class="fc" id="L139">        pickableList.add(snack);</span>
+<span class="fc" id="L140">        worms.add(worm = new Worm(1)); //lista worm olioista</span>
+<span class="fc" id="L141">        worms.add(worm2 = new Worm(2));</span>
+
+<span class="fc" id="L143">        timer = new Timer(DELAY, this);</span>
+<span class="fc" id="L144">        timer.start();</span>
+<span class="fc" id="L145">        ingame = true;</span>
+
+<span class="fc" id="L147">        control = new PlayerController(); //</span>
+<span class="fc" id="L148">        control.updateWorms(); // Worms-lista liitetään playercontrolleriin</span>
+<span class="fc" id="L149">        control.yksinPeli(pelimoodi);</span>
+<span class="fc" id="L150">        control.updateBoard(this);</span>
+
+<span class="fc" id="L152">        ImageIcon kuvamato = new ImageIcon(&quot;src/Images/BlueBG800x600.png&quot;);</span>
+<span class="fc" id="L153">        background = kuvamato.getImage();</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">        if (pelimoodi == &quot;vs AI&quot;) {</span>
+<span class="nc" id="L155">            BotTurnDown();</span>
+        }
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if (pelimoodi == &quot;sp&quot;) {</span>
+<span class="nc" id="L158">            worm2.setX(-1000);</span>
+<span class="nc" id="L159">            worm2.setY(-2000); //läpäl</span>
+<span class="nc" id="L160">            worm.setLife(1);</span>
+        }
+
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">        if (pelimoodi != &quot;sp&quot;) {</span>
+<span class="fc" id="L164">            powerUpCD(); //piilottaa powerupit alussa</span>
+        }
+<span class="fc" id="L166">    }</span>
+
+    public void restartGame() {
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        if (!ingame) {</span>
+<span class="nc" id="L170">            snack.init();</span>
+<span class="nc" id="L171">            ingame = true;</span>
+
+<span class="nc" id="L173">            worms.clear();</span>
+
+<span class="nc" id="L175">            worms.add(worm = new Worm(1)); //lista worm olioista</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">            if (pelimoodi != &quot;sp&quot;) {</span>
+
+<span class="nc" id="L178">                worms.add(worm2 = new Worm(2));</span>
+<span class="nc" id="L179">                powerUpCD();</span>
+<span class="nc" id="L180">                cordinates2.clear();</span>
+<span class="nc" id="L181">                body2.clear();</span>
+<span class="nc" id="L182">                tailNro2 = 0;</span>
+            }
+
+<span class="nc" id="L185">            timer.start();</span>
+
+<span class="nc" id="L187">            control.updateWorms();</span>
+<span class="nc" id="L188">            control.updateBoard(this);</span>
+
+<span class="nc" id="L190">            cordinates.clear();</span>
+
+<span class="nc" id="L192">            body.clear();</span>
+
+<span class="nc" id="L194">            tailNro = 0;</span>
+
+<span class="nc" id="L196">            Sound.Music.sound1.loop();</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">            if (pelimoodi == &quot;vs AI&quot;) {</span>
+<span class="nc" id="L198">                BotTurnDown();</span>
+            }
+
+<span class="nc bnc" id="L201" title="All 2 branches missed.">            if (pelimoodi == &quot;sp&quot;) {</span>
+<span class="nc" id="L202">                worm2.setX(-1000);</span>
+<span class="nc" id="L203">                worm2.setY(-2000);</span>
+<span class="nc" id="L204">                worm.setLife(1);</span>
+            }
+        }
+
+<span class="nc" id="L208">    }</span>
+
+    private void inGame() {
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">        if (!ingame) {</span>
+<span class="fc" id="L212">            timer.stop();</span>
+        }
+<span class="fc" id="L214">    }</span>
+
+    @Override
+    public void paintComponent(Graphics g) {
+
+<span class="fc bfc" id="L219" title="All 2 branches covered.">        if (ingame) {</span>
+<span class="fc" id="L220">            super.paintComponent(g);</span>
+<span class="fc" id="L221">            Graphics2D g2 = (Graphics2D) g;</span>
+
+<span class="fc" id="L223">            g2.setPaint(Color.BLACK);</span>
+<span class="fc" id="L224">            g2.fill(new Rectangle2D.Double(0, 0, getWidth(), getHeight()));</span>
+<span class="fc" id="L225">            g.drawImage(this.background, 0, 0, null);</span>
+<span class="fc" id="L226">            doDrawing(g);</span>
+
+<span class="fc" id="L228">            Toolkit.getDefaultToolkit().sync();</span>
+<span class="fc" id="L229">        } else {</span>
+<span class="fc" id="L230">            drawGameOver(g);</span>
+<span class="fc" id="L231">            inGame();</span>
+        }
+<span class="fc" id="L233">    }</span>
+
+    private void doDrawing(Graphics g) {
+        
+<span class="fc" id="L237">        Graphics2D g2d = (Graphics2D) g;</span>
+<span class="fc" id="L238">        drawPisteet(g);</span>
+
+        //tarkistetaan onko häntiä piirrettäväksi
+<span class="fc bfc" id="L241" title="All 2 branches covered.">        if (tailNro &gt; 0) {</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">            for (int i = 0; i &lt; body.size(); i++) {</span>
+                // pidetään huoli että jokainen &quot;tail&quot; tulee piirrettyä per frame
+<span class="fc" id="L244">                g2d.drawImage(body.get(i).getImage(), body.get(i).getX(), body.get(i).getY(), this);</span>
+                //System.out.println(&quot;tätä tehdään&quot;);
+            }
+        }
+
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        if (tailNro2 &gt; 0) {</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">            for (int i = 0; i &lt; body2.size(); i++) {</span>
+                // pidetään huoli että jokainen &quot;tail&quot; tulee piirrettyä per frame
+<span class="fc" id="L252">                g2d.drawImage(body2.get(i).getImage(), body2.get(i).getX(), body2.get(i).getY(), this);</span>
+                //System.out.println(&quot;tätä tehdään&quot;);
+            }
+        }
+        // piirretään power-upit matojen päälle, jotta ne ovat helpommit nähtävissä
+<span class="fc" id="L257">        g2d.drawImage(snack.getImage(), snack.getX(), snack.getY(), this);</span>
+<span class="fc" id="L258">        g2d.drawImage(faster.getImage(), faster.getX(), faster.getY(), this);</span>
+<span class="fc" id="L259">        g2d.drawImage(slower.getImage(), slower.getX(), slower.getY(), this);</span>
+<span class="fc" id="L260">        g2d.drawImage(reverse.getImage(), reverse.getX(), reverse.getY(), this);</span>
+<span class="fc" id="L261">        g2d.drawImage(HP.getImage(), HP.getX(), HP.getY(), this);</span>
+<span class="fc" id="L262">        g2d.drawImage(shield.getImage(), shield.getX(), shield.getY(), this);</span>
+<span class="fc" id="L263">        g2d.drawImage(bombs.getImage(1), bombs.getX(), bombs.getY(), this);</span>
+<span class="fc" id="L264">        g2d.drawImage(bombs.getImage(2), bombs.getXBombs(1), bombs.getYBombs(1), this);</span>
+<span class="fc" id="L265">        g2d.drawImage(bombs.getImage(3), bombs.getXBombs(2), bombs.getYBombs(2), this);</span>
+<span class="fc" id="L266">        g2d.drawImage(bombs.getImage(2), bombs.getXBombs(3), bombs.getYBombs(3), this);</span>
+<span class="fc" id="L267">        g2d.drawImage(bombs.getImage(3), bombs.getXBombs(4), bombs.getYBombs(4), this);</span>
+<span class="fc" id="L268">        g2d.drawImage(bombs.getImage(2), bombs.getXBombs(5), bombs.getYBombs(5), this);</span>
+<span class="fc" id="L269">        g2d.drawImage(bombs.getImage(3), bombs.getXBombs(6), bombs.getYBombs(6), this);</span>
+<span class="fc" id="L270">        g2d.drawImage(laser.getImage(), laser.getX(), laser.getY(), this);</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">        if (!laser.getLethal()) {</span>
+<span class="fc" id="L272">            g2d.drawImage(laser.getlasersightH(), laser.getX3(), laser.getY3(), this);</span>
+<span class="fc" id="L273">            g2d.drawImage(laser.getLasersightV(), laser.getX2(), laser.getY2(), this);</span>
+
+        } else {
+<span class="nc" id="L276">            g2d.drawImage(laser.getImageHori(), laser.getX3(), laser.getY3(), this);</span>
+<span class="nc" id="L277">            g2d.drawImage(laser.getImageVert(), laser.getX2(), laser.getY2(), this);</span>
+        }
+<span class="fc" id="L279">        g2d.drawImage(worm.getImage(), worm.getX(), worm.getY(), this);</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">        if (pelimoodi != &quot;sp&quot;) {</span>
+<span class="fc" id="L281">            g2d.drawImage(worm2.getImage(), worm2.getX(), worm2.getY(), this);</span>
+        }
+<span class="fc bfc" id="L283" title="All 2 branches covered.">        if (worm.getShield(worm)) {</span>
+<span class="fc" id="L284">            g2d.drawImage(shield.getShieldImage(), worm.getX() - 5, worm.getY() - 4, this);</span>
+        }
+<span class="fc bfc" id="L286" title="All 2 branches covered.">        if (worm2.getShield(worm2)) {</span>
+<span class="fc" id="L287">            g2d.drawImage(shield.getShieldImage(), worm2.getX() - 5, worm2.getY() - 4, this);</span>
+        }
+<span class="pc bpc" id="L289" title="1 of 4 branches missed.">        if (worm.getLife() &lt;= 0 || worm2.getLife() &lt;= 0) {</span>
+<span class="fc" id="L290">            drawGameOver(g);</span>
+        }
+<span class="fc bfc" id="L292" title="All 2 branches covered.">        if (worm.getReverse(worm)) {</span>
+<span class="fc" id="L293">            g2d.drawImage(reverse.getConfusionImage(), worm.getX() - 5, worm.getY() - 4, this);</span>
+        }
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">        if (worm2.getReverse(worm2)) {</span>
+<span class="nc" id="L296">            g2d.drawImage(reverse.getConfusionImage(), worm2.getX() - 5, worm2.getY() - 4, this);</span>
+        }
+
+<span class="fc" id="L299">    }</span>
+
+    private void drawPisteet(Graphics g) {
+<span class="fc" id="L302">        Font small = new Font(&quot;Helvetica&quot;, Font.BOLD, 20);</span>
+<span class="fc" id="L303">        Font smaller = new Font(&quot;Helvetica&quot;, Font.PLAIN, 15);</span>
+<span class="fc" id="L304">        FontMetrics fm = getFontMetrics(small);</span>
+<span class="fc" id="L305">        FontMetrics fm2 = getFontMetrics(smaller);</span>
+<span class="fc" id="L306">        String pt3 = &quot;FPS: &quot; + theRealFpsCounter;</span>
+        
+<span class="fc" id="L308">        g.setColor(Color.RED);</span>
+<span class="fc" id="L309">        g.setFont(small);</span>
+<span class="fc" id="L310">        String hp = &quot;HP: &quot; + worm.getLife();</span>
+<span class="fc" id="L311">        String pt = &quot;Pisteet: &quot; + worm.getPoints();</span>
+<span class="fc" id="L312">        g.drawString(hp, 10, 25);</span>
+<span class="fc" id="L313">        g.drawString(pt, 10, 50);</span>
+
+<span class="pc bpc" id="L315" title="1 of 2 branches missed.">        if (pelimoodi != &quot;sp&quot;) {</span>
+<span class="fc" id="L316">            g.setColor(Color.BLUE);</span>
+<span class="fc" id="L317">            String hp2 = &quot;HP: &quot; + worm2.getLife();</span>
+<span class="fc" id="L318">            String pt2 = &quot;Pisteet: &quot; + worm2.getPoints();</span>
+
+<span class="fc" id="L320">            g.drawString(hp2, (790 - fm.stringWidth(hp2)), 25);</span>
+<span class="fc" id="L321">            g.drawString(pt2, (790 - fm.stringWidth(pt2)), 50);</span>
+        }
+<span class="fc" id="L323">        g.setColor(Color.WHITE);</span>
+<span class="fc" id="L324">        g.setFont(smaller);</span>
+<span class="fc" id="L325">        g.drawString(pt3, ((790 - fm2.stringWidth(pt3))/2), 20);//piirtää fps</span>
+
+<span class="fc" id="L327">    }</span>
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+<span class="fc" id="L332">        currentTime = System.currentTimeMillis();</span>
+<span class="fc" id="L333">        double deltaTime = (double) (currentTime - previousTime) / 1_000;</span>
+        // 1/deltaTime); &lt;- kertoo nykyisen fps joka frame.
+       
+<span class="fc" id="L336">        double interval = 0.5;</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">        if(timeCounter &gt; interval){</span>
+<span class="fc" id="L338">            theRealFpsCounter = frameCounter;</span>
+<span class="fc" id="L339">            frameCounter = 0;</span>
+<span class="fc" id="L340">            timeCounter = 0;</span>
+        }
+        else{
+<span class="fc" id="L343">            timeCounter += deltaTime;</span>
+<span class="fc" id="L344">            frameCounter = frameCounter + (int)(1/interval);</span>
+        }
+        
+<span class="fc" id="L347">        checkCollisions();</span>
+<span class="fc" id="L348">        worm.move();</span>
+<span class="fc" id="L349">        worm.moveCont();</span>
+<span class="fc" id="L350">        worm2.move();</span>
+<span class="fc" id="L351">        worm2.moveCont();</span>
+        //tallennnetaan wormin coordinaatit yhteen 2D muuttujaan
+<span class="fc" id="L353">        x = worm.getX();</span>
+<span class="fc" id="L354">        y = worm.getY();</span>
+<span class="fc" id="L355">        x2 = worm2.getX();</span>
+<span class="fc" id="L356">        y2 = worm2.getY();</span>
+<span class="fc" id="L357">        p = new Point2D.Double(x, y);</span>
+<span class="fc" id="L358">        p2 = new Point2D.Double(x2, y2);</span>
+        //Lisätään coortinaatit listan cordinates alkuun (0).
+        //siirtää automaattisesti taulukon arvot yhden eteenpäin, 0-&gt;1
+<span class="fc" id="L361">        cordinates.add(0, p);</span>
+<span class="fc" id="L362">        cordinates2.add(0, p2);</span>
+
+        //jos lista liian suuri poistetaan viimeinen
+<span class="pc bpc" id="L365" title="1 of 2 branches missed.">        if (cordinates.size() &gt;= 10000) {</span>
+<span class="nc" id="L366">            cordinates.remove(cordinates.size() - 1);</span>
+        }
+
+<span class="pc bpc" id="L369" title="1 of 2 branches missed.">        if (cordinates2.size() &gt;= 10000) {</span>
+<span class="nc" id="L370">            cordinates2.remove(cordinates2.size() - 1);</span>
+        }
+
+        //Päivitetään jokaisen &quot;Tail&quot; olion coordinaatit
+<span class="fc bfc" id="L374" title="All 2 branches covered.">        for (int i = 0; i &lt; body.size(); i++) {</span>
+<span class="fc" id="L375">            int f = body.get(i).getCordinateInt();</span>
+<span class="fc" id="L376">            p = cordinates.get(f);</span>
+<span class="fc" id="L377">            x = (int) p.getX();</span>
+<span class="fc" id="L378">            y = (int) p.getY();</span>
+<span class="fc" id="L379">            body.get(i).setX(x);</span>
+<span class="fc" id="L380">            body.get(i).setY(y);</span>
+        }
+
+<span class="fc bfc" id="L383" title="All 2 branches covered.">        for (int i = 0; i &lt; body2.size(); i++) {</span>
+<span class="fc" id="L384">            int f = body2.get(i).getCordinateInt();</span>
+<span class="fc" id="L385">            p2 = cordinates2.get(f);</span>
+<span class="fc" id="L386">            x2 = (int) p2.getX();</span>
+<span class="fc" id="L387">            y2 = (int) p2.getY();</span>
+<span class="fc" id="L388">            body2.get(i).setX(x2);</span>
+<span class="fc" id="L389">            body2.get(i).setY(y2);</span>
+        }
+
+<span class="fc" id="L392">        repaint();</span>
+
+<span class="pc bpc" id="L394" title="1 of 2 branches missed.">        if (pelimoodi == &quot;vs AI&quot;) {</span>
+<span class="nc" id="L395">            BlueAIBot();</span>
+        }
+        
+<span class="fc" id="L398">        previousTime = currentTime;</span>
+<span class="fc" id="L399">    }</span>
+
+    public void checkCollisions() {
+<span class="fc" id="L402">        Rectangle Matokuutio = worm.getBounds();</span>
+<span class="fc" id="L403">        Rectangle Matokuutio2 = worm2.getBounds();</span>
+
+<span class="fc" id="L405">        Rectangle s = snack.getBounds();</span>
+<span class="fc" id="L406">        Rectangle pf = faster.getBounds();</span>
+<span class="fc" id="L407">        Rectangle ps = slower.getBounds();</span>
+<span class="fc" id="L408">        Rectangle pr = reverse.getBounds();</span>
+<span class="fc" id="L409">        Rectangle pl = HP.getBounds();</span>
+<span class="fc" id="L410">        Rectangle psh = shield.getBounds();</span>
+<span class="fc" id="L411">        Rectangle pb = bombs.getBounds();</span>
+<span class="fc" id="L412">        Ellipse2D pb2 = bombs.getBoundsBombs(2);</span>
+<span class="fc" id="L413">        Ellipse2D pb3 = bombs.getBoundsBombs(4);</span>
+<span class="fc" id="L414">        Ellipse2D pb4 = bombs.getBoundsBombs(6);</span>
+<span class="fc" id="L415">        Rectangle pla = laser.getBounds();</span>
+<span class="fc" id="L416">        Rectangle beam = laser.getBoundsB();</span>
+
+<span class="fc bfc" id="L418" title="All 2 branches covered.">        for (int i = 0; i &lt; body.size(); i++) {</span>
+<span class="fc" id="L419">            Rectangle Matotail = body.get(i).getBounds();</span>
+<span class="pc bpc" id="L420" title="2 of 6 branches missed.">            if (Matokuutio2.intersects(Matotail) &amp;&amp; !shield.isActive(worm2) &amp;&amp; pelimoodi != &quot;sp&quot;) {</span>
+<span class="pc bpc" id="L421" title="1 of 2 branches missed.">                if (worm2.getLife() &gt; 1) {</span>
+<span class="fc" id="L422">                    shield.shield(worm2, 50);</span>
+<span class="fc" id="L423">                    worm2.randomizeXY();</span>
+<span class="pc bpc" id="L424" title="1 of 2 branches missed.">                    if (pelimoodi == &quot;vs AI&quot;) {</span>
+<span class="nc" id="L425">                        BotTurnDown();</span>
+                    }
+
+                }
+<span class="fc" id="L429">                Life.loseLife(worm2);</span>
+            }
+        }
+
+<span class="fc bfc" id="L433" title="All 2 branches covered.">        for (int i = 0; i &lt; body2.size(); i++) {</span>
+<span class="fc" id="L434">            Rectangle Matotail2 = body2.get(i).getBounds();</span>
+<span class="pc bpc" id="L435" title="3 of 4 branches missed.">            if (Matokuutio.intersects(Matotail2) &amp;&amp; !shield.isActive(worm)) {</span>
+<span class="nc bnc" id="L436" title="All 2 branches missed.">                if (worm.getLife() &gt; 1) {</span>
+<span class="nc" id="L437">                    shield.shield(worm, 50);</span>
+<span class="nc" id="L438">                    worm.randomizeXY();</span>
+<span class="nc" id="L439">                    worm.setSuuntaAdv(0);</span>
+<span class="nc" id="L440">                    worm.setSuunta(0);</span>
+                }
+<span class="nc" id="L442">                Life.loseLife(worm);</span>
+            }
+        }
+<span class="pc bpc" id="L445" title="1 of 2 branches missed.">        if (pelimoodi == &quot;sp&quot;) {</span>
+<span class="nc bnc" id="L446" title="All 2 branches missed.">            for (int i = 2; i &lt; body.size(); i++) {</span>
+<span class="nc" id="L447">                Rectangle Matotail2 = body.get(i).getBounds();</span>
+<span class="nc bnc" id="L448" title="All 4 branches missed.">                if (Matokuutio.intersects(Matotail2) &amp;&amp; !shield.isActive(worm)) {</span>
+<span class="nc bnc" id="L449" title="All 2 branches missed.">                    if (worm.getLife() &gt; 1) {</span>
+<span class="nc" id="L450">                        shield.shield(worm, 50);</span>
+<span class="nc" id="L451">                        worm.randomizeXY();</span>
+<span class="nc" id="L452">                        worm.setSuuntaAdv(0);</span>
+<span class="nc" id="L453">                        worm.setSuunta(0);</span>
+                    }
+<span class="nc" id="L455">                    Life.loseLife(worm);</span>
+                }
+            }
+        }
+
+        //mato 1 collisions
+<span class="fc bfc" id="L461" title="All 2 branches covered.">        if (s.intersects(Matokuutio)) {</span>
+<span class="fc" id="L462">            snack.randomizePowerUpLocation();</span>
+<span class="fc" id="L463">            worm.setPoints(worm.getPoints() + 100);</span>
+<span class="fc" id="L464">            spawnTail(1);</span>
+        }
+
+<span class="pc bpc" id="L467" title="1 of 2 branches missed.">        if (pf.intersects(Matokuutio)) {</span>
+<span class="nc" id="L468">            faster.faster(worm);</span>
+<span class="nc" id="L469">            powerUpCD();</span>
+        }
+
+<span class="pc bpc" id="L472" title="1 of 2 branches missed.">        if (ps.intersects(Matokuutio)) {</span>
+<span class="nc" id="L473">            slower.slower(worm, worm2);</span>
+<span class="nc" id="L474">            powerUpCD();</span>
+        }
+
+<span class="pc bpc" id="L477" title="1 of 2 branches missed.">        if (pr.intersects(Matokuutio)) {</span>
+<span class="nc" id="L478">            reverse.confuse(worm, worm2);</span>
+<span class="nc" id="L479">            powerUpCD();</span>
+        }
+
+<span class="pc bpc" id="L482" title="1 of 2 branches missed.">        if (pl.intersects(Matokuutio)) {</span>
+<span class="nc" id="L483">            HP.Life(worm);</span>
+<span class="nc" id="L484">            powerUpCD();</span>
+        }
+
+<span class="pc bpc" id="L487" title="1 of 2 branches missed.">        if (psh.intersects(Matokuutio)) {</span>
+<span class="nc" id="L488">            shield.shield(worm, 10000);</span>
+<span class="nc" id="L489">            powerUpCD();</span>
+        }
+<span class="pc bpc" id="L491" title="1 of 2 branches missed.">        if (pb.intersects(Matokuutio)) {</span>
+<span class="nc" id="L492">            bombs.bombs(worm);</span>
+<span class="nc" id="L493">            bombs.bombZone();</span>
+<span class="nc" id="L494">            powerUpCD();</span>
+        }
+
+<span class="pc bpc" id="L497" title="5 of 8 branches missed.">        if (pb2.intersects(Matokuutio) || pb3.intersects(Matokuutio) || pb4.intersects(Matokuutio) &amp;&amp; !shield.isActive(worm)) {</span>
+<span class="nc" id="L498">            bombs.damage(worm);</span>
+        }
+<span class="pc bpc" id="L500" title="1 of 2 branches missed.">        if (pla.intersects(Matokuutio)) {</span>
+<span class="nc" id="L501">            laser.onPickup(worm, worm2);</span>
+<span class="nc" id="L502">            beam = laser.getBoundsB();</span>
+<span class="nc" id="L503">            powerUpCD();</span>
+        }
+<span class="pc bpc" id="L505" title="3 of 4 branches missed.">        if (beam.intersects(Matokuutio) &amp;&amp; !shield.isActive(worm)) {</span>
+<span class="nc" id="L506">            laser.damage(worm);</span>
+        }
+
+<span class="pc bpc" id="L509" title="1 of 8 branches missed.">        if (worm.getX() &lt; 5 || worm.getX() &gt; 760 || worm.getY() &lt; 5 || worm.getY() &gt; 550) {</span>
+<span class="fc bfc" id="L510" title="All 2 branches covered.">            if (worm.getLife() &gt; 1) {</span>
+<span class="fc" id="L511">                worm.randomizeXY();</span>
+<span class="fc" id="L512">                worm.setSuuntaAdv(0);</span>
+<span class="fc" id="L513">                worm.setSuunta(0);</span>
+            }
+<span class="fc" id="L515">            Life.loseLife(worm);</span>
+<span class="fc" id="L516">            worm.setPoints(worm.getPoints() - 100);</span>
+        }
+
+        //mato 2 collisions
+<span class="fc bfc" id="L520" title="All 2 branches covered.">        if (s.intersects(Matokuutio2)) {</span>
+<span class="fc" id="L521">            snack.randomizePowerUpLocation();</span>
+<span class="fc" id="L522">            worm2.setPoints(worm2.getPoints() + 100);</span>
+<span class="fc" id="L523">            spawnTail(2);</span>
+        }
+
+<span class="fc bfc" id="L526" title="All 2 branches covered.">        if (pf.intersects(Matokuutio2)) {</span>
+<span class="fc" id="L527">            faster.faster(worm2);</span>
+<span class="fc" id="L528">            powerUpCD();</span>
+        }
+
+<span class="pc bpc" id="L531" title="1 of 2 branches missed.">        if (ps.intersects(Matokuutio2)) {</span>
+<span class="nc" id="L532">            slower.slower(worm2, worm);</span>
+<span class="nc" id="L533">            powerUpCD();</span>
+        }
+
+<span class="fc bfc" id="L536" title="All 2 branches covered.">        if (pr.intersects(Matokuutio2)) {</span>
+<span class="fc" id="L537">            reverse.confuse(worm2, worm);</span>
+<span class="fc" id="L538">            powerUpCD();</span>
+        }
+
+<span class="pc bpc" id="L541" title="1 of 2 branches missed.">        if (pl.intersects(Matokuutio2)) {</span>
+<span class="nc" id="L542">            HP.Life(worm2);</span>
+<span class="nc" id="L543">            powerUpCD();</span>
+        }
+
+<span class="pc bpc" id="L546" title="1 of 2 branches missed.">        if (psh.intersects(Matokuutio2)) {</span>
+<span class="nc" id="L547">            shield.shield(worm2, 10000);</span>
+<span class="nc" id="L548">            powerUpCD();</span>
+        }
+<span class="pc bpc" id="L550" title="1 of 2 branches missed.">        if (pb.intersects(Matokuutio2)) {</span>
+<span class="nc" id="L551">            bombs.bombs(worm2);</span>
+<span class="nc" id="L552">            bombs.bombZone();</span>
+<span class="nc" id="L553">            powerUpCD();</span>
+        }
+
+<span class="pc bpc" id="L556" title="5 of 8 branches missed.">        if (pb2.intersects(Matokuutio2) || pb3.intersects(Matokuutio2) || pb4.intersects(Matokuutio2) &amp;&amp; !shield.isActive(worm2)) {</span>
+<span class="nc" id="L557">            bombs.damage(worm2);</span>
+        }
+<span class="pc bpc" id="L559" title="1 of 2 branches missed.">        if (pla.intersects(Matokuutio2)) {</span>
+<span class="nc" id="L560">            laser.onPickup(worm2, worm);</span>
+<span class="nc" id="L561">            beam = laser.getBoundsB();</span>
+<span class="nc" id="L562">            powerUpCD();</span>
+        }
+<span class="pc bpc" id="L564" title="3 of 4 branches missed.">        if (beam.intersects(Matokuutio2) &amp;&amp; !shield.isActive(worm2)) {</span>
+<span class="nc" id="L565">            laser.damage(worm2);</span>
+        }
+<span class="pc bpc" id="L567" title="4 of 10 branches missed.">        if ((worm2.getX() &lt; 5 || worm2.getX() &gt; 760 || worm2.getY() &lt; 5 || worm2.getY() &gt; 550) &amp;&amp; pelimoodi != &quot;sp&quot;) {</span>
+<span class="pc bpc" id="L568" title="1 of 2 branches missed.">            if (worm2.getLife() &gt; 1) {</span>
+<span class="fc" id="L569">                worm2.randomizeXY();</span>
+<span class="pc bpc" id="L570" title="1 of 2 branches missed.">                if (pelimoodi == &quot;vs AI&quot;) {</span>
+<span class="nc" id="L571">                    BotTurnDown();</span>
+                } else {
+<span class="fc" id="L573">                    worm2.setSuuntaAdv(0);</span>
+<span class="fc" id="L574">                    worm2.setSuunta(0);</span>
+                }
+
+            }
+<span class="fc" id="L578">            Life.loseLife(worm2);</span>
+<span class="fc" id="L579">            worm2.setPoints(worm2.getPoints() - 100);</span>
+        }
+<span class="fc" id="L581">    }</span>
+
+    private void drawGameOver(Graphics g) {
+<span class="fc" id="L584">        Music.sound4.play();</span>
+<span class="fc" id="L585">        laser.hide();</span>
+<span class="fc" id="L586">        filter = filtteri.getImage();</span>
+<span class="fc" id="L587">        String msg = null;</span>
+        String msg2;
+        String msg3;
+<span class="fc" id="L590">        Graphics2D g3 = (Graphics2D) g;</span>
+<span class="fc" id="L591">        g3.drawImage(filter, 0, 0, null);</span>
+
+<span class="fc" id="L593">        Font small = new Font(&quot;Helvetica&quot;, Font.BOLD, 20);</span>
+<span class="fc" id="L594">        Font big = new Font(&quot;Helvetica&quot;, Font.BOLD, 30);</span>
+<span class="fc" id="L595">        FontMetrics fm2 = getFontMetrics(small);</span>
+<span class="fc" id="L596">        FontMetrics fm = getFontMetrics(big);</span>
+<span class="fc" id="L597">        g3.setFont(big);</span>
+
+<span class="fc" id="L599">        Music.sound1.stop();</span>
+<span class="fc" id="L600">        ingame = false;</span>
+<span class="pc bpc" id="L601" title="1 of 2 branches missed.">        if (worm.getLife() &lt;= 0) {</span>
+<span class="pc bpc" id="L602" title="1 of 2 branches missed.">            if (pelimoodi != &quot;sp&quot;) {</span>
+<span class="fc" id="L603">                score = worm2.getPoints();</span>
+<span class="fc" id="L604">                msg = &quot;BLUE Won!&quot;;</span>
+<span class="fc" id="L605">                g3.setColor(Color.blue);</span>
+            } else {
+<span class="nc" id="L607">                msg = &quot;GAME OVER!&quot;;</span>
+<span class="nc" id="L608">                g3.setColor(Color.white);</span>
+            }
+<span class="nc bnc" id="L610" title="All 2 branches missed.">        } else if (worm2.getLife() &lt;= 0) {</span>
+<span class="nc" id="L611">            score = worm.getPoints();</span>
+<span class="nc" id="L612">            msg = &quot;RED Won!&quot;;</span>
+<span class="nc" id="L613">            g3.setColor(Color.red);</span>
+        }
+<span class="fc" id="L615">        msg2 = &quot;Press SPACE to play again.&quot;;</span>
+<span class="fc" id="L616">        msg3 = &quot;Press H to submit your highscore&quot;;</span>
+<span class="fc" id="L617">        g3.drawString(msg, (806 - fm.stringWidth(msg)) / 2, 270);</span>
+<span class="fc" id="L618">        g3.setFont(small);</span>
+<span class="fc" id="L619">        g3.setColor(Color.white);</span>
+<span class="fc" id="L620">        g3.drawString(msg2, (806 - fm2.stringWidth(msg2)) / 2, 600 / 2);</span>
+<span class="fc" id="L621">        g3.drawString(msg3, (806 - fm2.stringWidth(msg3)) / 2, 320);</span>
+<span class="fc" id="L622">    }</span>
+
+    private void spawnTail(int n) {
+        //tulee yksi Tail pala lisää
+<span class="pc bpc" id="L626" title="1 of 3 branches missed.">        switch (n) {</span>
+            case 1:
+<span class="fc" id="L628">                tailNro++;</span>
+<span class="fc" id="L629">                body.add(tail = new Tail(tailNro * 15, 1));</span>
+<span class="fc" id="L630">                break;</span>
+            case 2:
+<span class="fc" id="L632">                tailNro2++;</span>
+<span class="fc" id="L633">                body2.add(tail = new Tail(tailNro2 * 15, 2));</span>
+        }
+<span class="fc" id="L635">    }</span>
+
+    public void powerUpCD() {
+
+<span class="fc" id="L639">        faster.setX(-100);</span>
+<span class="fc" id="L640">        faster.setY(-100);</span>
+<span class="fc" id="L641">        slower.setX(-100);</span>
+<span class="fc" id="L642">        slower.setY(-100);</span>
+<span class="fc" id="L643">        reverse.setX(-100);</span>
+<span class="fc" id="L644">        reverse.setY(-100);</span>
+<span class="fc" id="L645">        HP.setX(-100);</span>
+<span class="fc" id="L646">        HP.setY(-100);</span>
+<span class="fc" id="L647">        shield.setX(-100);</span>
+<span class="fc" id="L648">        shield.setY(-100);</span>
+<span class="fc" id="L649">        bombs.setY(-100);</span>
+<span class="fc" id="L650">        bombs.setX(-100);</span>
+<span class="fc bfc" id="L651" title="All 2 branches covered.">        for (int i = 1; i &lt; 7; i++) {</span>
+<span class="fc" id="L652">            bombs.setXBombs(i, -1000);</span>
+<span class="fc" id="L653">            bombs.setYBombs(i, -1000);</span>
+        }
+<span class="fc" id="L655">        laser.setY(-100);</span>
+<span class="fc" id="L656">        laser.setX(-100);</span>
+
+<span class="fc" id="L658">        java.util.Timer timer2 = new java.util.Timer();</span>
+<span class="fc" id="L659">        timer2.schedule(new TimerTask() {</span>
+
+            @Override
+            public void run() {
+
+<span class="fc" id="L664">                int n = (int) (Math.random() * 7);</span>
+
+<span class="pc bpc" id="L666" title="5 of 8 branches missed.">                switch (n) {</span>
+                    case 0:
+<span class="nc" id="L668">                        shield.randomizePowerUpLocation();</span>
+<span class="nc" id="L669">                        break;</span>
+                    case 1:
+<span class="fc" id="L671">                        faster.randomizePowerUpLocation();</span>
+<span class="fc" id="L672">                        break;</span>
+                    case 2:
+<span class="fc" id="L674">                        slower.randomizePowerUpLocation();</span>
+<span class="fc" id="L675">                        break;</span>
+                    case 3:
+<span class="fc" id="L677">                        reverse.randomizePowerUpLocation();</span>
+<span class="fc" id="L678">                        break;</span>
+                    case 4:
+<span class="nc" id="L680">                        HP.randomizePowerUpLocation();</span>
+<span class="nc" id="L681">                        break;</span>
+                    case 5:
+<span class="nc" id="L683">                        bombs.randomizePowerUpLocation();</span>
+<span class="nc" id="L684">                        break;</span>
+                    case 6:
+<span class="nc" id="L686">                        laser.randomizePowerUpLocation();</span>
+                        break;
+                }
+
+<span class="fc" id="L690">            }</span>
+        }, 5000); //aika (ms), joka odotetaan
+<span class="fc" id="L692">    }</span>
+
+    public void BlueAIBot() {
+
+<span class="nc" id="L696">        Ellipse2D pb1 = bombs.getBoundsBombs(1);</span>
+<span class="nc" id="L697">        Ellipse2D pb2 = bombs.getBoundsBombs(2);</span>
+<span class="nc" id="L698">        Ellipse2D pb3 = bombs.getBoundsBombs(3);</span>
+<span class="nc" id="L699">        Ellipse2D pb4 = bombs.getBoundsBombs(4);</span>
+<span class="nc" id="L700">        Ellipse2D pb5 = bombs.getBoundsBombs(5);</span>
+<span class="nc" id="L701">        Ellipse2D pb6 = bombs.getBoundsBombs(6);</span>
+
+<span class="nc bnc" id="L703" title="All 2 branches missed.">        if (tailNro2 &gt; 3) {</span>
+<span class="nc bnc" id="L704" title="All 4 branches missed.">            if (worm2.getBounds().intersects(body2.get(body2.size() - 1).getBounds()) &amp;&amp; body2.size() &gt; 3) {</span>
+<span class="nc" id="L705">                BotTurnDown();</span>
+            }
+
+        }
+<span class="nc bnc" id="L709" title="All 2 branches missed.">        for (int i = 0; i &lt; pickableList.size(); i++) {</span>
+
+<span class="nc bnc" id="L711" title="All 6 branches missed.">            if (worms.get(1).getX() &lt; (pickableList.get(i).getX() + 10) &amp;&amp; worms.get(1).getX() &gt; (pickableList.get(i).getX() - 10) &amp;&amp; !worms.get(1).getReverse(worms.get(1))) {</span>
+<span class="nc bnc" id="L712" title="All 2 branches missed.">                if (worms.get(1).getY() &lt; pickableList.get(i).getY()) {</span>
+<span class="nc" id="L713">                    BotTurnDown();</span>
+
+                    //alas
+                } else {
+<span class="nc" id="L717">                    BotTurnUp();</span>
+
+                    //ylös
+                }
+
+            }
+
+<span class="nc bnc" id="L724" title="All 6 branches missed.">            if (worms.get(1).getY() &lt; (pickableList.get(i).getY() + 10) &amp;&amp; worms.get(1).getY() &gt; (pickableList.get(i).getY() - 10) &amp;&amp; !worms.get(1).getReverse(worms.get(1))) {</span>
+
+<span class="nc bnc" id="L726" title="All 2 branches missed.">                if (worms.get(1).getX() &lt; pickableList.get(i).getX()) {</span>
+<span class="nc" id="L727">                    BotTurnRight();</span>
+
+                    //oikea
+                } else {
+<span class="nc" id="L731">                    BotTurnLeft();</span>
+
+                    //vasen
+                }
+
+            }
+        }
+
+<span class="nc bnc" id="L739" title="All 4 branches missed.">        if (worms.get(1).getX() &lt; 20 &amp;&amp; worms.get(1).getSuunta() != 4) {</span>
+<span class="nc bnc" id="L740" title="All 2 branches missed.">            if (worms.get(1).getSuunta() != 2) {</span>
+<span class="nc" id="L741">                BotTurnUp();</span>
+<span class="nc" id="L742">                worms.get(1).setX(25);</span>
+            }
+
+<span class="nc bnc" id="L745" title="All 2 branches missed.">            if (worms.get(1).getReverse(worms.get(1))) {</span>
+<span class="nc" id="L746">                BotTurnUp();</span>
+<span class="nc" id="L747">                worms.get(1).setX(25);</span>
+            }
+
+        }
+
+<span class="nc bnc" id="L752" title="All 4 branches missed.">        if (worms.get(1).getX() &gt; 715 &amp;&amp; worms.get(1).getSuunta() != 3) {</span>
+<span class="nc bnc" id="L753" title="All 2 branches missed.">            if (worms.get(1).getSuunta() != 1) {</span>
+<span class="nc" id="L754">                BotTurnDown();</span>
+<span class="nc" id="L755">                worms.get(1).setX(710);</span>
+            }
+
+<span class="nc bnc" id="L758" title="All 2 branches missed.">            if (worms.get(1).getReverse(worms.get(1))) {</span>
+<span class="nc" id="L759">                BotTurnDown();</span>
+<span class="nc" id="L760">                worms.get(1).setX(710);</span>
+            }
+
+        }
+
+<span class="nc bnc" id="L765" title="All 4 branches missed.">        if (worms.get(1).getY() &gt; 540 &amp;&amp; worms.get(1).getSuunta() != 2) {</span>
+<span class="nc bnc" id="L766" title="All 2 branches missed.">            if (worms.get(1).getSuunta() != 3) {</span>
+<span class="nc" id="L767">                BotTurnLeft();</span>
+<span class="nc" id="L768">                worms.get(1).setY(535);</span>
+            }
+
+<span class="nc bnc" id="L771" title="All 2 branches missed.">            if (worms.get(1).getReverse(worms.get(1))) {</span>
+<span class="nc" id="L772">                BotTurnLeft();</span>
+<span class="nc" id="L773">                worms.get(1).setY(535);</span>
+            }
+
+        }
+
+<span class="nc bnc" id="L778" title="All 4 branches missed.">        if ((worms.get(1).getY() &lt; 20 &amp;&amp; worms.get(1).getSuunta() != 1)) {</span>
+<span class="nc bnc" id="L779" title="All 2 branches missed.">            if (worms.get(1).getSuunta() != 4) {</span>
+<span class="nc" id="L780">                BotTurnRight();</span>
+<span class="nc" id="L781">                worms.get(1).setY(25);</span>
+            }
+
+<span class="nc bnc" id="L784" title="All 2 branches missed.">            if (worms.get(1).getReverse(worms.get(1))) {</span>
+<span class="nc" id="L785">                BotTurnRight();</span>
+<span class="nc" id="L786">                worms.get(1).setY(25);</span>
+            }
+
+        }
+
+<span class="nc" id="L791">        Rectangle AIleft = getBoundsLeft();</span>
+<span class="nc bnc" id="L792" title="All 2 branches missed.">        for (int i = 0; i &lt; body.size(); i++) {</span>
+<span class="nc" id="L793">            Rectangle MatotailForAI = body.get(i).getBounds();</span>
+
+<span class="nc" id="L795">            Rectangle2D l2 = laser.getBoundsB();</span>
+<span class="nc bnc" id="L796" title="All 26 branches missed.">            if ((AIleft.intersects(MatotailForAI) || pb1.intersects(AIleft) || pb2.intersects(AIleft) || pb3.intersects(AIleft) || pb4.intersects(AIleft) || pb5.intersects(AIleft) || pb6.intersects(AIleft) || (l2.intersects(AIleft) &amp;&amp; laser.getHorizontal()) || (l2.intersects(AIleft) &amp;&amp; !l2.intersects(worms.get(1).getBounds()))) &amp;&amp; (worms.get(1).getSuunta() == 1 || worms.get(1).getReverse(worms.get(1)))) {</span>
+<span class="nc" id="L797">                int n = (int) (Math.random() * 1);</span>
+
+<span class="nc bnc" id="L799" title="All 3 branches missed.">                switch (n) {</span>
+                    case 0:
+                        do {
+<span class="nc" id="L802">                            BotTurnUp();</span>
+                            break;
+                        } while (l2.intersects(worms.get(1).getBounds()));
+
+                    case 1:
+                        do {
+<span class="nc" id="L808">                            BotTurnDown();</span>
+                            break;
+                        } while (l2.intersects(worms.get(1).getBounds()));
+                }
+            }
+
+        }
+
+<span class="nc" id="L816">        Rectangle AIright = getBoundsRight();</span>
+<span class="nc bnc" id="L817" title="All 2 branches missed.">        for (int i = 0; i &lt; body.size(); i++) {</span>
+<span class="nc" id="L818">            Rectangle MatotailForAI = body.get(i).getBounds();</span>
+
+<span class="nc" id="L820">            Rectangle2D l2 = laser.getBoundsB();</span>
+<span class="nc bnc" id="L821" title="All 26 branches missed.">            if ((AIright.intersects(MatotailForAI) || pb1.intersects(AIright) || pb2.intersects(AIright) || pb3.intersects(AIright) || pb4.intersects(AIright) || pb5.intersects(AIright) || pb6.intersects(AIright) || (l2.intersects(AIright) &amp;&amp; laser.getHorizontal()) || (l2.intersects(AIright) &amp;&amp; !l2.intersects(worms.get(1).getBounds()))) &amp;&amp; (worms.get(1).getSuunta() == 2 || worms.get(1).getReverse(worms.get(1)))) {</span>
+<span class="nc" id="L822">                int n = (int) (Math.random() * 2);</span>
+
+<span class="nc bnc" id="L824" title="All 3 branches missed.">                switch (n) {</span>
+                    case 0:
+                        do {
+<span class="nc" id="L827">                            BotTurnUp();</span>
+                            break;
+                        } while (l2.intersects(worms.get(1).getBounds()));
+
+                    case 1:
+                        do {
+<span class="nc" id="L833">                            BotTurnDown();</span>
+                            break;
+                        } while (l2.intersects(worms.get(1).getBounds()));
+                }
+            }
+
+        }
+
+<span class="nc" id="L841">        Rectangle AIup = getBoundsUp();</span>
+<span class="nc bnc" id="L842" title="All 2 branches missed.">        for (int i = 0; i &lt; body.size(); i++) {</span>
+<span class="nc" id="L843">            Rectangle MatotailForAI = body.get(i).getBounds();</span>
+
+<span class="nc" id="L845">            Rectangle2D l2 = laser.getBoundsB();</span>
+<span class="nc bnc" id="L846" title="All 26 branches missed.">            if ((AIup.intersects(MatotailForAI) || pb1.intersects(AIup) || pb2.intersects(AIup) || pb3.intersects(AIup) || pb4.intersects(AIup) || pb5.intersects(AIup) || pb6.intersects(AIup) || (l2.intersects(AIup) &amp;&amp; !laser.getHorizontal()) || (l2.intersects(AIup) &amp;&amp; !l2.intersects(worms.get(1).getBounds()))) &amp;&amp; (worms.get(1).getSuunta() == 3 || worms.get(1).getReverse(worms.get(1)))) {</span>
+<span class="nc" id="L847">                int n = (int) (Math.random() * 2);</span>
+
+<span class="nc bnc" id="L849" title="All 3 branches missed.">                switch (n) {</span>
+                    case 0:
+                        do {
+<span class="nc" id="L852">                            BotTurnLeft();</span>
+                            break;
+                        } while (l2.intersects(worms.get(1).getBounds()));
+
+                    case 1:
+                        do {
+<span class="nc" id="L858">                            BotTurnLeft();</span>
+                            break;
+                        } while (l2.intersects(worms.get(1).getBounds()));
+                }
+            }
+            //kek
+        }
+
+<span class="nc" id="L866">        Rectangle AIdown = getBoundsDown();</span>
+<span class="nc bnc" id="L867" title="All 2 branches missed.">        for (int i = 0; i &lt; body.size(); i++) {</span>
+<span class="nc" id="L868">            Rectangle MatotailForAI = body.get(i).getBounds();</span>
+
+<span class="nc" id="L870">            Rectangle2D l2 = laser.getBoundsB();</span>
+<span class="nc bnc" id="L871" title="All 26 branches missed.">            if ((AIdown.intersects(MatotailForAI) || pb1.intersects(AIdown) || pb2.intersects(AIdown) || pb3.intersects(AIdown) || pb4.intersects(AIdown) || pb5.intersects(AIdown) || pb6.intersects(AIdown) || (l2.intersects(AIdown) &amp;&amp; !laser.getHorizontal()) || (l2.intersects(AIdown) &amp;&amp; !l2.intersects(worms.get(1).getBounds()))) &amp;&amp; (worms.get(1).getSuunta() == 4 || worms.get(1).getReverse(worms.get(1)))) {</span>
+<span class="nc" id="L872">                int n = (int) (Math.random() * 2);</span>
+
+<span class="nc bnc" id="L874" title="All 3 branches missed.">                switch (n) {</span>
+                    case 0:
+                        do {
+<span class="nc" id="L877">                            BotTurnLeft();</span>
+                            break;
+                        } while (l2.intersects(worms.get(1).getBounds()));
+
+                    case 1:
+                        do {
+<span class="nc" id="L883">                            BotTurnLeft();</span>
+                            break;
+                        } while (l2.intersects(worms.get(1).getBounds()));
+                }
+            }
+
+        }
+
+<span class="nc" id="L891">    }</span>
+
+    public Rectangle getBoundsLeft() {
+<span class="nc" id="L894">        return new Rectangle(worms.get(1).getX() - 50, worms.get(1).getY(), 35, 42);</span>
+    }
+
+    public Rectangle getBoundsRight() {
+<span class="nc" id="L898">        return new Rectangle(worms.get(1).getX(), worms.get(1).getY(), 85, 42);</span>
+    }
+
+    public Rectangle getBoundsUp() {
+<span class="nc" id="L902">        return new Rectangle(worms.get(1).getX(), worms.get(1).getY() - 50, 35, 42);</span>
+    }
+
+    public Rectangle getBoundsDown() {
+<span class="nc" id="L906">        return new Rectangle(worms.get(1).getX(), worms.get(1).getY(), 35, 92);</span>
+    }
+
+    public void BotTurnLeft() {
+<span class="nc" id="L910">        worms.get(1).setSuunta(1);</span>
+<span class="nc" id="L911">        worms.get(1).setSuuntaAdv(2);</span>
+<span class="nc" id="L912">    }</span>
+
+    public void BotTurnRight() {
+<span class="nc" id="L915">        worms.get(1).setSuunta(2);</span>
+<span class="nc" id="L916">        worms.get(1).setSuuntaAdv(2);</span>
+<span class="nc" id="L917">    }</span>
+
+    public void BotTurnUp() {
+<span class="nc" id="L920">        worms.get(1).setSuunta(3);</span>
+<span class="nc" id="L921">        worms.get(1).setSuuntaAdv(1);</span>
+<span class="nc" id="L922">    }</span>
+
+    public void BotTurnDown() {
+<span class="nc" id="L925">        worms.get(1).setSuunta(4);</span>
+<span class="nc" id="L926">        worms.get(1).setSuuntaAdv(1);</span>
+<span class="nc" id="L927">    }</span>
+
+    public void yksinpeliTrue() {
+<span class="nc" id="L930">        this.pelimoodi = &quot;sp&quot;;</span>
+<span class="nc" id="L931">    }</span>
+
+<span class="fc" id="L933">    private class TAdapter extends KeyAdapter {</span>
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+<span class="fc" id="L937">            control.keyPressed(e);</span>
+<span class="fc" id="L938">        }</span>
+    }
+
+    public void submitHighscore() {
+<span class="nc bnc" id="L942" title="All 2 branches missed.">        if (!ingame) {</span>
+<span class="nc" id="L943">            Platform.runLater(new Runnable() {</span>
+                @Override
+                public void run() {
+<span class="nc" id="L946">                    TextInputDialog dialog = new TextInputDialog(&quot;Type your name here!&quot;);</span>
+<span class="nc" id="L947">                    dialog.setTitle(&quot;Highscore&quot;);</span>
+<span class="nc" id="L948">                    dialog.setHeaderText(&quot;Submit your highscore!&quot;);</span>
+<span class="nc" id="L949">                    dialog.setContentText(&quot;Please enter your name:&quot;);</span>
+
+<span class="nc" id="L951">                    Optional&lt;String&gt; result = dialog.showAndWait();</span>
+<span class="nc bnc" id="L952" title="All 2 branches missed.">                    if (result.isPresent()) {</span>
+<span class="nc" id="L953">                        System.out.println(score);</span>
+<span class="nc" id="L954">                        hscore.setHighscore(score);</span>
+<span class="nc" id="L955">                        hscore.setName(result.get());</span>
+<span class="nc" id="L956">                        System.out.println(&quot;Your name: &quot; + result.get());</span>
+<span class="nc" id="L957">                        connection.submitScore(hscore.getHighscore(), hscore.getName(), pelimoodi);</span>
+<span class="nc" id="L958">                        connection.showHighscore(pelimoodi);</span>
+                        
+                    }
+<span class="nc" id="L961">                }</span>
+            });
+        }
+
+<span class="nc" id="L965">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

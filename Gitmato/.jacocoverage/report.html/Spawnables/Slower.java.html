@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Slower.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Gitmato&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Spawnables</a> &gt; <span class="el_source">Slower.java</span></div><h1>Slower.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Spawnables;
+import Model.Worm;
+import Sound.Music;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.swing.ImageIcon;
+
+
+/**
+ *
+ * @author Olli
+ */
+public class Slower implements Spawnables{
+    private int xe;
+    private int ye;
+    private Image image;
+            
+    public void slower(Worm worm, Worm worm2) {
+<span class="nc" id="L26">        Music.sound8.play();</span>
+<span class="nc" id="L27">        worm.setPoints(worm.getPoints()+100);</span>
+<span class="nc" id="L28">        worm2.setNopeus(1);</span>
+        
+        //säätää nopeuden väliaikseks
+<span class="nc" id="L31">        Timer timer = new Timer();</span>
+<span class="nc" id="L32">        timer.schedule(new TimerTask() {</span>
+            @Override
+            public void run() {
+<span class="nc" id="L35">                worm2.setNopeus(2);</span>
+<span class="nc" id="L36">            }</span>
+        }, 5000); //aika (ms), joka odotetaan
+<span class="nc" id="L38">    }</span>
+    
+<span class="fc" id="L40">    public Slower() {</span>
+<span class="fc" id="L41">        init();</span>
+<span class="fc" id="L42">    }</span>
+    
+    @Override
+    public void loadImage(String imageName) {
+<span class="nc" id="L46">        ImageIcon ii = new ImageIcon(imageName);</span>
+<span class="nc" id="L47">        image = ii.getImage();    }</span>
+
+    @Override
+    public void init() {
+<span class="fc" id="L51">        ImageIcon kuva = new ImageIcon(&quot;src/Images/SlowDown.png&quot;);</span>
+<span class="fc" id="L52">        image = kuva.getImage();</span>
+            
+<span class="fc" id="L54">        setX(-100);</span>
+<span class="fc" id="L55">        setY(-100);</span>
+<span class="fc" id="L56">    }</span>
+
+    @Override
+    public Rectangle getBounds() {
+<span class="fc" id="L60">        return new Rectangle(xe+3, ye+3, 30, 30);</span>
+    }
+
+    @Override
+    public int getX() {
+<span class="fc" id="L65">        return xe;    </span>
+    }
+
+    @Override
+    public int getY() {
+<span class="fc" id="L70">        return ye;</span>
+    }
+
+    @Override
+    public void setX(int x) {
+<span class="fc" id="L75">        this.xe = x;</span>
+<span class="fc" id="L76">    }</span>
+
+    @Override
+    public void setY(int y) {
+<span class="fc" id="L80">        this.ye = y;</span>
+<span class="fc" id="L81">    }</span>
+
+    @Override
+    public Image getImage() {
+<span class="fc" id="L85">        return image;</span>
+    }
+    @Override
+    public void randomizePowerUpLocation() {
+<span class="fc" id="L89">        setX((int) (Math.random() * 750));</span>
+<span class="fc" id="L90">        setY((int) (Math.random() * 550));</span>
+<span class="fc" id="L91">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

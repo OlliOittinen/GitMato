@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PlayerController.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Gitmato&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Controller</a> &gt; <span class="el_source">PlayerController.java</span></div><h1>PlayerController.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Controller;
+
+import GUI.Matopeli;
+import java.awt.event.KeyEvent;
+import Model.Board;
+import Model.Worm;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.application.Platform;
+/**
+ *
+ * @author gedst
+ */
+public class PlayerController  {
+    
+<span class="fc" id="L21">    private List&lt;Worm&gt; worms = new ArrayList&lt;&gt;(); </span>
+    private Board board;
+    private Matopeli peli;
+<span class="fc" id="L24">    private String pelimoodi= &quot;versus&quot;;</span>
+    
+<span class="fc" id="L26">    public PlayerController(){</span>
+<span class="fc" id="L27">        initPlayerController();</span>
+<span class="fc" id="L28">    }</span>
+    
+    private void initPlayerController(){
+        
+<span class="fc" id="L32">    }</span>
+    public void yksinPeli(String peliMoodi){
+<span class="fc" id="L34">        this.pelimoodi = peliMoodi;</span>
+<span class="fc" id="L35">    }</span>
+   
+    public void updateWorms(){ // tätä täytyy kutsua joka pelin alussa!!!!
+<span class="fc" id="L38">        this.worms = Board.getWorms(); // saadaan oikeat pelaajat.</span>
+<span class="fc" id="L39">    }</span>
+    public void updateBoard(Board b){
+<span class="fc" id="L41">        this.board = b;</span>
+<span class="fc" id="L42">    }</span>
+     
+    public void keyPressed(KeyEvent e) {
+
+<span class="fc" id="L46">        int key = e.getKeyCode();</span>
+        
+        // controlls for player 1      
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (key == KeyEvent.VK_LEFT) {</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">            if(worms.get(0).getSuunta() != 2){</span>
+<span class="pc bpc" id="L51" title="2 of 6 branches missed.">                if(worms.get(0).getSuunta() != 1 &amp;&amp; (worms.get(0).getX() &lt; 20 || worms.get(0).getX() &gt; 740)){</span>
+<span class="fc" id="L52">                    worms.get(0).setX(worms.get(0).getX()-9);</span>
+                }
+<span class="fc" id="L54">                worms.get(0).setSuunta(1);</span>
+<span class="fc" id="L55">                worms.get(0).setSuuntaAdv(2);</span>
+            }
+            
+        }
+
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (key == KeyEvent.VK_RIGHT) {</span>
+            
+<span class="fc bfc" id="L62" title="All 2 branches covered.">            if(worms.get(0).getSuunta() != 1){</span>
+<span class="pc bpc" id="L63" title="3 of 6 branches missed.">                if(worms.get(0).getSuunta() != 2 &amp;&amp; (worms.get(0).getX() &lt; 20 || worms.get(0).getX() &gt; 740)){</span>
+<span class="nc" id="L64">                    worms.get(0).setX(worms.get(0).getX()+9);</span>
+                }
+<span class="fc" id="L66">                worms.get(0).setSuunta(2) ;</span>
+<span class="fc" id="L67">                worms.get(0).setSuuntaAdv(2) ;</span>
+
+            }
+        }
+
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (key == KeyEvent.VK_UP) {</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">            if(worms.get(0).getSuunta() != 4){</span>
+<span class="pc bpc" id="L74" title="3 of 6 branches missed.">                if(worms.get(0).getSuunta() != 3 &amp;&amp; (worms.get(0).getY() &lt; 20 || worms.get(0).getY() &gt; 530)){</span>
+<span class="nc" id="L75">                    worms.get(0).setY(worms.get(0).getY()-9);</span>
+                }
+<span class="fc" id="L77">                worms.get(0).setSuunta(3);</span>
+<span class="fc" id="L78">                worms.get(0).setSuuntaAdv(1);</span>
+            }
+        }
+
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (key == KeyEvent.VK_DOWN) {</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">            if(worms.get(0).getSuunta() != 3){</span>
+<span class="pc bpc" id="L84" title="1 of 6 branches missed.">               if(worms.get(0).getSuunta() != 4 &amp;&amp; (worms.get(0).getY() &lt; 20 || worms.get(0).getY() &gt; 530)){</span>
+<span class="fc" id="L85">                    worms.get(0).setY(worms.get(0).getY()+9);</span>
+                    
+                }
+<span class="fc" id="L88">               worms.get(0).setSuunta(4);</span>
+<span class="fc" id="L89">               worms.get(0).setSuuntaAdv(1);</span>
+               
+            }
+        }
+        
+        
+        // controlls for player 2 
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if(pelimoodi == &quot;versus&quot;){</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            if (key == KeyEvent.VK_A) {</span>
+            
+
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">                    if(worms.get(1).getSuunta() != 2){</span>
+<span class="pc bpc" id="L101" title="3 of 6 branches missed.">                        if(worms.get(1).getSuunta() != 1 &amp;&amp; (worms.get(1).getX() &lt; 20 || worms.get(1).getX() &gt; 740)){</span>
+<span class="nc" id="L102">                            worms.get(1).setX(worms.get(1).getX()-9);</span>
+                        }
+<span class="fc" id="L104">                        worms.get(1).setSuunta(1);</span>
+<span class="fc" id="L105">                        worms.get(1).setSuuntaAdv(2);</span>
+                    }
+
+                }
+
+<span class="fc bfc" id="L110" title="All 2 branches covered.">                if (key == KeyEvent.VK_D) {</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">                    if(worms.get(1).getSuunta() != 1){</span>
+<span class="pc bpc" id="L112" title="3 of 6 branches missed.">                        if(worms.get(1).getSuunta() != 2 &amp;&amp; (worms.get(1).getX() &lt; 20 || worms.get(1).getX() &gt; 740)){</span>
+<span class="nc" id="L113">                            worms.get(1).setX(worms.get(1).getX()+9);</span>
+                        }
+<span class="fc" id="L115">                        worms.get(1).setSuunta(2) ;</span>
+<span class="fc" id="L116">                        worms.get(1).setSuuntaAdv(2) ;</span>
+
+                    }
+                }
+
+<span class="fc bfc" id="L121" title="All 2 branches covered.">                if (key == KeyEvent.VK_W) {</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">                    if(worms.get(1).getSuunta() != 4){</span>
+<span class="pc bpc" id="L123" title="3 of 6 branches missed.">                        if(worms.get(1).getSuunta() != 3 &amp;&amp; (worms.get(1).getY() &lt; 20 || worms.get(1).getY() &gt; 530)){</span>
+<span class="nc" id="L124">                            worms.get(1).setY(worms.get(1).getY()-9);</span>
+                        }
+
+<span class="fc" id="L127">                        worms.get(1).setSuunta(3);</span>
+<span class="fc" id="L128">                        worms.get(1).setSuuntaAdv(1);</span>
+                    }
+                }
+
+<span class="fc bfc" id="L132" title="All 2 branches covered.">                if (key == KeyEvent.VK_S) {</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">                    if(worms.get(1).getSuunta() != 3){</span>
+<span class="pc bpc" id="L134" title="2 of 6 branches missed.">                        if(worms.get(1).getSuunta() != 4 &amp;&amp; (worms.get(1).getY() &lt; 20 || worms.get(1).getY() &gt; 530)){</span>
+<span class="nc" id="L135">                            worms.get(1).setY(worms.get(1).getY()+9);</span>
+                        }
+
+<span class="fc" id="L138">                        worms.get(1).setSuunta(4);</span>
+<span class="fc" id="L139">                        worms.get(1).setSuuntaAdv(1);</span>
+                    }
+                }
+            }
+        
+        //GAME RESET
+<span class="pc bpc" id="L145" title="2 of 4 branches missed.">        if (key == KeyEvent.VK_SPACE || key == KeyEvent.VK_ENTER) {</span>
+<span class="nc" id="L146">            board.restartGame();</span>
+        }
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        if (key == KeyEvent.VK_H) {</span>
+<span class="nc" id="L149">            board.submitHighscore();</span>
+        }
+                    
+        // controlls for player 2 
+        // --- Here ---
+<span class="fc" id="L154">    }  </span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

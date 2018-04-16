@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Tail.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Gitmato&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Model</a> &gt; <span class="el_source">Tail.java</span></div><h1>Tail.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Model;
+
+import java.awt.Image;
+import java.awt.Rectangle;
+import javax.swing.ImageIcon;
+
+/**
+ *
+ * @author maxki
+ */
+public class Tail{
+    private Image image;
+    private int x;
+    private int y;
+    private int playerNro;
+    // luku jonka mukaan hakee cordinaateista itselleen arvon.
+    private int cordinateInt;
+    
+<span class="fc" id="L24">     public Tail(int ci, int playerNro) {</span>
+<span class="fc" id="L25">        this.cordinateInt = ci;</span>
+<span class="fc" id="L26">        this.playerNro = playerNro;</span>
+<span class="fc" id="L27">        initTail();</span>
+<span class="fc" id="L28">    }</span>
+    private void initTail(){
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if(playerNro==1){</span>
+<span class="fc" id="L31">            ImageIcon kuvamato = new ImageIcon(&quot;src/images/RedWormTail(800x600).png&quot;);</span>
+<span class="fc" id="L32">            image = kuvamato.getImage();   </span>
+        }
+<span class="fc bfc" id="L34" title="All 2 branches covered.">         if(playerNro==2){</span>
+<span class="fc" id="L35">            ImageIcon kuvamato = new ImageIcon(&quot;src/images/BlueWormTail(800x600).png&quot;);</span>
+<span class="fc" id="L36">            image = kuvamato.getImage();   </span>
+        }
+<span class="fc" id="L38">    }</span>
+    
+    public Image getImage() {
+<span class="fc" id="L41">        return image;</span>
+    }
+    public int getCordinateInt(){
+<span class="fc" id="L44">        return cordinateInt;</span>
+    }
+    
+     public void setX(int luku) {
+<span class="fc" id="L48">        this.x = luku;</span>
+<span class="fc" id="L49">    }</span>
+
+    public void setY(int luku) {
+<span class="fc" id="L52">        this.y = luku;</span>
+<span class="fc" id="L53">    }</span>
+     public int getX() {
+<span class="fc" id="L55">        return x;</span>
+    }
+
+    public int getY() {
+<span class="fc" id="L59">        return y;</span>
+    }
+    
+    public Rectangle getBounds() {
+<span class="fc" id="L63">        return new Rectangle(x, y, 35, 42);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

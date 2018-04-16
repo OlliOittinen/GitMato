@@ -6,13 +6,23 @@ import javafx.animation.AnimationTimer;
 import Model.*;
 import Spawnables.*;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 
+import javafx.animation.Timeline;
 import javafx.application.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -25,8 +35,13 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
+import javax.swing.plaf.metal.MetalBorders;
+
 public class Matopeli extends Application {
 
+    //Multiplayer elements
+
+    //m--------------------
     private static Stage window;
     private Scene mainMenuScene, gameScene, gameOverScene, highscoreScene, highscoreTableScene;
 
@@ -103,12 +118,62 @@ public class Matopeli extends Application {
     private Text scenetitle = new Text();
     private String username;
     private boolean hs_submitted;
+
     private Button highscore_button;
 
     /**
      * Launches the application.
      * @param args Command-line arguments are passed in args.
      */
+    //Multiplayer elements
+    OptionDialog OD = new GUI.OptionDialog();
+
+    public static String getAddress() {
+        return address;
+    }
+
+    public static void setAddress(String address) {
+        Matopeli.address = address;
+    }
+
+    static String address;
+    static boolean server;
+
+    //StatusUpdater statusUpdater = new StatusUpdater(width / 2 - 150, height / 2 - 35);
+
+
+    public boolean getServer(){
+        return server;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getZ() {
+        return z;
+    }
+
+    public void setZ(int z) {
+        this.z = z;
+    }
+
+    int x = 0, y = 0, z = 0;
+
+
+    //m--------------------
     public static void main(String[] args) {
         launch(args);
     }
@@ -122,6 +187,7 @@ public class Matopeli extends Application {
      *                     The primary Stage is constructed by the platform.
      *                     Additional Stage objects may be constructed by the application.
      */
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -188,12 +254,76 @@ public class Matopeli extends Application {
             animationLoop(gc);
         });
 
+        //Button for Online Multiplay---------------------------------
+        Button button4 = new Button("Online");
+        button4.setOnAction((ActionEvent e)
+                -> {
+                    //Option PopUp
+                    final Stage dialog = new Stage();
+                    dialog.initModality(Modality.APPLICATION_MODAL);
+                    dialog.initOwner(primaryStage);
+                    VBox dialogVbox = new VBox(20);
+                    TextField field;
+                    field = new TextField("Address");
+                    Text text = new Text("Select whether you would like to host or join a game:");
+
+                    Button host = new Button("Host");
+                    host.setOnAction((ActionEvent r)
+                            -> {
+                                server = true;
+                                gameMode = "mp";
+                                init(gameMode);
+                                window.setScene(gameScene);
+                                animationLoop(gc);
+                            });
+
+
+
+                    Button cont = new Button("Continue");
+                    cont.setOnAction((ActionEvent r)
+                            -> {
+                                if (field.getText() != null) {
+                                    server = false;
+                                    address = field.getText();
+                                    //join game somehow
+                                    gameMode = "mp";
+                                    init(gameMode);
+                                    window.setScene(gameScene);
+                                    animationLoop(gc);
+                                }
+                                else{
+                                     text.setText("Enter an Adress to the Adress field");
+                                }
+                            });
+
+                    Button join = new Button("Join");
+                    join.setOnAction((ActionEvent t)
+                            -> {
+                        dialogVbox.getChildren().addAll(field, cont);
+
+                    });
+
+            dialogVbox.getChildren().addAll(
+                            text,
+                            join,
+                            host
+                    );
+                    Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                    dialog.setScene(dialogScene);
+                    dialog.show();
+
+
+
+                });
+
+        //--------------------------------------------------------------
+
         //------------Main Menu Scene - Game mode selector --------------
 
         //create a new vertical box, center it, and add buttons to it
         VBox menuLayout = new VBox(20);
         menuLayout.setAlignment(Pos.CENTER);
-        menuLayout.getChildren().addAll(button2, button1, button3);
+        menuLayout.getChildren().addAll(button4, button2, button1, button3);
 
         //main menu scene is a new scene based on above layout
         mainMenuScene = new Scene(menuLayout, width, height);
@@ -215,6 +345,7 @@ public class Matopeli extends Application {
 
         //shows this window to user
         window.show();
+
     }
     private void init(String gameMode){
         //initialize all the variables needed
@@ -692,5 +823,6 @@ public class Matopeli extends Application {
 
 
     }
+
 
 }

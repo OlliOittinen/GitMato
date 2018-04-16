@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Laaser.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Gitmato&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Spawnables</a> &gt; <span class="el_source">Laaser.java</span></div><h1>Laaser.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Spawnables;
+
+import Model.Worm;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.swing.ImageIcon;
+
+/**
+ *
+ * @author Olli
+ */
+public class Laaser implements Spawnables {
+
+    private int xe;
+    private int ye;
+    private Image image;
+    private int xe2;
+    private int ye2;
+    private Image image2;
+    private int xe3;
+    private int ye3;
+    private Image image3;
+    private Image image4;
+    private Image image5;
+<span class="fc" id="L32">    private boolean horizontal = false;</span>
+<span class="fc" id="L33">    private boolean lethal = false;</span>
+
+<span class="fc" id="L35">    private Rectangle beam = new Rectangle(-1000, -1000, 1, 1);</span>
+
+<span class="fc" id="L37">    public Laaser() {</span>
+<span class="fc" id="L38">        init();</span>
+<span class="fc" id="L39">    }</span>
+
+    @Override
+    public void loadImage(String imageName) {
+<span class="nc" id="L43">        ImageIcon ii = new ImageIcon(imageName);</span>
+<span class="nc" id="L44">        image = ii.getImage();</span>
+<span class="nc" id="L45">    }</span>
+
+    public void damage(Worm worm) {
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (lethal) {</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">            if (worm.getLife() &gt; 1) {</span>
+<span class="nc" id="L50">                worm.randomizeXY();</span>
+<span class="nc" id="L51">                worm.setSuuntaAdv(0);</span>
+<span class="nc" id="L52">                worm.setSuunta(0);</span>
+            }
+<span class="nc" id="L54">            Life.loseLife(worm);</span>
+        }
+<span class="nc" id="L56">    }</span>
+
+    @Override
+    public void init() {
+<span class="fc" id="L60">        ImageIcon kuva = new ImageIcon(&quot;src/Images/Lasercannon.png&quot;);</span>
+<span class="fc" id="L61">        image = kuva.getImage();</span>
+<span class="fc" id="L62">        ImageIcon kuva2 = new ImageIcon(&quot;src/Images/LazerH.png&quot;);</span>
+<span class="fc" id="L63">        image2 = kuva2.getImage();</span>
+<span class="fc" id="L64">        ImageIcon kuva3 = new ImageIcon(&quot;src/Images/lazerV.png&quot;);</span>
+<span class="fc" id="L65">        image3 = kuva3.getImage();</span>
+<span class="fc" id="L66">        ImageIcon kuva4 = new ImageIcon(&quot;src/Images/lasersightV.png&quot;);</span>
+<span class="fc" id="L67">        image4 = kuva4.getImage();</span>
+<span class="fc" id="L68">        ImageIcon kuva5 = new ImageIcon(&quot;src/Images/lasersightH.png&quot;);</span>
+<span class="fc" id="L69">        image5 = kuva5.getImage();</span>
+
+<span class="fc" id="L71">        setX(-100);</span>
+<span class="fc" id="L72">        setY(-100);</span>
+<span class="fc" id="L73">        setX2(-1000);</span>
+<span class="fc" id="L74">        setY2(-1000);</span>
+<span class="fc" id="L75">        setX3(-1000);</span>
+<span class="fc" id="L76">        setY3(-1000);</span>
+<span class="fc" id="L77">    }</span>
+
+    public void onPickup(Worm worm, Worm worm2) {
+<span class="nc" id="L80">        worm.setPoints(worm.getPoints() + 100);</span>
+
+<span class="nc" id="L82">        Timer timer = new Timer();</span>
+<span class="nc" id="L83">        timer.schedule(new TimerTask() {</span>
+            @Override
+            public void run() {
+                //hae kohteen nykysijainti, tallenna muuttujiin
+<span class="nc" id="L87">                int wormLocX = worm2.getX();</span>
+<span class="nc" id="L88">                int wormLocY = worm2.getY();</span>
+                //horisontaalinen vai vertikaalinen säde, random arvo 0...1
+<span class="nc" id="L90">                double r = Math.random();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                if (r &lt; 0.5) {</span>
+                    //vertical
+<span class="nc" id="L93">                    setX2(wormLocX - 30);</span>
+<span class="nc" id="L94">                    setY2(0);</span>
+<span class="nc" id="L95">                    beam.setBounds(wormLocX - 30, 0, 100, 600);</span>
+<span class="nc" id="L96">                    horizontal = false;</span>
+                } else {
+                    //horizontal
+<span class="nc" id="L99">                    setX3(0);</span>
+<span class="nc" id="L100">                    setY3(wormLocY - 30);</span>
+<span class="nc" id="L101">                    beam.setBounds(0, wormLocY - 30, 800, 100);</span>
+<span class="nc" id="L102">                    horizontal = true;</span>
+                }
+
+<span class="nc" id="L105">            }</span>
+        }, 1000); //aika (ms), joka odotetaan
+<span class="nc" id="L107">        timer.schedule(new TimerTask() {</span>
+            @Override
+            public void run() {
+<span class="nc" id="L110">                lethal = true;</span>
+<span class="nc" id="L111">                Sound.Music.sound3.play();</span>
+<span class="nc" id="L112">                timer.schedule(new TimerTask() {</span>
+                    @Override
+                    public void run() {
+<span class="nc" id="L115">                        setX3(-1000);</span>
+<span class="nc" id="L116">                        setY3(-1000);</span>
+<span class="nc" id="L117">                        setX2(-1000);</span>
+<span class="nc" id="L118">                        setY2(-1000);</span>
+<span class="nc" id="L119">                        beam.setBounds(-1000, -1000, 1, 1);</span>
+<span class="nc" id="L120">                        lethal = false;</span>
+<span class="nc" id="L121">                    }</span>
+                }, 2000);
+<span class="nc" id="L123">            }</span>
+        }, 1800); //aika (ms), joka odotetaanF
+
+<span class="nc" id="L126">    }</span>
+
+    //ikoni powerupille
+    @Override
+    public Rectangle getBounds() {
+<span class="fc" id="L131">        return new Rectangle(xe + 3, ye + 3, 30, 30);</span>
+    }
+
+    public Rectangle getBoundsB() {
+<span class="fc" id="L135">        return beam;</span>
+    }
+
+    public boolean getHorizontal() {
+<span class="nc" id="L139">        return horizontal;</span>
+    }
+
+    @Override
+    public int getX() {
+<span class="fc" id="L144">        return xe;</span>
+    }
+
+    @Override
+    public int getY() {
+<span class="fc" id="L149">        return ye;</span>
+    }
+
+    public int getX2() {
+<span class="fc" id="L153">        return xe2;</span>
+    }
+
+    public int getY2() {
+<span class="fc" id="L157">        return ye2;</span>
+    }
+
+    public int getX3() {
+<span class="fc" id="L161">        return xe3;</span>
+    }
+
+    public int getY3() {
+<span class="fc" id="L165">        return ye3;</span>
+    }
+
+    @Override
+    public void setX(int x) {
+<span class="fc" id="L170">        this.xe = x;</span>
+<span class="fc" id="L171">    }</span>
+
+    public void setX2(int x) {
+<span class="fc" id="L174">        this.xe2 = x;</span>
+<span class="fc" id="L175">    }</span>
+
+    public void setX3(int x) {
+<span class="fc" id="L178">        this.xe3 = x;</span>
+<span class="fc" id="L179">    }</span>
+
+    @Override
+    public void setY(int y) {
+<span class="fc" id="L183">        this.ye = y;</span>
+<span class="fc" id="L184">    }</span>
+
+    public void setY2(int y) {
+<span class="fc" id="L187">        this.ye2 = y;</span>
+<span class="fc" id="L188">    }</span>
+
+    public void setY3(int y) {
+<span class="fc" id="L191">        this.ye3 = y;</span>
+<span class="fc" id="L192">    }</span>
+
+    @Override
+    public Image getImage() {
+<span class="fc" id="L196">        return image;</span>
+    }
+
+    public Image getImageHori() {
+<span class="nc" id="L200">        return image2;</span>
+    }
+
+    public Image getImageVert() {
+<span class="nc" id="L204">        return image3;</span>
+    }
+
+    public Image getLasersightV() {
+<span class="fc" id="L208">        return image4;</span>
+    }
+
+    public Image getlasersightH() {
+<span class="fc" id="L212">        return image5;</span>
+    }
+
+    public boolean getLethal() {
+<span class="fc" id="L216">        return lethal;</span>
+    }
+
+    @Override
+    public void randomizePowerUpLocation() {
+<span class="nc" id="L221">        setX((int) (Math.random() * 750));</span>
+<span class="nc" id="L222">        setY((int) (Math.random() * 550));</span>
+<span class="nc" id="L223">    }</span>
+
+    public void hide() {
+<span class="fc" id="L226">        setX2(-1000);</span>
+<span class="fc" id="L227">        setY2(-1000);</span>
+<span class="fc" id="L228">        setX3(-1000);</span>
+<span class="fc" id="L229">        setY3(-1000);</span>
+<span class="fc" id="L230">        beam.setBounds(-1000, -1000, 1, 1);</span>
+<span class="fc" id="L231">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

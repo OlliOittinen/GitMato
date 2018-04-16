@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Life.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Gitmato&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Spawnables</a> &gt; <span class="el_source">Life.java</span></div><h1>Life.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Spawnables;
+
+import Model.Worm;
+import java.awt.Image;
+import java.awt.Rectangle;
+import javax.swing.ImageIcon;
+import Model.Board;
+import Sound.Music;
+import java.util.Timer;
+import java.util.TimerTask;
+/**
+ *
+ * @author maxki
+ */
+public class Life implements Spawnables {
+    
+    private int xe;
+    private int ye;
+    private Image image;
+    
+    public void Life(Worm worm) {
+<span class="nc" id="L27">        worm.setPoints(worm.getPoints()+100);</span>
+<span class="nc" id="L28">        addLife(worm);</span>
+<span class="nc" id="L29">    }</span>
+    
+<span class="fc" id="L31">    public Life() {</span>
+<span class="fc" id="L32">        init();</span>
+<span class="fc" id="L33">    }</span>
+    
+    public static void addLife (Worm worm) {
+<span class="nc" id="L36">        Music.sound5.play();</span>
+<span class="nc" id="L37">        worm.setLife(worm.getLife()+1);</span>
+<span class="nc" id="L38">    }</span>
+    
+    public static void loseLife(Worm worm) {
+<span class="fc" id="L41">        Music.sound11.play();</span>
+<span class="fc" id="L42">        worm.setLife(worm.getLife()-1);</span>
+<span class="fc" id="L43">        worm.setShield(true);</span>
+        
+<span class="fc" id="L45">        Timer timer = new Timer();</span>
+<span class="fc" id="L46">        timer.schedule(new TimerTask() {</span>
+            @Override
+            public void run() {
+<span class="fc" id="L49">                worm.setShield(false);</span>
+<span class="fc" id="L50">                }</span>
+            }, 1000);
+<span class="fc" id="L52">    }</span>
+     
+    @Override
+    public void loadImage(String imageName) {
+<span class="nc" id="L56">        ImageIcon ii = new ImageIcon(imageName);</span>
+<span class="nc" id="L57">        image = ii.getImage();</span>
+<span class="nc" id="L58">    }</span>
+
+    @Override
+    public void init() {
+<span class="fc" id="L62">        ImageIcon kuva = new ImageIcon(&quot;src/Images/Life_1.png&quot;);</span>
+<span class="fc" id="L63">        image = kuva.getImage();</span>
+            
+<span class="fc" id="L65">        setX(-100);</span>
+<span class="fc" id="L66">        setY(-100);</span>
+<span class="fc" id="L67">    }</span>
+
+    @Override
+    public Rectangle getBounds() {
+<span class="fc" id="L71">        return new Rectangle(xe+3, ye+3, 30, 30);</span>
+    }
+
+    @Override
+    public int getX() {
+<span class="fc" id="L76">        return xe;    </span>
+    }
+
+    @Override
+    public int getY() {
+<span class="fc" id="L81">        return ye;</span>
+    }
+
+    @Override
+    public void setX(int x) {
+<span class="fc" id="L86">        this.xe = x;</span>
+<span class="fc" id="L87">    }</span>
+
+    @Override
+    public void setY(int y) {
+<span class="fc" id="L91">        this.ye = y;</span>
+<span class="fc" id="L92">    }</span>
+
+    @Override
+    public Image getImage() {
+<span class="fc" id="L96">        return image;</span>
+    }
+    @Override
+    public void randomizePowerUpLocation() {
+<span class="nc" id="L100">        setX((int) (Math.random() * 750));</span>
+<span class="nc" id="L101">        setY((int) (Math.random() * 550));</span>
+<span class="nc" id="L102">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
