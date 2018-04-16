@@ -12,5 +12,13 @@ public class TestRunner {
         }
 
         System.out.println(result.wasSuccessful());
+
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.exit(0);
     }
 }

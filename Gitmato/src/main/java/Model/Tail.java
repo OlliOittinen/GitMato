@@ -28,7 +28,7 @@ public class Tail{
      * @param ci Coordinate where the tail will be drawn.
      * @param playerNumber Number for the player.
      */
-    Tail(int ci, int playerNumber) {
+    public Tail(int ci, int playerNumber) {
         this.coordinateInt = ci;
         this.playerNumber = playerNumber;
         initTail();
