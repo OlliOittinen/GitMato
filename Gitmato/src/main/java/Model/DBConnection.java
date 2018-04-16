@@ -19,6 +19,11 @@ public class DBConnection {
     private Connection con = null;
     private ArrayList<String> scores = new ArrayList<>();
     String highscore = "";
+
+    public Connection getCon() {
+        return con;
+    }
+
     int indexOf;
 
     /**
@@ -39,6 +44,7 @@ public class DBConnection {
      * @return an ArrayList based on the gameMode played
      */
     public ArrayList<String> showHighscore(String gameMode) {
+
         try {
             PreparedStatement query = null;
             try {

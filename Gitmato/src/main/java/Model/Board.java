@@ -9,11 +9,13 @@ import GUI.Matopeli;
 import Sound.Music;
 import Spawnables.*;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.TimerTask;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Alert;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
@@ -519,7 +521,7 @@ public class Board {
 
         //botti ja sen toiminta
         if (gameMode.equals("vs AI")) {
-            bot.start();
+            bot.runBotRun();
         }
 
     }
@@ -537,4 +539,7 @@ public class Board {
         }
     }
 
+    public Connection getConnection() {
+        return connection.getCon();
+    }
 }

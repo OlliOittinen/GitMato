@@ -182,6 +182,8 @@ public class Matopeli extends Application {
             window.setScene(gameScene);
             animationLoop(gc);
         });
+        Button close = new Button("Exit");
+        close.setOnAction( e -> System.exit(0));
 
         //add all skins to arraylist
         hatimages.add(cowboyhat);
@@ -219,7 +221,7 @@ public class Matopeli extends Application {
 
         VBox menuLayout = new VBox(20);
         menuLayout.setAlignment(Pos.CENTER);
-        menuLayout.getChildren().addAll(button2, button1, button3);
+        menuLayout.getChildren().addAll(button2, button1, button3, close);
 
 
         GridPane mainmenupane = new GridPane();
@@ -228,7 +230,7 @@ public class Matopeli extends Application {
         mainmenupane.setMinSize(width, height);
         skinbuttonpane.add(rednextButtons, 1, 0);
         skinbuttonpane.add(bluenextButtons, 0, 0);
-        skinbuttonpane.setPadding(new Insets(110, 0, 60, 0));
+        skinbuttonpane.setPadding(new Insets(80, 0, 40, 0));
         mainmenupane.add(imv, 0, 0);
         mainmenupane.add(imv2, 0, 0);
         mainmenupane.add(menuLayout, 0, 0);
@@ -627,11 +629,18 @@ public class Matopeli extends Application {
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
 
         highscore_button.setOnAction(e -> {
-            if (!hs_submitted) {
+            if (!hs_submitted && board.getConnection() != null) {
                 window.setScene(highscoreScene);
                 scenetitle.setText("You got " + score + " points ");
-            } else {
+            } else if (hs_submitted && board.getConnection() != null) {
                 window.setScene(highscoreTableScene);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Connection Error");
+                alert.setContentText("Database connection not established.");
+
+                alert.showAndWait();
             }
         });
 
@@ -665,13 +674,17 @@ public class Matopeli extends Application {
         grid.add(scenetitle, 0, 0, 2, 1);
         // create label for username
         Label userName = new Label("Username: ");
+        Label errorMessage = new Label();
+        errorMessage.setId("errormessage");
 
         userName.setTextFill(Color.WHITE);
         userName.setId("username");
         grid.add(userName, 0, 10);
         //create textfield for usernames
         TextField userTextField = new TextField();
+        userTextField.setPrefWidth(300);
         grid.add(userTextField, 1, 10);
+        grid.add(errorMessage, 0, 11);
 
         //create buttons
         Button submit = new Button("Submit");
@@ -681,13 +694,17 @@ public class Matopeli extends Application {
         cancel.setOnAction(e -> window.setScene(gameOverScene));
         submit.setOnAction(e -> {
             if ((userTextField.getText() != null && !userTextField.getText().isEmpty())) {
-                highscore_button.setText("Show\nhighscores");
-                hs_submitted = true;
-                username = userTextField.getText();
-                board.submitHighscore(score, username);
-                window.setScene(highscoreTableScene);
+                if (userTextField.getText().length() > 10) {
+                    errorMessage.setText("Please enter username\nbetween 1-10 characters");
+                } else {
+                    highscore_button.setText("Show\nhighscores");
+                    hs_submitted = true;
+                    username = userTextField.getText();
+                    board.submitHighscore(score, username);
+                    window.setScene(highscoreTableScene);
+                }
             } else {
-                userName.setText("Please enter\nyour username");
+                errorMessage.setText("Please enter\nyour username");
             }
         });
         //create Horizontal Box for buttons
