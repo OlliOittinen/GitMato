@@ -682,6 +682,7 @@ public class Matopeli extends Application {
         grid.add(userName, 0, 10);
         //create textfield for usernames
         TextField userTextField = new TextField();
+        userTextField.setPrefWidth(300);
         grid.add(userTextField, 1, 10);
         grid.add(errorMessage, 0, 11);
 
