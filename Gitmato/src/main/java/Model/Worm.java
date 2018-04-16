@@ -72,7 +72,7 @@ public class Worm {
     /**
      * Moves the Worm to the direction it is facing.
      */
-    void move() {
+    public void move() {
         if (x > 0 && dx < 0 || x < 960 && dx > 0) {
             if (directionAdv == 2) {
                 x += dx;
@@ -245,7 +245,7 @@ public class Worm {
     /**
      * Moves the Worm continuously to the same direction.
      */
-    void moveCont() {
+    public void moveCont() {
         if (direction == 1) {
             dx = -1 * speed;
         }

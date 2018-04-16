@@ -33,6 +33,7 @@ Controller\PlayerController.class
 Sound\Music$1.class
 Spawnables\Bombs$2.class
 Model\WormStates\WormFast.class
+Spawnables\AbstractDamagingSpawnables.class
 Model\WormStates\WormStateNormal.class
 Spawnables\Laser$2.class
 Spawnables\Shield.class

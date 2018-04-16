@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class SpawnableTest {
@@ -77,7 +78,6 @@ public class SpawnableTest {
         assertEquals(300, snack.getY(), 300);
     }
 
-    //INCOMPLETE, DOESN'T WORK AS SUPPOSED TO
     @Test
     public void testCollisionWithSpawnable() {
         for (int i= 1; i< all.size(); i++) {
@@ -91,4 +91,70 @@ public class SpawnableTest {
             assertEquals(-100, all.get(i).getY());
         }
     }
+
+    @Test
+    public void testLives() {
+        Life.addLife(worm);
+        assertEquals(4, worm.getLife());
+        assertEquals(100, worm.getPoints());
+
+        Life.loseLife(worm);
+        assertEquals(3, worm.getLife());
+
+        worm.shield();
+        Life.loseLife(worm);
+        assertEquals(3, worm.getLife());
+    }
+
+    @Test
+    public void bombs() {
+        Bombs b = (Bombs) all.get(0);
+        assertEquals(-1000, b.getXBombs(2));
+        assertEquals(-1000, b.getXBombs(3));
+        assertEquals(-1000, b.getXBombs(4));
+        assertEquals(-1000, b.getXBombs(5));
+        assertEquals(-1000, b.getXBombs(6));
+
+        assertEquals(-1000, b.getYBombs(2));
+        assertEquals(-1000, b.getYBombs(3));
+        assertEquals(-1000, b.getYBombs(4));
+        assertEquals(-1000, b.getYBombs(5));
+        assertEquals(-1000, b.getYBombs(6));
+
+        b.bombs(worm);
+        assertEquals(100, worm.getPoints());
+        b.bombZone();
+        try {
+            Thread.sleep(8501);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void laser() {
+        Worm worm2 = new Worm(2);
+        Laser laser = (Laser) all.get(3);
+        laser.onPickup(worm, worm2);
+        assertEquals(100, worm.getPoints());
+        try {
+            Thread.sleep(1001);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertTrue(laser.getBoundsB().contains(worm2.getX(), worm2.getY()));
+
+        try {
+            Thread.sleep(3800);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(-1000, laser.getX2());
+        assertEquals(-1000, laser.getX3());
+        assertEquals(-1000, laser.getY2());
+        assertEquals(-1000, laser.getY3());
+    }
+
+
 }
