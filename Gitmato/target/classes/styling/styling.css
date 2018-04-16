@@ -58,6 +58,13 @@
     -fx-font-family: 'Press Start 2P';
     -fx-font-size: 15px;
 }
+#errormessage {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Helvetica';
+    -fx-text-fill: red;
+
+}
 
 Button {
     -fx-font-family: 'Press Start 2P', cursive;
