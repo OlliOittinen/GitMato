@@ -10,20 +10,10 @@ public class WormTest {
 
     private Worm worm;
 
-
-*
-     * Creates a new worm to be tested
-
-
     @Before
     public void setUp() {
         worm = new Worm(1);
     }
-
-
-*
-     *
-
 
     @Test
     public void testStatsOnStart() {
@@ -33,8 +23,6 @@ public class WormTest {
         assertEquals(279, worm.getY());
         assertEquals(2, worm.getDirection());
     }
-*
-     * Tests whether or not worm gets confused and shielded based on state
 
 
     @Test
