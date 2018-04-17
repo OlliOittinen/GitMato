@@ -5,7 +5,9 @@ import org.junit.runner.notification.Failure;
 public class TestRunner {
 
     public static void main(String[] args) {
-        Result result = JUnitCore.runClasses(SpawnableTest.class, WormTest.class);
+        Result result = JUnitCore.runClasses(SpawnableTest.class,
+                WormTest.class, MusicTest.class,
+                DBConnectionTest.class, TailTest.class);
 
         for (Failure failure : result.getFailures()) {
             System.out.println(failure.toString());
