@@ -16,7 +16,6 @@ import javafx.scene.shape.Rectangle;
  * @author maxki
  */
 public class Tail{
-    private Image image;
     private int x;
     private int y;
     private int playerNumber;
@@ -35,6 +34,7 @@ public class Tail{
     }
 
     private void initTail(){
+        Image image;
         if(playerNumber==1){
             image = new Image("images/RedWormTail(800x600).png");
         }

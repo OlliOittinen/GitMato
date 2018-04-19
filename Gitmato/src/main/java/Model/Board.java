@@ -15,7 +15,6 @@ import java.util.TimerTask;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Alert;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
@@ -110,6 +109,8 @@ public class Board {
 
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
+        tailList = worm.getTails();
+        tailList2 = worm2.getTails();
         bot = new Bot(this);
 
         ingame = true;
@@ -230,8 +231,7 @@ public class Board {
     }
 
     private void powerUpCD() {
-        System.out.println(pickableList.size());
-        //go trough pickable list and hide powerups
+        //go trough pickable list and hide powerups, start at 1 because 0th index is snack
         for (int i = 1; i < pickableList.size(); i++) {
             pickableList.get(i).init();
         }
@@ -246,7 +246,7 @@ public class Board {
             @Override
             public void run() {
                 //snack is first index and we dont need to randomize it
-                int n = (int) (Math.random() * (pickableList.size() - 1) + 1);
+                int n = 8;//(int) (Math.random() * (pickableList.size() - 1) + 1);
                 pickableList.get(n).randomizeIconLocation();
 
             }
@@ -328,8 +328,7 @@ public class Board {
         if (s.intersects(Matokuutio)) {
             Music.snack.play();
             snack.randomizeIconLocation(this);
-            worm.setPoints(worm.getPoints() + 100);
-            spawnTail(1);
+            worm.addTail();
         }
 
         if (pf.intersects(Matokuutio)) {
@@ -382,7 +381,7 @@ public class Board {
         }
 
         if (sc.intersects(Matokuutio)) {
-            cut.cut(this, 2);
+            cut.cut(worm, worm2);
             powerUpCD();
         }
 
@@ -390,8 +389,7 @@ public class Board {
         if (s.intersects(Matokuutio2)) {
             Music.snack.play();
             snack.randomizeIconLocation(this);
-            worm2.setPoints(worm2.getPoints() + 100);
-            spawnTail(2);
+            worm2.addTail();
         }
 
         if (pf.intersects(Matokuutio2)) {
@@ -446,7 +444,7 @@ public class Board {
         }
 
         if (sc.intersects(Matokuutio2)) {
-            cut.cut(this, 1);
+            cut.cut(worm2, worm);
             powerUpCD();
         }
     }
@@ -483,8 +481,8 @@ public class Board {
             coordinates2.remove(coordinates2.size() - 1);
         }
 
-        setTailCoordinates(tailList, coordinates);
-        setTailCoordinates(tailList2, coordinates2);
+        updateTailCoordinates(tailList, coordinates);
+        updateTailCoordinates(tailList2, coordinates2);
 
         if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
             setIngame(false);
@@ -499,7 +497,7 @@ public class Board {
 
     }
 
-    private void setTailCoordinates(ArrayList<Tail> taillist, ArrayList<Point2D> coordinates) {
+    private void updateTailCoordinates(ArrayList<Tail> taillist, ArrayList<Point2D> coordinates) {
         for (Tail tail : taillist) {
             int f = tail.getCoordinateInt();
             p = coordinates.get(f);
@@ -507,19 +505,6 @@ public class Board {
             y = (int) p.getY();
             tail.setX(x);
             tail.setY(y);
-        }
-    }
-
-    private void spawnTail(int n) {
-        //tulee yksi Tail pala lisää
-        switch (n) {
-            case 1:
-                tailNro++;
-                tailList.add(new Tail(tailNro * 8, 1));
-                break;
-            case 2:
-                tailNro2++;
-                tailList2.add(new Tail(tailNro2 * 8, 2));
         }
     }
 
