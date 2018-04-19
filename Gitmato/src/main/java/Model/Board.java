@@ -53,6 +53,10 @@ public class Board {
     // Wormin locaatio muuttujat:
     private Point2D p;
     private Point2D p2;// coordinaatit
+    private int x;
+    private int y;
+    private int x2;
+    private int y2;
 
 
     /**
@@ -92,6 +96,7 @@ public class Board {
         laser = new Laser();
         snack = new Snack();
 
+        pickableList.add(snack);
         pickableList.add(faster);
         pickableList.add(slower);
         pickableList.add(reverse);
@@ -99,7 +104,7 @@ public class Board {
         pickableList.add(shield);
         pickableList.add(bombs);
         pickableList.add(laser);
-        pickableList.add(snack);
+
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
         bot = new Bot(this);
@@ -210,57 +215,23 @@ public class Board {
     }
 
     private void powerUpCD() {
-
-        faster.setX(-100);
-        faster.setY(-100);
-        slower.setX(-100);
-        slower.setY(-100);
-        reverse.setX(-100);
-        reverse.setY(-100);
-        HP.setX(-100);
-        HP.setY(-100);
-        shield.setX(-100);
-        shield.setY(-100);
-        bombs.setY(-100);
-        bombs.setX(-100);
+        //go trough pickable list and hide powerups
+        for (int i = 1; i < pickableList.size(); i++) {
+            pickableList.get(i).init();
+        }
         for (int i = 1; i < 7; i++) {
             bombs.setXBombs(i, -1000);
             bombs.setYBombs(i, -1000);
         }
-        laser.setY(-100);
-        laser.setX(-100);
 
         java.util.Timer timer2 = new java.util.Timer();
         timer2.schedule(new TimerTask() {
 
             @Override
             public void run() {
-
-                int n = (int) (Math.random() * 7);
-
-                switch (n) {
-                    case 0:
-                        shield.randomizeIconLocation();
-                        break;
-                    case 1:
-                        faster.randomizeIconLocation();
-                        break;
-                    case 2:
-                        slower.randomizeIconLocation();
-                        break;
-                    case 3:
-                        reverse.randomizeIconLocation();
-                        break;
-                    case 4:
-                        HP.randomizeIconLocation();
-                        break;
-                    case 5:
-                        bombs.randomizeIconLocation();
-                        break;
-                    case 6:
-                        laser.randomizeIconLocation();
-                        break;
-                }
+                //snack is last index so wh
+                int n = (int) (Math.random() * pickableList.size() + 1);
+                pickableList.get(n).randomizeIconLocation();
 
             }
         }, 5000); //aika (ms), joka odotetaan
@@ -464,12 +435,12 @@ public class Board {
         worm2.move();
         worm2.moveCont();
         //tallennnetaan wormin coordinaatit yhteen 2D muuttujaan
-        int x = worm.getX();
-        int y = worm.getY();
-        int x2 = worm2.getX();
-        int y2 = worm2.getY();
-        Point2D p = new Point2D(x, y);
-        Point2D p2 = new Point2D(x2, y2);
+        x = worm.getX();
+        y = worm.getY();
+        x2 = worm2.getX();
+        y2 = worm2.getY();
+        p = new Point2D(x, y);
+        p2 = new Point2D(x2, y2);
         //Lisätään coortinaatit listan cordinates alkuun (0).
         //siirtää automaattisesti taulukon arvot yhden eteenpäin, 0->1
 
@@ -485,23 +456,8 @@ public class Board {
             coordinates2.remove(coordinates2.size() - 1);
         }
 
-        for (Tail aTailList : tailList) {
-            int f = aTailList.getCoordinateInt();
-            p = coordinates.get(f);
-            x = (int) p.getX();
-            y = (int) p.getY();
-            aTailList.setX(x);
-            aTailList.setY(y);
-        }
-
-        for (Tail aTailList2 : tailList2) {
-            int f = aTailList2.getCoordinateInt();
-            p2 = coordinates2.get(f); 
-            x2 = (int) p2.getX();
-            y2 = (int) p2.getY();
-            aTailList2.setX(x2);
-            aTailList2.setY(y2);
-        }
+        setTailCoordinates(tailList, coordinates, p, x, y);
+        setTailCoordinates(tailList2, coordinates2, p2, x2, y2);
 
         if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
             setIngame(false);
@@ -514,6 +470,17 @@ public class Board {
             bot.runBotRun();
         }
 
+    }
+
+    private void setTailCoordinates(ArrayList<Tail> taillist, ArrayList<Point2D> coordinates, Point2D p, int x, int y) {
+        for (Tail tail : taillist) {
+            int f = tail.getCoordinateInt();
+            p = coordinates.get(f);
+            x = (int) p.getX();
+            y = (int) p.getY();
+            tail.setX(x);
+            tail.setY(y);
+        }
     }
 
     private void spawnTail(int n) {
@@ -529,6 +496,11 @@ public class Board {
         }
     }
 
+    /**
+     * Getter for database connection
+     *
+     * @return reference to database connection object
+     */
     public Connection getConnection() {
         return connection.getCon();
     }

@@ -6,7 +6,6 @@ import javafx.animation.AnimationTimer;
 import Model.*;
 import Spawnables.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javafx.application.*;
@@ -256,14 +255,14 @@ public class Matopeli extends Application {
         pc = new PlayerController(board, gameMode);
         worms = new ArrayList<>();
         powerups = board.getPickableList();
-        faster = (Faster) powerups.get(0);
-        slower = (Slower) powerups.get(1);
-        confuse = (Confuse) powerups.get(2);
-        life = (Life) powerups.get(3);
-        shield = (Shield) powerups.get(4);
-        bombs = (Bombs) powerups.get(5);
-        laser = (Laser) powerups.get(6);
-        snack = (Snack) powerups.get(7);
+        snack = (Snack) powerups.get(0);
+        faster = (Faster) powerups.get(1);
+        slower = (Slower) powerups.get(2);
+        confuse = (Confuse) powerups.get(3);
+        life = (Life) powerups.get(4);
+        shield = (Shield) powerups.get(5);
+        bombs = (Bombs) powerups.get(6);
+        laser = (Laser) powerups.get(7);
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
     }
@@ -451,6 +450,13 @@ public class Matopeli extends Application {
             if (!gameMode.equals("sp")) {
                 g.drawImage(worm2Image, worm2.getX(), worm2.getY());
             }
+            //draw skins for worms if boolean is true(skin is selected from mainmenu)
+            if (wormskinactive) {
+                g.drawImage(wormskin, worm.getX() - 5, worm.getY() - 10);
+            }
+            if (worm2skinactive) {
+                g.drawImage(worm2skin, worm2.getX() - 5, worm2.getY() - 10);
+            }
             //draw shield effects on top of worm if shield boolean is true
             if (worm.getShield()) {
                 g.drawImage(shieldeffect, worm.getX() - 5, worm.getY() - 4);
@@ -466,12 +472,6 @@ public class Matopeli extends Application {
             //identical for worm #2
             if (worm2.getReverse()) {
                 g.drawImage(confuseEffect, worm2.getX() - 5, worm2.getY() - 4);
-            }
-            if (wormskinactive) {
-                g.drawImage(wormskin, worm.getX() - 5, worm.getY() - 10);
-            }
-            if (worm2skinactive) {
-                g.drawImage(worm2skin, worm2.getX() - 5, worm2.getY() - 10);
             }
             //always draw points
             drawPoints(g);
@@ -590,14 +590,14 @@ public class Matopeli extends Application {
 
         //get powerups from the board
         powerups = board.getPickableList();
-        faster = (Faster) powerups.get(0);
-        slower = (Slower) powerups.get(1);
-        confuse = (Confuse) powerups.get(2);
-        life = (Life) powerups.get(3);
-        shield = (Shield) powerups.get(4);
-        bombs = (Bombs) powerups.get(5);
-        laser = (Laser) powerups.get(6);
-        snack = (Snack) powerups.get(7);
+        snack = (Snack) powerups.get(0);
+        faster = (Faster) powerups.get(1);
+        slower = (Slower) powerups.get(2);
+        confuse = (Confuse) powerups.get(3);
+        life = (Life) powerups.get(4);
+        shield = (Shield) powerups.get(5);
+        bombs = (Bombs) powerups.get(6);
+        laser = (Laser) powerups.get(7);
 
         //add worms from the board to local worms list
         worms.add(worm = board.getWorm());
