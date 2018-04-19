@@ -77,6 +77,7 @@ public class Matopeli extends Application {
     private Image bigredhat = new Image("images/bigredhat.png");
     private Image hornyhat = new Image("images/hornyhat.png");
     private Image bighornyhat = new Image("images/bighornyhat.png");
+    private Image scissoricon = new Image("images/scissoricon.png");
     private Image wormskin;
     private Image worm2skin;
     private ArrayList<Image> hatimages = new ArrayList();
@@ -102,6 +103,7 @@ public class Matopeli extends Application {
     private Shield shield;
     private Bombs bombs;
     private Laser laser;
+    private Cut cut;
     private Snack snack;
     private ArrayList<Worm> worms;
     private ArrayList<Spawnables> powerups;
@@ -263,6 +265,7 @@ public class Matopeli extends Application {
         shield = (Shield) powerups.get(5);
         bombs = (Bombs) powerups.get(6);
         laser = (Laser) powerups.get(7);
+        cut = (Cut) powerups.get(8);
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
     }
@@ -430,6 +433,7 @@ public class Matopeli extends Application {
             g.drawImage(bombtarget, bombs.getXBombs(5), bombs.getYBombs(5));
             g.drawImage(bombfire, bombs.getXBombs(6), bombs.getYBombs(6));
             g.drawImage(lasericon, laser.getX(), laser.getY());
+            g.drawImage(scissoricon, cut.getX(), cut.getY());
 
             //if laser's private boolean 'lethal' is not true, draw the laser sight for it
             if (!laser.getLethal()) {
@@ -598,6 +602,7 @@ public class Matopeli extends Application {
         shield = (Shield) powerups.get(5);
         bombs = (Bombs) powerups.get(6);
         laser = (Laser) powerups.get(7);
+        cut = (Cut) powerups.get(8);
 
         //add worms from the board to local worms list
         worms.add(worm = board.getWorm());

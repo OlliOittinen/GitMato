@@ -37,6 +37,7 @@ public class Board {
     private Shield shield;
     private Bombs bombs;
     private Laser laser;
+    private Cut cut;
     private String gameMode;
     private Matopeli engine;
     private Bot bot;
@@ -96,6 +97,7 @@ public class Board {
         bombs = new Bombs();
         laser = new Laser();
         snack = new Snack();
+        cut = new Cut();
 
         pickableList.add(snack);
         pickableList.add(faster);
@@ -105,6 +107,7 @@ public class Board {
         pickableList.add(shield);
         pickableList.add(bombs);
         pickableList.add(laser);
+        pickableList.add(cut);
 
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
@@ -168,6 +171,18 @@ public class Board {
      */
     public int getTailNro2() {
         return tailNro2;
+    }
+
+    public int getTailNro() {
+        return tailNro;
+    }
+
+    public void setTailNro(int i){
+        tailNro = i;
+    }
+
+    public void setTailNro2(int i){
+        tailNro2 = i;
     }
 
     /**
@@ -241,7 +256,7 @@ public class Board {
             @Override
             public void run() {
                 //snack is first index and we dont need to randomize it
-                int n = (int) (Math.random() * (pickableList.size() - 1) + 1);
+                int n = (int) 8;// (Math.random() * (pickableList.size() - 1) + 1);
                 pickableList.get(n).randomizeIconLocation();
 
             }
@@ -283,6 +298,7 @@ public class Board {
         Circle pb4 = bombs.getBoundsBombs(6);
         Bounds pla = laser.getBoundsForIcon();
         Rectangle beam = laser.getBoundsB();
+        Bounds sc = cut.getBoundsForIcon();
 
         for (Tail aTailList : tailList) {
             Bounds Matotail = aTailList.getBounds();
@@ -375,6 +391,11 @@ public class Board {
             Life.loseLife(worm);
         }
 
+        if (sc.intersects(Matokuutio)) {
+            cut.cut(this, 2);
+            powerUpCD();
+        }
+
         //mato 2 collisions
         if (s.intersects(Matokuutio2)) {
             Music.snack.play();
@@ -432,6 +453,11 @@ public class Board {
                 }
             }
             Life.loseLife(worm2);
+        }
+
+        if (sc.intersects(Matokuutio2)) {
+            cut.cut(this, 1);
+            powerUpCD();
         }
     }
 
