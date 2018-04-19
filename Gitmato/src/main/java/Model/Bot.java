@@ -41,9 +41,9 @@ class Bot {
         worm2 = board.getWorm2();
         body2 = board.getTailList2();
         tailNro2 = board.getTailNro2();
-        bombs = (Bombs) board.getPickableList().get(5);
+        bombs = (Bombs) board.getPickableList().get(6);
         pickableList = board.getPickableList();
-        laser = (Laser) board.getPickableList().get(6);
+        laser = (Laser) board.getPickableList().get(7);
         body = board.getTailList();
     }
 

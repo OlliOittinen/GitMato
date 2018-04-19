@@ -80,8 +80,6 @@ Button {
 }
 Button:hover {
     -fx-translate-y: -2;
-    -fx-text-fill: #909191;
-
 }
 
 #redarrowbuttonleft {
