@@ -27,7 +27,6 @@ public class Board {
     private ArrayList<Worm> worms;
     private Worm worm;
     private Worm worm2;
-    private Tail tail;
     private Tail tail2;
     private Snack snack;
     private Faster faster;
@@ -127,15 +126,6 @@ public class Board {
      */
     public String getGameMode() {
         return gameMode;
-    }
-
-    /**
-     * Sets the game mode to be used.
-     *
-     * @param gameMode the game mode to be played
-     */
-    public void setGameMode(String gameMode) {
-        this.gameMode = gameMode;
     }
 
     /**
@@ -506,7 +496,7 @@ public class Board {
 
         for (Tail aTailList2 : tailList2) {
             int f = aTailList2.getCoordinateInt();
-            p2 = coordinates2.get(f);
+            p2 = coordinates2.get(f); 
             x2 = (int) p2.getX();
             y2 = (int) p2.getY();
             aTailList2.setX(x2);
@@ -531,11 +521,11 @@ public class Board {
         switch (n) {
             case 1:
                 tailNro++;
-                tailList.add(tail = new Tail(tailNro * 8, 1));
+                tailList.add(new Tail(tailNro * 8, 1));
                 break;
             case 2:
                 tailNro2++;
-                tailList2.add(tail = new Tail(tailNro2 * 8, 2));
+                tailList2.add(new Tail(tailNro2 * 8, 2));
         }
     }
 
