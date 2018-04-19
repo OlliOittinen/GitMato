@@ -92,7 +92,7 @@ class Bot {
 
         if (worms.get(1).getX() < 20 && worms.get(1).getDirection() != 4) {
             if (worms.get(1).getDirection() != 2) {
-                if(worm2.getY() > pickableList.get(7).getY()){
+                if(worm2.getY() > pickableList.get(0).getY()){
                     BotTurnUp();
                 }else{
                     BotTurnDown();
@@ -101,7 +101,7 @@ class Bot {
             }
 
             if (worms.get(1).getReverse()) {
-                if(worm2.getY() > pickableList.get(7).getY()){
+                if(worm2.getY() > pickableList.get(0).getY()){
                     BotTurnDown();
                 }else{
                     BotTurnUp();
@@ -113,7 +113,7 @@ class Bot {
 
         if (worms.get(1).getX() > 715 && worms.get(1).getDirection() != 3) {
             if (worms.get(1).getDirection() != 1) {
-                if(worm2.getY() > pickableList.get(7).getY()){
+                if(worm2.getY() > pickableList.get(0).getY()){
                     BotTurnUp();
                 }else{
                     BotTurnDown();
@@ -122,7 +122,7 @@ class Bot {
             }
 
             if (worms.get(1).getReverse()) {
-                if(worm2.getY() > pickableList.get(7).getY()){
+                if(worm2.getY() > pickableList.get(0).getY()){
                     BotTurnDown();
                 }else{
                     BotTurnUp();

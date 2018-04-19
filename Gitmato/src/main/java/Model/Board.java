@@ -36,6 +36,7 @@ public class Board {
     private Shield shield;
     private Bombs bombs;
     private Laser laser;
+    private Cut cut;
     private String gameMode;
     private Matopeli engine;
     private Bot bot;
@@ -95,6 +96,7 @@ public class Board {
         bombs = new Bombs();
         laser = new Laser();
         snack = new Snack();
+        cut = new Cut();
 
         pickableList.add(snack);
         pickableList.add(faster);
@@ -104,6 +106,7 @@ public class Board {
         pickableList.add(shield);
         pickableList.add(bombs);
         pickableList.add(laser);
+        pickableList.add(cut);
 
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
@@ -158,6 +161,18 @@ public class Board {
      */
     public int getTailNro2() {
         return tailNro2;
+    }
+
+    public int getTailNro() {
+        return tailNro;
+    }
+
+    public void setTailNro(int i){
+        tailNro = i;
+    }
+
+    public void setTailNro2(int i){
+        tailNro2 = i;
     }
 
     /**
@@ -215,6 +230,7 @@ public class Board {
     }
 
     private void powerUpCD() {
+        System.out.println(pickableList.size());
         //go trough pickable list and hide powerups
         for (int i = 1; i < pickableList.size(); i++) {
             pickableList.get(i).init();
@@ -229,8 +245,8 @@ public class Board {
 
             @Override
             public void run() {
-                //snack is last index so wh
-                int n = (int) (Math.random() * pickableList.size() + 1);
+                //snack is first index and we dont need to randomize it
+                int n = (int) (Math.random() * (pickableList.size() - 1) + 1);
                 pickableList.get(n).randomizeIconLocation();
 
             }
@@ -272,6 +288,7 @@ public class Board {
         Circle pb4 = bombs.getBoundsBombs(6);
         Bounds pla = laser.getBoundsForIcon();
         Rectangle beam = laser.getBoundsB();
+        Bounds sc = cut.getBoundsForIcon();
 
         for (Tail aTailList : tailList) {
             Bounds Matotail = aTailList.getBounds();
@@ -364,6 +381,11 @@ public class Board {
             Life.loseLife(worm);
         }
 
+        if (sc.intersects(Matokuutio)) {
+            cut.cut(this, 2);
+            powerUpCD();
+        }
+
         //mato 2 collisions
         if (s.intersects(Matokuutio2)) {
             Music.snack.play();
@@ -422,6 +444,11 @@ public class Board {
             }
             Life.loseLife(worm2);
         }
+
+        if (sc.intersects(Matokuutio2)) {
+            cut.cut(this, 1);
+            powerUpCD();
+        }
     }
 
     /**
@@ -456,8 +483,8 @@ public class Board {
             coordinates2.remove(coordinates2.size() - 1);
         }
 
-        setTailCoordinates(tailList, coordinates, p, x, y);
-        setTailCoordinates(tailList2, coordinates2, p2, x2, y2);
+        setTailCoordinates(tailList, coordinates);
+        setTailCoordinates(tailList2, coordinates2);
 
         if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
             setIngame(false);
@@ -472,7 +499,7 @@ public class Board {
 
     }
 
-    private void setTailCoordinates(ArrayList<Tail> taillist, ArrayList<Point2D> coordinates, Point2D p, int x, int y) {
+    private void setTailCoordinates(ArrayList<Tail> taillist, ArrayList<Point2D> coordinates) {
         for (Tail tail : taillist) {
             int f = tail.getCoordinateInt();
             p = coordinates.get(f);
