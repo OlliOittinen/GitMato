@@ -225,6 +225,7 @@ public class Board {
     }
 
     private void powerUpCD() {
+        System.out.println(pickableList.size());
         //go trough pickable list and hide powerups
         for (int i = 1; i < pickableList.size(); i++) {
             pickableList.get(i).init();
@@ -239,8 +240,8 @@ public class Board {
 
             @Override
             public void run() {
-                //snack is last index so wh
-                int n = (int) (Math.random() * pickableList.size() + 1);
+                //snack is first index and we dont need to randomize it
+                int n = (int) (Math.random() * (pickableList.size() - 1) + 1);
                 pickableList.get(n).randomizeIconLocation();
 
             }
@@ -466,8 +467,8 @@ public class Board {
             coordinates2.remove(coordinates2.size() - 1);
         }
 
-        setTailCoordinates(tailList, coordinates, p, x, y);
-        setTailCoordinates(tailList2, coordinates2, p2, x2, y2);
+        setTailCoordinates(tailList, coordinates);
+        setTailCoordinates(tailList2, coordinates2);
 
         if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
             setIngame(false);
@@ -482,7 +483,7 @@ public class Board {
 
     }
 
-    private void setTailCoordinates(ArrayList<Tail> taillist, ArrayList<Point2D> coordinates, Point2D p, int x, int y) {
+    private void setTailCoordinates(ArrayList<Tail> taillist, ArrayList<Point2D> coordinates) {
         for (Tail tail : taillist) {
             int f = tail.getCoordinateInt();
             p = coordinates.get(f);
