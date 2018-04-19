@@ -9,6 +9,7 @@ import GUI.Matopeli;
 import Sound.Music;
 import Spawnables.*;
 
+import java.awt.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.TimerTask;
@@ -26,7 +27,6 @@ public class Board {
     private ArrayList<Worm> worms;
     private Worm worm;
     private Worm worm2;
-    private Tail tail2;
     private Snack snack;
     private Faster faster;
     private Slower slower;
@@ -37,7 +37,7 @@ public class Board {
     private Laser laser;
     private Cut cut;
     private String gameMode;
-    private Matopeli engine;
+    private Matopeli GUI;
     private Bot bot;
     private DBConnection connection = new DBConnection();
     private boolean ingame;
@@ -45,29 +45,20 @@ public class Board {
     //Lista Tail paloista
     private ArrayList<Tail> tailList;
     private ArrayList<Tail> tailList2;
-    private int tailNro = 0;
-    private int tailNro2 = 0;
     private ArrayList<Spawnables> pickableList;
     private ArrayList<Point2D> coordinates;
     private ArrayList<Point2D> coordinates2;
-    // Wormin locaatio muuttujat:
-    private Point2D p;
-    private Point2D p2;// coordinaatit
-    private int x;
-    private int y;
-    private int x2;
-    private int y2;
 
 
     /**
      * Class constructor
      *
-     * @param e        the engine/GUI that this model will send info to
+     * @param matopeli  the GUI/view that this model will send info to
      * @param gameMode the current game mode to be used
      */
-    public Board(Matopeli e, String gameMode) {
+    public Board(Matopeli matopeli, String gameMode) {
 
-        this.engine = e;
+        this.GUI = matopeli;
         this.gameMode = gameMode;
 
         //alustetaan listat
@@ -76,11 +67,9 @@ public class Board {
 
         this.coordinates = new ArrayList<>();
         this.tailList = new ArrayList<>();
-        this.p = new Point2D(0, 0);
 
         this.coordinates2 = new ArrayList<>();
         this.tailList2 = new ArrayList<>();
-        this.p2 = new Point2D(0, 0);
 
         initBoard();
     }
@@ -153,27 +142,6 @@ public class Board {
      */
     public Worm getWorm2() {
         return worm2;
-    }
-
-    /**
-     * Used by the bot class.
-     *
-     * @return the number of tail pieces for the second worm; how many snacks has the second worm gathered.
-     */
-    public int getTailNro2() {
-        return tailNro2;
-    }
-
-    public int getTailNro() {
-        return tailNro;
-    }
-
-    public void setTailNro(int i){
-        tailNro = i;
-    }
-
-    public void setTailNro2(int i){
-        tailNro2 = i;
     }
 
     /**
@@ -255,7 +223,7 @@ public class Board {
 
     /**
      * Submits the score to the database, retrieves current scores from the database.
-     * Tells the engine to form a high score table based on the current scores.
+     * Tells the GUI to form a high score table based on the current scores.
      *
      * @param score the winning worm's score
      * @param name  name of the winning worm to be submitted to the database
@@ -265,7 +233,7 @@ public class Board {
         if (name != null) {
             connection.submitScore(score, name, gameMode);
             ArrayList<String> scores = connection.showHighscore(gameMode);
-            engine.createHighscoreTableScene(scores);
+            GUI.createHighscoreTableScene(scores);
         }
 
     }
@@ -460,12 +428,12 @@ public class Board {
         worm2.move();
         worm2.moveCont();
         //tallennnetaan wormin coordinaatit yhteen 2D muuttujaan
-        x = worm.getX();
-        y = worm.getY();
-        x2 = worm2.getX();
-        y2 = worm2.getY();
-        p = new Point2D(x, y);
-        p2 = new Point2D(x2, y2);
+        int x = worm.getX();
+        int y = worm.getY();
+        int x2 = worm2.getX();
+        int y2 = worm2.getY();
+        Point2D p = new Point2D(x, y);
+        Point2D p2 = new Point2D(x2, y2);
         //Lisätään coortinaatit listan cordinates alkuun (0).
         //siirtää automaattisesti taulukon arvot yhden eteenpäin, 0->1
 
@@ -488,7 +456,7 @@ public class Board {
             setIngame(false);
         }
 
-        engine.setWormImage();
+        GUI.setWormImage();
 
         //botti ja sen toiminta
         if (gameMode.equals("vs AI")) {
@@ -500,9 +468,9 @@ public class Board {
     private void updateTailCoordinates(ArrayList<Tail> taillist, ArrayList<Point2D> coordinates) {
         for (Tail tail : taillist) {
             int f = tail.getCoordinateInt();
-            p = coordinates.get(f);
-            x = (int) p.getX();
-            y = (int) p.getY();
+            Point2D p = coordinates.get(f);
+            int x = (int) p.getX();
+            int y = (int) p.getY();
             tail.setX(x);
             tail.setY(y);
         }

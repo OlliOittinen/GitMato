@@ -16,7 +16,7 @@ import Model.Board;
 public class Cut extends AbstractSpawnables{
 
 
-    //joo ihan kiva mut ei
+/*    //joo ihan kiva mut ei
     public void cut(Board board, int who) {
         //who == 1 means that player 1 is the target of the cutting
         if(who == 1 && board.getTailList().size() > 0){
@@ -37,7 +37,7 @@ public class Cut extends AbstractSpawnables{
             }
         }
         //add points to the one who picked up
-    }
+    }*/
 
     /**
      * Shortens the opposing worm's tail by one quarter.
@@ -49,9 +49,8 @@ public class Cut extends AbstractSpawnables{
     public void cut(Worm worm, Worm worm2) {
         int currentLength = worm2.getTails().size();
         int howMuchAfterCut = (int) (worm2.getTails().size()*0.75);
-        System.out.println(currentLength);
-        System.out.println(howMuchAfterCut);
-        if (worm2.getTails().size() > 0) {
+
+        if (currentLength > 0) {
             do {
                 worm2.getTails().remove(currentLength - 1);
                 worm.setPoints(worm.getPoints() + 50);
