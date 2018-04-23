@@ -9,7 +9,6 @@ import GUI.Matopeli;
 import Sound.Music;
 import Spawnables.*;
 
-import java.awt.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.TimerTask;
@@ -35,7 +34,7 @@ public class Board {
     private Shield shield;
     private Bombs bombs;
     private Laser laser;
-    private Cut cut;
+    private Steal steal;
     private String gameMode;
     private Matopeli GUI;
     private Bot bot;
@@ -84,7 +83,7 @@ public class Board {
         bombs = new Bombs();
         laser = new Laser();
         snack = new Snack();
-        cut = new Cut();
+        steal = new Steal();
 
         pickableList.add(snack);
         pickableList.add(faster);
@@ -94,7 +93,7 @@ public class Board {
         pickableList.add(shield);
         pickableList.add(bombs);
         pickableList.add(laser);
-        pickableList.add(cut);
+        pickableList.add(steal);
 
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
@@ -214,7 +213,7 @@ public class Board {
             @Override
             public void run() {
                 //snack is first index and we dont need to randomize it
-                int n = 8;//(int) (Math.random() * (pickableList.size() - 1) + 1);
+                int n = (int) (Math.random() * (pickableList.size() - 1) + 1);
                 pickableList.get(n).randomizeIconLocation();
 
             }
@@ -256,7 +255,7 @@ public class Board {
         Circle pb4 = bombs.getBoundsBombs(6);
         Bounds pla = laser.getBoundsForIcon();
         Rectangle beam = laser.getBoundsB();
-        Bounds sc = cut.getBoundsForIcon();
+        Bounds sc = steal.getBoundsForIcon();
 
         for (Tail aTailList : tailList) {
             Bounds Matotail = aTailList.getBounds();
@@ -349,7 +348,7 @@ public class Board {
         }
 
         if (sc.intersects(Matokuutio)) {
-            cut.cut(worm, worm2);
+            steal.cut(worm, worm2);
             powerUpCD();
         }
 
@@ -412,7 +411,7 @@ public class Board {
         }
 
         if (sc.intersects(Matokuutio2)) {
-            cut.cut(worm2, worm);
+            steal.cut(worm2, worm);
             powerUpCD();
         }
     }
