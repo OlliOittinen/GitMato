@@ -240,7 +240,6 @@ public class Board {
     }
 
     private void powerUpCD() {
-        System.out.println(pickableList.size());
         //go trough pickable list and hide powerups
         for (int i = 1; i < pickableList.size(); i++) {
             pickableList.get(i).init();
@@ -535,7 +534,6 @@ public class Board {
 
     /**
      * Getter for database connection
-     *
      * @return reference to database connection object
      */
     public Connection getConnection() {
