@@ -197,9 +197,12 @@ public class Matopeli extends Application {
         bighatimages.add(bigredhat);
         bighatimages.add(bighornyhat);
 
-        imv2.setTranslateX(-10);
-        imv.setTranslateX(400);
-
+        imv2.setTranslateX(80);
+        imv.setTranslateX(490);
+        Label skinlabel = new Label("Select\nHat");
+        skinlabel.setId("skinlabel");
+        Label skinlabel2 = new Label("Select\nHat");
+        skinlabel2.setId("skinlabel");
         Button blueforwardskin = new Button();
         blueforwardskin.setOnAction(e -> checkWormSkin(2, "+"));
         blueforwardskin.setId("bluearrowbuttonright");
@@ -217,11 +220,11 @@ public class Matopeli extends Application {
         //------------Main Menu Scene - Game mode selector --------------
         HBox bluenextButtons = new HBox();
         bluenextButtons.setAlignment(Pos.BOTTOM_CENTER);
-        bluenextButtons.getChildren().addAll(bluebackwardskin, blueforwardskin);
+        bluenextButtons.getChildren().addAll(bluebackwardskin,skinlabel, blueforwardskin);
 
         HBox rednextButtons = new HBox();
         rednextButtons.setAlignment(Pos.BOTTOM_CENTER);
-        rednextButtons.getChildren().addAll(redbackwardskin, redforwardskin);
+        rednextButtons.getChildren().addAll(redbackwardskin,skinlabel2, redforwardskin);
 
         VBox menuLayout = new VBox(20);
         menuLayout.setAlignment(Pos.CENTER);
