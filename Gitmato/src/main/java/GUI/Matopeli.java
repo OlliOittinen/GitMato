@@ -80,7 +80,7 @@ public class Matopeli extends Application {
     private Image bigredhat = new Image("images/bigredhat.png");
     private Image hornyhat = new Image("images/hornyhat.png");
     private Image bighornyhat = new Image("images/bighornyhat.png");
-    private Image scissoricon = new Image("images/scissoricon.png");
+    private Image scissoricon = new Image("images/stealicon.png");
     private Image wormskin;
     private Image worm2skin;
     private ArrayList<Image> hatimages = new ArrayList();

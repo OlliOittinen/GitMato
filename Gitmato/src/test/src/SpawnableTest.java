@@ -25,7 +25,7 @@ public class SpawnableTest {
         Life life = new Life();
         Shield s = new Shield();
         Slower slo = new Slower();
-        Cut cut = new Cut();
+        Steal cut = new Steal();
 
         all.add(b);
         all.add(c);
