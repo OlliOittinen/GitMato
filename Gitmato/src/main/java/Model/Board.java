@@ -351,7 +351,7 @@ public class Board {
         }
 
         if (beam.intersects(Matokuutio) && !shield.isActive(worm)) {
-            laser.damage(worm2);
+            laser.damage(worm);
         }
 
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5 || worm.getY() > 550) {
