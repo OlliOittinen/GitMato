@@ -199,7 +199,7 @@ public class Board {
     }
 
     private void powerUpCD() {
-        //go trough pickable list and hide powerups, start at 1 because 0th index is snack
+        //go through pickable list and hide powerups, start at 1 because 0th index is snack
         for (int i = 1; i < pickableList.size(); i++) {
             pickableList.get(i).init();
         }
@@ -362,7 +362,7 @@ public class Board {
         }
 
         if (sc.intersects(Matokuutio)) {
-            steal.cut(worm, worm2);
+            steal.steal(worm, worm2);
             powerUpCD();
         }
 
@@ -439,7 +439,7 @@ public class Board {
         }
 
         if (sc.intersects(Matokuutio2)) {
-            steal.cut(worm2, worm);
+            steal.steal(worm2, worm);
             powerUpCD();
         }
     }
@@ -505,7 +505,6 @@ public class Board {
 
     /**
      * Getter for database connection
-     *
      * @return reference to database connection object
      */
     public Connection getConnection() {
