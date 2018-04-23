@@ -329,6 +329,20 @@ public class Board {
             powerUpCD();
         }
 
+
+        if (pb2.intersects(Matokuutio) || pb3.intersects(Matokuutio) || pb4.intersects(Matokuutio) && shield.isActive(worm)) {
+            Timer timer = new Timer();
+
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    worm.setShield(false);
+
+                }
+            }, 1500);
+            //pop goes the bubble
+        }
+
         if (pb2.intersects(Matokuutio) || pb3.intersects(Matokuutio) || pb4.intersects(Matokuutio) && !shield.isActive(worm)) {
             bombs.damage(worm);
         }
@@ -401,6 +415,19 @@ public class Board {
             bombs.bombs(worm2);
             bombs.bombZone();
             powerUpCD();
+        }
+
+        if (pb2.intersects(Matokuutio2) || pb3.intersects(Matokuutio2) || pb4.intersects(Matokuutio2) && shield.isActive(worm2)) {
+            Timer timer = new Timer();
+
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    worm2.setShield(false);
+
+                }
+            }, 1500);
+            //pop goes the bubble
         }
 
         if (pb2.intersects(Matokuutio2) || pb3.intersects(Matokuutio2) || pb4.intersects(Matokuutio2) && !shield.isActive(worm2)) {
