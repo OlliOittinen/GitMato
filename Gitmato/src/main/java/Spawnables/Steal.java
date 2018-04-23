@@ -7,13 +7,15 @@ import javafx.geometry.Bounds;
 import javafx.scene.shape.Rectangle;
 import Model.Board;
 
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
  *
  * @author Max
  */
-public class Cut extends AbstractSpawnables{
+public class Steal extends AbstractSpawnables{
 
 
 /*    //joo ihan kiva mut ei
@@ -47,15 +49,21 @@ public class Cut extends AbstractSpawnables{
      * @param worm2 the Worm object that is being targeted
      */
     public void cut(Worm worm, Worm worm2) {
+
+
         int currentLength = worm2.getTails().size();
         int howMuchAfterCut = (int) (worm2.getTails().size()*0.75);
 
         if (currentLength > 0) {
             do {
                 worm2.getTails().remove(currentLength - 1);
-                worm.setPoints(worm.getPoints() + 50);
+                worm.setPoints(worm.getPoints() - 50);
                 worm2.setPoints(worm2.getPoints() - 50);
+                worm.addTail();
+
                 currentLength = worm2.getTails().size();
+
+
             } while (currentLength > howMuchAfterCut);
         }
     }
@@ -63,7 +71,7 @@ public class Cut extends AbstractSpawnables{
      * Class constructor, calls on init();
      * @see AbstractSpawnables
      */
-    public Cut() {
+    public Steal() {
         init();
     }
 
