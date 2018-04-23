@@ -25,6 +25,7 @@ public class SpawnableTest {
         Life life = new Life();
         Shield s = new Shield();
         Slower slo = new Slower();
+        Cut cut = new Cut();
 
         all.add(b);
         all.add(c);
@@ -33,6 +34,7 @@ public class SpawnableTest {
         all.add(life);
         all.add(s);
         all.add(slo);
+        all.add(cut);
     }
 
     /**
@@ -58,7 +60,7 @@ public class SpawnableTest {
         for (Spawnables s: all) {
             assertEquals(-100, s.getBoundsForIcon().getMinX(), 0.1);
             assertEquals(-100, s.getBoundsForIcon().getMinY(), 0.1);
-            assertEquals((-100+35), s.getBoundsForIcon().getMaxX(), 0.1);
+            assertEquals((-100+45), s.getBoundsForIcon().getMaxX(), 10);
             assertEquals((-100+42), s.getBoundsForIcon().getMaxY(), 0.1);
         }
     }
@@ -78,6 +80,9 @@ public class SpawnableTest {
         assertEquals(300, snack.getY(), 300);
     }
 
+    /**
+     * Checks that when worm collides with spawnable, the spawnable is hidden,
+     */
     @Test
     public void testCollisionWithSpawnable() {
         for (int i= 1; i< all.size(); i++) {
@@ -92,6 +97,9 @@ public class SpawnableTest {
         }
     }
 
+    /**
+     * Checks that the functions in Life are working correctly.
+     */
     @Test
     public void testLives() {
         Life.addLife(worm);
@@ -106,6 +114,10 @@ public class SpawnableTest {
         assertEquals(3, worm.getLife());
     }
 
+    /**
+     * Checks that bombs are initiated correctly.
+     * Asserts that worm gets 100 points on pickup.
+     */
     @Test
     public void bombs() {
         Bombs b = (Bombs) all.get(0);
@@ -131,6 +143,10 @@ public class SpawnableTest {
         }
     }
 
+    /**
+     * Checks that the laser is created on top of the other worm after the set time.
+     * Makes sure the laser is hidden after its' timer is run out.
+     */
     @Test
     public void laser() {
         Worm worm2 = new Worm(2);
@@ -155,6 +171,5 @@ public class SpawnableTest {
         assertEquals(-1000, laser.getY2());
         assertEquals(-1000, laser.getY3());
     }
-
 
 }

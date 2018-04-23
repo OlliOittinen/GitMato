@@ -322,6 +322,10 @@ public class Worm {
         changeState(WormConfuse.getInstance());
     }
 
+    /**
+     * Adds an additional tail piece to this worm.
+     * Adds 100 points to the worm.
+     */
     public void addTail() {
         this.setPoints(this.getPoints()+100);
         tailList.add(new Tail((getTails().size()+1) * 8, playerNro));

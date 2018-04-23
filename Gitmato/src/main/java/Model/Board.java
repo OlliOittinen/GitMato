@@ -199,7 +199,7 @@ public class Board {
     }
 
     private void powerUpCD() {
-        //go trough pickable list and hide powerups, start at 1 because 0th index is snack
+        //go through pickable list and hide powerups, start at 1 because 0th index is snack
         for (int i = 1; i < pickableList.size(); i++) {
             pickableList.get(i).init();
         }
