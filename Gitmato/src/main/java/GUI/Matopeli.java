@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLNonTransientConnectionException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javafx.application.*;
 import javafx.geometry.Insets;
@@ -187,7 +188,10 @@ public class Matopeli extends Application {
             animationLoop(gc);
         });
         Button close = new Button("Exit");
-        close.setOnAction(e -> System.exit(0));
+        close.setOnAction(e ->{
+            //createConfirmationDialog();
+            System.exit(0);
+        });
 
         //add all skins to arraylist
         hatimages.add(cowboyhat);
@@ -220,11 +224,11 @@ public class Matopeli extends Application {
         //------------Main Menu Scene - Game mode selector --------------
         HBox bluenextButtons = new HBox();
         bluenextButtons.setAlignment(Pos.BOTTOM_CENTER);
-        bluenextButtons.getChildren().addAll(bluebackwardskin,skinlabel, blueforwardskin);
+        bluenextButtons.getChildren().addAll(bluebackwardskin, skinlabel, blueforwardskin);
 
         HBox rednextButtons = new HBox();
         rednextButtons.setAlignment(Pos.BOTTOM_CENTER);
-        rednextButtons.getChildren().addAll(redbackwardskin,skinlabel2, redforwardskin);
+        rednextButtons.getChildren().addAll(redbackwardskin, skinlabel2, redforwardskin);
 
         VBox menuLayout = new VBox(20);
         menuLayout.setAlignment(Pos.CENTER);
@@ -251,7 +255,10 @@ public class Matopeli extends Application {
 
         mainMenuScene.getStylesheets().add("Styling/styling.css");
         window.setScene(mainMenuScene);
-        window.setOnCloseRequest(e -> System.exit(0));
+        window.setOnCloseRequest(e -> {
+            //createConfirmationDialog();
+            System.exit(0);
+        });
         window.setTitle("Gitmato");
         window.show();
         Sound.Music.backgroundMusic.loop();
@@ -789,8 +796,8 @@ public class Matopeli extends Application {
     private Alert createConnectionAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
-        alert.setHeaderText("Database connection error.");
-        alert.setContentText("SQLNonTransientConnectionException");
+        alert.setHeaderText("Sorry! We couldn't establish connection to the database.");
+        alert.setContentText("SQL Non Transient Connection Exception");
 
         Exception ex = new SQLNonTransientConnectionException("Could not connect to address=(host=localhost)(port=4444)(type=master) : Connection refused: connect");
 
@@ -821,4 +828,15 @@ public class Matopeli extends Application {
         return alert;
     }
 
+    private Alert createConfirmationDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit");
+        alert.setHeaderText("Are you sure you want to exit?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            System.exit(0);
+        }
+        return alert;
+    }
 }

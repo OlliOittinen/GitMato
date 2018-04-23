@@ -1,6 +1,7 @@
 package Model.WormStates;
 
 import Model.Worm;
+import Sound.Music;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,6 +40,7 @@ public class WormShield extends WormState{
             @Override
             public void run() {
                 //set shield to be false again so no permanent shielding
+                Music.shieldpop.play();
                 worm.setShield(false);
             }
         }, 10000); //after this delay (in ms)
