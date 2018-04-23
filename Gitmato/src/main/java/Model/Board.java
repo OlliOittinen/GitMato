@@ -15,7 +15,6 @@ import java.util.TimerTask;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Alert;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
@@ -27,8 +26,6 @@ public class Board {
     private ArrayList<Worm> worms;
     private Worm worm;
     private Worm worm2;
-    private Tail tail;
-    private Tail tail2;
     private Snack snack;
     private Faster faster;
     private Slower slower;
@@ -37,9 +34,9 @@ public class Board {
     private Shield shield;
     private Bombs bombs;
     private Laser laser;
-    private Cut cut;
+    private Steal steal;
     private String gameMode;
-    private Matopeli engine;
+    private Matopeli GUI;
     private Bot bot;
     private DBConnection connection = new DBConnection();
     private boolean ingame;
@@ -47,29 +44,20 @@ public class Board {
     //Lista Tail paloista
     private ArrayList<Tail> tailList;
     private ArrayList<Tail> tailList2;
-    private int tailNro = 0;
-    private int tailNro2 = 0;
     private ArrayList<Spawnables> pickableList;
     private ArrayList<Point2D> coordinates;
     private ArrayList<Point2D> coordinates2;
-    // Wormin locaatio muuttujat:
-    private Point2D p;
-    private Point2D p2;// coordinaatit
-    private int x;
-    private int y;
-    private int x2;
-    private int y2;
 
 
     /**
      * Class constructor
      *
-     * @param e        the engine/GUI that this model will send info to
+     * @param matopeli  the GUI/view that this model will send info to
      * @param gameMode the current game mode to be used
      */
-    public Board(Matopeli e, String gameMode) {
+    public Board(Matopeli matopeli, String gameMode) {
 
-        this.engine = e;
+        this.GUI = matopeli;
         this.gameMode = gameMode;
 
         //alustetaan listat
@@ -78,11 +66,9 @@ public class Board {
 
         this.coordinates = new ArrayList<>();
         this.tailList = new ArrayList<>();
-        this.p = new Point2D(0, 0);
 
         this.coordinates2 = new ArrayList<>();
         this.tailList2 = new ArrayList<>();
-        this.p2 = new Point2D(0, 0);
 
         initBoard();
     }
@@ -97,7 +83,7 @@ public class Board {
         bombs = new Bombs();
         laser = new Laser();
         snack = new Snack();
-        cut = new Cut();
+        steal = new Steal();
 
         pickableList.add(snack);
         pickableList.add(faster);
@@ -107,10 +93,12 @@ public class Board {
         pickableList.add(shield);
         pickableList.add(bombs);
         pickableList.add(laser);
-        pickableList.add(cut);
+        pickableList.add(steal);
 
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
+        tailList = worm.getTails();
+        tailList2 = worm2.getTails();
         bot = new Bot(this);
 
         ingame = true;
@@ -138,15 +126,6 @@ public class Board {
     }
 
     /**
-     * Sets the game mode to be used.
-     *
-     * @param gameMode the game mode to be played
-     */
-    public void setGameMode(String gameMode) {
-        this.gameMode = gameMode;
-    }
-
-    /**
      * Returns the first worm object; first player
      *
      * @return the worm object of the (first) player
@@ -162,27 +141,6 @@ public class Board {
      */
     public Worm getWorm2() {
         return worm2;
-    }
-
-    /**
-     * Used by the bot class.
-     *
-     * @return the number of tail pieces for the second worm; how many snacks has the second worm gathered.
-     */
-    public int getTailNro2() {
-        return tailNro2;
-    }
-
-    public int getTailNro() {
-        return tailNro;
-    }
-
-    public void setTailNro(int i){
-        tailNro = i;
-    }
-
-    public void setTailNro2(int i){
-        tailNro2 = i;
     }
 
     /**
@@ -240,7 +198,7 @@ public class Board {
     }
 
     private void powerUpCD() {
-        //go trough pickable list and hide powerups
+        //go trough pickable list and hide powerups, start at 1 because 0th index is snack
         for (int i = 1; i < pickableList.size(); i++) {
             pickableList.get(i).init();
         }
@@ -264,7 +222,7 @@ public class Board {
 
     /**
      * Submits the score to the database, retrieves current scores from the database.
-     * Tells the engine to form a high score table based on the current scores.
+     * Tells the GUI to form a high score table based on the current scores.
      *
      * @param score the winning worm's score
      * @param name  name of the winning worm to be submitted to the database
@@ -274,7 +232,7 @@ public class Board {
         if (name != null) {
             connection.submitScore(score, name, gameMode);
             ArrayList<String> scores = connection.showHighscore(gameMode);
-            engine.createHighscoreTableScene(scores);
+            GUI.createHighscoreTableScene(scores);
         }
 
     }
@@ -297,7 +255,7 @@ public class Board {
         Circle pb4 = bombs.getBoundsBombs(6);
         Bounds pla = laser.getBoundsForIcon();
         Rectangle beam = laser.getBoundsB();
-        Bounds sc = cut.getBoundsForIcon();
+        Bounds sc = steal.getBoundsForIcon();
 
         for (Tail aTailList : tailList) {
             Bounds Matotail = aTailList.getBounds();
@@ -337,8 +295,7 @@ public class Board {
         if (s.intersects(Matokuutio)) {
             Music.snack.play();
             snack.randomizeIconLocation(this);
-            worm.setPoints(worm.getPoints() + 100);
-            spawnTail(1);
+            worm.addTail();
         }
 
         if (pf.intersects(Matokuutio)) {
@@ -391,7 +348,7 @@ public class Board {
         }
 
         if (sc.intersects(Matokuutio)) {
-            cut.cut(this, 2);
+            steal.cut(worm, worm2);
             powerUpCD();
         }
 
@@ -399,8 +356,7 @@ public class Board {
         if (s.intersects(Matokuutio2)) {
             Music.snack.play();
             snack.randomizeIconLocation(this);
-            worm2.setPoints(worm2.getPoints() + 100);
-            spawnTail(2);
+            worm2.addTail();
         }
 
         if (pf.intersects(Matokuutio2)) {
@@ -455,7 +411,7 @@ public class Board {
         }
 
         if (sc.intersects(Matokuutio2)) {
-            cut.cut(this, 1);
+            steal.cut(worm2, worm);
             powerUpCD();
         }
     }
@@ -471,12 +427,12 @@ public class Board {
         worm2.move();
         worm2.moveCont();
         //tallennnetaan wormin coordinaatit yhteen 2D muuttujaan
-        x = worm.getX();
-        y = worm.getY();
-        x2 = worm2.getX();
-        y2 = worm2.getY();
-        p = new Point2D(x, y);
-        p2 = new Point2D(x2, y2);
+        int x = worm.getX();
+        int y = worm.getY();
+        int x2 = worm2.getX();
+        int y2 = worm2.getY();
+        Point2D p = new Point2D(x, y);
+        Point2D p2 = new Point2D(x2, y2);
         //Lisätään coortinaatit listan cordinates alkuun (0).
         //siirtää automaattisesti taulukon arvot yhden eteenpäin, 0->1
 
@@ -492,14 +448,14 @@ public class Board {
             coordinates2.remove(coordinates2.size() - 1);
         }
 
-        setTailCoordinates(tailList, coordinates);
-        setTailCoordinates(tailList2, coordinates2);
+        updateTailCoordinates(tailList, coordinates);
+        updateTailCoordinates(tailList2, coordinates2);
 
         if (worm.getLife() <= 0 || worm2.getLife() <= 0) {
             setIngame(false);
         }
 
-        engine.setWormImage();
+        GUI.setWormImage();
 
         //botti ja sen toiminta
         if (gameMode.equals("vs AI")) {
@@ -508,27 +464,14 @@ public class Board {
 
     }
 
-    private void setTailCoordinates(ArrayList<Tail> taillist, ArrayList<Point2D> coordinates) {
+    private void updateTailCoordinates(ArrayList<Tail> taillist, ArrayList<Point2D> coordinates) {
         for (Tail tail : taillist) {
             int f = tail.getCoordinateInt();
-            p = coordinates.get(f);
-            x = (int) p.getX();
-            y = (int) p.getY();
+            Point2D p = coordinates.get(f);
+            int x = (int) p.getX();
+            int y = (int) p.getY();
             tail.setX(x);
             tail.setY(y);
-        }
-    }
-
-    private void spawnTail(int n) {
-        //tulee yksi Tail pala lisää
-        switch (n) {
-            case 1:
-                tailNro++;
-                tailList.add(tail = new Tail(tailNro * 8, 1));
-                break;
-            case 2:
-                tailNro2++;
-                tailList2.add(tail = new Tail(tailNro2 * 8, 2));
         }
     }
 

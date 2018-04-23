@@ -9,6 +9,8 @@ import Model.WormStates.*;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Ellipse;
 
+import java.util.ArrayList;
+
 
 /**
  * @author maxki
@@ -29,6 +31,11 @@ public class Worm {
     private int points;
     private boolean transparencychange;
 
+    public ArrayList<Tail> getTails() {
+        return this.tailList;
+    }
+
+    private ArrayList<Tail> tailList = new ArrayList<>();
     private double speed = 3;
     private int life = 3;
 
@@ -315,4 +322,8 @@ public class Worm {
         changeState(WormConfuse.getInstance());
     }
 
+    public void addTail() {
+        this.setPoints(this.getPoints()+100);
+        tailList.add(new Tail((getTails().size()+1) * 8, playerNro));
+    }
 }

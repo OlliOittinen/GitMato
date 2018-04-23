@@ -23,8 +23,6 @@ import java.util.ArrayList;
 class Bot {
     private ArrayList<Worm> worms;
     private Worm worm2;
-    private ArrayList<Tail> body2;
-    private int tailNro2;
     private Bombs bombs;
     private ArrayList<Spawnables> pickableList;
     private Laser laser;
@@ -39,8 +37,6 @@ class Bot {
     Bot(Board board){
         worms = board.getWorms();
         worm2 = board.getWorm2();
-        body2 = board.getTailList2();
-        tailNro2 = board.getTailNro2();
         bombs = (Bombs) board.getPickableList().get(6);
         pickableList = board.getPickableList();
         laser = (Laser) board.getPickableList().get(7);
