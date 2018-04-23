@@ -348,7 +348,7 @@ public class Board {
         }
 
         if (sc.intersects(Matokuutio)) {
-            steal.cut(worm, worm2);
+            steal.steal(worm, worm2);
             powerUpCD();
         }
 
@@ -411,7 +411,7 @@ public class Board {
         }
 
         if (sc.intersects(Matokuutio2)) {
-            steal.cut(worm2, worm);
+            steal.steal(worm2, worm);
             powerUpCD();
         }
     }

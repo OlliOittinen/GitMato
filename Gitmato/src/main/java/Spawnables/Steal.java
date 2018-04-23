@@ -19,7 +19,7 @@ public class Steal extends AbstractSpawnables{
 
 
 /*    //joo ihan kiva mut ei
-    public void cut(Board board, int who) {
+    public void steal(Board board, int who) {
         //who == 1 means that player 1 is the target of the cutting
         if(who == 1 && board.getTailList().size() > 0){
             int originalLength = board.getTailList().size();
@@ -43,13 +43,12 @@ public class Steal extends AbstractSpawnables{
 
     /**
      * Shortens the opposing worm's tail by one quarter.
-     * Rewards player who picked up the powerup icon with 50 points per tailpiece cut.
+     * Rewards player who picked up the powerup icon with 50 points per tailpiece steal.
      * Reduces the points from the opposing worm.
      * @param worm the Worm object that picked up the icon
      * @param worm2 the Worm object that is being targeted
      */
-    public void cut(Worm worm, Worm worm2) {
-
+    public void steal(Worm worm, Worm worm2) {
 
         int currentLength = worm2.getTails().size();
         int howMuchAfterCut = (int) (worm2.getTails().size()*0.75);
@@ -57,12 +56,10 @@ public class Steal extends AbstractSpawnables{
         if (currentLength > 0) {
             do {
                 worm2.getTails().remove(currentLength - 1);
-                worm.setPoints(worm.getPoints() - 50);
-                worm2.setPoints(worm2.getPoints() - 50);
                 worm.addTail();
-
+                worm.setPoints(worm.getPoints() - 50); //addTail() adds 100 points so reduce the point/tail a little for balance
+                worm2.setPoints(worm2.getPoints() - 50);
                 currentLength = worm2.getTails().size();
-
 
             } while (currentLength > howMuchAfterCut);
         }
