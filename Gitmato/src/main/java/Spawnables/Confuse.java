@@ -31,7 +31,13 @@ public class Confuse extends AbstractSpawnables {
         //add points to the one who picked up the icon
         worm.setPoints(worm.getPoints()+100);
         //set the speed of the opposing worm to be the opposite
-        worm2.confuse();
+        if(!worm2.getShield()){
+            worm2.confuse();
+        }else{
+            //pop goes the bubble
+            worm2.setShield(false);
+        }
+
     }
 
     /**

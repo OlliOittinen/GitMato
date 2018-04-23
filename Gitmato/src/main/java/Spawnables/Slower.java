@@ -30,7 +30,13 @@ public class Slower extends AbstractSpawnables{
         //add points to the one who picked up
         worm.setPoints(worm.getPoints()+100);
         //change state of the opposing worm
-        worm2.slowerSpeed();
+        if(!worm2.getShield()){
+            worm2.slowerSpeed();
+        }else{
+            //pop goes the bubble
+            worm2.setShield(false);
+        }
+
     }
 
     /**

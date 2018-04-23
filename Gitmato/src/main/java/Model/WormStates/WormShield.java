@@ -41,6 +41,6 @@ public class WormShield extends WormState{
                 //set shield to be false again so no permanent shielding
                 worm.setShield(false);
             }
-        }, 5000); //after this delay (in ms)
+        }, 10000); //after this delay (in ms)
     }
 }

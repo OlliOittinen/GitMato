@@ -11,6 +11,7 @@ import Spawnables.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Timer;
 import java.util.TimerTask;
 
 import javafx.geometry.Bounds;
@@ -336,8 +337,21 @@ public class Board {
             beam = laser.getBoundsB();
             powerUpCD();
         }
+        if (beam.intersects(Matokuutio) && shield.isActive(worm)) {
+            Timer timer = new Timer();
+
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        worm.setShield(false);
+
+                    }
+                }, 1500);
+                //pop goes the bubble
+        }
+
         if (beam.intersects(Matokuutio) && !shield.isActive(worm)) {
-            laser.damage(worm);
+            laser.damage(worm2);
         }
 
         if (worm.getX() < 5 || worm.getX() > 760 || worm.getY() < 5 || worm.getY() > 550) {
@@ -397,6 +411,20 @@ public class Board {
             beam = laser.getBoundsB();
             powerUpCD();
         }
+
+        if (beam.intersects(Matokuutio2) && shield.isActive(worm2)) {
+            Timer timer = new Timer();
+
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    worm2.setShield(false);
+
+                }
+            }, 1500);
+            //pop goes the bubble
+        }
+
         if (beam.intersects(Matokuutio2) && !shield.isActive(worm2)) {
             laser.damage(worm2);
         }

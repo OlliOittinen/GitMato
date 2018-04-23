@@ -54,7 +54,8 @@ public class Steal extends AbstractSpawnables{
         int currentLength = worm2.getTails().size();
         int howMuchAfterCut = (int) (worm2.getTails().size()*0.75);
 
-        if (currentLength > 0) {
+        if (currentLength > 0 && !worm2.getShield()) {
+
             do {
                 worm2.getTails().remove(currentLength - 1);
                 worm.setPoints(worm.getPoints() - 50);
@@ -65,6 +66,9 @@ public class Steal extends AbstractSpawnables{
 
 
             } while (currentLength > howMuchAfterCut);
+        }else{
+            //pop goes the bubble
+            worm2.setShield(false);
         }
     }
     /**
