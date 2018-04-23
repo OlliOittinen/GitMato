@@ -2,44 +2,13 @@ package Spawnables;
 
 
 import Model.Worm;
-import Sound.Music;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Rectangle;
-import Model.Board;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
 
 /**
- *
  * @author Max
  */
 public class Steal extends AbstractSpawnables{
-
-
-/*    //joo ihan kiva mut ei
-    public void steal(Board board, int who) {
-        //who == 1 means that player 1 is the target of the cutting
-        if(who == 1 && board.getTailList().size() > 0){
-            int originalLength = board.getTailList().size();
-            while(board.getTailList().size()*2 > originalLength){
-                board.getTailList().remove(board.getTailList().size()-1);
-                board.setTailNro(board.getTailNro()-1);
-                board.getWorm().setPoints(board.getWorm().getPoints()-50);
-                board.getWorm2().setPoints(board.getWorm2().getPoints()+50);
-            }
-        }else if(who == 2 && board.getTailList2().size() > 0){
-            int originalLength2 = board.getTailList2().size();
-            while (board.getTailList2().size() * 2 > originalLength2) {
-                board.getTailList2().remove(board.getTailList2().size() - 1);
-                board.setTailNro2(board.getTailNro2()-1);
-                board.getWorm2().setPoints(board.getWorm2().getPoints()-50);
-                board.getWorm().setPoints(board.getWorm().getPoints()+50);
-            }
-        }
-        //add points to the one who picked up
-    }*/
 
     /**
      * Shortens the opposing worm's tail by one quarter.
@@ -66,6 +35,7 @@ public class Steal extends AbstractSpawnables{
     }
     /**
      * Class constructor, calls on init();
+     *
      * @see AbstractSpawnables
      */
     public Steal() {

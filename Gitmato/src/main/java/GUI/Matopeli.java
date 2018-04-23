@@ -6,6 +6,9 @@ import javafx.animation.AnimationTimer;
 import Model.*;
 import Spawnables.*;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.sql.SQLNonTransientConnectionException;
 import java.util.ArrayList;
 
 import javafx.application.*;
@@ -184,7 +187,7 @@ public class Matopeli extends Application {
             animationLoop(gc);
         });
         Button close = new Button("Exit");
-        close.setOnAction( e -> System.exit(0));
+        close.setOnAction(e -> System.exit(0));
 
         //add all skins to arraylist
         hatimages.add(cowboyhat);
@@ -640,12 +643,7 @@ public class Matopeli extends Application {
             } else if (hs_submitted && board.getConnection() != null) {
                 window.setScene(highscoreTableScene);
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Connection Error");
-                alert.setContentText("Database connection not established.");
-
-                alert.showAndWait();
+                createConnectionAlert().showAndWait();
             }
         });
 
@@ -783,6 +781,41 @@ public class Matopeli extends Application {
         highscoreTableScene.getStylesheets().add("Styling/styling.css");
 
 
+    }
+
+    private Alert createConnectionAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Database connection error.");
+        alert.setContentText("SQLNonTransientConnectionException");
+
+        Exception ex = new SQLNonTransientConnectionException("Could not connect to address=(host=localhost)(port=4444)(type=master) : Connection refused: connect");
+
+        // Create expandable Exception.
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        ex.printStackTrace(pw);
+        String exceptionText = sw.toString();
+
+        Label label = new Label("The exception stacktrace was:");
+
+        TextArea textArea = new TextArea(exceptionText);
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+
+        textArea.setMaxWidth(Double.MAX_VALUE);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setVgrow(textArea, Priority.ALWAYS);
+        GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(label, 0, 0);
+        expContent.add(textArea, 0, 1);
+
+        // Set expandable Exception into the dialog pane.
+        alert.getDialogPane().setExpandableContent(expContent);
+        return alert;
     }
 
 }

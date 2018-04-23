@@ -477,7 +477,6 @@ public class Board {
 
     /**
      * Getter for database connection
-     *
      * @return reference to database connection object
      */
     public Connection getConnection() {
