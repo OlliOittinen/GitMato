@@ -21,6 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.canvas.GraphicsContext;
@@ -82,6 +83,9 @@ public class Matopeli extends Application {
     private Image hornyhat = new Image("images/hornyhat.png");
     private Image bighornyhat = new Image("images/bighornyhat.png");
     private Image scissoricon = new Image("images/stealicon.png");
+    private Image controlinfo = new Image("images/InfoControls.png");
+    private Image gameideainfo = new Image("images/gameidea.png");
+    private Image powerupinfo = new Image("images/powerupinfo.png");
     private Image wormskin;
     private Image worm2skin;
     private ArrayList<Image> hatimages = new ArrayList();
@@ -188,7 +192,7 @@ public class Matopeli extends Application {
             animationLoop(gc);
         });
         Button close = new Button("Exit");
-        close.setOnAction(e ->{
+        close.setOnAction(e -> {
             //createConfirmationDialog();
             System.exit(0);
         });
@@ -200,6 +204,25 @@ public class Matopeli extends Application {
         bighatimages.add(bighat);
         bighatimages.add(bigredhat);
         bighatimages.add(bighornyhat);
+
+
+        //create info popup
+        GridPane infopane = new GridPane();
+        HBox navbuttons = new HBox(20);
+        navbuttons.setAlignment(Pos.BOTTOM_CENTER);
+        Button forward = new Button();
+        forward.setId("redarrowbuttonright");
+        Button backward = new Button();
+        backward.setId("bluearrowbuttonleft");
+        navbuttons.getChildren().addAll(backward,forward);
+        ImageView infoimv = new ImageView();
+        infoimv.setImage(controlinfo);
+        infoimv.setFitWidth(width);
+        infoimv.setFitHeight(height);
+        infopane.getChildren().add(infoimv);
+        infopane.getChildren().add(navbuttons);
+        infopane.getStylesheets().add("Styling/styling.css");
+        Scene infoscene = new Scene(infopane,width,height);
 
         imv2.setTranslateX(80);
         imv.setTranslateX(490);
@@ -234,6 +257,13 @@ public class Matopeli extends Application {
         menuLayout.setAlignment(Pos.CENTER);
         menuLayout.getChildren().addAll(button2, button1, button3, close);
 
+        HBox infobuttonbox = new HBox();
+        Button infobutton = new Button();
+        infobutton.setOnAction(e -> window.setScene(infoscene));
+        infobutton.setId("infobutton");
+        infobuttonbox.getChildren().add(infobutton);
+        infobuttonbox.setAlignment(Pos.TOP_RIGHT);
+
 
         GridPane mainmenupane = new GridPane();
         GridPane skinbuttonpane = new GridPane();
@@ -242,6 +272,7 @@ public class Matopeli extends Application {
         skinbuttonpane.add(rednextButtons, 1, 0);
         skinbuttonpane.add(bluenextButtons, 0, 0);
         skinbuttonpane.setPadding(new Insets(80, 0, 40, 0));
+        mainmenupane.add(infobuttonbox, 0, 0);
         mainmenupane.add(imv, 0, 0);
         mainmenupane.add(imv2, 0, 0);
         mainmenupane.add(menuLayout, 0, 0);
