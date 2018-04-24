@@ -75,20 +75,10 @@
 
 #infobutton {
     -fx-background-image: url("infobutton.png");
-    -fx-background-size: 40px 40px;
+    -fx-background-size: 45;
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
-    -fx-translate-y: -180;
-}
-#scrollpane {
-    -fx-background: #8b8b8b;
-    -fx-font-family: 'Press Start 2P';
-    -fx-text-fill:white;
-}
-#scrollvbox{
-    -fx-background-color: #8b8b8b;
-    -fx-font-family: 'Press Start 2P';
-    -fx-text-fill: white;
+    -fx-translate-y: -170;
 }
 
 Button {
@@ -107,8 +97,36 @@ Button {
 Button:hover {
     -fx-translate-y: -2;
 }
+
 #infobutton:hover {
-    -fx-translate-y: -182;
+    -fx-translate-y: -172;
+}
+
+#exitbutton {
+    -fx-background-image: url("exit.png");
+    -fx-background-size: 50px;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-translate-y: -250;
+    -fx-translate-x: 640;
+}
+#exitbutton:hover{
+    -fx-translate-y: -252;
+}
+
+#orangearrowbuttonleft {
+    -fx-background-image: url("OrangeArrowButton.png");
+    -fx-background-size: 40px 40px;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+}
+
+#orangearrowbuttonright {
+    -fx-background-image: url("OrangeArrowButton.png");
+    -fx-background-size: 40px 40px;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-scale-x: -1;
 }
 
 #redarrowbuttonleft {

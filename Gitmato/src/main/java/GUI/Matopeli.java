@@ -83,6 +83,7 @@ public class Matopeli extends Application {
     private Image hornyhat = new Image("images/hornyhat.png");
     private Image bighornyhat = new Image("images/bighornyhat.png");
     private Image scissoricon = new Image("images/stealicon.png");
+    private ArrayList<Image> infoimg = new ArrayList();
     private Image controlinfo = new Image("images/InfoControls.png");
     private Image gameideainfo = new Image("images/gameidea.png");
     private Image powerupinfo = new Image("images/powerupinfo.png");
@@ -130,6 +131,7 @@ public class Matopeli extends Application {
     private boolean worm2skinactive;
     private int skinindex = -1;
     private int skinindex2 = -1;
+    private int infoindex = 0;
 
     /**
      * Launches the application.
@@ -205,24 +207,55 @@ public class Matopeli extends Application {
         bighatimages.add(bigredhat);
         bighatimages.add(bighornyhat);
 
+        //add info images to arraylist
+        infoimg.add(controlinfo);
+        infoimg.add(gameideainfo);
+        infoimg.add(powerupinfo);
 
-        //create info popup
+        //create info scene
         GridPane infopane = new GridPane();
         HBox navbuttons = new HBox(20);
         navbuttons.setAlignment(Pos.BOTTOM_CENTER);
         Button forward = new Button();
-        forward.setId("redarrowbuttonright");
+        forward.setId("orangearrowbuttonright");
         Button backward = new Button();
-        backward.setId("bluearrowbuttonleft");
-        navbuttons.getChildren().addAll(backward,forward);
+        backward.setId("orangearrowbuttonleft");
+        Button exitbutton = new Button();
+        exitbutton.setId("exitbutton");
+        exitbutton.setAlignment(Pos.TOP_RIGHT);
+        navbuttons.getChildren().addAll(backward, forward);
         ImageView infoimv = new ImageView();
         infoimv.setImage(controlinfo);
         infoimv.setFitWidth(width);
         infoimv.setFitHeight(height);
         infopane.getChildren().add(infoimv);
         infopane.getChildren().add(navbuttons);
+        infopane.getChildren().add(exitbutton);
         infopane.getStylesheets().add("Styling/styling.css");
-        Scene infoscene = new Scene(infopane,width,height);
+        Scene infoscene = new Scene(infopane, width, height);
+
+        //exit button handler
+        exitbutton.setOnAction(e -> window.setScene(mainMenuScene));
+
+        //info scene navigation buttons handlers
+        forward.setOnAction(e -> {
+            if (infoindex < infoimg.size() - 1) {
+                infoindex++;
+            } else {
+                infoindex = 0;
+            }
+            infoimv.setImage(infoimg.get(infoindex));
+        });
+
+        backward.setOnAction(e -> {
+            if (infoindex > 0 && infoindex <= infoimg.size() - 1) {
+                infoindex--;
+            } else {
+                infoindex = 0;
+            }
+            infoimv.setImage(infoimg.get(infoindex));
+        });
+
 
         imv2.setTranslateX(80);
         imv.setTranslateX(490);
