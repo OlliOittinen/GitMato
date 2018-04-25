@@ -75,6 +75,8 @@
 
 #infobutton {
     -fx-background-image: url("infobutton.png");
+    -fx-min-height: 45px;
+    -fx-min-width: 45px;
     -fx-background-size: 45;
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
@@ -97,6 +99,9 @@ Button {
 Button:hover {
     -fx-translate-y: -2;
 }
+Button:pressed {
+    -fx-translate-y: 3;
+}
 
 #infobutton:hover {
     -fx-translate-y: -172;
@@ -104,6 +109,8 @@ Button:hover {
 
 #exitbutton {
     -fx-background-image: url("exit.png");
+    -fx-min-height: 50px;
+    -fx-min-width: 50px;
     -fx-background-size: 50px;
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
@@ -116,6 +123,8 @@ Button:hover {
 
 #orangearrowbuttonleft {
     -fx-background-image: url("OrangeArrowButton.png");
+    -fx-min-height: 40px;
+    -fx-min-width: 40px;
     -fx-background-size: 40px 40px;
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
@@ -123,6 +132,8 @@ Button:hover {
 
 #orangearrowbuttonright {
     -fx-background-image: url("OrangeArrowButton.png");
+    -fx-min-height: 40px;
+    -fx-min-width: 40px;
     -fx-background-size: 40px 40px;
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
@@ -131,6 +142,8 @@ Button:hover {
 
 #redarrowbuttonleft {
     -fx-background-image: url("RedrrowButton.png");
+    -fx-min-height: 40px;
+    -fx-min-width: 40px;
     -fx-background-size: 40px 40px;
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
@@ -138,6 +151,8 @@ Button:hover {
 
 #redarrowbuttonright {
     -fx-background-image: url("RedrrowButton.png");
+    -fx-min-height: 40px;
+    -fx-min-width: 40px;
     -fx-background-size: 40px 40px;
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
@@ -146,6 +161,8 @@ Button:hover {
 
 #bluearrowbuttonleft {
     -fx-background-image: url("BlueArrowButton.png");
+    -fx-min-height: 40px;
+    -fx-min-width: 40px;
     -fx-background-size: 40px 40px;
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
@@ -153,6 +170,8 @@ Button:hover {
 
 #bluearrowbuttonright {
     -fx-background-image: url("BlueArrowButton.png");
+    -fx-min-height: 40px;
+    -fx-min-width: 40px;
     -fx-background-size: 40px 40px;
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;

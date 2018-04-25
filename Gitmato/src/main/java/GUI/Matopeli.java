@@ -214,7 +214,7 @@ public class Matopeli extends Application {
 
         //create info scene
         GridPane infopane = new GridPane();
-        HBox navbuttons = new HBox(20);
+        HBox navbuttons = new HBox(50);
         navbuttons.setAlignment(Pos.BOTTOM_CENTER);
         Button forward = new Button();
         forward.setId("orangearrowbuttonright");
@@ -257,8 +257,10 @@ public class Matopeli extends Application {
         });
 
 
-        imv2.setTranslateX(80);
-        imv.setTranslateX(490);
+        imv2.setTranslateX(-20);
+        imv.setTranslateX(400);
+        imv2.setTranslateY(-20);
+        imv.setTranslateY(-20);
         Label skinlabel = new Label("Select\nHat");
         skinlabel.setId("skinlabel");
         Label skinlabel2 = new Label("Select\nHat");
@@ -278,11 +280,13 @@ public class Matopeli extends Application {
         redbackwardskin.setId("redarrowbuttonleft");
 
         //------------Main Menu Scene - Game mode selector --------------
-        HBox bluenextButtons = new HBox();
+        HBox bluenextButtons = new HBox(10);
+        bluenextButtons.setPadding(new Insets (0,100,0,0));
         bluenextButtons.setAlignment(Pos.BOTTOM_CENTER);
         bluenextButtons.getChildren().addAll(bluebackwardskin, skinlabel, blueforwardskin);
 
-        HBox rednextButtons = new HBox();
+        HBox rednextButtons = new HBox(10);
+        rednextButtons.setPadding(new Insets (0,0,0,100));
         rednextButtons.setAlignment(Pos.BOTTOM_CENTER);
         rednextButtons.getChildren().addAll(redbackwardskin, skinlabel2, redforwardskin);
 
