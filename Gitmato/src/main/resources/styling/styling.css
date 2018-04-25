@@ -63,6 +63,7 @@
     -fx-font-family: 'Press Start 2P';
     -fx-font-size: 15px;
     -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
 }
 
 #errormessage {
