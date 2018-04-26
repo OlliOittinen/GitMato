@@ -45,6 +45,7 @@ public class Matopeli extends Application {
     private Image confuseEffect = new Image("images/confusion.png");
     private Image fastericon = new Image("images/SpeedUp.png");
     private Image lasericon = new Image("images/Lasercannon.png");
+    private Image switchericon = new Image ("images/firehat.png");
     private Image laserH = new Image("images/LazerH.png");
     private Image laserV = new Image("images/lazerV.png");
     private Image lasersightV = new Image("images/lasersightV.png");
@@ -116,6 +117,7 @@ public class Matopeli extends Application {
     private Laser laser;
     private Steal steal;
     private Snack snack;
+    private Switcher switcher;
     private ArrayList<Worm> worms;
     private ArrayList<Spawnables> powerups;
     private long currentTime = 0; // current time (ms)
@@ -349,6 +351,7 @@ public class Matopeli extends Application {
         steal = (Steal) powerups.get(8);
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
+        switcher = (Switcher) powerups.get(9);
     }
 
     private void animationLoop(GraphicsContext gc) {
@@ -515,6 +518,7 @@ public class Matopeli extends Application {
             g.drawImage(bombfire, bombs.getXBombs(6), bombs.getYBombs(6));
             g.drawImage(lasericon, laser.getX(), laser.getY());
             g.drawImage(scissoricon, steal.getX(), steal.getY());
+            g.drawImage(switchericon, switcher.getX(), switcher.getY());
 
             //if laser's private boolean 'lethal' is not true, draw the laser sight for it
             if (!laser.getLethal()) {
