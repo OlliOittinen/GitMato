@@ -17,6 +17,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -93,6 +94,7 @@ public class Matopeli extends Application {
     private ArrayList<Image> bighatimages = new ArrayList<>();
     private ImageView imv = new ImageView();
     private ImageView imv2 = new ImageView();
+    private ImageView infoimv = new ImageView();
 
     private static int width = 800;
     private static int height = 600;
@@ -224,7 +226,6 @@ public class Matopeli extends Application {
         exitbutton.setId("exitbutton");
         exitbutton.setAlignment(Pos.TOP_RIGHT);
         navbuttons.getChildren().addAll(backward, forward);
-        ImageView infoimv = new ImageView();
         infoimv.setImage(controlinfo);
         infoimv.setFitWidth(width);
         infoimv.setFitHeight(height);
@@ -237,23 +238,23 @@ public class Matopeli extends Application {
         //exit button handler
         exitbutton.setOnAction(e -> window.setScene(mainMenuScene));
 
+        //keyboard navigation for info scene
+        infoscene.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.RIGHT) {
+                navigateInfo("+");
+            }
+            if (e.getCode() == KeyCode.LEFT) {
+                navigateInfo("-");
+            }
+        });
+
         //info scene navigation buttons handlers
         forward.setOnAction(e -> {
-            if (infoindex < infoimg.size() - 1) {
-                infoindex++;
-            } else {
-                infoindex = 0;
-            }
-            infoimv.setImage(infoimg.get(infoindex));
+            navigateInfo("+");
         });
 
         backward.setOnAction(e -> {
-            if (infoindex > 0 && infoindex <= infoimg.size() - 1) {
-                infoindex--;
-            } else {
-                infoindex = 0;
-            }
-            infoimv.setImage(infoimg.get(infoindex));
+            navigateInfo("_");
         });
 
 
@@ -904,5 +905,24 @@ public class Matopeli extends Application {
             System.exit(0);
         }
         return alert;
+    }
+
+    private void navigateInfo(String value) {
+        if (value.equals("+")) {
+            if (infoindex < infoimg.size() - 1) {
+                infoindex++;
+            } else {
+                infoindex = 0;
+            }
+            infoimv.setImage(infoimg.get(infoindex));
+        }
+        if (value.equals("-")) {
+            if (infoindex > 0 && infoindex <= infoimg.size() - 1) {
+                infoindex--;
+            } else {
+                infoindex = 0;
+            }
+            infoimv.setImage(infoimg.get(infoindex));
+        }
     }
 }
