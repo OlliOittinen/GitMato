@@ -172,4 +172,27 @@ public class SpawnableTest {
         assertEquals(-1000, laser.getY3());
     }
 
+    /**
+     * Assigns three tailpieces to second worm.
+     * Checks the length of both worms' tails before and after power-up, when worm #1 picks it up.
+     */
+    @Test
+    public void steal() {
+        Worm worm2 = new Worm(2);
+        Steal steal = (Steal) all.get(7);
+
+        worm2.addTail();
+        worm2.addTail();
+        worm2.addTail();
+
+        assertEquals(3, worm2.getTails().size());
+        assertEquals(0, worm.getTails().size());
+
+        steal.steal(worm, worm2);
+
+        assertEquals(2, worm2.getTails().size());
+        assertEquals(1, worm.getTails().size());
+    }
+
+
 }
