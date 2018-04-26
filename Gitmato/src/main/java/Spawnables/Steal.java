@@ -33,7 +33,6 @@ public class Steal extends AbstractSpawnables{
 
             } while (currentLength > howMuchAfterCut);
         }else{
-            //pop goes the bubble
             worm2.setShield(false);
         }
     }

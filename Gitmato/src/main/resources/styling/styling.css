@@ -134,6 +134,7 @@ Button:pressed {
 
 
 TextField {
+    -fx-font-family: 'Press Start 2P';
     -fx-min-width: 400px;
     -fx-max-width: 400px;
 }

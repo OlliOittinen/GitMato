@@ -17,6 +17,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -44,6 +45,7 @@ public class Matopeli extends Application {
     private Image confuseEffect = new Image("images/confusion.png");
     private Image fastericon = new Image("images/SpeedUp.png");
     private Image lasericon = new Image("images/Lasercannon.png");
+    private Image switchericon = new Image ("images/switcher.png");
     private Image laserH = new Image("images/LazerH.png");
     private Image laserV = new Image("images/lazerV.png");
     private Image lasersightV = new Image("images/lasersightV.png");
@@ -93,6 +95,7 @@ public class Matopeli extends Application {
     private ArrayList<Image> bighatimages = new ArrayList<>();
     private ImageView imv = new ImageView();
     private ImageView imv2 = new ImageView();
+    private ImageView infoimv = new ImageView();
 
     private static int width = 800;
     private static int height = 600;
@@ -114,6 +117,7 @@ public class Matopeli extends Application {
     private Laser laser;
     private Steal steal;
     private Snack snack;
+    private Switcher switcher;
     private ArrayList<Worm> worms;
     private ArrayList<Spawnables> powerups;
     private long currentTime = 0; // current time (ms)
@@ -199,7 +203,6 @@ public class Matopeli extends Application {
             System.exit(0);
         });
 
-        //add all skins to arraylist
         hatimages.add(cowboyhat);
         hatimages.add(firehat);
         hatimages.add(hornyhat);
@@ -207,12 +210,10 @@ public class Matopeli extends Application {
         bighatimages.add(bigredhat);
         bighatimages.add(bighornyhat);
 
-        //add info images to arraylist
         infoimg.add(controlinfo);
         infoimg.add(gameideainfo);
         infoimg.add(powerupinfo);
 
-        //create info scene
         GridPane infopane = new GridPane();
         HBox navbuttons = new HBox(50);
         navbuttons.setAlignment(Pos.BOTTOM_CENTER);
@@ -224,7 +225,6 @@ public class Matopeli extends Application {
         exitbutton.setId("exitbutton");
         exitbutton.setAlignment(Pos.TOP_RIGHT);
         navbuttons.getChildren().addAll(backward, forward);
-        ImageView infoimv = new ImageView();
         infoimv.setImage(controlinfo);
         infoimv.setFitWidth(width);
         infoimv.setFitHeight(height);
@@ -234,26 +234,24 @@ public class Matopeli extends Application {
         infopane.getStylesheets().add("Styling/styling.css");
         Scene infoscene = new Scene(infopane, width, height);
 
-        //exit button handler
         exitbutton.setOnAction(e -> window.setScene(mainMenuScene));
+
+        infoscene.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.RIGHT) {
+                navigateInfo("+");
+            }
+            if (e.getCode() == KeyCode.LEFT) {
+                navigateInfo("-");
+            }
+        });
 
         //info scene navigation buttons handlers
         forward.setOnAction(e -> {
-            if (infoindex < infoimg.size() - 1) {
-                infoindex++;
-            } else {
-                infoindex = 0;
-            }
-            infoimv.setImage(infoimg.get(infoindex));
+            navigateInfo("+");
         });
 
         backward.setOnAction(e -> {
-            if (infoindex > 0 && infoindex <= infoimg.size() - 1) {
-                infoindex--;
-            } else {
-                infoindex = 0;
-            }
-            infoimv.setImage(infoimg.get(infoindex));
+            navigateInfo("-");
         });
 
 
@@ -300,7 +298,6 @@ public class Matopeli extends Application {
         infobuttonbox.getChildren().add(infobutton);
         infobuttonbox.setAlignment(Pos.TOP_RIGHT);
 
-
         GridPane mainmenupane = new GridPane();
         GridPane skinbuttonpane = new GridPane();
         mainmenupane.setAlignment(Pos.CENTER);
@@ -314,10 +311,8 @@ public class Matopeli extends Application {
         mainmenupane.add(menuLayout, 0, 0);
         mainmenupane.add(skinbuttonpane, 0, 2);
         mainmenupane.setAlignment(Pos.BOTTOM_CENTER);
-        //main menu scene is a new scene based on above layouts
         mainMenuScene = new Scene(mainmenupane, width, height);
 
-        //set id for css, get the styling from the correct file
         mainmenupane.setId("main_menu");
 
         mainMenuScene.getStylesheets().add("Styling/styling.css");
@@ -332,7 +327,6 @@ public class Matopeli extends Application {
     }
 
     private void init(String gameMode) {
-        //initialize all the variables needed
         board = new Board(this, gameMode);
         pc = new PlayerController(board, gameMode);
         worms = new ArrayList<>();
@@ -346,12 +340,12 @@ public class Matopeli extends Application {
         bombs = (Bombs) powerups.get(6);
         laser = (Laser) powerups.get(7);
         steal = (Steal) powerups.get(8);
+        switcher = (Switcher) powerups.get(9);
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
     }
 
     private void animationLoop(GraphicsContext gc) {
-        //timer handles all the drawing in a loop
         timer = new AnimationTimer() {
             //fps-throttle
             private long lastUpdate = 0;
@@ -359,7 +353,6 @@ public class Matopeli extends Application {
             @Override
             public void handle(long now) {
                 if (now - lastUpdate >= 10_000_000) {
-                    //let the controller handle inputs
                     gameScene.setOnKeyPressed((KeyEvent event) -> pc.keyPressed(event));
                     board.updateBoard();
                     draw(gc);
@@ -472,26 +465,19 @@ public class Matopeli extends Application {
     }
 
     private void draw(GraphicsContext g) {
-        //as long as board tells GUI to be active
         if (board.isIngame()) {
-
-            //update worm bodies and sizes of the tail, get these from the board
             body = board.getTailList();
             body2 = board.getTailList2();
             tailsize = body.size();
             tailsize2 = body2.size();
 
-            //keep drawing the background
             g.drawImage(background, 0, 0);
 
-            //if worm #1's tail is bigger than 1 (exists)
             if (tailsize > 0) {
-                //in a loop, draw these tail pieces
                 for (int i = 0; i < tailsize; i++) {
                     g.drawImage(wormtail, body.get(i).getX(), body.get(i).getY());
                 }
             }
-            //identical to above, but for worm #2
             if (tailsize2 > 0) {
                 for (int i = 0; i < tailsize2; i++) {
                     g.drawImage(wormtail2, body2.get(i).getX(), body2.get(i).getY());
@@ -514,6 +500,7 @@ public class Matopeli extends Application {
             g.drawImage(bombfire, bombs.getXBombs(6), bombs.getYBombs(6));
             g.drawImage(lasericon, laser.getX(), laser.getY());
             g.drawImage(scissoricon, steal.getX(), steal.getY());
+            g.drawImage(switchericon, switcher.getX(), switcher.getY());
 
             //if laser's private boolean 'lethal' is not true, draw the laser sight for it
             if (!laser.getLethal()) {
@@ -526,43 +513,33 @@ public class Matopeli extends Application {
                 g.drawImage(laserV, laser.getX2(), laser.getY2());
             }
 
-            //keep drawing worm #1
             g.drawImage(wormImage, worm.getX(), worm.getY());
 
-            //if the game mode is not single player, draw the second worm too
-            //could this just be passed once and not be constantly checked?
             if (!gameMode.equals("sp")) {
                 g.drawImage(worm2Image, worm2.getX(), worm2.getY());
             }
-            //draw skins for worms if boolean is true(skin is selected from mainmenu)
             if (wormskinactive) {
                 g.drawImage(wormskin, worm.getX() - 5, worm.getY() - 10);
             }
             if (worm2skinactive) {
                 g.drawImage(worm2skin, worm2.getX() - 5, worm2.getY() - 10);
             }
-            //draw shield effects on top of worm if shield boolean is true
             if (worm.getShield()) {
                 g.drawImage(shieldeffect, worm.getX() - 5, worm.getY() - 4);
             }
-            //identical, but for worm #2
             if (worm2.getShield()) {
                 g.drawImage(shieldeffect, worm2.getX() - 5, worm2.getY() - 4);
             }
-            //draw confusion effects on top of worm if confuse boolean is true
             if (worm.getReverse()) {
                 g.drawImage(confuseEffect, worm.getX() - 5, worm.getY() - 4);
             }
-            //identical for worm #2
             if (worm2.getReverse()) {
                 g.drawImage(confuseEffect, worm2.getX() - 5, worm2.getY() - 4);
             }
-            //always draw points
             drawPoints(g);
 
-            //if board is inactive
-        } else {
-            //stop the background music, play death music
+            }
+            else {
             if (worm.getLife() < worm2.getLife() && !gameMode.equals("sp")) {
                 score = worm2.getPoints();
                 winner_label.setText("BLUE WON");
@@ -579,31 +556,21 @@ public class Matopeli extends Application {
             Music.death.play();
             createGameOverScene();
             createHighscoreScene();
-            //set scene to be game over
             window.setScene(gameOverScene);
-            //stop the timer that handles drawing
             timer.stop();
-            //reset the board
             reset();
         }
     }
 
     private void drawPoints(GraphicsContext g) {
-
-        //set fonts and colors to be used for drawing the points
         g.setFont(Font.font("Helvetica", FontWeight.BOLD, 22));
         g.setFill(Color.RED);
         g.setStroke(Color.BLACK);
-
-        //initialise string to be drawn
         String hp = "HP: " + worm.getLife();
         String pt = "Pisteet: " + worm.getPoints();
-
-        //draw the text on the GUI based on these values
         g.fillText(hp, 50, 30);
         g.fillText(pt, 50, 60);
 
-        //if game mode is not single player, draw the points for the second worm
         if (!gameMode.equals("sp")) {
             g.setFill(Color.BLUE);
             String hp2 = "HP: " + worm2.getLife();
@@ -613,7 +580,6 @@ public class Matopeli extends Application {
         }
 
         //------------------FPS counter-------------------
-        //get the current time from the system
         currentTime = System.currentTimeMillis();
         //delta time is difference between current and previous time divided by 1k
         double deltaTime = (double) (currentTime - previousTime) / 1_000;
@@ -632,7 +598,6 @@ public class Matopeli extends Application {
             //if current time is less than interval, add difference between times to the time counter
             timeCounter += deltaTime;
             //add  1/interval to the current frame counter
-            //why?
             frameCounter += (int) (1 / interval);
         }
         //save previous time as current time so when this is called again, it can use the new values
@@ -646,17 +611,11 @@ public class Matopeli extends Application {
     }
 
     private void reset() {
-        //start the background music
+
         Music.backgroundMusic.loop();
-
-        //tell the board it's ingame again
         board.setIngame(true);
-
-        //set highscore submitted back to false
-
         hs_submitted = false;
 
-        //clear the internal arraylists for reinitialization
         worms.clear();
         body.clear();
         body2.clear();
@@ -664,15 +623,10 @@ public class Matopeli extends Application {
 
         //reset the tailsizes to be 0 for no conflicts
         tailsize = 0;
-        tailsize = 0;
+        tailsize2 = 0;
 
-        //create a new Board based on the game mode
         board = new Board(this, gameMode);
-
-        //create a new controller using the new board and game mode
         pc = new PlayerController(board, gameMode);
-
-        //get powerups from the board
         powerups = board.getPickableList();
         snack = (Snack) powerups.get(0);
         faster = (Faster) powerups.get(1);
@@ -683,24 +637,18 @@ public class Matopeli extends Application {
         bombs = (Bombs) powerups.get(6);
         laser = (Laser) powerups.get(7);
         steal = (Steal) powerups.get(8);
-
-        //add worms from the board to local worms list
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
     }
 
     private void createGameOverScene() {
-        //create a new vertical box, center it, and add buttons to it, set id for css
         VBox gameOverLayout = new VBox(20);
         gameOverLayout.setId("gameOver");
         gameOverLayout.setAlignment(Pos.CENTER);
 
-        //create a label for game over, handled in css
         Label gameOverLabel = new Label("GAME OVER");
         gameOverLabel.setId("gameOverLabel");
 
-
-        //buttons
         Button restart = new Button("Restart");
         Button backToSS = new Button("Main menu");
         highscore_button = new Button("Submit\nhighscore");
@@ -710,7 +658,6 @@ public class Matopeli extends Application {
             timer.start();
         });
 
-        //handle button clicks
         backToSS.setOnAction(e -> window.setScene(mainMenuScene));
 
         highscore_button.setOnAction(e -> {
@@ -724,52 +671,36 @@ public class Matopeli extends Application {
             }
         });
 
-        //add buttons to the layout
         gameOverLayout.getChildren().addAll(gameOverLabel, winner_label, restart, backToSS, highscore_button);
-
-        //create game over scene based on this layout
         gameOverScene = new Scene(gameOverLayout, width, height);
-        //add css to this scene
         gameOverScene.getStylesheets().add("Styling/styling.css");
     }
 
     private void createHighscoreScene() {
 
-        //create a gridpane
         GridPane grid = new GridPane();
-
-        //align it center
         grid.setAlignment(Pos.CENTER);
-
-        //set horizontal gap
         grid.setHgap(10);
-
-        //set vertical gap
         grid.setVgap(10);
-
-        //set padding around grid
         grid.setPadding(new Insets(25, 25, 25, 25));
         scenetitle.setId("highscore_title");
         scenetitle.setFill(Color.WHITE);
         grid.add(scenetitle, 0, 0, 2, 1);
-        // create label for username
+
         Label userName = new Label("Username: ");
         Label errorMessage = new Label();
         errorMessage.setId("errormessage");
-
         userName.setTextFill(Color.WHITE);
         userName.setId("username");
         grid.add(userName, 0, 10);
-        //create textfield for usernames
+
         TextField userTextField = new TextField();
         grid.add(userTextField, 1, 10);
         grid.add(errorMessage, 0, 11);
 
-        //create buttons
         Button submit = new Button("Submit");
         Button cancel = new Button("Cancel");
 
-        // handlers for buttons
         cancel.setOnAction(e -> window.setScene(gameOverScene));
         submit.setOnAction(e -> {
             if ((userTextField.getText() != null && !userTextField.getText().isEmpty())) {
@@ -786,7 +717,6 @@ public class Matopeli extends Application {
                 errorMessage.setText("Please enter\nyour username");
             }
         });
-        //create Horizontal Box for buttons
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().addAll(submit, cancel);
@@ -794,7 +724,6 @@ public class Matopeli extends Application {
 
         highscoreScene = new Scene(grid, width, height);
         grid.setId("highscore_scene");
-        //get stylesheets for highscore scene
         highscoreScene.getStylesheets().add("Styling/styling.css");
     }
 
@@ -808,7 +737,7 @@ public class Matopeli extends Application {
         //searches for match from the arraylist where username=username_given and points = score_given and gets the index of where the match was found.
         int indexOf = scorelist.indexOf(username + " " + score) + 1;
         String highscore = "";
-        //adds top10 names and highscores to the "highscore" String in a loop
+        //adds top10 names and highscores to the String
         int i = 0;
         for (String s : scorelist) {
             i++;
@@ -816,22 +745,14 @@ public class Matopeli extends Application {
                 highscore += +(i) + ". " + s + '\n';
             }
         }
-        //create a gridpane
         GridPane grid = new GridPane();
         grid.setId("highscoretable_scene");
-
-        //align it center
         grid.setAlignment(Pos.CENTER);
-
-        //set horizontal gap
         grid.setHgap(10);
-
-        //set vertical gap
         grid.setVgap(10);
 
         VBox vbox = new VBox(40);
         vbox.setAlignment(Pos.CENTER);
-
 
         Text headline = new Text("You placed: #" + indexOf + " with " + score + " points!\n\n\nTop 10");
         headline.setFill(Color.WHITE);
@@ -841,22 +762,18 @@ public class Matopeli extends Application {
 
         highscores.setId("top_10_highscores");
         Button okbutton = new Button("OK");
-        //handeler for ok button
         okbutton.setOnAction(e -> {
             window.setScene(gameOverScene);
             highscore_button.setText("Show\nhighscore");
         });
 
         highscores.setId("highscoretable_highscores");
-        //handler for okbutton
         okbutton.setOnAction(e -> window.setScene(gameOverScene));
         vbox.getChildren().addAll(headline, highscores, okbutton);
         grid.getChildren().addAll(vbox);
 
         highscoreTableScene = new Scene(grid, width, height);
         highscoreTableScene.getStylesheets().add("Styling/styling.css");
-
-
     }
 
     private Alert createConnectionAlert() {
@@ -904,5 +821,24 @@ public class Matopeli extends Application {
             System.exit(0);
         }
         return alert;
+    }
+
+    private void navigateInfo(String value) {
+        if (value.equals("+")) {
+            if (infoindex < infoimg.size() - 1) {
+                infoindex++;
+            } else {
+                infoindex = 0;
+            }
+            infoimv.setImage(infoimg.get(infoindex));
+        }
+        if (value.equals("-")) {
+            if (infoindex > 0 && infoindex <= infoimg.size() - 1) {
+                infoindex--;
+            } else {
+                infoindex = 0;
+            }
+            infoimv.setImage(infoimg.get(infoindex));
+        }
     }
 }

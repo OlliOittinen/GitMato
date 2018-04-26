@@ -33,11 +33,8 @@ public class Life extends AbstractSpawnables {
      */
 
     public static void addLife(Worm worm) {
-        //add points to this worm
         worm.setPoints(worm.getPoints() + 100);
-        //play the corresponding music
         Music.addLife.play();
-        //add points to the one who picked up
         worm.setLife(worm.getLife() + 1);
     }
 
@@ -53,12 +50,9 @@ public class Life extends AbstractSpawnables {
      */
     //needs to be static so laser & bomb spawnables can access this
     public static void loseLife(Worm worm) {
-        //check whether or not the shield is active; if not, this worm loses a life
         if (!worm.getShield()) {
-            //play the corresponding music
-            Music.loseLife.play(); //remove a life from this worm's life pool
+            Music.loseLife.play();
             worm.setLife(worm.getLife() - 1);
-            //give this worm a shield for a second to prevent instant loss of all lives
             worm.setShield(true);
             worm.setTransparencyChange(true);
             Timer timer = new Timer();

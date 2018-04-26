@@ -36,6 +36,7 @@ public class Board {
     private Bombs bombs;
     private Laser laser;
     private Steal steal;
+    private Switcher switcher;
     private String gameMode;
     private Matopeli GUI;
     private Bot bot;
@@ -85,6 +86,7 @@ public class Board {
         laser = new Laser();
         snack = new Snack();
         steal = new Steal();
+        switcher = new Switcher();
 
         pickableList.add(snack);
         pickableList.add(faster);
@@ -95,6 +97,7 @@ public class Board {
         pickableList.add(bombs);
         pickableList.add(laser);
         pickableList.add(steal);
+        pickableList.add(switcher);
 
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
@@ -218,7 +221,7 @@ public class Board {
                 pickableList.get(n).randomizeIconLocation();
 
             }
-        }, 5000); //aika (ms), joka odotetaan
+        }, 5000);
     }
 
     /**
@@ -257,6 +260,7 @@ public class Board {
         Bounds pla = laser.getBoundsForIcon();
         Rectangle beam = laser.getBoundsB();
         Bounds sc = steal.getBoundsForIcon();
+        Bounds sw = switcher.getBoundsForIcon();
 
         for (Tail aTailList : tailList) {
             Bounds Matotail = aTailList.getBounds();
@@ -380,6 +384,11 @@ public class Board {
             powerUpCD();
         }
 
+        if (sw.intersects(Matokuutio)) {
+            switcher.switcher(worm, worm2);
+            powerUpCD();
+        }
+
         //mato 2 collisions
         if (s.intersects(Matokuutio2)) {
             Music.snack.play();
@@ -469,6 +478,11 @@ public class Board {
             steal.steal(worm2, worm);
             powerUpCD();
         }
+
+        if (sw.intersects(Matokuutio2)) {
+            switcher.switcher(worm2, worm);
+            powerUpCD();
+        }
     }
 
     /**
@@ -512,7 +526,6 @@ public class Board {
 
         GUI.setWormImage();
 
-        //botti ja sen toiminta
         if (gameMode.equals("vs AI")) {
             bot.runBotRun();
         }

@@ -26,6 +26,7 @@ public class SpawnableTest {
         Shield s = new Shield();
         Slower slo = new Slower();
         Steal steal = new Steal();
+        Switcher swi = new Switcher();
 
         all.add(b);
         all.add(c);
@@ -35,6 +36,7 @@ public class SpawnableTest {
         all.add(s);
         all.add(slo);
         all.add(steal);
+        all.add(swi);
     }
 
     /**
@@ -170,6 +172,26 @@ public class SpawnableTest {
         assertEquals(-1000, laser.getX3());
         assertEquals(-1000, laser.getY2());
         assertEquals(-1000, laser.getY3());
+    }
+    /**
+     * Checks that upon picking up the switcher the worms' locations are switched
+     */
+    @Test
+    public void switcher(){
+        Worm worm2 = new Worm(2);
+        Switcher switcher = (Switcher) all.get(8);
+        worm.setX(200);
+        worm.setY(200);
+        worm2.setX(400);
+        worm2.setY(400);
+
+        switcher.switcher(worm, worm2);
+
+        assertEquals(400, worm.getX());
+        assertEquals(400, worm.getX());
+        assertEquals(200, worm2.getX());
+        assertEquals(200, worm2.getX());
+
     }
 
     /**

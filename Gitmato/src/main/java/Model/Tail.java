@@ -17,12 +17,13 @@ public class Tail{
     private int x;
     private int y;
     private int playerNumber;
+
     // luku jonka mukaan hakee cordinaateista itselleen arvon.
     private int coordinateInt;
 
     /**
      * Class constructor
-     * @param ci Coordinate where the tail will be drawn.
+     * @param ci Coordinate where the tail will be drawn, ie. where on the ArrayList the tail is put to.
      * @param playerNumber Number for the player.
      */
     public Tail(int ci, int playerNumber) {

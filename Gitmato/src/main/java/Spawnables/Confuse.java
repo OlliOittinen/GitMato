@@ -24,20 +24,14 @@ public class Confuse extends AbstractSpawnables {
      * @param worm2 the object (worm) that is to move in the opposite direction
      * @see Model.WormStates.WormConfuse
      */
-    //requires both worms to set effects correctly
     public void confuse(Worm worm, Worm worm2) {
-        //play the corresponding music
         Music.reverse.play();
-        //add points to the one who picked up the icon
         worm.setPoints(worm.getPoints()+100);
-        //set the speed of the opposing worm to be the opposite
         if(!worm2.getShield()){
             worm2.confuse();
         }else{
-            //pop goes the bubble
             worm2.setShield(false);
         }
-
     }
 
     /**

@@ -61,9 +61,9 @@ public class Laser extends AbstractDamagingSpawnables {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                //hae vastustajan nykysijainti, tallenna muuttujiin
                 int wormLocX = worm2.getX();
                 int wormLocY = worm2.getY();
+
                 //horisontaalinen vai vertikaalinen säde, random arvo 0...1
                 double r = Math.random();
                 if (r < 0.5) {

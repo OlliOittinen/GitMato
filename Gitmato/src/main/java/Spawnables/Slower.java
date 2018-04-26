@@ -23,20 +23,14 @@ public class Slower extends AbstractSpawnables{
      * @param worm2 the worm to be slowed down; the worm that has a slower speed temporarily
      * @see Model.WormStates.WormSlow
      */
-    //requires both worms for correct application
     public void slower(Worm worm, Worm worm2) {
-        //play the corresponding music
         Music.slowerPowerup.play();
-        //add points to the one who picked up
         worm.setPoints(worm.getPoints()+100);
-        //change state of the opposing worm
         if(!worm2.getShield()){
             worm2.slowerSpeed();
         }else{
-            //pop goes the bubble
             worm2.setShield(false);
         }
-
     }
 
     /**

@@ -23,11 +23,8 @@ public class Faster extends AbstractSpawnables {
      * @see Model.WormStates.WormFast
      */
     public void faster(Worm worm) {
-        //add points to the worm who picked up
         worm.setPoints(worm.getPoints()+100);
-        //play the corresponding music
         Music.fasterPowerup.play();
-        //set the state of this worm to be faster
         worm.fasterSpeed();
     }
 
