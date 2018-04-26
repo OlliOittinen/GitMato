@@ -173,6 +173,9 @@ public class SpawnableTest {
         assertEquals(-1000, laser.getY2());
         assertEquals(-1000, laser.getY3());
     }
+    /**
+     * Checks that upon picking up the switcher the worms locations are switched
+     */
 
     @Test
     public void switcher(){
