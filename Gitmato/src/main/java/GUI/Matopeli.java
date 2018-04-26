@@ -45,7 +45,7 @@ public class Matopeli extends Application {
     private Image confuseEffect = new Image("images/confusion.png");
     private Image fastericon = new Image("images/SpeedUp.png");
     private Image lasericon = new Image("images/Lasercannon.png");
-    private Image switchericon = new Image ("images/firehat.png");
+    private Image switchericon = new Image ("images/switcher.png");
     private Image laserH = new Image("images/LazerH.png");
     private Image laserV = new Image("images/lazerV.png");
     private Image lasersightV = new Image("images/lasersightV.png");
