@@ -31,11 +31,15 @@ public class Worm {
     private int points;
     private boolean transparencychange;
 
-    public ArrayList<Tail> getTails() {
-        return this.tailList;
+    public int getMultiplier() {
+        return multiplier;
     }
 
-    private ArrayList<Tail> tailList = new ArrayList<>();
+    public void setMultiplier(int multiplier) {
+        this.multiplier = multiplier;
+    }
+
+    private int multiplier = 8;
     private double speed = 3;
     private int life = 3;
 
@@ -55,6 +59,11 @@ public class Worm {
         this.life = life;
     }
 
+    public ArrayList<Tail> getTails() {
+        return this.tailList;
+    }
+
+    private ArrayList<Tail> tailList = new ArrayList<>();
     /**
      * Class constructor.
      * @param p number of the user; 1 for first player, 2 for the second
@@ -328,6 +337,6 @@ public class Worm {
      */
     public void addTail() {
         this.setPoints(this.getPoints()+100);
-        tailList.add(new Tail((getTails().size()+1) * 8, playerNro));
+        tailList.add(new Tail((getTails().size()+1) * multiplier, playerNro));
     }
 }

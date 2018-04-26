@@ -30,18 +30,14 @@ public class WormFast extends WormState {
      */
     @Override
     public void action(Worm worm) {
-        //set speed of this worm to be higher
         worm.setSpeed(worm.getSpeed()+2);
-
-        //create a new timer
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                //normalize the speed again
                 worm.changeState(WormStateNormal.getInstance());
             }
-        }, 5000); //after this delay (ms)
+        }, 5000);
     }
 
 }
