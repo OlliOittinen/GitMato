@@ -256,7 +256,7 @@ public class Matopeli extends Application {
             infoimv.setImage(infoimg.get(infoindex));
         });
 
-        
+
         imv.setTranslateX(380);
         imv2.setTranslateY(-25);
         imv.setTranslateY(-25);
