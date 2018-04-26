@@ -254,7 +254,7 @@ public class Matopeli extends Application {
         });
 
         backward.setOnAction(e -> {
-            navigateInfo("_");
+            navigateInfo("-");
         });
 
 
