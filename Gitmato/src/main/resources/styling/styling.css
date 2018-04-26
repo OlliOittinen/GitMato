@@ -3,7 +3,7 @@
 #main_menu {
     -fx-background-image: url("MainMenuBG.png");
     -fx-background-repeat: stretch;
-    -fx-background-size: 900 606;
+    -fx-background-size: 800 600;
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
 }
@@ -74,16 +74,6 @@
 
 }
 
-#infobutton {
-    -fx-background-image: url("infobutton.png");
-    -fx-min-height: 45px;
-    -fx-min-width: 45px;
-    -fx-background-size: 45;
-    -fx-background-color: transparent;
-    -fx-background-repeat: no-repeat;
-    -fx-translate-y: -170;
-}
-
 Button {
     -fx-font-family: 'Press Start 2P', cursive;
     -fx-min-height: 44px;
@@ -100,13 +90,28 @@ Button {
 Button:hover {
     -fx-translate-y: -2;
 }
+
 Button:pressed {
     -fx-translate-y: 3;
+}
+#infobutton {
+    -fx-background-image: url("infobutton.png");
+    -fx-min-height: 45px;
+    -fx-min-width: 45px;
+    -fx-background-size: 45;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-translate-y: -170;
 }
 
 #infobutton:hover {
     -fx-translate-y: -172;
 }
+
+#infobutton:pressed {
+    -fx-translate-y: -168;
+}
+
 
 #exitbutton {
     -fx-background-image: url("exit.png");
@@ -118,8 +123,19 @@ Button:pressed {
     -fx-translate-y: -250;
     -fx-translate-x: 640;
 }
-#exitbutton:hover{
+
+#exitbutton:hover {
     -fx-translate-y: -252;
+}
+#exitbutton:pressed {
+    -fx-translate-y: -248;
+}
+
+
+
+TextField {
+    -fx-min-width: 400px;
+    -fx-max-width: 400px;
 }
 
 #orangearrowbuttonleft {

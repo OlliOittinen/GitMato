@@ -256,11 +256,10 @@ public class Matopeli extends Application {
             infoimv.setImage(infoimg.get(infoindex));
         });
 
-
-        imv2.setTranslateX(-20);
-        imv.setTranslateX(400);
-        imv2.setTranslateY(-20);
-        imv.setTranslateY(-20);
+        
+        imv.setTranslateX(380);
+        imv2.setTranslateY(-25);
+        imv.setTranslateY(-25);
         Label skinlabel = new Label("Select\nHat");
         skinlabel.setId("skinlabel");
         Label skinlabel2 = new Label("Select\nHat");
@@ -281,12 +280,12 @@ public class Matopeli extends Application {
 
         //------------Main Menu Scene - Game mode selector --------------
         HBox bluenextButtons = new HBox(10);
-        bluenextButtons.setPadding(new Insets (0,100,0,0));
+        bluenextButtons.setPadding(new Insets(0, 100, 0, 0));
         bluenextButtons.setAlignment(Pos.BOTTOM_CENTER);
         bluenextButtons.getChildren().addAll(bluebackwardskin, skinlabel, blueforwardskin);
 
         HBox rednextButtons = new HBox(10);
-        rednextButtons.setPadding(new Insets (0,0,0,100));
+        rednextButtons.setPadding(new Insets(0, 0, 0, 100));
         rednextButtons.setAlignment(Pos.BOTTOM_CENTER);
         rednextButtons.getChildren().addAll(redbackwardskin, skinlabel2, redforwardskin);
 
@@ -763,7 +762,6 @@ public class Matopeli extends Application {
         grid.add(userName, 0, 10);
         //create textfield for usernames
         TextField userTextField = new TextField();
-        userTextField.setPrefWidth(300);
         grid.add(userTextField, 1, 10);
         grid.add(errorMessage, 0, 11);
 
@@ -776,7 +774,7 @@ public class Matopeli extends Application {
         submit.setOnAction(e -> {
             if ((userTextField.getText() != null && !userTextField.getText().isEmpty())) {
                 if (userTextField.getText().length() > 10) {
-                    errorMessage.setText("Please enter username\nbetween 1-10 characters");
+                    errorMessage.setText("Username should be\n1-10 characters");
                 } else {
                     highscore_button.setText("Show\nhighscores");
                     hs_submitted = true;
