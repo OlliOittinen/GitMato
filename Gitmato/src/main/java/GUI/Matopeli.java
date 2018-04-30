@@ -45,7 +45,7 @@ public class Matopeli extends Application {
     private Image confuseEffect = new Image("images/confusion.png");
     private Image fastericon = new Image("images/SpeedUp.png");
     private Image lasericon = new Image("images/Lasercannon.png");
-    private Image switchericon = new Image ("images/switcher.png");
+    private Image switchericon = new Image("images/switcher.png");
     private Image laserH = new Image("images/LazerH.png");
     private Image laserV = new Image("images/lazerV.png");
     private Image lasersightV = new Image("images/lasersightV.png");
@@ -245,7 +245,6 @@ public class Matopeli extends Application {
             }
         });
 
-        //info scene navigation buttons handlers
         forward.setOnAction(e -> {
             navigateInfo("+");
         });
@@ -253,7 +252,6 @@ public class Matopeli extends Application {
         backward.setOnAction(e -> {
             navigateInfo("-");
         });
-
 
         imv.setTranslateX(380);
         imv2.setTranslateY(-25);
@@ -538,8 +536,7 @@ public class Matopeli extends Application {
             }
             drawPoints(g);
 
-            }
-            else {
+        } else {
             if (worm.getLife() < worm2.getLife() && !gameMode.equals("sp")) {
                 score = worm2.getPoints();
                 winner_label.setText("BLUE WON");
@@ -784,7 +781,6 @@ public class Matopeli extends Application {
 
         Exception ex = new SQLNonTransientConnectionException("Could not connect to address=(host=localhost)(port=4444)(type=master) : Connection refused: connect");
 
-        // Create expandable Exception.
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         ex.printStackTrace(pw);
@@ -806,7 +802,6 @@ public class Matopeli extends Application {
         expContent.add(label, 0, 0);
         expContent.add(textArea, 0, 1);
 
-        // Set expandable Exception into the dialog pane.
         alert.getDialogPane().setExpandableContent(expContent);
         return alert;
     }

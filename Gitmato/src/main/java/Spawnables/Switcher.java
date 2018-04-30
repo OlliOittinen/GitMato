@@ -2,7 +2,6 @@ package Spawnables;
 
 import Model.Worm;
 import Sound.Music;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,11 +13,13 @@ import java.util.TimerTask;
 public class Switcher extends AbstractSpawnables{
 
     /**
-     * Awards worm object with points and changes positions
-     * @param worm the worm to be awarded with points
-     * @param worm2 the worm that switches positions with the first worm
+     * Awards <code>Worm</code> object with points and changes positions
+     * @param worm the <code>Worm</code> to be awarded with points
+     * @param worm2 the <code>Worm</code> that switches positions with the first worm
      */
     public void switcher(Worm worm, Worm worm2) {
+
+        //TODO add sound
         int x;
         int y;
 
@@ -52,7 +53,7 @@ public class Switcher extends AbstractSpawnables{
     }
 
     /**
-     * Class constructor, calls on init();
+     * Class constructor
      * @see AbstractSpawnables
      */
     public Switcher() {

@@ -28,9 +28,8 @@ public class WormConfuse extends WormState {
 
 
     /**
-     * Makes this worm object move in the opposing direction on every key press
-     *
-     * @param worm the worm that's supposed to have its' movement reversed
+     * Makes this <code>Worm</code>  move in the opposing direction on every key press.
+     * @param worm the <code>Worm</code> that's supposed to have its' movement reversed.
      */
     @Override
     public void action(Worm worm) {

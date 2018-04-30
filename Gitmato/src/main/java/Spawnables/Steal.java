@@ -6,16 +6,16 @@ import javafx.geometry.Bounds;
 import javafx.scene.shape.Rectangle;
 
 /**
- * @author Max
+ * @author Max, Olli
  */
 public class Steal extends AbstractSpawnables{
 
     /**
-     * Shortens the opposing worm's tail by one quarter.
-     * Rewards player who picked up the powerup icon with 50 points per tailpiece steal.
-     * Reduces the points from the opposing worm.
-     * @param worm the Worm object that picked up the icon
-     * @param worm2 the Worm object that is being targeted
+     * Shortens the opposing <code>Worm</code>'s tail by one quarter.
+     * Rewards player who picked up the power-up icon with 50 points per tailpiece steal.
+     * Reduces the points from the opposing <code>Worm</code> .
+     * @param worm the <code>Worm</code> object that picked up the icon
+     * @param worm2 the <code>Worm</code> object that is being targeted
      */
     public void steal(Worm worm, Worm worm2) {
 
@@ -37,8 +37,7 @@ public class Steal extends AbstractSpawnables{
         }
     }
     /**
-     * Class constructor, calls on init();
-     *
+     * Class constructor
      * @see AbstractSpawnables
      */
     public Steal() {

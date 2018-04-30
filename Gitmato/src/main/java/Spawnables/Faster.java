@@ -16,10 +16,10 @@ import Sound.Music;
 public class Faster extends AbstractSpawnables {
 
     /**
-     * Makes this object (worm) move faster.
+     * Makes this <code>Worm</code> move faster.
      * Uses Worm States to achieve this.
-     * Also plays the corresponding music and awards the worm with points.
-     * @param worm the worm that picked up this icon
+     * Also plays the corresponding music and awards the <code>Worm</code>  with points.
+     * @param worm the <code>Worm</code>  that picked up this icon
      * @see Model.WormStates.WormFast
      */
     public void faster(Worm worm) {
@@ -29,7 +29,7 @@ public class Faster extends AbstractSpawnables {
     }
 
     /**
-     * Class constructor, calls on init();
+     * Class constructor
      * @see AbstractSpawnables
      */
     public Faster() {

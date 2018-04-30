@@ -336,7 +336,6 @@ public class Board {
 
         if (pb2.intersects(Matokuutio) || pb3.intersects(Matokuutio) || pb4.intersects(Matokuutio) && shield.isActive(worm)) {
             Timer timer = new Timer();
-
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -344,7 +343,6 @@ public class Board {
 
                 }
             }, 1500);
-            //pop goes the bubble
         }
 
         if (pb2.intersects(Matokuutio) || pb3.intersects(Matokuutio) || pb4.intersects(Matokuutio) && !shield.isActive(worm)) {
@@ -357,15 +355,13 @@ public class Board {
         }
         if (beam.intersects(Matokuutio) && shield.isActive(worm)) {
             Timer timer = new Timer();
-
-                timer.schedule(new TimerTask() {
+            timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         worm.setShield(false);
 
                     }
                 }, 1500);
-                //pop goes the bubble
         }
 
         if (beam.intersects(Matokuutio) && !shield.isActive(worm)) {
@@ -450,7 +446,6 @@ public class Board {
 
         if (beam.intersects(Matokuutio2) && shield.isActive(worm2)) {
             Timer timer = new Timer();
-
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -458,7 +453,6 @@ public class Board {
 
                 }
             }, 1500);
-            //pop goes the bubble
         }
 
         if (beam.intersects(Matokuutio2) && !shield.isActive(worm2)) {

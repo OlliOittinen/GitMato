@@ -16,7 +16,7 @@ import java.util.TimerTask;
  */
 public class Life extends AbstractSpawnables {
     /**
-     * Class constructor, calls on init();
+     * Class constructor
      *
      * @see AbstractSpawnables
      */
@@ -26,10 +26,9 @@ public class Life extends AbstractSpawnables {
 
 
     /**
-     * Adds a life to the object (worm) that picked up the icon for this powerup.
+     * Adds a life to the <code>Worm</code>  that picked up the icon for this power-up.
      * Plays the corresponding music and awards the worm with points.
-     *
-     * @param worm the worm Object to be awarded with life and points
+     * @param worm the <code>Worm</code>  to be awarded with life and points
      */
 
     public static void addLife(Worm worm) {
@@ -40,14 +39,13 @@ public class Life extends AbstractSpawnables {
 
 
     /**
-     * Removes a life from the object (worm).
-     * Plays the corresponding music and sets a shield for this worm for 1000 milliseconds.
-     * Static due to bombs and lasers.
-     *
-     * @param worm the worm that is to lose a life.
-     * @see Bombs
-     * @see Laser
+     * Removes a life from the <code>Worm</code> .
+     * Plays the corresponding music and sets a shield for this <code>Worm</code>  for 1000 milliseconds.
+     * Static due to AbstractDamagingSpawnables.
+     * @param worm the <code>Worm</code>  that is to lose a life.
+     * @see AbstractDamagingSpawnables
      */
+
     //needs to be static so laser & bomb spawnables can access this
     public static void loseLife(Worm worm) {
         if (!worm.getShield()) {

@@ -25,8 +25,8 @@ public class WormSlow extends WormState {
     }
 
     /**
-     * Slows down the worm object temporarily.
-     * @param worm the worm that is supposed to be slowed down
+     * Slows down the <code>Worm</code>  temporarily.
+     * @param worm the <code>Worm</code>  that is supposed to be slowed down
      */
     @Override
     public void action(Worm worm) {

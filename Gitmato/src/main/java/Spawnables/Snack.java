@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Snack extends AbstractSpawnables {
 
     /**
-     * Class constructor, calls on init();
+     * Class constructor
      */
     public Snack() {
         init();
@@ -56,13 +56,13 @@ public class Snack extends AbstractSpawnables {
 
     private boolean checkCollision(ArrayList<Tail> t1, ArrayList<Tail> t2) {
         boolean intersects = false;
-        for (int i = 0; i < t1.size(); i++) {
-            if (t1.get(i).getBounds().intersects(this.getBoundsForIcon())) {
+        for (Tail aT1 : t1) {
+            if (aT1.getBounds().intersects(this.getBoundsForIcon())) {
                 intersects = true;
             }
         }
-        for (int i = 0; i < t2.size(); i++) {
-            if (t2.get(i).getBounds().intersects(this.getBoundsForIcon())) {
+        for (Tail aT2 : t2) {
+            if (aT2.getBounds().intersects(this.getBoundsForIcon())) {
                 intersects = true;
             }
         }

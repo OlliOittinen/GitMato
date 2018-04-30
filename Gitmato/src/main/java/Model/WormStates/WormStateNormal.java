@@ -23,8 +23,8 @@ public class WormStateNormal extends WormState {
 
 
     /**
-     * Makes the worm object move normally
-     * @param worm the worm object that gets its speed normalized
+     * Makes the <code>Worm</code>  move normally
+     * @param worm the <code>Worm</code> that gets its speed normalized
      */
     @Override
     public void action(Worm worm) {

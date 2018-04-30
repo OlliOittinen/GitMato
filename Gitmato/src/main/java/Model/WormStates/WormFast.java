@@ -25,8 +25,8 @@ public class WormFast extends WormState {
     }
 
     /**
-     * Makes the worm object move quicker temporarily.
-     * @param worm the worm that's supposed to move quicker
+     * Makes the <code>Worm</code> move quicker temporarily.
+     * @param worm the <code>Worm</code>  that's supposed to move quicker
      */
     @Override
     public void action(Worm worm) {

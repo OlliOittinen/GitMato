@@ -26,7 +26,7 @@ public class Laser extends AbstractDamagingSpawnables {
     private Rectangle beam = new Rectangle(-1000, -1000, 1, 1);
 
     /**
-     * Class constructor, calls on init();
+     * Class constructor
      */
     public Laser() {
         init();
@@ -47,12 +47,12 @@ public class Laser extends AbstractDamagingSpawnables {
     }
 
     /**
-     * Awards the worm object with points, uses the second worm's location to place a laser.
-     * Gets the second worms' x and y-coordinates and places a vertical or
+     * Awards the <code>Worm</code>  object with points, uses the second <code>Worm</code>'s location to place a laser.
+     * Gets the second <code>Worm</code>s' x and y-coordinates and places a vertical or
      * a horizontal laser on top of these, based on pseudo-random modifier.
      * Plays corresponding music files on both collision with icon and when the laser is being fired.
-     * @param worm the worm object to be awarded with points
-     * @param worm2 the worm object to be targeted by a laser
+     * @param worm the <code>Worm</code>  to be awarded with points
+     * @param worm2 the <code>Worm</code>  to be targeted by a laser
      */
     public void onPickup(Worm worm, Worm worm2) {
         worm.setPoints(worm.getPoints() + 100);
@@ -101,7 +101,7 @@ public class Laser extends AbstractDamagingSpawnables {
 
     /**
      * Returns the rectangle laser beam
-     * @return Rectangle object
+     * @return <code>Rectangle</code> object
      * @see Rectangle
      */
     public Rectangle getBoundsB() {

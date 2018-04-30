@@ -71,7 +71,7 @@ public class SpawnableTest {
     }
 
     /**
-     * Sets a snack and a worm to the same x- & y-coordinate and makes sure it has relocated to somewhere else on the board spectrum.
+     * Sets a snack and a worm to the same x- and y-coordinate and makes sure it has relocated to somewhere else on the board spectrum.
      */
     @Test
     public void testCollisionWithSnack() {

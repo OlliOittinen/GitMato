@@ -28,9 +28,9 @@ public class WormShield extends WormState {
     }
 
     /**
-     * Shields this worm object temporarily.
+     * Shields this <code>Worm</code> temporarily.
      *
-     * @param worm the worm that is to be shielded
+     * @param worm the <code>Worm</code>  that is to be shielded
      */
     @Override
     public void action(Worm worm) {
