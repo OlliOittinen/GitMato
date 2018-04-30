@@ -1,5 +1,6 @@
 import Model.Worm;
 import Spawnables.*;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,6 +8,8 @@ import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 public class SpawnableTest {
 
@@ -216,5 +219,72 @@ public class SpawnableTest {
         assertEquals(1, worm.getTails().size());
     }
 
+    /**
+     * Tests whether or not the abstractDamagingSpawnables method 'damage' reduces the worm's life by 1
+     * assuming that the spawnable is set to 'lethal'.
+     */
+    @Test
+    public void testLethality() {
+        Worm worm2 = new Worm(2);
+        AbstractDamagingSpawnables asd = new Laser();
+        assertFalse(((Laser) asd).getLethal());
+        ((Laser) asd).onPickup(worm, worm2);
+        try {
+            Thread.sleep(2850);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Assert.assertTrue(((Laser) asd).getLethal());
+        asd.damage(worm2);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(2, worm2.getLife());
+    }
 
+    /**
+     * Checks whether the slower and faster spawnables function correctly, with and without shield statuses.
+     */
+    @Test
+    public void fasterAndSlowerSpawnable() {
+        Faster f = (Faster) all.get(2);
+        Slower s = (Slower) all.get(6);
+        Worm worm2 = new Worm(2);
+        assertEquals(3, worm.getSpeed(), 0.01);
+        f.faster(worm);
+        assertEquals(5, worm.getSpeed(), 0.01);
+        worm.setSpeed(3);
+        worm.setShield(true);
+        s.slower(worm2, worm);
+        assertEquals(3, worm.getSpeed(), 0.01);
+        worm.setShield(false);
+        s.slower(worm2, worm);
+        assertEquals(1, worm.getSpeed(), 0.01);
+    }
+
+    /**
+     * Tests if <code>Confuse</code> spawnable sets the worm's speed
+     * to be negative of current speed with and without shield.
+     */
+    @Test
+    public void confusion() {
+        Confuse c = (Confuse) all.get(1);
+        Worm worm2 = new Worm(2);
+        worm.setShield(true);
+        c.confuse(worm2, worm);
+        assertEquals(3, worm.getSpeed(), 0.01);
+        worm.setShield(false);
+        c.confuse(worm2, worm);
+        assertEquals(-3, worm.getSpeed(), 0.01);
+    }
+
+    @Test
+    public void shield() {
+        Shield shield = (Shield) all.get(5);
+        assertFalse(worm.getShield());
+        shield.shield(worm);
+        assertTrue(shield.isActive(worm));
+    }
 }

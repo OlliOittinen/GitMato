@@ -30,16 +30,7 @@ public class Worm {
     private boolean reverse = false; //Reverse debuff
     private int points;
     private boolean transparencychange;
-
-    public int getMultiplier() {
-        return multiplier;
-    }
-
-    public void setMultiplier(int multiplier) {
-        this.multiplier = multiplier;
-    }
-
-    private int multiplier = 8;
+    private final int multiplier = 8;
     private double speed = 3;
     private int life = 3;
 

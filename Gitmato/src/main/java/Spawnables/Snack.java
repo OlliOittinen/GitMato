@@ -31,6 +31,10 @@ public class Snack extends AbstractSpawnables {
         setY(200);
     }
 
+    /**
+     * Empty method, overridden using the one with @param Board
+     *
+     */
     @Override
     public void randomizeIconLocation() {
     }
@@ -38,11 +42,12 @@ public class Snack extends AbstractSpawnables {
     /**
      * This method randomizes the location for the icon
      * to be placed using Math.random (ie. pseudo-random)
-     * and uses the size of the map to do so
+     * and uses the size of the map to do so.
+     * @param board the board where the tails are retrieved from
      */
     public void randomizeIconLocation(Board board) {
         ArrayList<Tail> t1 = board.getTailList();
-        ArrayList<Tail> t2 = board.getTailList();
+        ArrayList<Tail> t2 = board.getTailList2();
         do {
             setX((int) (Math.random() * 750));
             setY((int) (Math.random() * 550));

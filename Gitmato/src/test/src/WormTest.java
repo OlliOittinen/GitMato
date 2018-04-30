@@ -1,5 +1,7 @@
 import Model.Worm;
 import Model.WormStates.*;
+import Spawnables.AbstractDamagingSpawnables;
+import Spawnables.Laser;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,11 +29,13 @@ public class WormTest {
 
 
     @Test
-    public void testConfuseAndShieldStates() {
+    public void testConfuseAndShieldStates() throws InterruptedException {
         worm.confuse();
         assertTrue(worm.getReverse());
+        Thread.sleep(5000);
         worm.shield();
         assertTrue(worm.getShield());
+        Thread.sleep(5000);
     }
 
     @Test
@@ -81,4 +85,6 @@ public class WormTest {
         worm.turnAround();
         assertEquals(3, worm.getDirection());
     }
+
+
 }
