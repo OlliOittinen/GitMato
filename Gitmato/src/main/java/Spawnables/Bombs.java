@@ -30,7 +30,7 @@ public class Bombs extends AbstractDamagingSpawnables{
     /**
      * Awards the object with 100 points.
      *
-     * @param worm the object that is awarded points
+     * @param worm the <code>Worm</code> object that is awarded points
      */
     public void bombs(Worm worm) {
         worm.setPoints(worm.getPoints() + 100);
@@ -39,7 +39,7 @@ public class Bombs extends AbstractDamagingSpawnables{
 
 
     /**
-     * Class constructor, calls on init();
+     * Class constructor
      */
     public Bombs() {
         init();
@@ -110,7 +110,7 @@ public class Bombs extends AbstractDamagingSpawnables{
     /**
      * Returns the circle used by bomb zone.
      * @param n the index of the target or bomb
-     * @return a new Circle with predetermined draw size
+     * @return a new <code>Circle</code> with predetermined draw size
      * @see Circle
      */
     public Circle getBoundsBombs(int n) {
@@ -155,9 +155,8 @@ public class Bombs extends AbstractDamagingSpawnables{
 
     /**
      * Randomizes the locations for the targets.
-     * Uses Math.random() to randomize.
      */
-    public void randomizeXYBombs() {
+    private void randomizeXYBombs() {
         for (int i = 1; i < xlist.length; i+= 2) {
             setXBombs(i, (int) (Math.random() * 600));
             setYBombs(i, (int) (Math.random() * 400));

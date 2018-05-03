@@ -36,6 +36,7 @@ public class Board {
     private Bombs bombs;
     private Laser laser;
     private Steal steal;
+    private Switcher switcher;
     private String gameMode;
     private Matopeli GUI;
     private Bot bot;
@@ -85,6 +86,7 @@ public class Board {
         laser = new Laser();
         snack = new Snack();
         steal = new Steal();
+        switcher = new Switcher();
 
         pickableList.add(snack);
         pickableList.add(faster);
@@ -95,6 +97,7 @@ public class Board {
         pickableList.add(bombs);
         pickableList.add(laser);
         pickableList.add(steal);
+        pickableList.add(switcher);
 
         worms.add(worm = new Worm(1)); //lista worm olioista
         worms.add(worm2 = new Worm(2));
@@ -213,12 +216,12 @@ public class Board {
 
             @Override
             public void run() {
-                //snack is first index and we dont need to randomize it
+                //snack is first index (0) and we dont need to randomize it
                 int n = (int) (Math.random() * (pickableList.size() - 1) + 1);
                 pickableList.get(n).randomizeIconLocation();
 
             }
-        }, 5000); //aika (ms), joka odotetaan
+        }, 5000);
     }
 
     /**
@@ -257,6 +260,7 @@ public class Board {
         Bounds pla = laser.getBoundsForIcon();
         Rectangle beam = laser.getBoundsB();
         Bounds sc = steal.getBoundsForIcon();
+        Bounds sw = switcher.getBoundsForIcon();
 
         for (Tail aTailList : tailList) {
             Bounds Matotail = aTailList.getBounds();
@@ -332,7 +336,6 @@ public class Board {
 
         if (pb2.intersects(Matokuutio) || pb3.intersects(Matokuutio) || pb4.intersects(Matokuutio) && shield.isActive(worm)) {
             Timer timer = new Timer();
-
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -340,7 +343,6 @@ public class Board {
 
                 }
             }, 1500);
-            //pop goes the bubble
         }
 
         if (pb2.intersects(Matokuutio) || pb3.intersects(Matokuutio) || pb4.intersects(Matokuutio) && !shield.isActive(worm)) {
@@ -353,15 +355,13 @@ public class Board {
         }
         if (beam.intersects(Matokuutio) && shield.isActive(worm)) {
             Timer timer = new Timer();
-
-                timer.schedule(new TimerTask() {
+            timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         worm.setShield(false);
 
                     }
                 }, 1500);
-                //pop goes the bubble
         }
 
         if (beam.intersects(Matokuutio) && !shield.isActive(worm)) {
@@ -377,6 +377,11 @@ public class Board {
 
         if (sc.intersects(Matokuutio)) {
             steal.steal(worm, worm2);
+            powerUpCD();
+        }
+
+        if (sw.intersects(Matokuutio)) {
+            switcher.switcher(worm, worm2);
             powerUpCD();
         }
 
@@ -441,7 +446,6 @@ public class Board {
 
         if (beam.intersects(Matokuutio2) && shield.isActive(worm2)) {
             Timer timer = new Timer();
-
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -449,7 +453,6 @@ public class Board {
 
                 }
             }, 1500);
-            //pop goes the bubble
         }
 
         if (beam.intersects(Matokuutio2) && !shield.isActive(worm2)) {
@@ -467,6 +470,11 @@ public class Board {
 
         if (sc.intersects(Matokuutio2)) {
             steal.steal(worm2, worm);
+            powerUpCD();
+        }
+
+        if (sw.intersects(Matokuutio2)) {
+            switcher.switcher(worm2, worm);
             powerUpCD();
         }
     }
@@ -512,7 +520,6 @@ public class Board {
 
         GUI.setWormImage();
 
-        //botti ja sen toiminta
         if (gameMode.equals("vs AI")) {
             bot.runBotRun();
         }

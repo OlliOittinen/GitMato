@@ -25,22 +25,18 @@ public class WormSlow extends WormState {
     }
 
     /**
-     * Slows down the worm object temporarily.
-     * @param worm the worm that is supposed to be slowed down
+     * Slows down the <code>Worm</code>  temporarily.
+     * @param worm the <code>Worm</code>  that is supposed to be slowed down
      */
     @Override
     public void action(Worm worm) {
-        //set speed of this worm to be less
         worm.setSpeed(worm.getSpeed()-2);
-
-        //create a timer, after which call on normal state
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                //normalize the speed again
                 worm.changeState(WormStateNormal.getInstance());
                 }
-            }, 5000); //delay (in ms) after which everything under timer.schedule is done
+            }, 5000);
         }
 }

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Snack extends AbstractSpawnables {
 
     /**
-     * Class constructor, calls on init();
+     * Class constructor
      */
     public Snack() {
         init();
@@ -25,13 +25,16 @@ public class Snack extends AbstractSpawnables {
     /**
      * Randomizes the location of the snack icon at start.
      */
-    //on init, set the starting snack to be at a random x-location between 600 & 200
     @Override
     public void init() {
         setX(600 - (int) (Math.random() * 400));
         setY(200);
     }
 
+    /**
+     * Empty method, overridden using the one with @param Board
+     *
+     */
     @Override
     public void randomizeIconLocation() {
     }
@@ -39,11 +42,12 @@ public class Snack extends AbstractSpawnables {
     /**
      * This method randomizes the location for the icon
      * to be placed using Math.random (ie. pseudo-random)
-     * and uses the size of the map to do so
+     * and uses the size of the map to do so.
+     * @param board the board where the tails are retrieved from
      */
     public void randomizeIconLocation(Board board) {
         ArrayList<Tail> t1 = board.getTailList();
-        ArrayList<Tail> t2 = board.getTailList();
+        ArrayList<Tail> t2 = board.getTailList2();
         do {
             setX((int) (Math.random() * 750));
             setY((int) (Math.random() * 550));
@@ -52,13 +56,13 @@ public class Snack extends AbstractSpawnables {
 
     private boolean checkCollision(ArrayList<Tail> t1, ArrayList<Tail> t2) {
         boolean intersects = false;
-        for (int i = 0; i < t1.size(); i++) {
-            if (t1.get(i).getBounds().intersects(this.getBoundsForIcon())) {
+        for (Tail aT1 : t1) {
+            if (aT1.getBounds().intersects(this.getBoundsForIcon())) {
                 intersects = true;
             }
         }
-        for (int i = 0; i < t2.size(); i++) {
-            if (t2.get(i).getBounds().intersects(this.getBoundsForIcon())) {
+        for (Tail aT2 : t2) {
+            if (aT2.getBounds().intersects(this.getBoundsForIcon())) {
                 intersects = true;
             }
         }

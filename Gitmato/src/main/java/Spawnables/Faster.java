@@ -16,23 +16,20 @@ import Sound.Music;
 public class Faster extends AbstractSpawnables {
 
     /**
-     * Makes this object (worm) move faster.
+     * Makes this <code>Worm</code> move faster.
      * Uses Worm States to achieve this.
-     * Also plays the corresponding music and awards the worm with points.
-     * @param worm the worm that picked up this icon
+     * Also plays the corresponding music and awards the <code>Worm</code>  with points.
+     * @param worm the <code>Worm</code>  that picked up this icon
      * @see Model.WormStates.WormFast
      */
     public void faster(Worm worm) {
-        //add points to the worm who picked up
         worm.setPoints(worm.getPoints()+100);
-        //play the corresponding music
         Music.fasterPowerup.play();
-        //set the state of this worm to be faster
         worm.fasterSpeed();
     }
 
     /**
-     * Class constructor, calls on init();
+     * Class constructor
      * @see AbstractSpawnables
      */
     public Faster() {

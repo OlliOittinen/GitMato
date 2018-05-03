@@ -6,8 +6,6 @@
 package Model;
 
 import javafx.geometry.Bounds;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
 
@@ -19,28 +17,18 @@ public class Tail{
     private int x;
     private int y;
     private int playerNumber;
+
     // luku jonka mukaan hakee cordinaateista itselleen arvon.
     private int coordinateInt;
 
     /**
      * Class constructor
-     * @param ci Coordinate where the tail will be drawn.
+     * @param ci Coordinate where the tail will be drawn, ie. where on the ArrayList the tail is put to.
      * @param playerNumber Number for the player.
      */
     public Tail(int ci, int playerNumber) {
         this.coordinateInt = ci;
         this.playerNumber = playerNumber;
-        initTail();
-    }
-
-    private void initTail(){
-        Image image;
-        if(playerNumber==1){
-            image = new Image("images/RedWormTail(800x600).png");
-        }
-         if(playerNumber==2){
-            image = new Image("images/BlueWormTail(800x600).png");
-        }
     }
 
     /**

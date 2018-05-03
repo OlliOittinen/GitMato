@@ -16,7 +16,7 @@ import java.util.TimerTask;
  */
 public class Life extends AbstractSpawnables {
     /**
-     * Class constructor, calls on init();
+     * Class constructor
      *
      * @see AbstractSpawnables
      */
@@ -26,39 +26,31 @@ public class Life extends AbstractSpawnables {
 
 
     /**
-     * Adds a life to the object (worm) that picked up the icon for this powerup.
+     * Adds a life to the <code>Worm</code>  that picked up the icon for this power-up.
      * Plays the corresponding music and awards the worm with points.
-     *
-     * @param worm the worm Object to be awarded with life and points
+     * @param worm the <code>Worm</code>  to be awarded with life and points
      */
 
     public static void addLife(Worm worm) {
-        //add points to this worm
         worm.setPoints(worm.getPoints() + 100);
-        //play the corresponding music
         Music.addLife.play();
-        //add points to the one who picked up
         worm.setLife(worm.getLife() + 1);
     }
 
 
     /**
-     * Removes a life from the object (worm).
-     * Plays the corresponding music and sets a shield for this worm for 1000 milliseconds.
-     * Static due to bombs and lasers.
-     *
-     * @param worm the worm that is to lose a life.
-     * @see Bombs
-     * @see Laser
+     * Removes a life from the <code>Worm</code> .
+     * Plays the corresponding music and sets a shield for this <code>Worm</code>  for 1000 milliseconds.
+     * Static due to AbstractDamagingSpawnables.
+     * @param worm the <code>Worm</code>  that is to lose a life.
+     * @see AbstractDamagingSpawnables
      */
+
     //needs to be static so laser & bomb spawnables can access this
     public static void loseLife(Worm worm) {
-        //check whether or not the shield is active; if not, this worm loses a life
         if (!worm.getShield()) {
-            //play the corresponding music
-            Music.loseLife.play(); //remove a life from this worm's life pool
+            Music.loseLife.play();
             worm.setLife(worm.getLife() - 1);
-            //give this worm a shield for a second to prevent instant loss of all lives
             worm.setShield(true);
             worm.setTransparencyChange(true);
             Timer timer = new Timer();

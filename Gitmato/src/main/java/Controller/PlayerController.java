@@ -24,7 +24,8 @@ public class PlayerController {
 
     /**
      * Class constructor.
-     * @param board the object given to access Worm objects.
+     *
+     * @param board    the object given to access Worm objects.
      * @param gameMode game mode type.
      */
     public PlayerController(Board board, String gameMode) {
@@ -37,8 +38,8 @@ public class PlayerController {
      * Handles the player's key presses.
      * Checks what key is pressed and changes the worms direction accordingly.
      * Is called every time a player presses a key.
-     * @param e An event which indicates that a keystroke occurred in a component.
      *
+     * @param e An event which indicates that a keystroke occurred in a component.
      */
     public void keyPressed(KeyEvent e) {
 
@@ -89,19 +90,13 @@ public class PlayerController {
 
             }
         }
-
-        //ends the game
         if (key == KeyCode.ESCAPE) {
             board.setIngame(false);
-
         }
-
 
         // controls for player 2
         if (gameMode == "versus") {
             if (key == KeyCode.A) {
-
-
                 if (worms.get(1).getDirection() != 2) {
                     if (worms.get(1).getDirection() != 1 && (worms.get(1).getX() < 20 || worms.get(1).getX() > 740)) {
                         worms.get(1).setX(worms.get(1).getX() - 9);
@@ -109,7 +104,6 @@ public class PlayerController {
                     worms.get(1).setDirection(1);
                     worms.get(1).setDirectionAdv(2);
                 }
-
             }
 
             if (key == KeyCode.D) {
@@ -119,7 +113,6 @@ public class PlayerController {
                     }
                     worms.get(1).setDirection(2);
                     worms.get(1).setDirectionAdv(2);
-
                 }
             }
 
@@ -128,7 +121,6 @@ public class PlayerController {
                     if (worms.get(1).getDirection() != 3 && (worms.get(1).getY() < 20 || worms.get(1).getY() > 530)) {
                         worms.get(1).setY(worms.get(1).getY() - 9);
                     }
-
                     worms.get(1).setDirection(3);
                     worms.get(1).setDirectionAdv(1);
                 }
@@ -139,16 +131,10 @@ public class PlayerController {
                     if (worms.get(1).getDirection() != 4 && (worms.get(1).getY() < 20 || worms.get(1).getY() > 530)) {
                         worms.get(1).setY(worms.get(1).getY() + 9);
                     }
-
                     worms.get(1).setDirection(4);
                     worms.get(1).setDirectionAdv(1);
                 }
             }
-
-
-
-
         }
     }
 }
-

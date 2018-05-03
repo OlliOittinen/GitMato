@@ -7,20 +7,20 @@ package Model;
 
 import java.sql.*;
 import java.util.ArrayList;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 /**
- *
  * @author Eero, Olli
  */
-public class DBConnection {
+class DBConnection {
 
     private Connection con = null;
     private ArrayList<String> scores = new ArrayList<>();
     String highscore = "";
 
-    public Connection getCon() {
+    Connection getCon() {
         return con;
     }
 
@@ -29,17 +29,18 @@ public class DBConnection {
     /**
      * Class constructor.
      */
-    public DBConnection() {
+    DBConnection() {
         try {
             con = DriverManager.getConnection("jdbc:mariadb://localhost:4444/score", "Olli", "laiskajaakko");
         } catch (SQLException e) {
             System.out.println(e);
-           // e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
     /**
      * Returns the high scores from the database, sorted in descending order.
+     *
      * @param gameMode the game mode that was played
      * @return an ArrayList based on the gameMode played
      */
@@ -84,8 +85,9 @@ public class DBConnection {
 
     /**
      * Submits the user's score to the database after the game
-     * @param score the user's score
-     * @param name name to be stored in the database
+     *
+     * @param score    the user's score
+     * @param name     name to be stored in the database
      * @param gameMode game mode that was played
      */
     public void submitScore(int score, String name, String gameMode) {
@@ -98,7 +100,6 @@ public class DBConnection {
                 query.setString(1, name);
                 query.setInt(2, score);
                 query.setString(3, gameMode);
-                //System.out.println(query);
                 ResultSet result = query.executeQuery();
                 try {
                     while (result.next()) {
@@ -124,7 +125,6 @@ public class DBConnection {
                     System.out.println(e);
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -6,16 +6,18 @@ import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class WormShield extends WormState{
+public class WormShield extends WormState {
 
     //create a singleton instance of this class
     private static WormShield instance;
 
-    private WormShield() {}
+    private WormShield() {
+    }
 
     /**
      * Class 'constructor'. Retrieves this class's instance.
      * This class is defined as a singleton, so it is only ever created once.
+     *
      * @return the instance of this class
      */
     public static WormShield getInstance() {
@@ -26,23 +28,20 @@ public class WormShield extends WormState{
     }
 
     /**
-     * Shields this worm object temporarily.
-     * @param worm the worm that is to be shielded
+     * Shields this <code>Worm</code> temporarily.
+     *
+     * @param worm the <code>Worm</code>  that is to be shielded
      */
     @Override
     public void action(Worm worm) {
-        //set the shield for this worm to be true
         worm.setShield(true);
-
-        //create timer
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                //set shield to be false again so no permanent shielding
                 Music.shieldpop.play();
                 worm.setShield(false);
             }
-        }, 10000); //after this delay (in ms)
+        }, 10000);
     }
 }

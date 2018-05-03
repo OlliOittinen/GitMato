@@ -17,7 +17,7 @@ import java.util.TimerTask;
 public class Shield extends AbstractSpawnables{
 
     /**
-     * Class constructor, calls on init();
+     * Class constructor
      *@see AbstractSpawnables
      */
     public Shield() {
@@ -25,25 +25,22 @@ public class Shield extends AbstractSpawnables{
     }
 
     /**
-     * Awards the worm object with points.
-     * Plays the corresponding music and awards the worm with points.
+     * Awards the <code>Worm</code>  with points.
+     * Plays the corresponding music and awards the <code>Worm</code>  with points.
      * Uses Worm State to apply shield effect.
-     * @param worm the worm to be awarded
+     * @param worm <code>Worm</code>  to be awarded
      * @see Model.WormStates.WormShield
      */
     public void shield(Worm worm) {
-        //play the corresponding music
         Music.shield.play();
-        //add points to the one who picked up the powerup
         worm.setPoints(worm.getPoints()+100);
-        //call on state change for the worm
         worm.shield();
     }
 
     /**
-     * Checks the boolean for this worm's shield effect.
-     * @param worm the worm object to be checked
-     * @return boolean value of this worm's shield
+     * Checks the boolean for this <code>Worm</code> 's shield effect.
+     * @param worm the <code>Worm</code>  to be checked
+     * @return boolean value of this <code>Worm</code>'s shield
      */
     public boolean isActive(Worm worm) {
         return worm.getShield();
