@@ -26,7 +26,6 @@ Model\Board$1.class
 Spawnables\Bombs$2$1.class
 Model\WormStates\WormConfuse$1.class
 Model\WormStates\WormShield$1.class
-Spawnables\Cut.class
 Model\DBConnection.class
 Spawnables\Confuse.class
 Spawnables\Laser$1.class

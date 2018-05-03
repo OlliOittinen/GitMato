@@ -34,7 +34,7 @@ import javafx.scene.paint.Color;
 public class Matopeli extends Application {
 
     private static Stage window;
-    private Scene mainMenuScene, gameScene, gameOverScene, highscoreScene, highscoreTableScene;
+    private Scene mainMenuScene, gameScene, gameOverScene, highscoreScene, highscoreTableScene, leveleditorscene;
 
     private Image background = new Image("images/BlueBG800x600.png");
     private Image snackicon = new Image("images/Apple(800x600).png");
@@ -197,6 +197,16 @@ public class Matopeli extends Application {
             window.setScene(gameScene);
             animationLoop(gc);
         });
+        Button leveleditor = new Button("Level Editor");
+        leveleditor.setOnAction(e -> {
+            LevelEditor le = new LevelEditor();
+            GridPane pane = le.createGrid();
+            pane.setId("leveleditor");
+            pane.getStylesheets().add("Styling/styling.css");
+            pane.setAlignment(Pos.CENTER);
+            Scene scene = new Scene(pane,width,height);
+            window.setScene(scene);
+        });
         Button close = new Button("Exit");
         close.setOnAction(e -> {
             //createConfirmationDialog();
@@ -287,7 +297,7 @@ public class Matopeli extends Application {
 
         VBox menuLayout = new VBox(20);
         menuLayout.setAlignment(Pos.CENTER);
-        menuLayout.getChildren().addAll(button2, button1, button3, close);
+        menuLayout.getChildren().addAll(button2, button1, button3,leveleditor, close);
 
         HBox infobuttonbox = new HBox();
         Button infobutton = new Button();
