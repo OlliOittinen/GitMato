@@ -77,6 +77,8 @@ Button:pressed {
     -fx-background-color: transparent;
     -fx-background-image: null;
     -fx-text-fill: null;
+    -fx-min-height: 50px;
+    -fx-min-width: 50px;
 }
 
 #infobutton {
