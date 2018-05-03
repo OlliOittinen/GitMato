@@ -79,6 +79,8 @@ Button:pressed {
     -fx-text-fill: null;
     -fx-min-height: 50px;
     -fx-min-width: 50px;
+    -fx-border-color: #b9b9b9;
+    -fx-border-width: 2px;
 }
 
 #infobutton {
@@ -118,15 +120,15 @@ Button:pressed {
     -fx-translate-y: -247;
 }
 #editor_exit {
-    -fx-translate-y: -20;
-    -fx-translate-x: 530;
+    -fx-translate-y: -60;
+    -fx-translate-x: 550;
 }
 #editor_exit:hover {
-    -fx-translate-y: -22;
+    -fx-translate-y: -62;
 }
 
 #editor_exit:pressed {
-    -fx-translate-y: -17;
+    -fx-translate-y: -57;
 }
 
 TextField {
