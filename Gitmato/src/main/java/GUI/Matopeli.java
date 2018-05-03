@@ -45,7 +45,7 @@ public class Matopeli extends Application {
     private Image confuseEffect = new Image("images/confusion.png");
     private Image fastericon = new Image("images/SpeedUp.png");
     private Image lasericon = new Image("images/Lasercannon.png");
-    private Image switchericon = new Image("images/switcher.png");
+    private Image switchericon = new Image("images/Portal.png");
     private Image laserH = new Image("images/LazerH.png");
     private Image laserV = new Image("images/lazerV.png");
     private Image lasersightV = new Image("images/lasersightV.png");
@@ -79,11 +79,14 @@ public class Matopeli extends Application {
     private Image wormtailT = new Image("images/RedWormTail(800x600)T.png");
     private Image wormtail2T = new Image("images/BlueWormTail(800x600)T.png");
     private Image cowboyhat = new Image("images/Hat.png");
-    private Image firehat = new Image("images/firehat.png");
     private Image bighat = new Image("images/BigHat.png");
-    private Image bigredhat = new Image("images/bigredhat.png");
-    private Image hornyhat = new Image("images/hornyhat.png");
-    private Image bighornyhat = new Image("images/bighornyhat.png");
+    private Image bluehat = new Image("images/Hat1.png");
+    private Image bigbluehat = new Image("images/Hattu1.png");
+    private Image redhat = new Image("images/Hat2.png");
+    private Image bigredhat = new Image("images/Hattu2.png");
+    private Image purplehat = new Image("images/Hat3.png");
+    private Image bigpurplehat = new Image("images/Hattu3.png");
+
     private Image scissoricon = new Image("images/stealicon.png");
     private ArrayList<Image> infoimg = new ArrayList();
     private Image controlinfo = new Image("images/InfoControls.png");
@@ -214,11 +217,14 @@ public class Matopeli extends Application {
         });
 
         hatimages.add(cowboyhat);
-        hatimages.add(firehat);
-        hatimages.add(hornyhat);
+        hatimages.add(bluehat);
+        hatimages.add(redhat);
+        hatimages.add(purplehat);
+
         bighatimages.add(bighat);
+        bighatimages.add(bigbluehat);
         bighatimages.add(bigredhat);
-        bighatimages.add(bighornyhat);
+        bighatimages.add(bigpurplehat);
 
         infoimg.add(controlinfo);
         infoimg.add(gameideainfo);
@@ -264,8 +270,10 @@ public class Matopeli extends Application {
         });
 
         imv.setTranslateX(380);
-        imv2.setTranslateY(-25);
-        imv.setTranslateY(-25);
+        imv2.setTranslateX(10);
+        imv2.setTranslateY(-50);
+        imv2.setId("bluewormhat");
+        imv.setTranslateY(-50);
         Label skinlabel = new Label("Select\nHat");
         skinlabel.setId("skinlabel");
         Label skinlabel2 = new Label("Select\nHat");
@@ -295,7 +303,7 @@ public class Matopeli extends Application {
         rednextButtons.setAlignment(Pos.BOTTOM_CENTER);
         rednextButtons.getChildren().addAll(redbackwardskin, skinlabel2, redforwardskin);
 
-        VBox menuLayout = new VBox(20);
+        VBox menuLayout = new VBox(5);
         menuLayout.setAlignment(Pos.CENTER);
         menuLayout.getChildren().addAll(button2, button1, button3,leveleditor, close);
 
@@ -312,7 +320,7 @@ public class Matopeli extends Application {
         mainmenupane.setMinSize(width, height);
         skinbuttonpane.add(rednextButtons, 1, 0);
         skinbuttonpane.add(bluenextButtons, 0, 0);
-        skinbuttonpane.setPadding(new Insets(80, 0, 40, 0));
+        skinbuttonpane.setPadding(new Insets(60, 0, 40, 0));
         mainmenupane.add(infobuttonbox, 0, 0);
         mainmenupane.add(imv, 0, 0);
         mainmenupane.add(imv2, 0, 0);
@@ -527,10 +535,10 @@ public class Matopeli extends Application {
                 g.drawImage(worm2Image, worm2.getX(), worm2.getY());
             }
             if (wormskinactive) {
-                g.drawImage(wormskin, worm.getX() - 5, worm.getY() - 10);
+                g.drawImage(wormskin, worm.getX() -5, worm.getY() - 15);
             }
             if (worm2skinactive) {
-                g.drawImage(worm2skin, worm2.getX() - 5, worm2.getY() - 10);
+                g.drawImage(worm2skin, worm2.getX() -5 , worm2.getY() - 15);
             }
             if (worm.getShield()) {
                 g.drawImage(shieldeffect, worm.getX() - 5, worm.getY() - 4);

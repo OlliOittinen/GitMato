@@ -122,6 +122,9 @@ TextField {
     -fx-min-width: 400px;
     -fx-max-width: 400px;
 }
+#bluewormhat {
+    -fx-scale-x: -1;
+}
 
 #orangearrowbuttonleft, #orangearrowbuttonright, #redarrowbuttonleft, #redarrowbuttonright, #bluearrowbuttonleft, #bluearrowbuttonright {
     -fx-min-height: 40px;
