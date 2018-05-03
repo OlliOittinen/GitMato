@@ -202,7 +202,7 @@ public class Matopeli extends Application {
             LevelEditor le = new LevelEditor();
             GridPane pane = le.createGrid();
             pane.setId("leveleditor");
-            //pane.getStylesheets().add("Styling/styling.css");
+            pane.getStylesheets().add("Styling/styling.css");
             pane.setAlignment(Pos.CENTER);
             Scene scene = new Scene(pane,width,height);
             window.setScene(scene);

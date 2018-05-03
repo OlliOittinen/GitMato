@@ -76,6 +76,7 @@ Button:pressed {
 #invisible {
     -fx-background-color: transparent;
     -fx-background-image: null;
+    -fx-text-fill: null;
 }
 
 #infobutton {
