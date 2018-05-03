@@ -99,7 +99,7 @@ Button:pressed {
     -fx-translate-y: -167;
 }
 
-#exitbutton {
+#exitbutton, #editor_exit {
     -fx-background-image: url("exit.png");
     -fx-min-height: 50px;
     -fx-min-width: 50px;
@@ -116,6 +116,17 @@ Button:pressed {
 
 #exitbutton:pressed {
     -fx-translate-y: -247;
+}
+#editor_exit {
+    -fx-translate-y: -20;
+    -fx-translate-x: 530;
+}
+#editor_exit:hover {
+    -fx-translate-y: -22;
+}
+
+#editor_exit:pressed {
+    -fx-translate-y: -17;
 }
 
 TextField {

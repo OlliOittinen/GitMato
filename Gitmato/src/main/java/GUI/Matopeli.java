@@ -200,10 +200,16 @@ public class Matopeli extends Application {
             window.setScene(gameScene);
             animationLoop(gc);
         });
+
+        //create level editor scene
         Button leveleditor = new Button("Level Editor");
         leveleditor.setOnAction(e -> {
             LevelEditor le = new LevelEditor();
             GridPane pane = le.createGrid();
+            Button levelexit = new Button();
+            levelexit.setOnAction(event -> window.setScene(mainMenuScene));
+            pane.getChildren().add(levelexit);
+            levelexit.setId("editor_exit");
             pane.setId("leveleditor");
             pane.getStylesheets().add("Styling/styling.css");
             pane.setAlignment(Pos.CENTER);
@@ -652,6 +658,7 @@ public class Matopeli extends Application {
         bombs = (Bombs) powerups.get(6);
         laser = (Laser) powerups.get(7);
         steal = (Steal) powerups.get(8);
+        switcher = (Switcher) powerups.get(9);
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
     }
