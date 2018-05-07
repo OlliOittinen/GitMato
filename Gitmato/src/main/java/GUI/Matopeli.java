@@ -1,5 +1,6 @@
 package GUI;
 
+import javafx.geometry.Point2D;
 import Controller.PlayerController;
 import Sound.Music;
 import javafx.animation.AnimationTimer;
@@ -85,6 +86,7 @@ public class Matopeli extends Application {
     private Image bigredhat = new Image("images/Hattu2.png");
     private Image purplehat = new Image("images/Hat3.png");
     private Image bigpurplehat = new Image("images/Hattu3.png");
+    private Image tree1 = new Image("images/Tree1.png");
 
     private Image scissoricon = new Image("images/stealicon.png");
     private ArrayList<Image> infoimg = new ArrayList();
@@ -138,6 +140,9 @@ public class Matopeli extends Application {
     private int skinindex = -1;
     private int skinindex2 = -1;
     private int infoindex = 0;
+    private LevelEditor editorpane;
+    private Boolean[][] booleans = new Boolean[12][9];
+    private Point2D[][] coords = new Point2D[12][9];
 
     /**
      * Launches the application.
@@ -203,9 +208,10 @@ public class Matopeli extends Application {
         //create level editor scene
         Button leveleditor = new Button("Level Editor");
         leveleditor.setOnAction(e -> {
-            GridPane editorpane = new LevelEditor();
+            
             Button levelexit = new Button();
             levelexit.setOnAction(event -> window.setScene(mainMenuScene));
+            editorpane = new LevelEditor();
             editorpane.getChildren().add(levelexit);
             levelexit.setId("editor_exit");
             editorpane.setId("leveleditor");
@@ -375,6 +381,10 @@ public class Matopeli extends Application {
                 if (now - lastUpdate >= 10_000_000) {
                     gameScene.setOnKeyPressed((KeyEvent event) -> pc.keyPressed(event));
                     board.updateBoard();
+                    // uptating scene maker
+                    booleans = editorpane.getButtonbooleans();
+                    coords = editorpane.getCoordinates();
+
                     draw(gc);
 
                 }
@@ -503,6 +513,23 @@ public class Matopeli extends Application {
                     g.drawImage(wormtail2, body2.get(i).getX(), body2.get(i).getY());
                 }
             }
+            
+            //drawing the trees
+
+
+            //if (editorpane.getCoordinates() !=null){
+
+                for (int i = 0; i < 12; i++) {
+                    for (int j = 0; j < 9; j++) {
+                        if(booleans[i][j]){
+                            g.drawImage(tree1, coords[i][j].getX(), coords[i][j].getY());
+
+                        }
+
+                    }
+                }
+            //}
+
 
             //draw powerups last so they're on top and easily visible to the viewer
             g.drawImage(snackicon, snack.getX(), snack.getY());
@@ -557,6 +584,7 @@ public class Matopeli extends Application {
                 g.drawImage(confuseEffect, worm2.getX() - 5, worm2.getY() - 4);
             }
             drawPoints(g);
+
 
         } else {
             if (worm.getLife() < worm2.getLife() && !gameMode.equals("sp")) {

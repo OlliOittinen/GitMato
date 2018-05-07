@@ -36,5 +36,6 @@ Model\WormStates\WormFast.class
 Spawnables\AbstractDamagingSpawnables.class
 Model\WormStates\WormStateNormal.class
 Spawnables\Laser$2.class
+GUI\Coordinate.class
 Spawnables\Shield.class
 Spawnables\Life$1.class
