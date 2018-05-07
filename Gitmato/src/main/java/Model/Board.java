@@ -5,7 +5,7 @@
  */
 package Model;
 
-import GUI.Matopeli;
+import GUI.*;
 import Sound.Music;
 import Spawnables.*;
 
@@ -50,6 +50,12 @@ public class Board {
     private ArrayList<Point2D> coordinates;
     private ArrayList<Point2D> coordinates2;
 
+    //puut & editor
+    private LevelEditor editor;
+    private Point2D[][] trees;
+    private ArrayList<Point2D> treelist = new ArrayList<>();
+    private ArrayList<Rectangle> treeBoxes = new ArrayList<>();
+
 
     /**
      * Class constructor
@@ -71,7 +77,9 @@ public class Board {
 
         this.coordinates2 = new ArrayList<>();
         this.tailList2 = new ArrayList<>();
-
+        if (matopeli.getEditorpane() != null) {
+            this.editor = matopeli.getEditorpane();
+        }
         initBoard();
     }
 
@@ -104,6 +112,22 @@ public class Board {
         tailList = worm.getTails();
         tailList2 = worm2.getTails();
         bot = new Bot(this);
+
+        if (editor != null) {
+            trees = editor.getCoordinates();
+            Boolean[][] booleans =editor.getButtonbooleans();
+            for (int i = 0; i < 12; i++) {
+                for (int j = 0; j < 9; j++) {
+                    if (booleans[i][j]) {
+                        treelist.add(new Point2D(trees[i][j].getX(), trees[i][j].getY()));
+                    }
+                }
+            }
+
+            for (Point2D tree : treelist) {
+                treeBoxes.add(new Rectangle(tree.getX()+12, tree.getY()+83, 40, 50));
+            }
+        }
 
         ingame = true;
         if (gameMode.equals("vs AI")) {
@@ -262,6 +286,7 @@ public class Board {
         Bounds sc = steal.getBoundsForIcon();
         Bounds sw = switcher.getBoundsForIcon();
 
+
         for (Tail aTailList : tailList) {
             Bounds Matotail = aTailList.getBounds();
             if (Matokuutio2.intersects(Matotail) && !shield.isActive(worm2) && !gameMode.equals("sp")) {
@@ -293,6 +318,19 @@ public class Board {
                     }
                     Life.loseLife(worm);
                 }
+            }
+        }
+        for (Rectangle treeBoxe : treeBoxes) {
+            if (Matokuutio.intersects(treeBoxe.getLayoutBounds())) {
+                Life.loseLife(worm);
+                worm.turnAround();
+            }
+        }
+
+        for (Rectangle treeBoxe : treeBoxes) {
+            if (Matokuutio2.intersects(treeBoxe.getLayoutBounds())) {
+                Life.loseLife(worm2);
+                worm2.turnAround();
             }
         }
 

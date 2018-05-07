@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
-class LevelEditor extends GridPane {
+public class LevelEditor extends GridPane {
 
     private Button[][] buttons = new Button[12][9];
     private Boolean[][] buttonbooleans = new Boolean[12][9];
@@ -17,7 +17,7 @@ class LevelEditor extends GridPane {
     private int k;
     private int l;
 
-    LevelEditor() {
+    public LevelEditor() {
         setPrefSize(800, 600);
         generateButtons();
     }

@@ -140,6 +140,11 @@ public class Matopeli extends Application {
     private int skinindex = -1;
     private int skinindex2 = -1;
     private int infoindex = 0;
+
+    public LevelEditor getEditorpane() {
+        return editorpane;
+    }
+
     private LevelEditor editorpane;
     private Boolean[][] booleans = new Boolean[12][9];
     private Point2D[][] coords = new Point2D[12][9];
@@ -518,21 +523,15 @@ public class Matopeli extends Application {
             }
             
             //drawing the trees
-
-
             if (editorpane !=null) {
-
                 for (int i = 0; i < 12; i++) {
                     for (int j = 0; j < 9; j++) {
                         if (booleans[i][j]) {
                             g.drawImage(tree1, coords[i][j].getX(), coords[i][j].getY());
-
                         }
-
                     }
                 }
             }
-
 
             //draw powerups last so they're on top and easily visible to the viewer
             g.drawImage(snackicon, snack.getX(), snack.getY());
