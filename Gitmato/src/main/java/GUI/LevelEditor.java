@@ -12,11 +12,11 @@ class LevelEditor extends GridPane {
     private int k;
     private int l;
 
-    LevelEditor createGrid() {
+    LevelEditor() {
         setPrefSize(800, 600);
         generateButtons();
-        return this;
     }
+
 
     private void generateButtons() {
         for (i = 0; i < 12; i++) {
@@ -27,7 +27,7 @@ class LevelEditor extends GridPane {
                     System.out.println(text);
 
                     if (text.length() > 2) {
-                        k = Integer.parseInt(text.substring(0,2));
+                        k = Integer.parseInt(text.substring(0, 2));
                         l = Character.getNumericValue(text.charAt(2));
                     } else {
                         k = Character.getNumericValue(text.charAt(0));
