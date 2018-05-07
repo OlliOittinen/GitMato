@@ -48,6 +48,8 @@ class LevelEditor extends GridPane {
                         tree.setX(coordinates[k][l].getX());
                         tree.setY(coordinates[k][l].getY());
                         buttons[k][l].setGraphic(tree);
+                    } else {
+                        buttons[k][l].setGraphic(null);
                     }
 
                 });

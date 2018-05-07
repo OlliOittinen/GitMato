@@ -369,6 +369,12 @@ public class Matopeli extends Application {
         switcher = (Switcher) powerups.get(9);
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
+
+        // uptating scene maker
+        if(editorpane != null) {
+            booleans = editorpane.getButtonbooleans();
+            coords = editorpane.getCoordinates();
+        }
     }
 
     private void animationLoop(GraphicsContext gc) {
@@ -381,9 +387,6 @@ public class Matopeli extends Application {
                 if (now - lastUpdate >= 10_000_000) {
                     gameScene.setOnKeyPressed((KeyEvent event) -> pc.keyPressed(event));
                     board.updateBoard();
-                    // uptating scene maker
-                    booleans = editorpane.getButtonbooleans();
-                    coords = editorpane.getCoordinates();
 
                     draw(gc);
 
@@ -517,18 +520,18 @@ public class Matopeli extends Application {
             //drawing the trees
 
 
-            //if (editorpane.getCoordinates() !=null){
+            if (editorpane !=null) {
 
                 for (int i = 0; i < 12; i++) {
                     for (int j = 0; j < 9; j++) {
-                        if(booleans[i][j]){
+                        if (booleans[i][j]) {
                             g.drawImage(tree1, coords[i][j].getX(), coords[i][j].getY());
 
                         }
 
                     }
                 }
-            //}
+            }
 
 
             //draw powerups last so they're on top and easily visible to the viewer
