@@ -19,6 +19,9 @@ public class Music {
     public static Music snack = new Music("snack.wav");
     public static Music loseLife = new Music("lostlife.wav");
     public static Music shieldpop = new Music("bubble_pop.wav");
+    public static Music steal = new Music("steal_sound.wav");
+    public static Music portal = new Music("portal_sound.wav");
+
 
 
     /**

@@ -2,30 +2,32 @@ package Spawnables;
 
 import Model.Worm;
 import Sound.Music;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 /**
- *
  * @author Max
  */
-public class Switcher extends AbstractSpawnables{
+public class Switcher extends AbstractSpawnables {
 
     /**
      * Awards <code>Worm</code> object with points and changes positions
-     * @param worm the <code>Worm</code> to be awarded with points
+     *
+     * @param worm  the <code>Worm</code> to be awarded with points
      * @param worm2 the <code>Worm</code> that switches positions with the first worm
      */
     public void switcher(Worm worm, Worm worm2) {
 
-        //TODO add sound
+        Music.portal.play();
+
         int x;
         int y;
 
-        worm.setPoints(worm.getPoints()+100);
+        worm.setPoints(worm.getPoints() + 100);
 
-        if(!worm2.getShield()){
+        if (!worm2.getShield()) {
             worm.setShield(true);
             worm2.setShield(true);
 
@@ -46,7 +48,7 @@ public class Switcher extends AbstractSpawnables{
                     worm.setShield(false);
                 }
             }, 2000);
-        }else{
+        } else {
             worm2.setShield(false);
         }
 
@@ -54,6 +56,7 @@ public class Switcher extends AbstractSpawnables{
 
     /**
      * Class constructor
+     *
      * @see AbstractSpawnables
      */
     public Switcher() {

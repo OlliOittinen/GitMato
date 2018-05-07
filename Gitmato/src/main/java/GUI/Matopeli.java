@@ -204,16 +204,15 @@ public class Matopeli extends Application {
         //create level editor scene
         Button leveleditor = new Button("Level Editor");
         leveleditor.setOnAction(e -> {
-            LevelEditor le = new LevelEditor();
-            GridPane pane = le.createGrid();
+            GridPane editorpane = new LevelEditor();
             Button levelexit = new Button();
             levelexit.setOnAction(event -> window.setScene(mainMenuScene));
-            pane.getChildren().add(levelexit);
+            editorpane.getChildren().add(levelexit);
             levelexit.setId("editor_exit");
-            pane.setId("leveleditor");
-            pane.getStylesheets().add("Styling/styling.css");
-            pane.setAlignment(Pos.CENTER);
-            Scene scene = new Scene(pane,width,height);
+            editorpane.setId("leveleditor");
+            editorpane.getStylesheets().add("Styling/styling.css");
+            editorpane.setAlignment(Pos.CENTER);
+            Scene scene = new Scene(editorpane,width,height);
             window.setScene(scene);
         });
         Button close = new Button("Exit");
