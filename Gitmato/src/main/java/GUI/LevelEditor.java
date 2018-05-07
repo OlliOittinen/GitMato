@@ -44,6 +44,7 @@ class LevelEditor extends GridPane {
 
                     if (buttonbooleans[k][l]) {
                         ImageView tree =  new ImageView("images/Tree1.png");
+                        tree.setId("tree");
                         tree.setX(coordinates[k][l].getX());
                         tree.setY(coordinates[k][l].getY());
                         buttons[k][l].setGraphic(tree);

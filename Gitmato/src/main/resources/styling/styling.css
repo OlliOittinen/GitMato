@@ -82,6 +82,11 @@ Button:pressed {
     -fx-border-color: #b9b9b9;
     -fx-border-width: 2px;
 }
+#tree{
+    -fx-translate-y: -38px;
+    -fx-translate-x: -16px;
+}
+
 
 #infobutton {
     -fx-background-image: url("infobutton.png");
