@@ -1,7 +1,10 @@
 package GUI;
 
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 class LevelEditor extends GridPane {
@@ -23,10 +26,7 @@ class LevelEditor extends GridPane {
     private void generateButtons() {
         for (i = 0; i < 12; i++) {
             for (j = 0; j < 9; j++) {
-
                 coordinates[i][j]= new Point2D((25+(62.5*i)), (25+(60*j)));
-
-
                 buttons[i][j] = new Button(Integer.toString(i) + "" + Integer.toString(j));
                 buttons[i][j].setOnAction(e -> {
                     String text = ((Button) e.getSource()).getText();
@@ -42,9 +42,17 @@ class LevelEditor extends GridPane {
                     buttonbooleans[k][l] = !buttonbooleans[k][l];
                     System.out.println("coordinates" + k + l + "boolean: " + buttonbooleans[k][l]);
 
+                    if (buttonbooleans[k][l]) {
+                        ImageView tree =  new ImageView("images/Tree1.png");
+                        tree.setX(coordinates[k][l].getX());
+                        tree.setY(coordinates[k][l].getY());
+                        buttons[k][l].setGraphic(tree);
+                    }
+
                 });
                 buttonbooleans[i][j] = false;
                 add(buttons[i][j], i, j);
+
                 buttons[i][j].setId("invisible");
                 buttons[i][j].setPrefSize(50, 50);
             }
