@@ -12,10 +12,8 @@
 package Model;
 
 import Spawnables.*;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;

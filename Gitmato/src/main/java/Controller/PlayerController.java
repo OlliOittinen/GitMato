@@ -95,7 +95,7 @@ public class PlayerController {
         }
 
         // controls for player 2
-        if (gameMode == "versus") {
+        if (gameMode.equals("versus")) {
             if (key == KeyCode.A) {
                 if (worms.get(1).getDirection() != 2) {
                     if (worms.get(1).getDirection() != 1 && (worms.get(1).getX() < 20 || worms.get(1).getX() > 740)) {

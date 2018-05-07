@@ -15,9 +15,9 @@ public class DBConnectionTest {
     }
 
     */
-/**
-     * Only works while tunneling & connection active and while leader is "YEABOII"
-     *//*
+
+     //Only works while tunneling & connection active and while leader is "YEABOII"
+     /*
 
     @Test
     public void testConnection() {

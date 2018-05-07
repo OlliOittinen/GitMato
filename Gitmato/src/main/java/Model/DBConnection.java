@@ -8,9 +8,6 @@ package Model;
 import java.sql.*;
 import java.util.ArrayList;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-
 /**
  * @author Eero, Olli
  */

@@ -1,12 +1,6 @@
 package Spawnables;
-/**
- *
- *@author Olli
-*/
 
 import javafx.geometry.Bounds;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
 /**

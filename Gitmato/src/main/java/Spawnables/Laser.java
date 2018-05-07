@@ -9,7 +9,6 @@ import Model.Worm;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 
 /**

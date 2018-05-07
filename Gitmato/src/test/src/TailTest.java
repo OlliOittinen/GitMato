@@ -1,5 +1,4 @@
 import Model.Tail;
-import javafx.geometry.Bounds;
 import javafx.scene.shape.Rectangle;
 import org.junit.Before;
 import org.junit.Test;
