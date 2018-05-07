@@ -54,7 +54,7 @@ public class Board {
     /**
      * Class constructor
      *
-     * @param matopeli  the GUI/view that this model will send info to
+     * @param matopeli the GUI/view that this model will send info to
      * @param gameMode the current game mode to be used
      */
     public Board(Matopeli matopeli, String gameMode) {
@@ -356,12 +356,12 @@ public class Board {
         if (beam.intersects(Matokuutio) && shield.isActive(worm)) {
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        worm.setShield(false);
+                @Override
+                public void run() {
+                    worm.setShield(false);
 
-                    }
-                }, 1500);
+                }
+            }, 1500);
         }
 
         if (beam.intersects(Matokuutio) && !shield.isActive(worm)) {
@@ -539,6 +539,7 @@ public class Board {
 
     /**
      * Getter for database connection
+     *
      * @return reference to database connection object
      */
     public Connection getConnection() {

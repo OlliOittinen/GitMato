@@ -2,6 +2,7 @@ package Spawnables;
 
 
 import Model.Worm;
+import Sound.Music;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Rectangle;
 
@@ -19,6 +20,7 @@ public class Steal extends AbstractSpawnables{
      */
     public void steal(Worm worm, Worm worm2) {
 
+        Music.steal.play();
         int currentLength = worm2.getTails().size();
         int howMuchAfterCut = (int) (worm2.getTails().size()*0.75);
 
