@@ -173,11 +173,9 @@ class Bot {
             Rectangle l2 = laser.getBoundsB();
 
             if ((AIleft.intersects(MatotailForAI) || (pb1.intersects(AIleft) || pb2.intersects(AIleft) || pb3.intersects(AIleft) || pb4.intersects(AIleft) || pb5.intersects(AIleft) || pb6.intersects(AIleft) || (l2.intersects(AIleft) && laser.getHorizontal()) || (l2.intersects(AIleft) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 1 || worms.get(1).getReverse()))) {
-                if (worm2.getY() > pickableList.get(0).getY()) {
-                    BotTurnUp();
-                } else {
+
                     BotTurnDown();
-                }
+
             }
 
 
@@ -191,11 +189,9 @@ class Bot {
 
             if ((AIright.intersects(MatotailForAI) || pb1.intersects(AIright) || pb2.intersects(AIright) || pb3.intersects(AIright) || pb4.intersects(AIright) || pb5.intersects(AIright) || pb6.intersects(AIright) || (l2.intersects(AIright) && laser.getHorizontal()) || (l2.intersects(AIright) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 2 || worms.get(1).getReverse())) {
 
-                if (worm2.getY() > pickableList.get(0).getY()) {
+
                     BotTurnUp();
-                } else {
-                    BotTurnDown();
-                }
+
 
             }
 
@@ -210,11 +206,9 @@ class Bot {
 
             if ((AIup.intersects(MatotailForAI) || pb1.intersects(AIup) || pb2.intersects(AIup) || pb3.intersects(AIup) || pb4.intersects(AIup) || pb5.intersects(AIup) || pb6.intersects(AIup) || (l2.intersects(AIup) && !laser.getHorizontal()) || (l2.intersects(AIup) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 3 || worms.get(1).getReverse())) {
 
-                if (worm2.getX() > pickableList.get(0).getX()) {
+
                     BotTurnLeft();
-                } else {
-                    BotTurnRight();
-                }
+
 
             }
         }
@@ -228,11 +222,9 @@ class Bot {
 
             if ((AIdown.intersects(MatotailForAI) || pb1.intersects(AIdown) || pb2.intersects(AIdown) || pb3.intersects(AIdown) || pb4.intersects(AIdown) || pb5.intersects(AIdown) || pb6.intersects(AIdown) || (l2.intersects(AIdown) && !laser.getHorizontal()) || (l2.intersects(AIdown) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 4 || worms.get(1).getReverse())) {
 
-                if (worm2.getX() > pickableList.get(0).getX()) {
-                    BotTurnLeft();
-                } else {
+
                     BotTurnRight();
-                }
+
             }
 
         }
