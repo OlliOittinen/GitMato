@@ -1,5 +1,6 @@
 package GUI;
 
+import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
@@ -7,6 +8,7 @@ class LevelEditor extends GridPane {
 
     private Button[][] buttons = new Button[12][9];
     private Boolean[][] buttonbooleans = new Boolean[12][9];
+    private Point2D[][] coordinates = new Point2D[12][9];
     private int i = 0;
     private int j = 0;
     private int k;
@@ -21,6 +23,10 @@ class LevelEditor extends GridPane {
     private void generateButtons() {
         for (i = 0; i < 12; i++) {
             for (j = 0; j < 9; j++) {
+
+                coordinates[i][j]= new Point2D((25+(62.5*i)), (25+(60*j)));
+
+
                 buttons[i][j] = new Button(Integer.toString(i) + "" + Integer.toString(j));
                 buttons[i][j].setOnAction(e -> {
                     String text = ((Button) e.getSource()).getText();
@@ -44,5 +50,25 @@ class LevelEditor extends GridPane {
             }
         }
 
+    }
+
+
+
+
+    //getters and setters
+    public Boolean[][] getButtonbooleans() {
+        return buttonbooleans;
+    }
+
+    public void setButtonbooleans(Boolean[][] buttonbooleans) {
+        this.buttonbooleans = buttonbooleans;
+    }
+
+    public Point2D[][] getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Point2D[][] coordinates) {
+        this.coordinates = coordinates;
     }
 }
