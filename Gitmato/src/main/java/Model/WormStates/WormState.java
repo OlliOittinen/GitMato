@@ -2,6 +2,9 @@ package Model.WormStates;
 
 import Model.Worm;
 
+/**
+ * While this is abstract class is called <code>WormState</code>, it's an amalgamation of State and Template Methods.
+ */
 public abstract class WormState {
 
     /**
