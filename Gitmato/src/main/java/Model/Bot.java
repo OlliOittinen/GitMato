@@ -26,8 +26,7 @@ class Bot {
     private ArrayList<Rectangle> treeList;
     private Laser laser;
     private ArrayList<Tail> body;
-
-
+    
     /**
      * Class Constructor.
      *
@@ -60,10 +59,7 @@ class Bot {
         Circle pb6 = bombs.getBoundsBombs(6);
 
         for (int i = 0; i < pickableList.size(); i++) {
-
             if (worms.get(1).getX() < (pickableList.get(i).getX() + 10) && worms.get(1).getX() > (pickableList.get(i).getX() - 10) && !worms.get(1).getReverse()) {
-
-
                 if (worms.get(1).getY() < pickableList.get(i).getY()) {
                     BotTurnDown();
                 } else {
@@ -72,7 +68,6 @@ class Bot {
             }
 
             if (worms.get(1).getY() < (pickableList.get(i).getY() + 10) && worms.get(1).getY() > (pickableList.get(i).getY() - 10) && !worms.get(1).getReverse()) {
-
                 if (worms.get(1).getX() < pickableList.get(i).getX()) {
                     BotTurnRight();
                 } else {
@@ -120,7 +115,6 @@ class Bot {
                 }
                 worms.get(1).setX(710);
             }
-
         }
 
         if (worms.get(1).getY() > 540 && worms.get(1).getDirection() != 2) {
@@ -162,125 +156,99 @@ class Bot {
                 }
                 worms.get(1).setY(25);
             }
-
         }
 
         Bounds AIleft = getBoundsLeft();
         for (int i = 0; i < body.size(); i++) {
             Bounds MatotailForAI = body.get(i).getBounds();
-
             Rectangle l2 = laser.getBoundsB();
-
             if ((AIleft.intersects(MatotailForAI) || (pb1.intersects(AIleft) || pb2.intersects(AIleft) || pb3.intersects(AIleft) || pb4.intersects(AIleft) || pb5.intersects(AIleft) || pb6.intersects(AIleft) || (l2.intersects(AIleft) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 1 || worms.get(1).getReverse()))) {
-
                 BotTurnUp();
-
             }
 
             if (l2.intersects(AIleft) && laser.getHorizontal()) {
-                if (worms.get(1).getY() < 300) {
+                if (worms.get(1).getY() < 100) {
                     BotTurnDown();
+                } else if (worms.get(1).getY() > 700) {
+                    BotTurnUp();
                 } else {
                     BotTurnUp();
                 }
             }
-
-
         }
 
         Bounds AIright = getBoundsRight();
         for (int i = 0; i < body.size(); i++) {
             Bounds MatotailForAI = body.get(i).getBounds();
-
             Rectangle l2 = laser.getBoundsB();
-
             if ((AIright.intersects(MatotailForAI) || pb1.intersects(AIright) || pb2.intersects(AIright) || pb3.intersects(AIright) || pb4.intersects(AIright) || pb5.intersects(AIright) || pb6.intersects(AIright) || (l2.intersects(AIright) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 2 || worms.get(1).getReverse())) {
-
-
                 BotTurnDown();
-
             }
 
             if (l2.intersects(AIright) && laser.getHorizontal()) {
-                if (worms.get(1).getY() < 300) {
+                if (worms.get(1).getY() < 100) {
                     BotTurnDown();
-                } else {
+                } else if (worms.get(1).getY() > 700) {
                     BotTurnUp();
+                } else {
+                    BotTurnDown();
                 }
-
-
             }
-
-
         }
 
         Bounds AIup = getBoundsUp();
         for (int i = 0; i < body.size(); i++) {
             Bounds MatotailForAI = body.get(i).getBounds();
-
             Rectangle l2 = laser.getBoundsB();
-
             if ((AIup.intersects(MatotailForAI) || pb1.intersects(AIup) || pb2.intersects(AIup) || pb3.intersects(AIup) || pb4.intersects(AIup) || pb5.intersects(AIup) || pb6.intersects(AIup) || (l2.intersects(AIup) && !laser.getHorizontal()) || (l2.intersects(AIup) && !l2.intersects(worms.get(1).getBounds()))) && (worms.get(1).getDirection() == 3 || worms.get(1).getReverse())) {
-
                 BotTurnRight();
-
             }
 
             if (l2.intersects(AIup) && !laser.getHorizontal()) {
-                if (worms.get(1).getX() < 400) {
+                if (worms.get(1).getX() < 100) {
                     BotTurnRight();
-                } else {
+                } else if (worms.get(1).getX() > 500) {
                     BotTurnLeft();
+                } else {
+                    BotTurnRight();
                 }
-
-
             }
-
-
         }
 
         Bounds AIdown = getBoundsDown();
         for (int i = 0; i < body.size(); i++) {
             Bounds MatotailForAI = body.get(i).getBounds();
-
             Rectangle l2 = laser.getBoundsB();
-
-
             if ((AIdown.intersects(MatotailForAI) || pb1.intersects(AIdown) || pb2.intersects(AIdown) || pb3.intersects(AIdown) || pb4.intersects(AIdown) || pb5.intersects(AIdown) || pb6.intersects(AIdown)) && (worms.get(1).getDirection() == 4 || worms.get(1).getReverse())) {
-
-
                 BotTurnLeft();
-
             }
 
             if (l2.intersects(AIdown) && !laser.getHorizontal()) {
-                if (worms.get(1).getX() < 400) {
+                if (worms.get(1).getX() < 100) {
                     BotTurnRight();
+                } else if (worms.get(1).getX() > 500) {
+                    BotTurnLeft();
                 } else {
                     BotTurnLeft();
                 }
-
-
             }
-
-
         }
 
-        for (int i = 0; i < treeList.size(); i++) {
-            if (AIdown.intersects(treeList.get(i).getLayoutBounds())) {
-                BotTurnDown();
-            }
-
-            if (AIup.intersects(treeList.get(i).getLayoutBounds())) {
-                BotTurnUp();
-            }
-
-            if (AIleft.intersects(treeList.get(i).getLayoutBounds())) {
+        for (Rectangle aTreeList : treeList) {
+            if (AIdown.intersects(aTreeList.getLayoutBounds())) {
                 BotTurnLeft();
             }
 
-            if (AIright.intersects(treeList.get(i).getLayoutBounds())) {
+            if (AIup.intersects(aTreeList.getLayoutBounds())) {
                 BotTurnRight();
+            }
+
+            if (AIleft.intersects(aTreeList.getLayoutBounds())) {
+                BotTurnUp();
+            }
+
+            if (AIright.intersects(aTreeList.getLayoutBounds())) {
+                BotTurnDown();
             }
         }
     }
@@ -306,78 +274,42 @@ class Bot {
     }
 
     private void BotTurnLeft() {
-        worms.get(1).setDirection(1);
-        worms.get(1).setDirectionAdv(2);
-
+        if (worms.get(1).getX() < 20) {
+            worms.get(1).setDirection(2);
+            worms.get(1).setDirectionAdv(2);
+        } else {
+            worms.get(1).setDirection(1);
+            worms.get(1).setDirectionAdv(2);
+        }
     }
 
     private void BotTurnRight() {
-        worms.get(1).setDirection(2);
-        worms.get(1).setDirectionAdv(2);
-
+        if (worms.get(1).getX() > 715) {
+            worms.get(1).setDirection(1);
+            worms.get(1).setDirectionAdv(2);
+        } else {
+            worms.get(1).setDirection(2);
+            worms.get(1).setDirectionAdv(2);
+        }
     }
 
     private void BotTurnUp() {
-        worms.get(1).setDirection(3);
-        worms.get(1).setDirectionAdv(1);
-
+        if (worms.get(1).getY() < 20) {
+            worms.get(1).setDirection(4);
+            worms.get(1).setDirectionAdv(1);
+        } else {
+            worms.get(1).setDirection(3);
+            worms.get(1).setDirectionAdv(1);
+        }
     }
 
     void BotTurnDown() {
-        worms.get(1).setDirection(4);
-        worms.get(1).setDirectionAdv(1);
-
-    }
-
-    public void turn(int suunta) {
-        //suunta 1 = vasen, 2 = oikea, 3 = ylös, 4 = alas
-
-        if (suunta == 1) {
-            if (worm2.getY() < 315 && worm2.getY() > 285) {
-                BotTurnUp();
-            } else {
-                if (worms.get(1).getY() < 300) {
-                    BotTurnDown();
-                } else {
-                    BotTurnUp();
-                }
-            }
-        }
-
-        if (suunta == 2) {
-            if (worm2.getY() < 315 && worm2.getY() > 285) {
-                BotTurnDown();
-            } else {
-                if (worms.get(1).getY() < 300) {
-                    BotTurnDown();
-                } else {
-                    BotTurnUp();
-                }
-            }
-        }
-
-        if (suunta == 3) {
-            if (worm2.getX() < 415 && worm2.getX() > 385) {
-                BotTurnRight();
-            } else {
-                if (worms.get(1).getX() < 400) {
-                    BotTurnRight();
-                } else {
-                    BotTurnLeft();
-                }
-            }
-        }
-
-        if (suunta == 4) {
-            if (worm2.getX() < 415 && worm2.getX() > 385) {
-                BotTurnLeft();
-            } else {
-                if (worms.get(1).getX() < 400) {
-                    BotTurnRight();
-                } else {
-                    BotTurnLeft();
-                }
-            }
+        if (worms.get(1).getY() > 540) {
+            worms.get(1).setDirection(3);
+            worms.get(1).setDirectionAdv(1);
+        } else {
+            worms.get(1).setDirection(4);
+            worms.get(1).setDirectionAdv(1);
         }
     }
 }
