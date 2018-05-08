@@ -140,7 +140,7 @@ public class Board {
         }
 
         if (!gameMode.equals("sp")) {
-            powerUpCD(); //piilottaa powerupit alussa
+            powerUpCD(); //piilottaa powerupit
         }
     }
 
@@ -267,7 +267,7 @@ public class Board {
 
     private void checkCollisions() {
 
-        //Bounds returns a square object
+        //Bounds returns a rectangular object
         Bounds Matokuutio = worm.getBounds();
         Bounds Matokuutio2 = worm2.getBounds();
 
@@ -320,21 +320,8 @@ public class Board {
                 }
             }
         }
-        for (Rectangle treeBoxe : treeBoxes) {
-            if (Matokuutio.intersects(treeBoxe.getLayoutBounds())) {
-                Life.loseLife(worm);
-                worm.turnAround();
-            }
-        }
 
-        for (Rectangle treeBoxe : treeBoxes) {
-            if (Matokuutio2.intersects(treeBoxe.getLayoutBounds())) {
-                Life.loseLife(worm2);
-                worm2.turnAround();
-            }
-        }
-
-        //mato 1 collisions
+        //worm 1 collisions
         if (s.intersects(Matokuutio)) {
             Music.snack.play();
             snack.randomizeIconLocation(this);
@@ -423,7 +410,14 @@ public class Board {
             powerUpCD();
         }
 
-        //mato 2 collisions
+        for (Rectangle treeBoxe : treeBoxes) {
+            if (Matokuutio.intersects(treeBoxe.getLayoutBounds())) {
+                Life.loseLife(worm);
+                worm.turnAround();
+            }
+        }
+
+        //worm 2 collisions
         if (s.intersects(Matokuutio2)) {
             Music.snack.play();
             snack.randomizeIconLocation(this);
@@ -470,7 +464,6 @@ public class Board {
 
                 }
             }, 1500);
-            //pop goes the bubble
         }
 
         if (pb2.intersects(Matokuutio2) || pb3.intersects(Matokuutio2) || pb4.intersects(Matokuutio2) && !shield.isActive(worm2)) {
@@ -514,6 +507,13 @@ public class Board {
         if (sw.intersects(Matokuutio2)) {
             switcher.switcher(worm2, worm);
             powerUpCD();
+        }
+
+        for (Rectangle treeBoxe : treeBoxes) {
+            if (Matokuutio2.intersects(treeBoxe.getLayoutBounds())) {
+                Life.loseLife(worm2);
+                worm2.turnAround();
+            }
         }
     }
 
