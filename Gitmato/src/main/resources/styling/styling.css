@@ -54,7 +54,7 @@
 }
 #colorlabel {
     -fx-text-fill: #ffffff;
-    -fx-translate-x: -100;
+    -fx-translate-x: -200;
     -fx-translate-y: -200;
 
 }
@@ -102,7 +102,7 @@ Button:pressed {
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
     -fx-translate-y: -170;
-    -fx-translate-x: 150;
+    -fx-translate-x: -150;
 }
 
 #infobutton:hover {
@@ -146,7 +146,7 @@ Button:pressed {
     -fx-background-image: null;
     -fx-background-color: gray;
     -fx-translate-y: -200;
-    -fx-translate-x: -300;
+    -fx-translate-x: -400;
     -fx-min-width: 85px;
     -fx-max-width: 85px;
 }
