@@ -331,6 +331,9 @@ public class Matopeli extends Application {
     }
 
     private void addImagesToArrays() {
+        colorbuttonimv.setImage(bbackground);
+        colorbuttonimv.setFitHeight(70);
+        colorbuttonimv.setFitWidth(70);
         bgimages.add(bbackground);
         bgimages.add(gbackground);
         bgimages.add(rbackground);
