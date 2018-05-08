@@ -7,19 +7,27 @@ public class Music {
 
     private Clip clip;
 
-    public static Music sound1 = new Music("Off Limits.wav");
-    public static Music sound2 = new Music("faster.wav");
-    public static Music sound3 = new Music("lasershot.wav");
-    public static Music sound4 = new Music("Death.wav");
-    public static Music sound5 = new Music("getlife.wav");
-    public static Music sound6 = new Music("shields.wav");
-    public static Music sound7 = new Music("bombs.wav");
-    public static Music sound8 = new Music("slower.wav");
-    public static Music sound9 = new Music("confusion.wav");
-    public static Music sound10 = new Music("snack.wav");
-    public static Music sound11 = new Music("lostlife.wav");  
-    
+    public static Music backgroundMusic = new Music("Off Limits.wav");
+    public static Music fasterPowerup = new Music("faster.wav");
+    public static Music laserShot = new Music("lasershot.wav");
+    public static Music death = new Music("Death.wav");
+    public static Music addLife = new Music("getlife.wav");
+    public static Music shield = new Music("shields.wav");
+    public static Music bombs = new Music("bombs.wav");
+    public static Music slowerPowerup = new Music("slower.wav");
+    public static Music reverse = new Music("confusion.wav");
+    public static Music snack = new Music("snack.wav");
+    public static Music loseLife = new Music("lostlife.wav");
+    public static Music shieldpop = new Music("bubble_pop.wav");
+    public static Music steal = new Music("steal_sound.wav");
+    public static Music portal = new Music("portal_sound.wav");
 
+
+
+    /**
+     * Class constructor
+     * @param fileName the name of the file to be used for constructing this Music object. Usually *.wav or similar.
+     */
     public Music(String fileName) {
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(new File("src/main/resources/sounds/"+(fileName)).getAbsoluteFile());
@@ -32,6 +40,10 @@ public class Music {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Plays the file once.
+     */
     public void play() {
         try {
             if (clip != null) {
@@ -54,6 +66,9 @@ public class Music {
 
     }
 
+    /**
+     * Stops the file being played.
+     */
     public void stop() {
         if (clip == null) {
             return;
@@ -61,6 +76,9 @@ public class Music {
         clip.stop();
     }
 
+    /**
+     * Continuously plays the file, doesn't stop.
+     */
     public void loop() {
         try {
             if (clip != null) {
@@ -80,8 +98,11 @@ public class Music {
         }
     }
 
+    /**
+     * Checks if the file is being played.
+     * @return true if the file is being played, false if not.
+     */
     public boolean isActive() {
-
         return clip.isActive();
     }
 }

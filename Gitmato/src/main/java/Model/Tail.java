@@ -5,61 +5,77 @@
  */
 package Model;
 
-import java.awt.Image;
-import java.awt.Rectangle;
-import javax.swing.ImageIcon;
+import javafx.geometry.Bounds;
+import javafx.scene.shape.Rectangle;
+
 
 /**
  *
  * @author maxki
  */
 public class Tail{
-    private Image image;
     private int x;
     private int y;
-    private int playerNro;
+    private int playerNumber;
+
     // luku jonka mukaan hakee cordinaateista itselleen arvon.
-    private int cordinateInt;
-    
-     public Tail(int ci, int playerNro) {
-        this.cordinateInt = ci;
-        this.playerNro = playerNro;
-        initTail();
+    private int coordinateInt;
+
+    /**
+     * Class constructor
+     * @param ci Coordinate where the tail will be drawn, ie. where on the ArrayList the tail is put to.
+     * @param playerNumber Number for the player.
+     */
+    public Tail(int ci, int playerNumber) {
+        this.coordinateInt = ci;
+        this.playerNumber = playerNumber;
     }
-    private void initTail(){
-        if(playerNro==1){
-            ImageIcon kuvamato = new ImageIcon("src/main/resources/images/RedWormTail(800x600).png");
-            image = kuvamato.getImage();   
-        }
-         if(playerNro==2){
-            ImageIcon kuvamato = new ImageIcon("src/main/resources/images/BlueWormTail(800x600).png");
-            image = kuvamato.getImage();   
-        }
+
+    /**
+     * Getter for CoordinateInt.
+     * @return Coordinates where the tail will be drawn.
+     */
+    public int getCoordinateInt(){
+        return coordinateInt;
     }
-    
-    public Image getImage() {
-        return image;
-    }
-    public int getCordinateInt(){
-        return cordinateInt;
-    }
-    
-     public void setX(int luku) {
+
+    /**
+     * Setter for x coordinate.
+     * @param luku Coordinate x of Tail object.
+     */
+    public void setX(int luku) {
         this.x = luku;
     }
 
+    /**
+     * Setter for x coordinate.
+     * @param luku Coordinate x of Tail object.
+     */
     public void setY(int luku) {
         this.y = luku;
     }
-     public int getX() {
+    /**
+     * Getter for x coordinate.
+     * @return x coordinate of Tail object.
+     */
+
+    public int getX() {
         return x;
     }
-
+    /**
+     * Getter for y coordinate.
+     * @return y coordinate of Tail object.
+     */
     public int getY() {
         return y;
     }
-    
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, 35, 42);
+
+    /**
+     * Creates Rectangle object for Tail for collision checking.
+     * @return Bounds object based on Rectangle objects layout bounds.
+     */
+    public Bounds getBounds() {
+        Rectangle tail = new Rectangle(x, y, 35, 42);
+        return tail.getLayoutBounds();
     }
 }

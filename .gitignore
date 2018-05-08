@@ -1,7 +1,10 @@
-/Matopeli/nbproject/private/
-/Matopeli1/nbproject/private/
-/Matopeli1/build/
-/Gitmato/nbproject/private/
-/Gitmato/build/
-/Matopeli/build/
-/Gitmato/dist/
+/.idea/
+/Gitmato/.idea/
+*.class
+/out/
+.idea/
+*.iml
+Gitmato.iml
+Gitmato/build.xml
+Gitmato/manifest.mf
+Gitmato/target

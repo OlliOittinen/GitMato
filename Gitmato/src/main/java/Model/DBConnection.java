@@ -7,56 +7,52 @@ package Model;
 
 import java.sql.*;
 import java.util.ArrayList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 /**
- *
- * @author Eero
+ * @author Eero, Olli
  */
-public class DBConnection {
+class DBConnection {
 
-    String name;
-    int score;
-    Connection con = null;
-    ArrayList<String> scores = new ArrayList();
+    private Connection con = null;
+    private ArrayList<String> scores = new ArrayList<>();
     String highscore = "";
+
+    Connection getCon() {
+        return con;
+    }
+
     int indexOf;
 
-    public DBConnection() {
+    /**
+     * Class constructor.
+     */
+    DBConnection() {
         try {
             con = DriverManager.getConnection("jdbc:mariadb://localhost:4444/score", "Olli", "laiskajaakko");
         } catch (SQLException e) {
             System.out.println(e);
+            // e.printStackTrace();
         }
     }
 
-    public void showHighscore(String pelimoodi) {
+    /**
+     * Returns the high scores from the database, sorted in descending order.
+     *
+     * @param gameMode the game mode that was played
+     * @return an ArrayList based on the gameMode played
+     */
+    public ArrayList<String> showHighscore(String gameMode) {
+
         try {
             PreparedStatement query = null;
             try {
-                query = con.prepareStatement("select * from highscore where pelimuoto='" + pelimoodi + "' order by pisteet desc");
+                query = con.prepareStatement("select * from highscore where pelimuoto='" + gameMode + "' order by pisteet desc");
                 ResultSet result = query.executeQuery();
                 try {
                     while (result.next()) {
                         scores.add(result.getString("nimi") + " " + result.getInt("pisteet"));
                     }
-                    int i = 0;
-                    for (String s : scores) {
-                        i++;
-                        if (i <= 10) {
-                            highscore += +(i) + ". " + s + '\n';
-                        }
-                    }
-                    indexOf = scores.indexOf(name + " " + score) + 1;
-
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Highscore");
-                    alert.setHeaderText("Top 10\n You placed: #" + indexOf + " with " + score + " points!");
-                    alert.setContentText(highscore);
-                    alert.showAndWait();
-                    scores.clear();
-                    highscore = "";
+                    return scores;
                 } catch (SQLException e) {
                     do {
                         System.err.println("Viesti: " + e.getMessage());
@@ -81,19 +77,26 @@ public class DBConnection {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
-    public void submitScore(int score, String name, String pelimoodi) {
-        this.score = score;
-        this.name = name;
+    /**
+     * Submits the user's score to the database after the game
+     *
+     * @param score    the user's score
+     * @param name     name to be stored in the database
+     * @param gameMode game mode that was played
+     */
+    public void submitScore(int score, String name, String gameMode) {
+        int score1 = score;
+        String name1 = name;
         try {
             PreparedStatement query = null;
             try {
                 query = con.prepareStatement("INSERT INTO highscore VALUES(?, ?, ?)");
                 query.setString(1, name);
                 query.setInt(2, score);
-                query.setString(3, pelimoodi);
-                //System.out.println(query);
+                query.setString(3, gameMode);
                 ResultSet result = query.executeQuery();
                 try {
                     while (result.next()) {
@@ -110,6 +113,7 @@ public class DBConnection {
                 }
             } catch (Exception e) {
                 System.out.println("Epäonnistui. ");
+                e.printStackTrace();
             } finally {
                 try {
                     query.close();
@@ -118,7 +122,6 @@ public class DBConnection {
                     System.out.println(e);
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

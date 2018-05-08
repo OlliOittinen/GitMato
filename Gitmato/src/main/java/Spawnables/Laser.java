@@ -6,68 +6,37 @@
 package Spawnables;
 
 import Model.Worm;
-import java.awt.Image;
-import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.swing.ImageIcon;
+
+import javafx.scene.shape.Rectangle;
 
 /**
  *
  * @author Olli
  */
-public class Laser implements Spawnables {
+public class Laser extends AbstractDamagingSpawnables {
 
-    private int xe;
-    private int ye;
-    private Image image;
     private int xe2;
     private int ye2;
-    private Image image2;
     private int xe3;
     private int ye3;
-    private Image image3;
-    private Image image4;
-    private Image image5;
     private boolean horizontal = false;
-    private boolean lethal = false;
-
     private Rectangle beam = new Rectangle(-1000, -1000, 1, 1);
 
+    /**
+     * Class constructor
+     */
     public Laser() {
         init();
     }
 
-    @Override
-    public void loadImage(String imageName) {
-        ImageIcon ii = new ImageIcon(imageName);
-        image = ii.getImage();
-    }
 
-    public void damage(Worm worm) {
-        if (lethal) {
-            if (worm.getLife() > 1) {
-                worm.randomizeXY();
-                worm.setSuuntaAdv(0);
-                worm.setSuunta(0);
-            }
-            Life.loseLife(worm);
-        }
-    }
-
+    /**
+     * On constructing this Object, hides the icon and horizontal and vertical lasers.
+     */
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/main/resources/images/Lasercannon.png");
-        image = kuva.getImage();
-        ImageIcon kuva2 = new ImageIcon("src/main/resources/images/LazerH.png");
-        image2 = kuva2.getImage();
-        ImageIcon kuva3 = new ImageIcon("src/main/resources/images/lazerV.png");
-        image3 = kuva3.getImage();
-        ImageIcon kuva4 = new ImageIcon("src/main/resources/images/lasersightV.png");
-        image4 = kuva4.getImage();
-        ImageIcon kuva5 = new ImageIcon("src/main/resources/images/lasersightH.png");
-        image5 = kuva5.getImage();
-
         setX(-100);
         setY(-100);
         setX2(-1000);
@@ -76,6 +45,14 @@ public class Laser implements Spawnables {
         setY3(-1000);
     }
 
+    /**
+     * Awards the <code>Worm</code>  object with points, uses the second <code>Worm</code>'s location to place a laser.
+     * Gets the second <code>Worm</code>s' x and y-coordinates and places a vertical or
+     * a horizontal laser on top of these, based on pseudo-random modifier.
+     * Plays corresponding music files on both collision with icon and when the laser is being fired.
+     * @param worm the <code>Worm</code>  to be awarded with points
+     * @param worm2 the <code>Worm</code>  to be targeted by a laser
+     */
     public void onPickup(Worm worm, Worm worm2) {
         worm.setPoints(worm.getPoints() + 100);
 
@@ -83,22 +60,22 @@ public class Laser implements Spawnables {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                //hae kohteen nykysijainti, tallenna muuttujiin
                 int wormLocX = worm2.getX();
                 int wormLocY = worm2.getY();
+
                 //horisontaalinen vai vertikaalinen säde, random arvo 0...1
                 double r = Math.random();
                 if (r < 0.5) {
                     //vertical
                     setX2(wormLocX - 30);
                     setY2(0);
-                    beam.setBounds(wormLocX - 30, 0, 100, 600);
+                    setBoundsB(wormLocX - 30, 0, 100, 600);
                     horizontal = false;
                 } else {
                     //horizontal
                     setX3(0);
                     setY3(wormLocY - 30);
-                    beam.setBounds(0, wormLocY - 30, 800, 100);
+                    setBoundsB(0, wormLocY - 30, 800, 100);
                     horizontal = true;
                 }
 
@@ -108,15 +85,11 @@ public class Laser implements Spawnables {
             @Override
             public void run() {
                 lethal = true;
-                Sound.Music.sound3.play();
+                Sound.Music.laserShot.play();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        setX3(-1000);
-                        setY3(-1000);
-                        setX2(-1000);
-                        setY2(-1000);
-                        beam.setBounds(-1000, -1000, 1, 1);
+                        hide();
                         lethal = false;
                     }
                 }, 2000);
@@ -125,109 +98,118 @@ public class Laser implements Spawnables {
 
     }
 
-    //ikoni powerupille
-    @Override
-    public Rectangle getBounds() {
-        return new Rectangle(xe + 3, ye + 3, 30, 30);
-    }
-
+    /**
+     * Returns the rectangle laser beam
+     * @return <code>Rectangle</code> object
+     * @see Rectangle
+     */
     public Rectangle getBoundsB() {
         return beam;
     }
 
+    /**
+     * Checks whether the laser should be vertical or horizontal.
+     * @return boolean value
+     */
     public boolean getHorizontal() {
         return horizontal;
     }
 
-    @Override
-    public int getX() {
-        return xe;
-    }
-
-    @Override
-    public int getY() {
-        return ye;
-    }
-
+    /**
+     * Gets the x-coordinate for vertical beam
+     * @return integer value of the x-coordinate for the vertical beam
+     */
     public int getX2() {
         return xe2;
     }
 
+    /**
+     * Gets the y-coordinate for vertical beam
+     * @return integer value of the y-coordinate for the vertical beam
+     */
     public int getY2() {
         return ye2;
     }
 
+    /**
+     * Gets the x-coordinate for horizontal beam
+     * @return integer value of the x-coordinate for the horizontal beam
+     */
     public int getX3() {
         return xe3;
     }
 
+    /**
+     * Gets the y-coordinate for horizontal beam
+     * @return integer value of the y-coordinate for the horizontal beam
+     */
     public int getY3() {
         return ye3;
     }
 
-    @Override
-    public void setX(int x) {
-        this.xe = x;
-    }
-
-    public void setX2(int x) {
+    /**
+     * Sets the vertical laser's x-coordinate according to parameter x.
+     * @param x integer value of the x-coordinate for the vertical beam.
+     */
+    private void setX2(int x) {
         this.xe2 = x;
     }
 
-    public void setX3(int x) {
+    /**
+     * Sets the horizontal laser's x-coordinate according to parameter x.
+     * @param x integer value of the x-coordinate for the horizontal beam.
+     */
+    private void setX3(int x) {
         this.xe3 = x;
     }
 
-    @Override
-    public void setY(int y) {
-        this.ye = y;
-    }
-
-    public void setY2(int y) {
+    /**
+     * Sets the vertical laser's y-coordinate according to parameter y.
+     * @param y integer value of the y-coordinate for the vertical beam.
+     */
+    private void setY2(int y) {
         this.ye2 = y;
     }
 
-    public void setY3(int y) {
+    /**
+     * Sets the horizontal laser's y-coordinate according to parameter y.
+     * @param y integer value of the y-coordinate for the horizontal beam.
+     */
+    private void setY3(int y) {
         this.ye3 = y;
     }
 
-    @Override
-    public Image getImage() {
-        return image;
+    /**
+     * Sets the laser beam on map according to parameters.
+     * @param x the x-coordinate of the upper left corner of this beam
+     * @param y the y-coordinate of the upper left corner of this beam
+     * @param w the width of this beam
+     * @param h the height of this beam
+     */
+    private void setBoundsB(int x, int y, int w, int h){
+        beam.setX(x);
+        beam.setY(y);
+        beam.setWidth(w);
+        beam.setHeight(h);
     }
 
-    public Image getImageHori() {
-        return image2;
-    }
-
-    public Image getImageVert() {
-        return image3;
-    }
-
-    public Image getLasersightV() {
-        return image4;
-    }
-
-    public Image getlasersightH() {
-        return image5;
-    }
-
+    /**
+     * Gets the lethality boolean value for this beam
+     * @return boolean for deadliness
+     */
     public boolean getLethal() {
         return lethal;
     }
 
-    @Override
-    public void randomizePowerUpLocation() {
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
-    }
-
-    public void hide() {
+    /**
+     * Hides the beam away from the user after it's finished displaying.
+     */
+    private void hide() {
         setX2(-1000);
         setY2(-1000);
         setX3(-1000);
         setY3(-1000);
-        beam.setBounds(-1000, -1000, 1, 1);
+        setBoundsB(-1000, -1000, 1, 1);
     }
 
 }
