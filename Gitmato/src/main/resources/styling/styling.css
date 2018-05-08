@@ -31,7 +31,7 @@
     -fx-text-alignment: center;
 }
 
-#top_10_highscores, #highscoretable_highscores, #username, #skinlabel {
+#top_10_highscores, #highscoretable_highscores, #username, #skinlabel, #colorlabel {
     -fx-font-size: 15px;
 }
 
@@ -50,6 +50,12 @@
     -fx-font-weight: bold;
     -fx-font-family: 'Helvetica';
     -fx-text-fill: red;
+
+}
+#colorlabel {
+    -fx-text-fill: #ffffff;
+    -fx-translate-x: -100;
+    -fx-translate-y: -200;
 
 }
 
@@ -96,6 +102,7 @@ Button:pressed {
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
     -fx-translate-y: -170;
+    -fx-translate-x: 150;
 }
 
 #infobutton:hover {
@@ -134,6 +141,14 @@ Button:pressed {
 
 #editor_exit:pressed {
     -fx-translate-y: -57;
+}
+#bgcolorbtn{
+    -fx-background-image: null;
+    -fx-background-color: gray;
+    -fx-translate-y: -200;
+    -fx-translate-x: -300;
+    -fx-min-width: 85px;
+    -fx-max-width: 85px;
 }
 
 TextField {

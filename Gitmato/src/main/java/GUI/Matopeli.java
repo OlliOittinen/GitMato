@@ -36,7 +36,12 @@ public class Matopeli extends Application {
     private static Stage window;
     private Scene mainMenuScene, gameScene, gameOverScene, highscoreScene, highscoreTableScene, leveleditorscene;
 
-    private Image background = new Image("images/BlueBG800x600.png");
+
+    private Image bbackground = new Image("images/BlueBG800x600.png");
+    private Image gbackground = new Image("images/GreenBG800x600.png");
+    private Image rbackground = new Image("images/RedBG800x600.png");
+    private Image background = bbackground;
+
     private Image snackicon = new Image("images/Apple(800x600).png");
     private Image bombicon = new Image("images/Bombs(800-600).png");
     private Image bombtarget = new Image("images/Target2.png");
@@ -97,9 +102,11 @@ public class Matopeli extends Application {
     private Image worm2skin;
     private ArrayList<Image> hatimages = new ArrayList();
     private ArrayList<Image> bighatimages = new ArrayList<>();
+    private ArrayList<Image> bgimages = new ArrayList<>();
     private ImageView imv = new ImageView();
     private ImageView imv2 = new ImageView();
     private ImageView infoimv = new ImageView();
+    private ImageView colorbuttonimv = new ImageView();
 
     private static int width = 800;
     private static int height = 600;
@@ -135,11 +142,13 @@ public class Matopeli extends Application {
     private String username;
     private boolean hs_submitted;
     private Button highscore_button;
+    private Button bgcolor;
     private boolean wormskinactive;
     private boolean worm2skinactive;
     private int skinindex = -1;
     private int skinindex2 = -1;
     private int infoindex = 0;
+    private int bgindex = 0;
 
     public LevelEditor getEditorpane() {
         return editorpane;
@@ -213,7 +222,7 @@ public class Matopeli extends Application {
         //create level editor scene
         Button leveleditor = new Button("Level Editor");
         leveleditor.setOnAction(e -> {
-            
+
             Button levelexit = new Button();
             levelexit.setOnAction(event -> window.setScene(mainMenuScene));
             editorpane = new LevelEditor();
@@ -222,7 +231,7 @@ public class Matopeli extends Application {
             editorpane.setId("leveleditor");
             editorpane.getStylesheets().add("Styling/styling.css");
             editorpane.setAlignment(Pos.CENTER);
-            Scene scene = new Scene(editorpane,width,height);
+            Scene scene = new Scene(editorpane, width, height);
             window.setScene(scene);
         });
         Button close = new Button("Exit");
@@ -230,6 +239,10 @@ public class Matopeli extends Application {
             //createConfirmationDialog();
             System.exit(0);
         });
+
+        bgimages.add(bbackground);
+        bgimages.add(gbackground);
+        bgimages.add(rbackground);
 
         hatimages.add(cowboyhat);
         hatimages.add(bluehat);
@@ -244,6 +257,18 @@ public class Matopeli extends Application {
         infoimg.add(controlinfo);
         infoimg.add(gameideainfo);
         infoimg.add(powerupinfo);
+
+        colorbuttonimv.setImage(background);
+        colorbuttonimv.setFitHeight(70);
+        colorbuttonimv.setFitWidth(70);
+
+        bgcolor = new Button();
+        Label colorlabel = new Label("Select\nMap\nColor");
+        colorlabel.setId("colorlabel");
+        bgcolor.setGraphic(colorbuttonimv);
+        bgcolor.setOnAction(e -> setBGcolor());
+        bgcolor.setId("bgcolorbtn");
+        bgcolor.setPrefSize(70, 70);
 
         GridPane infopane = new GridPane();
         HBox navbuttons = new HBox(50);
@@ -320,14 +345,14 @@ public class Matopeli extends Application {
 
         VBox menuLayout = new VBox(5);
         menuLayout.setAlignment(Pos.CENTER);
-        menuLayout.getChildren().addAll(button2, button1, button3,leveleditor, close);
+        menuLayout.getChildren().addAll(button2, button1, button3, leveleditor, close);
 
-        HBox infobuttonbox = new HBox();
+        HBox toprowbox = new HBox();
         Button infobutton = new Button();
         infobutton.setOnAction(e -> window.setScene(infoscene));
         infobutton.setId("infobutton");
-        infobuttonbox.getChildren().add(infobutton);
-        infobuttonbox.setAlignment(Pos.TOP_RIGHT);
+        toprowbox.getChildren().addAll(colorlabel, bgcolor, infobutton);
+        toprowbox.setAlignment(Pos.TOP_CENTER);
 
         GridPane mainmenupane = new GridPane();
         GridPane skinbuttonpane = new GridPane();
@@ -336,7 +361,7 @@ public class Matopeli extends Application {
         skinbuttonpane.add(rednextButtons, 1, 0);
         skinbuttonpane.add(bluenextButtons, 0, 0);
         skinbuttonpane.setPadding(new Insets(60, 0, 40, 0));
-        mainmenupane.add(infobuttonbox, 0, 0);
+        mainmenupane.add(toprowbox, 0, 0);
         mainmenupane.add(imv, 0, 0);
         mainmenupane.add(imv2, 0, 0);
         mainmenupane.add(menuLayout, 0, 0);
@@ -376,7 +401,7 @@ public class Matopeli extends Application {
         worms.add(worm2 = board.getWorm2());
 
         // uptating scene maker
-        if(editorpane != null) {
+        if (editorpane != null) {
             booleans = editorpane.getButtonbooleans();
             coords = editorpane.getCoordinates();
         }
@@ -502,6 +527,17 @@ public class Matopeli extends Application {
 
     }
 
+    private void setBGcolor() {
+        System.out.println("värin vaihto");
+        bgindex++;
+        if (bgindex >= bgimages.size() || bgindex <= 0) {
+            bgindex = 0;
+        }
+        background = bgimages.get(bgindex);
+        colorbuttonimv.setImage(bgimages.get(bgindex));
+        bgcolor.setGraphic(colorbuttonimv);
+    }
+
     private void draw(GraphicsContext g) {
         if (board.isIngame()) {
             body = board.getTailList();
@@ -521,9 +557,9 @@ public class Matopeli extends Application {
                     g.drawImage(wormtail2, body2.get(i).getX(), body2.get(i).getY());
                 }
             }
-            
+
             //drawing the trees
-            if (editorpane !=null) {
+            if (editorpane != null) {
                 for (int i = 0; i < 12; i++) {
                     for (int j = 0; j < 9; j++) {
                         if (booleans[i][j]) {
@@ -568,10 +604,10 @@ public class Matopeli extends Application {
                 g.drawImage(worm2Image, worm2.getX(), worm2.getY());
             }
             if (wormskinactive) {
-                g.drawImage(wormskin, worm.getX() -5, worm.getY() - 15);
+                g.drawImage(wormskin, worm.getX() - 5, worm.getY() - 15);
             }
             if (worm2skinactive) {
-                g.drawImage(worm2skin, worm2.getX() -5 , worm2.getY() - 15);
+                g.drawImage(worm2skin, worm2.getX() - 5, worm2.getY() - 15);
             }
             if (worm.getShield()) {
                 g.drawImage(shieldeffect, worm.getX() - 5, worm.getY() - 4);
