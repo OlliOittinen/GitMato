@@ -583,4 +583,13 @@ public class Board {
     public Connection getConnection() {
         return connection.getCon();
     }
+
+    /**
+     * Getter for tree-obstacles
+     *
+     * @return list of tree-obstacles
+     */
+    public ArrayList getTreeBoxes(){
+        return treeBoxes;
+    }
 }
