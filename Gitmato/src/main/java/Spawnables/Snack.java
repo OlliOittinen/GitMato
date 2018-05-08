@@ -7,6 +7,7 @@ package Spawnables;
 
 import Model.Board;
 import Model.Tail;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
@@ -48,10 +49,22 @@ public class Snack extends AbstractSpawnables {
     public void randomizeIconLocation(Board board) {
         ArrayList<Tail> t1 = board.getTailList();
         ArrayList<Tail> t2 = board.getTailList2();
+        ArrayList<Rectangle> trees = board.getTreeBoxes();
+
         do {
             setX((int) (Math.random() * 750));
             setY((int) (Math.random() * 550));
-        } while (checkCollision(t1, t2));
+        } while (checkCollision(t1, t2) || checkCollision(trees));
+    }
+
+    private boolean checkCollision(ArrayList<Rectangle> trees) {
+        boolean intersects = false;
+        for (Rectangle r : trees) {
+            if (r.getLayoutBounds().intersects(this.getBoundsForIcon())) {
+                intersects = true;
+            }
+        }
+        return intersects;
     }
 
     private boolean checkCollision(ArrayList<Tail> t1, ArrayList<Tail> t2) {

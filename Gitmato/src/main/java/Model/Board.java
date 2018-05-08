@@ -240,12 +240,15 @@ public class Board {
 
             @Override
             public void run() {
-                //snack is first index (0) and we dont need to randomize it
-                int n = (int) (Math.random() * (pickableList.size() - 1) + 1);
-                pickableList.get(n).randomizeIconLocation();
-
+                powerUpReRoll();
             }
         }, 5000);
+    }
+
+    private void powerUpReRoll() {
+        //snack is first index (0) and we dont need to randomize it
+        int n = (int) (Math.random() * (pickableList.size() - 1) + 1);
+        pickableList.get(n).randomizeIconLocation();
     }
 
     /**
@@ -262,7 +265,6 @@ public class Board {
             ArrayList<String> scores = connection.showHighscore(gameMode);
             GUI.createHighscoreTableScene(scores);
         }
-
     }
 
     private void checkCollisions() {
@@ -286,6 +288,13 @@ public class Board {
         Bounds sc = steal.getBoundsForIcon();
         Bounds sw = switcher.getBoundsForIcon();
 
+
+        for (Rectangle r : getTreeBoxes()) {
+            if (r.intersects(s) || r.intersects(pf) || r.intersects(ps) || r.intersects(pr) || r.intersects(pl)
+                    || r.intersects(psh) || r.intersects(pb) || r.intersects(sc) || r.intersects(sw)) {
+                powerUpReRoll();
+            }
+        }
 
         for (Tail aTailList : tailList) {
             Bounds Matotail = aTailList.getBounds();
@@ -589,7 +598,7 @@ public class Board {
      *
      * @return list of tree-obstacles
      */
-    public ArrayList getTreeBoxes(){
+    public ArrayList<Rectangle> getTreeBoxes(){
         return treeBoxes;
     }
 }

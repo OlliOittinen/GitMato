@@ -42,7 +42,7 @@ public class LevelEditor extends GridPane {
                     buttonbooleans[k][l] = !buttonbooleans[k][l];
                     System.out.println("coordinates" + k + l + "boolean: " + buttonbooleans[k][l]);
 
-                    if (buttonbooleans[k][l]) {
+                    if (buttonbooleans[k][l] && getCount(buttonbooleans) < 5) {
                         ImageView tree =  new ImageView("images/Tree1.png");
                         tree.setId("tree");
                         tree.setX(coordinates[k][l].getX());
@@ -60,10 +60,17 @@ public class LevelEditor extends GridPane {
                 buttons[i][j].setPrefSize(50, 50);
             }
         }
-
     }
 
-
+    private int getCount(Boolean[][] buttonbooleans) {
+        int count = 0;
+        for (i = 0; i < 12; i++) {
+            for (j = 0; j < 9; j++) {
+                    count += (buttonbooleans[i][j] ? 1 : 0);
+                }
+            }
+        return count;
+    }
 
 
     //getters and setters
