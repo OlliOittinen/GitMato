@@ -241,7 +241,7 @@ public class Board {
             @Override
             public void run() {
                 //snack is first index (0) and we dont need to randomize it
-                int n = (int) 7;// (Math.random() * (pickableList.size() - 1) + 1);
+                int n = (int) (Math.random() * (pickableList.size() - 1) + 1);
                 pickableList.get(n).randomizeIconLocation();
 
             }
