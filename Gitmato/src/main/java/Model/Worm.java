@@ -32,7 +32,7 @@ public class Worm {
     private boolean transparencychange;
     private final int multiplier = 8;
     private double speed = 3;
-    private int life = 3;
+    private int life = 3000;
 
     /**
      * Getter for life value.
