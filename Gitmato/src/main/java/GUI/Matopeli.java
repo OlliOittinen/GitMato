@@ -361,11 +361,13 @@ public class Matopeli extends Application {
         bluenextButtons.setAlignment(Pos.BOTTOM_CENTER);
         Button[] blueButtons = createBlueHatChoiceButtons();
         bluenextButtons.getChildren().addAll(blueButtons[1], skinlabel, blueButtons[0]);
+        Label skinlabel2 = new Label("Select\nHat");
+        skinlabel2.setId("skinlabel");
         HBox rednextButtons = new HBox(10);
         rednextButtons.setPadding(new Insets(0, 0, 0, 100));
         rednextButtons.setAlignment(Pos.BOTTOM_CENTER);
         Button[] redButtons = createRedHatChoiceButtons();
-        rednextButtons.getChildren().addAll(redButtons[1], skinlabel, redButtons[0]);
+        rednextButtons.getChildren().addAll(redButtons[1], skinlabel2, redButtons[0]);
         return new HBox[] {bluenextButtons, rednextButtons};
     }
 
