@@ -36,7 +36,12 @@ public class Matopeli extends Application {
     private static Stage window;
     private Scene mainMenuScene, gameScene, gameOverScene, highscoreScene, highscoreTableScene, leveleditorscene;
 
-    private Image background = new Image("images/BlueBG800x600.png");
+
+    private Image bbackground = new Image("images/BlueBG800x600.png");
+    private Image gbackground = new Image("images/GreenBG800x600.png");
+    private Image rbackground = new Image("images/RedBG800x600.png");
+    private Image background = bbackground;
+
     private Image snackicon = new Image("images/Apple(800x600).png");
     private Image bombicon = new Image("images/Bombs(800-600).png");
     private Image bombtarget = new Image("images/Target2.png");
@@ -97,9 +102,11 @@ public class Matopeli extends Application {
     private Image worm2skin;
     private ArrayList<Image> hatimages = new ArrayList();
     private ArrayList<Image> bighatimages = new ArrayList<>();
+    private ArrayList<Image> bgimages = new ArrayList<>();
     private ImageView imv = new ImageView();
     private ImageView imv2 = new ImageView();
     private ImageView infoimv = new ImageView();
+    private ImageView colorbuttonimv = new ImageView();
 
     private static int width = 800;
     private static int height = 600;
@@ -135,11 +142,13 @@ public class Matopeli extends Application {
     private String username;
     private boolean hs_submitted;
     private Button highscore_button;
+    private Button bgcolour;
     private boolean wormskinactive;
     private boolean worm2skinactive;
     private int skinindex = -1;
     private int skinindex2 = -1;
     private int infoindex = 0;
+    private int bgindex = 0;
 
     public LevelEditor getEditorpane() {
         return editorpane;
@@ -158,30 +167,8 @@ public class Matopeli extends Application {
         launch(args);
     }
 
-    /**
-     * Initializes all of the necessary objects needed for the game to run.
-     * Creates mainMenuScene and gameScene.
-     * Adds functionality for the mainMenu buttons.
-     * When game mode is selected starts the game engine.
-     *
-     * @param primaryStage The JavaFX Stage class is the top level JavaFX container.
-     *                     The primary Stage is constructed by the platform.
-     *                     Additional Stage objects may be constructed by the application.
-     */
-    @Override
-    public void start(Stage primaryStage) {
 
-        window = primaryStage;
-        window.setTitle("Gitmato");
-
-        window.setResizable(false);
-        Group root = new Group();
-        Canvas canvas = new Canvas(width, height);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        root.getChildren().add(canvas);
-        gameScene = new Scene(root);
-
-        //----GAME MODE SELECTOR SCENE AKA MAIN MENU-----------
+    private Button[] createMainMenuButtons(GraphicsContext gc) {
         Button button1 = new Button("Player VS AI");
         button1.setOnAction(e
                 -> {
@@ -213,7 +200,7 @@ public class Matopeli extends Application {
         //create level editor scene
         Button leveleditor = new Button("Level Editor");
         leveleditor.setOnAction(e -> {
-            
+
             Button levelexit = new Button();
             levelexit.setOnAction(event -> window.setScene(mainMenuScene));
             editorpane = new LevelEditor();
@@ -222,7 +209,7 @@ public class Matopeli extends Application {
             editorpane.setId("leveleditor");
             editorpane.getStylesheets().add("Styling/styling.css");
             editorpane.setAlignment(Pos.CENTER);
-            Scene scene = new Scene(editorpane,width,height);
+            Scene scene = new Scene(editorpane, width, height);
             window.setScene(scene);
         });
         Button close = new Button("Exit");
@@ -230,20 +217,21 @@ public class Matopeli extends Application {
             //createConfirmationDialog();
             System.exit(0);
         });
+        return new Button[]{button2, button1, button3, leveleditor, close};
+    }
 
-        hatimages.add(cowboyhat);
-        hatimages.add(bluehat);
-        hatimages.add(redhat);
-        hatimages.add(purplehat);
+    private Scene createInfoPane() {
+        colorbuttonimv.setImage(background);
+        colorbuttonimv.setFitHeight(70);
+        colorbuttonimv.setFitWidth(70);
 
-        bighatimages.add(bighat);
-        bighatimages.add(bigbluehat);
-        bighatimages.add(bigredhat);
-        bighatimages.add(bigpurplehat);
-
-        infoimg.add(controlinfo);
-        infoimg.add(gameideainfo);
-        infoimg.add(powerupinfo);
+        bgcolour = new Button();
+        Label colorlabel = new Label("Select\nMap\nColor");
+        colorlabel.setId("colorlabel");
+        bgcolour.setGraphic(colorbuttonimv);
+        bgcolour.setOnAction(e -> setBGcolor());
+        bgcolour.setId("bgcolorbtn");
+        bgcolour.setMaxSize(70, 70);
 
         GridPane infopane = new GridPane();
         HBox navbuttons = new HBox(50);
@@ -283,71 +271,56 @@ public class Matopeli extends Application {
         backward.setOnAction(e -> {
             navigateInfo("-");
         });
+        return infoscene;
+    }
 
-        imv.setTranslateX(380);
-        imv2.setTranslateX(10);
-        imv2.setTranslateY(-50);
-        imv2.setId("bluewormhat");
-        imv.setTranslateY(-50);
-        Label skinlabel = new Label("Select\nHat");
-        skinlabel.setId("skinlabel");
-        Label skinlabel2 = new Label("Select\nHat");
-        skinlabel2.setId("skinlabel");
+    private Button[] createBlueHatChoiceButtons() {
         Button blueforwardskin = new Button();
         blueforwardskin.setOnAction(e -> checkWormSkin(2, "+"));
         blueforwardskin.setId("bluearrowbuttonright");
         Button bluebackwardskin = new Button();
         bluebackwardskin.setOnAction(e -> checkWormSkin(2, "-"));
         bluebackwardskin.setId("bluearrowbuttonleft");
+        return new Button[]{blueforwardskin, bluebackwardskin};
+    }
 
+    private Button[] createRedHatChoiceButtons() {
         Button redforwardskin = new Button();
         redforwardskin.setOnAction(e -> checkWormSkin(1, "+"));
         redforwardskin.setId("redarrowbuttonright");
         Button redbackwardskin = new Button();
         redbackwardskin.setOnAction(e -> checkWormSkin(1, "-"));
         redbackwardskin.setId("redarrowbuttonleft");
+        return new Button[]{redforwardskin, redbackwardskin};
+    }
 
-        //------------Main Menu Scene - Game mode selector --------------
-        HBox bluenextButtons = new HBox(10);
-        bluenextButtons.setPadding(new Insets(0, 100, 0, 0));
-        bluenextButtons.setAlignment(Pos.BOTTOM_CENTER);
-        bluenextButtons.getChildren().addAll(bluebackwardskin, skinlabel, blueforwardskin);
+    /**
+     * Initializes all of the necessary objects needed for the game to run.
+     * Creates mainMenuScene and gameScene.
+     * Adds functionality for the mainMenu buttons.
+     * When game mode is selected starts the game engine.
+     *
+     * @param primaryStage The JavaFX Stage class is the top level JavaFX container.
+     *                     The primary Stage is constructed by the platform.
+     *                     Additional Stage objects may be constructed by the application.
+     */
+    @Override
+    public void start(Stage primaryStage) {
 
-        HBox rednextButtons = new HBox(10);
-        rednextButtons.setPadding(new Insets(0, 0, 0, 100));
-        rednextButtons.setAlignment(Pos.BOTTOM_CENTER);
-        rednextButtons.getChildren().addAll(redbackwardskin, skinlabel2, redforwardskin);
+        window = primaryStage;
+        window.setTitle("Gitmato");
 
-        VBox menuLayout = new VBox(5);
-        menuLayout.setAlignment(Pos.CENTER);
-        menuLayout.getChildren().addAll(button2, button1, button3,leveleditor, close);
+        window.setResizable(false);
+        Group root = new Group();
+        Canvas canvas = new Canvas(width, height);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        root.getChildren().add(canvas);
+        gameScene = new Scene(root);
 
-        HBox infobuttonbox = new HBox();
-        Button infobutton = new Button();
-        infobutton.setOnAction(e -> window.setScene(infoscene));
-        infobutton.setId("infobutton");
-        infobuttonbox.getChildren().add(infobutton);
-        infobuttonbox.setAlignment(Pos.TOP_RIGHT);
+        addImagesToArrays();
 
-        GridPane mainmenupane = new GridPane();
-        GridPane skinbuttonpane = new GridPane();
-        mainmenupane.setAlignment(Pos.CENTER);
-        mainmenupane.setMinSize(width, height);
-        skinbuttonpane.add(rednextButtons, 1, 0);
-        skinbuttonpane.add(bluenextButtons, 0, 0);
-        skinbuttonpane.setPadding(new Insets(60, 0, 40, 0));
-        mainmenupane.add(infobuttonbox, 0, 0);
-        mainmenupane.add(imv, 0, 0);
-        mainmenupane.add(imv2, 0, 0);
-        mainmenupane.add(menuLayout, 0, 0);
-        mainmenupane.add(skinbuttonpane, 0, 2);
-        mainmenupane.setAlignment(Pos.BOTTOM_CENTER);
-        mainMenuScene = new Scene(mainmenupane, width, height);
+        window.setScene(createMainMenu(gc));
 
-        mainmenupane.setId("main_menu");
-
-        mainMenuScene.getStylesheets().add("Styling/styling.css");
-        window.setScene(mainMenuScene);
         window.setOnCloseRequest(e -> {
             //createConfirmationDialog();
             System.exit(0);
@@ -355,6 +328,96 @@ public class Matopeli extends Application {
         window.setTitle("Gitmato");
         window.show();
         Sound.Music.backgroundMusic.loop();
+    }
+
+    private void addImagesToArrays() {
+        colorbuttonimv.setImage(bbackground);
+        colorbuttonimv.setFitHeight(70);
+        colorbuttonimv.setFitWidth(70);
+        bgimages.add(bbackground);
+        bgimages.add(gbackground);
+        bgimages.add(rbackground);
+
+        hatimages.add(cowboyhat);
+        hatimages.add(bluehat);
+        hatimages.add(redhat);
+        hatimages.add(purplehat);
+
+        bighatimages.add(bighat);
+        bighatimages.add(bigbluehat);
+        bighatimages.add(bigredhat);
+        bighatimages.add(bigpurplehat);
+
+        infoimg.add(controlinfo);
+        infoimg.add(gameideainfo);
+        infoimg.add(powerupinfo);
+    }
+
+    private HBox[] createButtonBoxes() {
+        Label skinlabel = new Label("Select\nHat");
+        skinlabel.setId("skinlabel");
+        HBox bluenextButtons = new HBox(10);
+        bluenextButtons.setPadding(new Insets(0, 100, 0, 0));
+        bluenextButtons.setAlignment(Pos.BOTTOM_CENTER);
+        Button[] blueButtons = createBlueHatChoiceButtons();
+        bluenextButtons.getChildren().addAll(blueButtons[1], skinlabel, blueButtons[0]);
+        HBox rednextButtons = new HBox(10);
+        rednextButtons.setPadding(new Insets(0, 0, 0, 100));
+        rednextButtons.setAlignment(Pos.BOTTOM_CENTER);
+        Button[] redButtons = createRedHatChoiceButtons();
+        rednextButtons.getChildren().addAll(redButtons[1], skinlabel, redButtons[0]);
+        return new HBox[] {bluenextButtons, rednextButtons};
+    }
+
+    private Scene createMainMenu(GraphicsContext gc) {
+        VBox menuLayout = new VBox(5);
+        menuLayout.setAlignment(Pos.CENTER);
+        menuLayout.getChildren().addAll(createMainMenuButtons(gc));
+        GridPane mainmenupane = new GridPane();
+        GridPane skinbuttonpane = new GridPane();
+        mainmenupane.setAlignment(Pos.CENTER);
+        mainmenupane.setMinSize(width, height);
+
+        HBox[] buttonBoxes = createButtonBoxes();
+        skinbuttonpane.add(buttonBoxes[0], 0, 0);
+        skinbuttonpane.add(buttonBoxes[1], 1, 0);
+        skinbuttonpane.setPadding(new Insets(60, 0, 40, 0));
+
+        mainmenupane.add(createInfoBox(), 0, 0);
+
+        imv.setTranslateX(380);
+        imv.setTranslateY(-50);
+        imv2.setTranslateX(10);
+        imv2.setTranslateY(-50);
+        imv2.setId("bluewormhat");
+
+        mainmenupane.add(imv, 0, 0);
+        mainmenupane.add(imv2, 0, 0);
+        mainmenupane.add(menuLayout, 0, 0);
+        mainmenupane.add(skinbuttonpane, 0, 2);
+        mainmenupane.setAlignment(Pos.BOTTOM_CENTER);
+        mainMenuScene = new Scene(mainmenupane, width, height);
+        mainmenupane.setId("main_menu");
+        mainMenuScene.getStylesheets().add("Styling/styling.css");
+
+        return mainMenuScene;
+    }
+
+    private HBox createInfoBox() {
+        HBox infobuttonbox = new HBox();
+        Button infobutton = new Button();
+        Label colorlabel = new Label("Select\nMap\nColor");
+        colorlabel.setId("colorlabel");
+        bgcolour = new Button();
+        bgcolour.setGraphic(colorbuttonimv);
+        bgcolour.setOnAction(e -> setBGcolor());
+        bgcolour.setId("bgcolorbtn");
+        bgcolour.setPrefSize(70, 70);
+        infobutton.setOnAction(e -> window.setScene(createInfoPane()));
+        infobutton.setId("infobutton");
+        infobuttonbox.getChildren().addAll(colorlabel, bgcolour, infobutton);
+        infobuttonbox.setAlignment(Pos.TOP_RIGHT);
+        return infobuttonbox;
     }
 
     private void init(String gameMode) {
@@ -375,7 +438,7 @@ public class Matopeli extends Application {
         worms.add(worm = board.getWorm());
         worms.add(worm2 = board.getWorm2());
 
-        // uptating scene maker
+        // updating scene maker
         if(editorpane != null) {
             booleans = editorpane.getButtonbooleans();
             coords = editorpane.getCoordinates();
@@ -384,6 +447,7 @@ public class Matopeli extends Application {
 
     private void animationLoop(GraphicsContext gc) {
         timer = new AnimationTimer() {
+
             //fps-throttle
             private long lastUpdate = 0;
 
@@ -392,9 +456,7 @@ public class Matopeli extends Application {
                 if (now - lastUpdate >= 10_000_000) {
                     gameScene.setOnKeyPressed((KeyEvent event) -> pc.keyPressed(event));
                     board.updateBoard();
-
                     draw(gc);
-
                 }
             }
         };
@@ -502,6 +564,18 @@ public class Matopeli extends Application {
 
     }
 
+    private void setBGcolor() {
+        bgindex++;
+        if (bgindex >= bgimages.size() || bgindex <= 0) {
+            bgindex = 0;
+        }
+        background = bgimages.get(bgindex);
+        colorbuttonimv.setImage(background);
+        colorbuttonimv.setFitHeight(70);
+        colorbuttonimv.setFitWidth(70);
+        bgcolour.setGraphic(colorbuttonimv);
+    }
+
     private void draw(GraphicsContext g) {
         if (board.isIngame()) {
             body = board.getTailList();
@@ -521,9 +595,9 @@ public class Matopeli extends Application {
                     g.drawImage(wormtail2, body2.get(i).getX(), body2.get(i).getY());
                 }
             }
-            
+
             //drawing the trees
-            if (editorpane !=null) {
+            if (editorpane != null) {
                 for (int i = 0; i < 12; i++) {
                     for (int j = 0; j < 9; j++) {
                         if (booleans[i][j]) {
@@ -568,10 +642,10 @@ public class Matopeli extends Application {
                 g.drawImage(worm2Image, worm2.getX(), worm2.getY());
             }
             if (wormskinactive) {
-                g.drawImage(wormskin, worm.getX() -5, worm.getY() - 15);
+                g.drawImage(wormskin, worm.getX() - 5, worm.getY() - 15);
             }
             if (worm2skinactive) {
-                g.drawImage(worm2skin, worm2.getX() -5 , worm2.getY() - 15);
+                g.drawImage(worm2skin, worm2.getX() - 5, worm2.getY() - 15);
             }
             if (worm.getShield()) {
                 g.drawImage(shieldeffect, worm.getX() - 5, worm.getY() - 4);
