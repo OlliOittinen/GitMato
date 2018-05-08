@@ -26,13 +26,12 @@ class Bot {
     private ArrayList<Rectangle> treeList;
     private Laser laser;
     private ArrayList<Tail> body;
-    
+
     /**
      * Class Constructor.
      *
      * @param board board that the Bot uses as its field.
      */
-
     Bot(Board board) {
         worms = board.getWorms();
         worm2 = board.getWorm2();
