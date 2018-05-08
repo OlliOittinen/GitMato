@@ -178,11 +178,17 @@ class Bot {
             }
 
             if (l2.intersects(AIleft) && laser.getHorizontal()) {
-                if (worms.get(1).getY() < 300) {
+                if (worms.get(1).getY() < 100) {
                     BotTurnDown();
-                } else {
+                }else if (worms.get(1).getY() > 700) {
+                    BotTurnUp();
+                }else {
                     BotTurnUp();
                 }
+
+
+
+
             }
 
 
@@ -202,11 +208,15 @@ class Bot {
             }
 
             if (l2.intersects(AIright) && laser.getHorizontal()) {
-                if (worms.get(1).getY() < 300) {
+                if (worms.get(1).getY() < 100) {
                     BotTurnDown();
-                } else {
+                }else if (worms.get(1).getY() > 700) {
                     BotTurnUp();
+                }else {
+                    BotTurnDown();
                 }
+
+
 
 
             }
@@ -227,11 +237,15 @@ class Bot {
             }
 
             if (l2.intersects(AIup) && !laser.getHorizontal()) {
-                if (worms.get(1).getX() < 400) {
+                if (worms.get(1).getX() < 100) {
                     BotTurnRight();
-                } else {
+                }else if (worms.get(1).getX() > 500) {
                     BotTurnLeft();
+                }else {
+                    BotTurnRight();
                 }
+
+
 
 
             }
@@ -254,11 +268,15 @@ class Bot {
             }
 
             if (l2.intersects(AIdown) && !laser.getHorizontal()) {
-                if (worms.get(1).getX() < 400) {
+                if (worms.get(1).getX() < 100) {
                     BotTurnRight();
-                } else {
+                }else if (worms.get(1).getX() > 500) {
+                    BotTurnLeft();
+                }else {
                     BotTurnLeft();
                 }
+
+
 
 
             }
@@ -268,19 +286,19 @@ class Bot {
 
         for (int i = 0; i < treeList.size(); i++) {
             if (AIdown.intersects(treeList.get(i).getLayoutBounds())) {
-                BotTurnDown();
-            }
-
-            if (AIup.intersects(treeList.get(i).getLayoutBounds())) {
-                BotTurnUp();
-            }
-
-            if (AIleft.intersects(treeList.get(i).getLayoutBounds())) {
                 BotTurnLeft();
             }
 
-            if (AIright.intersects(treeList.get(i).getLayoutBounds())) {
+            if (AIup.intersects(treeList.get(i).getLayoutBounds())) {
                 BotTurnRight();
+            }
+
+            if (AIleft.intersects(treeList.get(i).getLayoutBounds())) {
+                BotTurnUp();
+            }
+
+            if (AIright.intersects(treeList.get(i).getLayoutBounds())) {
+                BotTurnDown();
             }
         }
     }
@@ -306,78 +324,53 @@ class Bot {
     }
 
     private void BotTurnLeft() {
-        worms.get(1).setDirection(1);
-        worms.get(1).setDirectionAdv(2);
+        if(worms.get(1).getX() < 20){
+            worms.get(1).setDirection(2);
+            worms.get(1).setDirectionAdv(2);
+        }else{
+            worms.get(1).setDirection(1);
+            worms.get(1).setDirectionAdv(2);
+        }
+
 
     }
 
     private void BotTurnRight() {
-        worms.get(1).setDirection(2);
-        worms.get(1).setDirectionAdv(2);
+        if(worms.get(1).getX() > 715){
+            worms.get(1).setDirection(1);
+            worms.get(1).setDirectionAdv(2);
+        }else{
+            worms.get(1).setDirection(2);
+            worms.get(1).setDirectionAdv(2);
+        }
+
 
     }
 
     private void BotTurnUp() {
-        worms.get(1).setDirection(3);
-        worms.get(1).setDirectionAdv(1);
+        if(worms.get(1).getY() < 20){
+            worms.get(1).setDirection(4);
+            worms.get(1).setDirectionAdv(1);
+        }else{
+            worms.get(1).setDirection(3);
+            worms.get(1).setDirectionAdv(1);
+        }
+
 
     }
 
     void BotTurnDown() {
-        worms.get(1).setDirection(4);
-        worms.get(1).setDirectionAdv(1);
+        if(worms.get(1).getY() > 540){
+            worms.get(1).setDirection(3);
+            worms.get(1).setDirectionAdv(1);
+        }else{
+            worms.get(1).setDirection(4);
+            worms.get(1).setDirectionAdv(1);
+        }
+
 
     }
 
-    public void turn(int suunta) {
-        //suunta 1 = vasen, 2 = oikea, 3 = ylös, 4 = alas
 
-        if (suunta == 1) {
-            if (worm2.getY() < 315 && worm2.getY() > 285) {
-                BotTurnUp();
-            } else {
-                if (worms.get(1).getY() < 300) {
-                    BotTurnDown();
-                } else {
-                    BotTurnUp();
-                }
-            }
-        }
 
-        if (suunta == 2) {
-            if (worm2.getY() < 315 && worm2.getY() > 285) {
-                BotTurnDown();
-            } else {
-                if (worms.get(1).getY() < 300) {
-                    BotTurnDown();
-                } else {
-                    BotTurnUp();
-                }
-            }
-        }
-
-        if (suunta == 3) {
-            if (worm2.getX() < 415 && worm2.getX() > 385) {
-                BotTurnRight();
-            } else {
-                if (worms.get(1).getX() < 400) {
-                    BotTurnRight();
-                } else {
-                    BotTurnLeft();
-                }
-            }
-        }
-
-        if (suunta == 4) {
-            if (worm2.getX() < 415 && worm2.getX() > 385) {
-                BotTurnLeft();
-            } else {
-                if (worms.get(1).getX() < 400) {
-                    BotTurnRight();
-                } else {
-                    BotTurnLeft();
-                }
-            }
-        }
-    }
 }
