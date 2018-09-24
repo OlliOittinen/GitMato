@@ -7,89 +7,33 @@ package Spawnables;
 
 import Model.Worm;
 import Sound.Music;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.util.Timer;
-import java.util.TimerTask;
-import javax.swing.ImageIcon;
 
 /**
  *
  * @author Olli
  */
 
-public class Faster implements Spawnables {
-    
-    private int xe;
-    private int ye;
-    private Image image;
-    
-    
+public class Faster extends AbstractSpawnables {
+
+    /**
+     * Makes this <code>Worm</code> move faster.
+     * Uses Worm States to achieve this.
+     * Also plays the corresponding music and awards the <code>Worm</code>  with points.
+     * @param worm the <code>Worm</code>  that picked up this icon
+     * @see Model.WormStates.WormFast
+     */
     public void faster(Worm worm) {
         worm.setPoints(worm.getPoints()+100);
-        worm.setNopeus(3);
-        Music.sound2.play();
-        
-        //säätää nopeuden väliaikseks
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                worm.setNopeus(2);
-            }
-        }, 5000); //aika (ms), joka odotetaan
+        Music.fasterPowerup.play();
+        worm.fasterSpeed();
     }
-    
+
+    /**
+     * Class constructor
+     * @see AbstractSpawnables
+     */
     public Faster() {
         init();
     }
-    
-    @Override
-    public void loadImage(String imageName) {
-        ImageIcon ii = new ImageIcon(imageName);
-        image = ii.getImage();    }
 
-    @Override
-    public void init() {
-        ImageIcon kuva = new ImageIcon("src/main/resources/images/SpeedUp.png");
-        image = kuva.getImage();
-            
-        setX(-100);
-        setY(-100);
-    }
-
-    @Override
-    public Rectangle getBounds() {
-        return new Rectangle(xe+3, ye+3, 30, 30);
-    }
-
-    @Override
-    public int getX() {
-        return xe;    
-    }
-
-    @Override
-    public int getY() {
-        return ye;
-    }
-
-    @Override
-    public void setX(int x) {
-        this.xe = x;
-    }
-
-    @Override
-    public void setY(int y) {
-        this.ye = y;
-    }
-
-    @Override
-    public Image getImage() {
-        return image;
-    }
-    @Override
-    public void randomizePowerUpLocation() {
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
-    }
 }

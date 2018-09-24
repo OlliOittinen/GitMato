@@ -1,14 +1,65 @@
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-#pane {
+
+#main_menu {
     -fx-background-image: url("MainMenuBG.png");
-    -fx-background-repeat: stretch;   
-    -fx-background-size: 900 606;
+    -fx-font-family: 'Press Start 2P';
+    -fx-background-repeat: stretch;
+    -fx-background-size: 800 600;
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
+
+}
+
+#gameOver, #highscore_scene, #highscoretable_scene, #leveleditor {
+    -fx-background-image: url("BlueBG800x6002.png");
+    -fx-font-family: 'Press Start 2P';
+    -fx-background-position: center center;
+}
+
+#gameOverLabel {
+    -fx-font-size: 50px;
+    -fx-text-fill: white;
+    -fx-stroke: black;
+    -fx-stroke-width: 1;
+}
+
+#highscore_title, #winner_label {
+    -fx-font-size: 30px;
+}
+
+#highscoretable_headline {
+    -fx-font-size: 20px;
+    -fx-text-alignment: center;
+}
+
+#top_10_highscores, #highscoretable_highscores, #username, #skinlabel, #colorlabel {
+    -fx-font-size: 15px;
+}
+
+#highscoretable_headline {
+    -fx-font-size: 20px;
+    -fx-text-alignment: center;
+}
+
+#skinlabel {
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+}
+
+#errormessage {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Helvetica';
+    -fx-text-fill: red;
+
+}
+#colorlabel {
+    -fx-text-fill: #ffffff;
+    -fx-translate-x: -200;
+    -fx-translate-y: -200;
+
 }
 
 Button {
-    -fx-font-family:'Press Start 2P', cursive;
     -fx-min-height: 44px;
     -fx-min-width: 150px;
     -fx-background-image: url("VersusButton.png");
@@ -17,4 +68,125 @@ Button {
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-font-size: 10px;
+    -fx-text-alignment: center;
+}
+
+Button:hover {
+    -fx-translate-y: -2;
+}
+
+Button:pressed {
+    -fx-translate-y: 3;
+}
+
+#invisible {
+    -fx-background-color: transparent;
+    -fx-background-image: null;
+    -fx-text-fill: null;
+    -fx-min-height: 50px;
+    -fx-min-width: 50px;
+    -fx-border-color: #b9b9b9;
+    -fx-border-width: 2px;
+}
+#tree{
+    -fx-translate-y: -38px;
+    -fx-translate-x: -16px;
+}
+
+
+#infobutton {
+    -fx-background-image: url("infobutton.png");
+    -fx-min-height: 45px;
+    -fx-min-width: 45px;
+    -fx-background-size: 45;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-translate-y: -170;
+    -fx-translate-x: -150;
+}
+
+#infobutton:hover {
+    -fx-translate-y: -173;
+}
+
+#infobutton:pressed {
+    -fx-translate-y: -167;
+}
+
+#exitbutton, #editor_exit {
+    -fx-background-image: url("exit.png");
+    -fx-min-height: 50px;
+    -fx-min-width: 50px;
+    -fx-background-size: 50px;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-translate-y: -250;
+    -fx-translate-x: 640;
+}
+
+#exitbutton:hover {
+    -fx-translate-y: -252;
+}
+
+#exitbutton:pressed {
+    -fx-translate-y: -247;
+}
+#editor_exit {
+    -fx-translate-y: -60;
+    -fx-translate-x: 550;
+}
+#editor_exit:hover {
+    -fx-translate-y: -62;
+}
+
+#editor_exit:pressed {
+    -fx-translate-y: -57;
+}
+#bgcolorbtn{
+    -fx-background-image: null;
+    -fx-background-color: gray;
+    -fx-translate-y: -200;
+    -fx-translate-x: -400;
+    -fx-min-width: 85px;
+    -fx-max-width: 85px;
+}
+
+TextField {
+    -fx-min-width: 400px;
+    -fx-max-width: 400px;
+}
+#bluewormhat {
+    -fx-scale-x: -1;
+}
+
+#orangearrowbuttonleft, #orangearrowbuttonright, #redarrowbuttonleft, #redarrowbuttonright, #bluearrowbuttonleft, #bluearrowbuttonright {
+    -fx-min-height: 40px;
+    -fx-min-width: 40px;
+    -fx-background-size: 40px 40px;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+}
+
+#orangearrowbuttonleft, #orangearrowbuttonright {
+    -fx-background-image: url("OrangeArrowButton.png");
+}
+
+#orangearrowbuttonright {
+    -fx-scale-x: -1;
+}
+
+#redarrowbuttonleft, #redarrowbuttonright {
+    -fx-background-image: url("RedrrowButton.png");
+}
+
+#redarrowbuttonright {
+    -fx-scale-x: -1;
+}
+
+#bluearrowbuttonleft, #bluearrowbuttonright {
+    -fx-background-image: url("BlueArrowButton.png");
+}
+
+#bluearrowbuttonright {
+    -fx-scale-x: -1;
 }

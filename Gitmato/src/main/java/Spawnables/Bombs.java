@@ -6,65 +6,51 @@
 package Spawnables;
 
 import Model.Worm;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.geom.Ellipse2D;
-import javax.swing.ImageIcon;
-import Model.Board;
 import Sound.Music;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.scene.image.Image;
+import javafx.scene.shape.*;
+
 /**
  *
- * @author maxki
+ * @author maxki, Olli, Eero
  */
-public class Bombs implements Spawnables {
+public class Bombs extends AbstractDamagingSpawnables{
 
-    private int xe, ye, xe2, ye2, xe3, ye3, xe4, ye4, xe5, ye5, xe6, ye6, xe7, ye7;
+    private int x2, y2, x3, y3, x4, y4, x5, y5, x6, y6, x7, y7;
 
     private Image image, image2, image3;
 
-    private Board board;
-    private boolean lethal = false;
 
-    private int xlist[] = new int[]{xe, xe2, xe3, xe4, xe5, xe6, xe7};
-    private int ylist[] = new int[]{ye, ye2, ye3, ye4, ye5, ye6, ye7};
+    private int xlist[] = new int[]{x, x2, x3, x4, x5, x6, x7};
+    private int ylist[] = new int[]{y, y2, y3, y4, y5, y6, y7};
 
+    /**
+     * Awards the object with 100 points.
+     *
+     * @param worm the <code>Worm</code> object that is awarded points
+     */
     public void bombs(Worm worm) {
         worm.setPoints(worm.getPoints() + 100);
     }
 
-    public void damage(Worm worm) {
-        if (lethal) {
-            if (worm.getLife() > 1) {
-                worm.randomizeXY();
-                worm.setSuuntaAdv(0);
-                worm.setSuunta(0);
-            }
-            Life.loseLife(worm);
-        }
-    }
 
+
+    /**
+     * Class constructor
+     */
     public Bombs() {
         init();
     }
 
-    @Override
-    public void loadImage(String imageName) {
-        ImageIcon ii = new ImageIcon(imageName);
-        image = ii.getImage();
-    }
-
+    /**
+     * Hides the icon and targeting ellipses - along with the actual damaging zones - away from the user's vision.
+     * This method is only called once, during the initialization process.
+     */
     @Override
     public void init() {
-        ImageIcon kuva = new ImageIcon("src/main/resources/images/Bombs(800-600).png");
-        image = kuva.getImage();
-        ImageIcon kuva2 = new ImageIcon("src/main/resources/images/Target2.png");
-        image2 = kuva2.getImage();
-        ImageIcon kuva3 = new ImageIcon("src/main/resources/images/firestorm2.png");
-        image3 = kuva3.getImage();
-
         setX(-100);
         setY(-100);
         for (int i = 0; i < xlist.length; i++) {
@@ -73,114 +59,105 @@ public class Bombs implements Spawnables {
         }
     }
 
+    /**
+     * Handles the bomb zones that are displayed.
+     * Firstly, it randomizes locations for the targets to appear shortly.
+     * Secondly, it randomizes locations for three targets using this class's private integer lists, and displays them.
+     * Thirdly, places the actual damaging areas on top of the previously randomized locations,
+     * removes the targets from the map, and displays the damaging areas.
+     */
     public void bombZone() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                //arpoo kentältä 3 sijaintia, johon pommit laitetaan
                 randomizeXYBombs();
             }
-        }, 1000); //aika (ms), joka odotetaan
+        }, 1000); //aika (ms), joka odotetaan ENNEN targetteja
+        //uusi ajastin pommeille ja targeteille
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Music.sound7.play();
+                Music.bombs.play();
+                //laitetaan targetit kohdalleen
                 for (int i = 2; i < xlist.length; i = i + 2) {
                     setXBombs(i, xlist[i - 1]);
                     setYBombs(i, ylist[i - 1]);
                 }
+                //piilotetaan targetit kentältä
                 for (int i = 1; i <= 5; i = i + 2) {
                     setXBombs(i, -1000);
                     setYBombs(i, -1000);
                 }
+                //laitetaan targettien/pommien paikat kuolettaviksi
                 lethal = true;
+                //uusi ajastin
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
+                        //piilota pommit kentältä
                         for (int i = 2; i <=6; i = i + 2) {
                             setXBombs(i, -1000);
                             setYBombs(i, -1000);
                         }
                     }
-                }, 5000);
+                }, 5000); //tulialueet
             }
-        }, 2500); //aika (ms), joka odotetaan
+        }, 2500); //targetit
     }
 
-    @Override
-    public Rectangle getBounds() {
-        return new Rectangle(xe + 3, ye + 3, 30, 30);
+    /**
+     * Returns the circle used by bomb zone.
+     * @param n the index of the target or bomb
+     * @return a new <code>Circle</code> with predetermined draw size
+     * @see Circle
+     */
+    public Circle getBoundsBombs(int n) {
+        return new Circle(xlist[n] + 105, ylist[n] + 100, 85);
     }
 
-    public Ellipse2D getBoundsBombs(int n) {
-        return new Ellipse2D.Double(xlist[n] + 3, ylist[n] + 3, 200, 200);
-    }
-
-    @Override
-    public int getX() {
-        return xe;
-    }
-
-    @Override
-    public int getY() {
-        return ye;
-    }
-
-    @Override
-    public void setX(int x) {
-        xe = x;
-    }
-
-    @Override
-    public void setY(int y) {
-        ye = y;
-    }
-
+    /**
+     * Returns the x-coordinate of this target or bomb.
+     * @param n index of the wanted target or bomb
+     * @return the x-coordinate of this bomb or target
+     */
     public int getXBombs(int n) {
         return xlist[n];
     }
 
+    /**
+     * Returns the y-coordinate of this target or bomb.
+     * @param n index of the wanted target or bomb
+     * @return the y-coordinate of this bomb or target
+     */
     public int getYBombs(int n) {
         return ylist[n];
     }
 
+    /**
+     * Sets x-coordinate of this target or bomb.
+     * @param n the index of the wanted target or bomb
+     * @param value the x-coordinate of bomb or target at index n
+     */
     public void setXBombs(int n, int value) {
         xlist[n] = value;
     }
 
+    /**
+     * Sets y-coordinate of this target or bomb.
+     * @param n the index of the wanted target or bomb
+     * @param value the y-coordinate of bomb or target at index n
+     */
     public void setYBombs(int n, int value) {
         ylist[n] = value;
     }
 
-    @Override
-    public Image getImage() {
-        return image;
-    }
-
-    public Image getImage(int n) {
-        Image img = null;
-        switch (n) {
-            case 1:
-                img = image;
-                break;
-            case 2:
-                img = image2;
-                break;
-            case 3:
-                img = image3;
-                break;
-        }
-        return img;
-    }
-
-    @Override
-    public void randomizePowerUpLocation() {
-        setX((int) (Math.random() * 750));
-        setY((int) (Math.random() * 550));
-    }
-
-    public void randomizeXYBombs() {
-        for (int i = 1; i < xlist.length; i = i + 2) {
+    /**
+     * Randomizes the locations for the targets.
+     */
+    private void randomizeXYBombs() {
+        for (int i = 1; i < xlist.length; i+= 2) {
             setXBombs(i, (int) (Math.random() * 600));
             setYBombs(i, (int) (Math.random() * 400));
         }
